@@ -51,19 +51,24 @@ Repo: https://github.com/coding-nyx/a0090-meta`
           type: 'file',
           content: `# Nexus (AGNES) [In Progress]
 Unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.
-Tech: LLM, React, React Native, Firebase, RAG`
+Tech: LLM, React, React Native, Firebase, RAG
+Live: https://agent-agnes-ai.web.app
+Repo: https://github.com/coding-nyx/nexus-react-native`
         },
         'fitpro-connect.md': {
           type: 'file',
           content: `# FitPro Connect [In Progress]
 Comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.
-Tech: React, Firebase, Stripe`
+Tech: React, Firebase, Stripe
+Live: https://personal-trainer-mock.web.app/
+Repo: https://github.com/coding-nyx/personal-trainer`
         },
-        'linux-kernel-mod.md': {
+        'hermes-companion-web.md': {
           type: 'file',
-          content: `# Linux Kernel Mod [Experimental]
-Custom kernel module experimenting with process scheduling algorithms for low-latency tasks.
-Tech: C, Linux, Make`
+          content: `# Hermes Companion Web [Active]
+Web companion for the Hermes agent — pair, chat, control the device, and forward mobile notifications.
+Tech: TypeScript, Web, Hermes, AI Agents
+Repo: https://github.com/coding-nyx/hermes-companion-web`
         }
       }
     },

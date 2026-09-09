@@ -86,18 +86,9 @@ export const experienceData = [
 
 export const projects = [
   {
-    name: "Agentic Component Framework",
-    tags: ["Agentic AI", "Python", "State Machine", "Multi-Agent", "Swift / iOS"],
-    description: "A deterministic, config-driven agentic pipeline that automates component lifecycles from spec → contract → QA test suite → implementation → gate verification. Features 8 declarative quality gates, multi-target parallel tracks, and unified multi-ecosystem prompt compilation.",
-    imageUrl: null,
-    liveUrl: null,
-    repoUrl: null,
-    status: "Production"
-  },
-  {
     name: "Hermes Companion App",
     tags: ["Android", "Kotlin", "Jetpack Compose", "Tailscale", "AI Agents"],
-    description: "Native Android companion application for self-hosted Hermes Agent fleet featuring device pairing via Tailscale, bidirectional control, accessibility automation, and real-time chat.",
+    description: "Native Android companion for a self-hosted Hermes Agent fleet: Tailscale pairing, bidirectional control, accessibility automation, and real-time chat.",
     imageUrl: null,
     liveUrl: "https://github.com/coding-nyx/hermes-companion-app/releases",
     repoUrl: "https://github.com/coding-nyx/hermes-companion-app",
@@ -118,26 +109,35 @@ export const projects = [
     description: "A comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.",
     imageUrl: null,
     liveUrl: "https://personal-trainer-mock.web.app/",
-    repoUrl: null,
+    repoUrl: "https://github.com/coding-nyx/personal-trainer",
     status: "In Progress"
-  },
-  {
-    name: "Linux Kernel Mod",
-    tags: ["C", "Linux", "Make"],
-    description: "A custom kernel module experimenting with process scheduling algorithms for low-latency tasks.",
-    imageUrl: null,
-    liveUrl: null,
-    repoUrl: null,
-    status: "Experimental"
   },
   {
     name: "Nexus",
     tags: ["llm", "react", "react native", "firebase", "rag", "wellness"],
     description: "Nexus (AGNES): A unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.",
-    imageUrl: "no image yet",
+    imageUrl: null,
     liveUrl: "https://agent-agnes-ai.web.app",
-    repoUrl: null,
+    repoUrl: "https://github.com/coding-nyx/nexus-react-native",
     status: "In Progress"
+  },
+  {
+    name: "Hermes Companion Web",
+    tags: ["TypeScript", "Web", "Hermes", "AI Agents"],
+    description: "Web companion for the Hermes agent — pair, chat, control the device, and forward mobile notifications.",
+    imageUrl: null,
+    liveUrl: null,
+    repoUrl: "https://github.com/coding-nyx/hermes-companion-web",
+    status: "Active"
+  },
+  {
+    name: "Agentic Component Framework",
+    tags: ["Agentic AI", "Python", "State Machine", "Multi-Agent", "Swift / iOS"],
+    description: "A deterministic, config-driven agentic pipeline that automates component lifecycles from spec → contract → QA test suite → implementation → gate verification. Features 8 declarative quality gates, multi-target parallel tracks, and unified multi-ecosystem prompt compilation.",
+    imageUrl: null,
+    liveUrl: null,
+    repoUrl: null,
+    status: "Production"
   }
 ];
 
