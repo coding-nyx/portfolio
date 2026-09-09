@@ -257,10 +257,11 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
         output.push({
           text: `FEATURED PROJECTS:
 • [Hermes Companion App]   - Native Android companion for self-hosted Hermes AI fleet (Tailscale mesh)
+• [Hermes Companion Web]   - Web companion: pair, chat, device control, notification forwarding
 • [a0090-meta (hub-11 OS)] - Mainline Linux 6.18 OS distribution for RK3588 NVR
 • [FitPro Connect]         - Comprehensive platform for fitness trainers (React/Firebase/Stripe)
 • [Nexus (AGNES)]          - Unified multi-agent wellness platform
-• [Linux Kernel Mod]       - Low-latency RT process scheduling module
+• [Agentic Component Framework] - Production spec-to-code pipeline (Zoho)
 (Type 'goto projects' to view cards or 'cat projects/<name>.md')`,
           color: "var(--neon-green)"
         });

@@ -33,10 +33,11 @@ RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
   - Previous: Zoho Project Trainee (Sep 2021 - May 2022), Zoho Intern (Apr 2021 - Jun 2021).
 • Embedded & Low-Level Linux Chops:
   - **a0090-meta** (also known as **hub-11 OS**, **a009-hub**, **hub-11**, **hub11**): Upstream-maintainable mainline Linux 6.18 OS distribution engineered for the AMedia RK3588 NVR Demo board. Raj engineered the custom Device Tree Source (DTS), U-Boot / FIT boot image assembly, kernel driver integration, and platform bring-up.
-  - **Linux Kernel Mod**: Experimental low-latency real-time process scheduler module for CPU task balancing.
 • AI & Mobile Systems:
   - **Hermes Companion App**: Native Android app for self-hosted Hermes AI agent fleet with Tailscale mesh pairing, bidirectional telemetry, and accessibility automation.
-  - **Nexus (AGNES)**: Unified multi-agent wellness platform with specialized agent coordination.
+  - **Hermes Companion Web**: Web companion to pair, chat, control the device, and forward mobile notifications.
+  - **Nexus (AGNES)**: Unified multi-agent wellness platform with specialized agent coordination. Repo: coding-nyx/nexus-react-native. Live: https://agent-agnes-ai.web.app
+  - **FitPro Connect**: Fitness trainer platform (React/Firebase). Live: https://personal-trainer-mock.web.app/
 • Top Skills: Swift (90%), Agentic Coding (90%), AI/LLMs (85%), UIKit/SwiftUI (85%), Linux Kernel (80%), Firebase (75%), React (70%), Kotlin/Android (60%).
 • Technical Pedigree & Academic Foundation:
   - Early STEM Foundation: **D.A.V. (Junior & High School)** — Forged in a prestigious, mathematically rigorous environment renowned for analytical discipline, competitive problem-solving, and foundational science excellence.
@@ -283,7 +284,6 @@ function generateFallbackResponse(messagesInput, repos) {
 • **Custom Board Device Tree (DTS)**: Hand-crafted and patched Device Tree Source (\`dts\`) mapping hardware peripherals, high-speed SerDes, PCIe, and memory allocations specifically for the Rockchip RK3588 silicon.
 • **FIT Boot Image Assembly & U-Boot**: Architected flattened image tree (\`FIT\`) boot containers packaging the mainline kernel, initramfs, and hardware dtbs into an atomic, verifiable payload.
 • **Upstream Tracking**: Designed to stay maintainable against mainline Linux releases rather than relying on bloated, frozen vendor BSP blobs.
-• **Process Scheduling Module**: Developed experimental real-time kernel modules exploring low-latency task scheduling under high-throughput video workloads.
 
 [ACTION:SCROLL_TO:projects]`;
   }

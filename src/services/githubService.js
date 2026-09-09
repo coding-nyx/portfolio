@@ -58,26 +58,50 @@ export async function fetchLiveGitHubContext() {
     {
       name: "hermes-companion-app",
       owner: "coding-nyx",
-      description: "Native Android companion for self-hosted Hermes Agent fleet featuring Tailscale mesh",
+      description: "Native Android companion for self-hosted Hermes Agent",
       language: "Kotlin",
-      stars: 3,
+      stars: 0,
       url: "https://github.com/coding-nyx/hermes-companion-app"
+    },
+    {
+      name: "hermes-companion-web",
+      owner: "coding-nyx",
+      description: "Web companion for the Hermes agent — pair, chat, control the device, and forward mobile notifications.",
+      language: "TypeScript",
+      stars: 0,
+      url: "https://github.com/coding-nyx/hermes-companion-web"
     },
     {
       name: "a0090-meta",
       owner: "coding-nyx",
-      description: "Upstream-maintainable Linux OS distribution for AMedia RK3588 NVR Demo (hub-11)",
+      description: "Upstream-maintainable OS for hub-11 (AMedia RK3588 NVR Demo)",
       language: "C",
-      stars: 5,
+      stars: 0,
       url: "https://github.com/coding-nyx/a0090-meta"
     },
     {
-      name: "nexus",
+      name: "portfolio",
       owner: "coding-nyx",
-      description: "Unified multi-agent AI wellness platform with specialized agents",
+      description: "Portfolio dashboard",
       language: "JavaScript",
-      stars: 2,
-      url: "https://github.com/coding-nyx/nexus"
+      stars: 0,
+      url: "https://github.com/coding-nyx/portfolio"
+    },
+    {
+      name: "personal-trainer",
+      owner: "coding-nyx",
+      description: "FitPro Connect — fitness trainer platform",
+      language: "TypeScript",
+      stars: 0,
+      url: "https://github.com/coding-nyx/personal-trainer"
+    },
+    {
+      name: "poker",
+      owner: "coding-nyx",
+      description: "Poker project",
+      language: "TypeScript",
+      stars: 0,
+      url: "https://github.com/coding-nyx/poker"
     }
   ];
 
