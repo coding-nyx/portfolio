@@ -1,20 +1,55 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import PixelCard from './common/PixelCard';
-import Modal from './common/Modal';
 import { certificationsData } from '../data/portfolio';
-import { FaExternalLinkAlt, FaCertificate } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
-const CertificationsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  height: 100%;
-  justify-content: space-between;
+const Details = styled.details`
+  width: 100%;
   padding: 5px;
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    padding: 10px 12px;
+    border: 1px solid var(--text-dim);
+    background: rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: '▸';
+      display: inline-block;
+      transition: transform 0.15s ease;
+    }
+
+    [data-theme='professional'] &,
+    [data-theme='modern'] & {
+      color: #0f172a;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+  }
+
+  &[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  &[open] summary {
+    margin-bottom: 12px;
+  }
 `;
 
-const PreviewGrid = styled.div`
+const CertList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
@@ -22,7 +57,6 @@ const PreviewGrid = styled.div`
 `;
 
 const CertCard = styled.div`
-  /* Cyberpunk style matching ProjectCard */
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--text-dim);
   padding: 14px;
@@ -33,7 +67,6 @@ const CertCard = styled.div`
   position: relative;
   overflow: hidden;
 
-  /* Professional Theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     background: #ffffff;
@@ -129,97 +162,16 @@ const CredentialLink = styled.a`
   }
 `;
 
-const ViewAllButton = styled.button`
-  background: transparent;
-  border: 1px solid var(--neon-pink);
-  color: var(--neon-pink);
-  padding: 8px 16px;
-  font-size: 0.82rem;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-  width: 100%;
-
-  [data-theme='cyberpunk'] & {
-    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-
-    &:hover {
-      background: var(--neon-pink);
-      color: #000;
-      box-shadow: 0 0 12px var(--neon-pink);
-    }
-  }
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    background: #f8fafc;
-    color: #2563eb;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-
-    &:hover {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1d4ed8;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
-    }
-  }
-`;
-
-const ModalGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-  max-height: 65vh;
-  overflow-y: auto;
-  padding: 4px;
-`;
-
 const Certifications = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const previewCount = 3;
+  const olderCerts = certificationsData.filter(c => c.older === true);
+  const items = olderCerts.length > 0 ? olderCerts : certificationsData;
 
   return (
-    <>
-      <PixelCard title="Certifications">
-        <CertificationsContainer>
-          <PreviewGrid>
-            {certificationsData.slice(0, previewCount).map((cert, idx) => (
-              <CertCard key={idx}>
-                <div>
-                  <CertHeader>
-                    <IssuerTag>{cert.issuer}</IssuerTag>
-                  </CertHeader>
-                  <CertName>{cert.name}</CertName>
-                </div>
-                <CertFooter>
-                  <span>{cert.date}</span>
-                  {cert.credentialUrl ? (
-                    <CredentialLink href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
-                      Verify <FaExternalLinkAlt size={9} />
-                    </CredentialLink>
-                  ) : (
-                    <span>Verified</span>
-                  )}
-                </CertFooter>
-              </CertCard>
-            ))}
-          </PreviewGrid>
-          <ViewAllButton onClick={() => setModalOpen(true)}>
-            <FaCertificate size={12} />
-            <span>View All ({certificationsData.length}) Certifications</span>
-          </ViewAllButton>
-        </CertificationsContainer>
-      </PixelCard>
-
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} title="All Certifications">
-        <ModalGrid>
-          {certificationsData.map((cert, idx) => (
+    <PixelCard title="Certifications">
+      <Details>
+        <summary>Older certifications (2020)</summary>
+        <CertList>
+          {items.map((cert, idx) => (
             <CertCard key={idx}>
               <div>
                 <CertHeader>
@@ -231,7 +183,7 @@ const Certifications = () => {
                 <span>{cert.date}</span>
                 {cert.credentialUrl ? (
                   <CredentialLink href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
-                    Verify Credential <FaExternalLinkAlt size={10} />
+                    Verify <FaExternalLinkAlt size={9} />
                   </CredentialLink>
                 ) : (
                   <span>Verified</span>
@@ -239,9 +191,9 @@ const Certifications = () => {
               </CertFooter>
             </CertCard>
           ))}
-        </ModalGrid>
-      </Modal>
-    </>
+        </CertList>
+      </Details>
+    </PixelCard>
   );
 };
 

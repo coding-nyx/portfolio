@@ -2,33 +2,29 @@
 
 export const profileData = {
   name: "Raj Kumar S",
-  headline: "iOS Developer | Full-Cycle Development",
+  headline: "iOS / Apple Platform Engineer · Swift · UIKit · SwiftUI · SPM",
   location: "Chennai, India",
   profileImage: "/profile.jpg",
-  summary: `Passionate iOS Developer with 2+ years of experience building sleek, scalable mobile applications. My expertise lies in full-cycle development, bridging the gap between complex logic and user-centric design. I thrive on solving architectural challenges and am constantly expanding my toolkit.`,
+  summary: `iOS / Apple platform engineer and Member of Technical Staff at Zoho (May 2022–Present, ~4 yrs 4 mos). I build modular Swift architectures, shared UI libraries, and full-cycle mobile features across UIKit and SwiftUI — from wireframes through API integration — with a focus on design consistency and measurable performance. Public pillars: Hermes Companion and WorkTracker.`,
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/raj-kumar-s",
-    email: "raju9112000@gmail.com"
+    email: "raju9112000@gmail.com",
+    github: "https://github.com/coding-nyx"
   }
 };
 
 export const skillsData = [
   { name: "Swift", level: 90, category: "Mobile" },
+  { name: "UIKit", level: 88, category: "Mobile" },
   { name: "SwiftUI", level: 85, category: "Mobile" },
-  { name: "UIKit", level: 85, category: "Mobile" },
-  { name: "Agentic Frameworks", level: 90, category: "AI" },
-  { name: "AI / LLMs", level: 85, category: "AI" },
-  { name: "Adaptability", level: 90, category: "Core" },
-  { name: "Teamwork", level: 90, category: "Core" },
-  { name: "Linux", level: 80, category: "OS" },
-  { name: "Zoho Catalyst", level: 75, category: "Cloud" },
+  { name: "SPM / packages", level: 85, category: "Mobile" },
+  { name: "Kotlin", level: 70, category: "Mobile" },
+  { name: "Android / Compose", level: 68, category: "Mobile" },
+  { name: "TypeScript", level: 75, category: "Language" },
+  { name: "React / Next.js", level: 72, category: "Frontend" },
   { name: "Firebase", level: 75, category: "Backend" },
-  { name: "React", level: 70, category: "Frontend" },
-  { name: "AWS", level: 50, category: "Cloud" },
-  { name: "Kotlin", level: 60, category: "Language" },
-  { name: "Android", level: 60, category: "Mobile" },
-  { name: "Java", level: 65, category: "Language" },
-  { name: "React Native", level: 65, category: "Mobile" },
+  { name: "MCP / agent tooling", level: 80, category: "AI" },
+  { name: "Linux", level: 80, category: "OS" },
 ];
 
 export const experienceData = [
@@ -36,25 +32,26 @@ export const experienceData = [
     company: "Zoho",
     role: "Member of Technical Staff",
     dates: "May 2022 - Present",
-    duration: "3 yrs 8 mos",
+    duration: "4 yrs 4 mos",
     type: "Full-time",
-    description: "As a Member of Technical Staff at Zoho since May 2022, I have focused on engineering modular UI architectures, developing an agentic development framework for rapid component creation and verification, creating reusable components in Swift, and ensuring design consistency across the Zoho mobile ecosystem. My role has included leading the design of critical modules from wireframing to API integration using Swift and UIKit/SwiftUI, reducing frontend development time by 30%, and optimizing app performance resulting in a 20% improvement in launch speed and reduced memory overhead.",
+    description:
+      "Member of Technical Staff on Zoho’s mobile platforms since May 2022. I engineer modular Swift UI architectures, ship reusable component libraries used across Zoho mobile surfaces, and own features from design handoff through networking and API integration (UIKit + SwiftUI). Work includes design-system consistency, performance and memory tuning, and internal agentic tooling that speeds component generation, validation, and gate checks — without publishing proprietary package names.",
     projects: [
       {
-        name: "Agentic Component Framework",
-        desc: "Developed an agentic development framework for automating the generation, validation, and iteration of modular UI components."
+        name: "Shared mobile UI libraries",
+        desc: "Reusable Swift components and patterns that keep look-and-feel consistent across Zoho mobile apps."
       },
       {
-        name: "Zoho Mobile UI Kit",
-        desc: "Engineered a comprehensive library of reusable UI components using Swift, reducing frontend dev time by 30%."
+        name: "Module ownership (design → API)",
+        desc: "Led critical modules from wireframes through API integration with robust architecture and error handling."
       },
       {
-        name: "Core Modules Revamp",
-        desc: "Led the design of critical modules from wireframing to API integration, ensuring robust architecture."
+        name: "Agentic component tooling",
+        desc: "Internal config-driven pipeline for component lifecycle: spec → contract → tests → implementation → verification gates."
       },
       {
-        name: "Performance Overhaul",
-        desc: "Refactored legacy code resulting in a 20% improvement in app launch speed and reduced memory overhead."
+        name: "Performance & memory",
+        desc: "Refactored hot paths to improve launch behavior and reduce memory overhead on production apps."
       }
     ]
   },
@@ -64,7 +61,8 @@ export const experienceData = [
     dates: "Sep 2021 - May 2022",
     duration: "9 mos",
     type: "Trainee",
-    description: "Collaborated with the mobile team to understand core architectural patterns and contributed to bug fixes and minor feature enhancements.",
+    description:
+      "Collaborated with the mobile team on architectural patterns, bug fixes, and feature enhancements in Swift."
   },
   {
     company: "Zoho",
@@ -72,7 +70,7 @@ export const experienceData = [
     dates: "Apr 2021 - Jun 2021",
     duration: "3 mos",
     type: "Internship",
-    description: "Initial exposure to professional iOS development workflows and Swift programming.",
+    description: "Intro to professional iOS workflows and Swift."
   },
   {
     company: "Servion Global Solutions",
@@ -80,24 +78,50 @@ export const experienceData = [
     dates: "Nov 2019 - Dec 2019",
     duration: "2 mos",
     type: "Internship",
-    description: "Gained insights into enterprise software solutions and team collaboration.",
+    description: "Enterprise software exposure and team collaboration."
   }
 ];
 
 export const projects = [
   {
+    name: "WorkTracker",
+    featured: true,
+    tags: ["TypeScript", "Firebase", "Next.js", "MCP", "Kanban"],
+    description:
+      "Canonical work-item brain for agent fleets: multi-board kanban, REST + MCP (15 tools), Firestore live sync, command-queue brain, and connector plugins (Hermes, Claude Code, Codex, and more).",
+    imageUrl: null, // @Design: needs real screenshot
+    liveUrl: "https://worktracker-nyx.web.app",
+    repoUrl: "https://github.com/coding-nyx/worktracker",
+    status: "Active"
+  },
+  {
     name: "Hermes Companion App",
+    featured: true,
     tags: ["Android", "Kotlin", "Jetpack Compose", "Tailscale", "AI Agents"],
-    description: "Native Android companion for a self-hosted Hermes Agent fleet: Tailscale pairing, bidirectional control, accessibility automation, and real-time chat.",
-    imageUrl: null,
+    description:
+      "Native Android companion for a self-hosted Hermes agent fleet: Tailscale pairing, bidirectional control, accessibility automation, and real-time chat.",
+    imageUrl: null, // @Design: needs real screenshot
     liveUrl: "https://github.com/coding-nyx/hermes-companion-app/releases",
     repoUrl: "https://github.com/coding-nyx/hermes-companion-app",
     status: "Active"
   },
   {
+    name: "Hermes Companion Web",
+    featured: false,
+    tags: ["TypeScript", "Web", "Hermes", "AI Agents"],
+    description:
+      "Web companion for the Hermes agent — pair, chat, control the device, and forward mobile notifications.",
+    imageUrl: null,
+    liveUrl: null,
+    repoUrl: "https://github.com/coding-nyx/hermes-companion-web",
+    status: "Active"
+  },
+  {
     name: "a0090-meta (hub-11 OS)",
+    featured: false,
     tags: ["Linux Kernel", "RK3588", "Device Tree", "C", "Armbian"],
-    description: "Upstream-maintainable Linux OS distribution for the AMedia RK3588 NVR Demo (hub-11), featuring mainline Linux 6.18, custom board DTS, FIT boot image assembly, and driver integration.",
+    description:
+      "Upstream-maintainable Linux OS for the AMedia RK3588 NVR Demo: mainline Linux, custom board DTS, FIT boot, driver integration.",
     imageUrl: null,
     liveUrl: null,
     repoUrl: "https://github.com/coding-nyx/a0090-meta",
@@ -105,8 +129,10 @@ export const projects = [
   },
   {
     name: "FitPro Connect",
+    featured: false,
     tags: ["React", "Firebase", "Stripe"],
-    description: "A comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.",
+    description:
+      "Platform for fitness trainers to manage classes, portfolios, and clients.",
     imageUrl: null,
     liveUrl: "https://personal-trainer-mock.web.app/",
     repoUrl: "https://github.com/coding-nyx/personal-trainer",
@@ -114,30 +140,14 @@ export const projects = [
   },
   {
     name: "Nexus",
+    featured: false,
     tags: ["llm", "react", "react native", "firebase", "rag", "wellness"],
-    description: "Nexus (AGNES): A unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.",
+    description:
+      "Multi-agent AI wellness platform with specialized agents and E2EE.",
     imageUrl: null,
     liveUrl: "https://agent-agnes-ai.web.app",
     repoUrl: "https://github.com/coding-nyx/nexus-react-native",
     status: "In Progress"
-  },
-  {
-    name: "Hermes Companion Web",
-    tags: ["TypeScript", "Web", "Hermes", "AI Agents"],
-    description: "Web companion for the Hermes agent — pair, chat, control the device, and forward mobile notifications.",
-    imageUrl: null,
-    liveUrl: null,
-    repoUrl: "https://github.com/coding-nyx/hermes-companion-web",
-    status: "Active"
-  },
-  {
-    name: "Agentic Component Framework",
-    tags: ["Agentic AI", "Python", "State Machine", "Multi-Agent", "Swift / iOS"],
-    description: "A deterministic, config-driven agentic pipeline that automates component lifecycles from spec → contract → QA test suite → implementation → gate verification. Features 8 declarative quality gates, multi-target parallel tracks, and unified multi-ecosystem prompt compilation.",
-    imageUrl: null,
-    liveUrl: null,
-    repoUrl: null,
-    status: "Production"
   }
 ];
 
@@ -162,89 +172,82 @@ export const certificationsData = [
     name: "Programming for everybody (Getting started with python)",
     issuer: "Coursera",
     date: "Jul 2020",
-    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/KYC47RL4MWRX"
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/KYC47RL4MWRX",
+    older: true
   },
   {
     name: "The Sustainable Development Goals – A global, transdisciplinary vision for the future",
     issuer: "Coursera",
     date: "Jul 2020",
-    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/X3U4Y9FM3D2W"
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/X3U4Y9FM3D2W",
+    older: true
   },
   {
     name: "Step into Robotic process automation",
     issuer: "GUVI Geek Networks, IITM Research Park",
     date: "Jun 2020",
-    credentialUrl: "https://www.guvi.in/verify-certificate?id=L60K9a3H209160515l"
+    credentialUrl: "https://www.guvi.in/verify-certificate?id=L60K9a3H209160515l",
+    older: true
   },
   {
     name: "Cybersecurity Essentials",
     issuer: "Cisco",
     date: "May 2020",
-    credentialUrl: "" // No direct credential URL provided on LinkedIn
+    credentialUrl: "",
+    older: true
   },
   {
     name: "Entrepreneurship",
     issuer: "Cisco",
     date: "May 2020",
-    credentialUrl: "" // No direct credential URL provided on LinkedIn
+    credentialUrl: "",
+    older: true
   },
   {
     name: "IT Academy: Network Virtualization Concepts",
     issuer: "VMware",
     date: "May 2020",
-    credentialUrl: "https://www.youracclaim.com/badges/bad87375-c32e-4daa-8dd1-c295373d0c91"
+    credentialUrl: "https://www.youracclaim.com/badges/bad87375-c32e-4daa-8dd1-c295373d0c91",
+    older: true
   },
   {
     name: "IT Academy: Software Defined Storage Concepts",
     issuer: "VMware",
     date: "May 2020",
-    credentialUrl: "https://www.youracclaim.com/badges/25e83b93-d84d-4110-8718-ea597e5c88d5"
+    credentialUrl: "https://www.youracclaim.com/badges/25e83b93-d84d-4110-8718-ea597e5c88d5",
+    older: true
   },
   {
     name: "Introduction to IoT",
     issuer: "Cisco",
     date: "May 2020",
-    credentialUrl: "" // No direct credential URL provided on LinkedIn
+    credentialUrl: "",
+    older: true
   },
   {
     name: "Introduction to Packet Tracer",
     issuer: "Cisco",
     date: "May 2020",
-    credentialUrl: "" // No direct credential URL provided on LinkedIn
+    credentialUrl: "",
+    older: true
   },
   {
     name: "Machine Learning for All",
     issuer: "Coursera",
     date: "May 2020",
-    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/2F477P28WVLY"
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/2F477P28WVLY",
+    older: true
   },
   {
     name: "Predict Future Product Prices Using Facebook Prophet",
     issuer: "Coursera",
     date: "May 2020",
-    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/TURLH426RU69"
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/TURLH426RU69",
+    older: true
   }
 ];
 
-
-export const testimonialsData = [
-  {
-    quote: "Raj Kumar's expertise in Swift and his commitment to clean architecture were instrumental in the success of our mobile UI Kit. He's a proactive problem-solver and a great team player.",
-    name: "Priya Sharma",
-    title: "Senior Software Engineer, Zoho"
-  },
-  {
-    quote: "I was consistently impressed with Raj Kumar's ability to tackle complex UI challenges. His work on performance optimization significantly improved our app's user experience.",
-    name: "Arjun Gupta",
-    title: "Engineering Manager, Zoho"
-  },
-  {
-    quote: "Working with Raj Kumar is a pleasure. He is not only a talented developer but also a great communicator who can clearly articulate technical concepts to non-technical stakeholders.",
-    name: "Sunita Reddy",
-    title: "Product Manager, Zoho"
-  }
-];
-
+export const testimonialsData = [];
 
 export const interestsData = [
   "Obstacle Course Races",

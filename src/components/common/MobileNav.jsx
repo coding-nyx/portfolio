@@ -106,7 +106,7 @@ const MobileNav = () => {
         <span>HOME</span>
       </NavItem>
 
-      <NavItem onClick={() => scrollToSection('[title="Projects"]')} aria-label="Projects">
+      <NavItem onClick={() => scrollToSection('#featured-work')} aria-label="Projects">
         <FaCode />
         <span>PROJ</span>
       </NavItem>

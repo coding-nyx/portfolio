@@ -1,0 +1,72 @@
+{
+  "found": [
+    "Featured work",
+    "Experience",
+    "Skills",
+    "Other work"
+  ],
+  "areas": [
+    {
+      "i": 0,
+      "id": null,
+      "textPreview": "Raj Kumar S iOS / Apple Platform Engineer · Swift · UIKit · SwiftUI · SPM Chenna"
+    },
+    {
+      "i": 1,
+      "id": "featured-work",
+      "textPreview": "Featured work WorkTracker WorkTracker Active TypeScript Firebase Next.js MCP Kan"
+    },
+    {
+      "i": 2,
+      "id": null,
+      "textPreview": "Experience Zoho May 2022 - Present Member of Technical Staff Member of Technical"
+    },
+    {
+      "i": 3,
+      "id": null,
+      "textPreview": "Skills MOBILE Swift UIKit SwiftUI SPM / packages Kotlin Android / Compose LANGUA"
+    },
+    {
+      "i": 4,
+      "id": "other-work",
+      "textPreview": "Other work SECONDARY PROJECTS Hermes Companion Web Active TypeScript Web Hermes "
+    },
+    {
+      "i": 5,
+      "id": null,
+      "textPreview": "iOS Component Lab (SwiftUI & Agentic Framework) Dynamic Island Physics Tap to mo"
+    },
+    {
+      "i": 6,
+      "id": null,
+      "textPreview": "Certifications Older certifications (2020)"
+    },
+    {
+      "i": 7,
+      "id": null,
+      "textPreview": ""
+    },
+    {
+      "i": 8,
+      "id": null,
+      "textPreview": "Achievements Spartan Racer [TOP 10% FINISH] @Obstacle Course (10km Course) Compl"
+    },
+    {
+      "i": 9,
+      "id": null,
+      "textPreview": "Awards & Honors Smart India Hackathon (Participant) [NATIONAL STAGE] Smart India"
+    },
+    {
+      "i": 10,
+      "id": null,
+      "textPreview": "Interests & Passions Obstacle Course Races Endurance training, Spartan races, an"
+    },
+    {
+      "i": 11,
+      "id": "contact-section",
+      "textPreview": "Contact & Direct Uplink Direct Uplink Available Chennai, India (IST / UTC +5:30)"
+    }
+  ],
+  "ok": true,
+  "path": "Featured work → Experience → Skills → Other work"
+}

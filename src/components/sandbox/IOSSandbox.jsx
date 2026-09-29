@@ -211,7 +211,7 @@ export const IOSSandbox = () => {
   };
 
   return (
-    <PixelCard title="iOS Component Lab (SwiftUI & Agentic Framework)">
+    <PixelCard title="iOS Component Lab (SwiftUI)">
       <SandboxContainer>
         {/* Module 1: Fluid Dynamic Island */}
         <InteractivePanel>
@@ -313,7 +313,7 @@ export const IOSSandbox = () => {
               $active={activeArch === 'agentic'}
               onClick={() => setActiveArch('agentic')}
             >
-              Swift UI Kit + Agentic
+              Swift UI Kit
             </SegmentBtn>
           </SegmentControl>
 

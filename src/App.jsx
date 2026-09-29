@@ -5,7 +5,7 @@ import { useTheme } from './context/ThemeContext';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
-import Projects from './components/Projects';
+import { FeaturedProjects, OtherProjects } from './components/Projects';
 import Achievements from './components/Achievements';
 import Interests from './components/Interests';
 import Contact from './components/Contact';
@@ -49,13 +49,14 @@ const BentoGrid = styled.div`
     padding-bottom: 100px; /* Extra padding for mobile nav */
   }
 
-  /* Mobile Layout */
+  /* Mobile Layout — recruiter path: Featured → Experience → Skills → Other */
   grid-template-areas:
     "H"
     "J"
     "E"
-    "B"
     "S"
+    "O"
+    "B"
     "L"
     "A"
     "W"
@@ -70,8 +71,9 @@ const BentoGrid = styled.div`
       "H H"
       "J J"
       "E E"
-      "B B"
       "S S"
+      "O O"
+      "B B"
       "L L"
       "A W"
       "T T"
@@ -86,9 +88,11 @@ const BentoGrid = styled.div`
 
     grid-template-areas:
       "H H H H"
-      "J J E E"
-      "B B B B"
+      "J J J J"
+      "E E E E"
       "S S S S"
+      "O O O O"
+      "B B B B"
       "L L A W"
       "T T I I"
       "C C C C";
@@ -100,6 +104,7 @@ const HeroArea = styled.div` grid-area: H; `;
 const SkillsArea = styled.div` grid-area: S; `;
 const ExperienceArea = styled.div` grid-area: E; `;
 const ProjectsArea = styled.div` grid-area: J; `;
+const OtherProjectsArea = styled.div` grid-area: O; `;
 const SandboxArea = styled.div` grid-area: B; `;
 const AchievementsArea = styled.div` grid-area: A; `;
 const InterestsArea = styled.div` grid-area: I; `;
@@ -137,10 +142,11 @@ function App() {
           <SystemAlert onOpenRook={(prompt) => setRookPrompt(prompt || "Tell me about Raj, his background, and his work")} />
           <BentoGrid id="main-content">
             <HeroArea><Hero onAskRook={(prompt) => setRookPrompt(prompt)} /></HeroArea>
-            <ProjectsArea><Projects /></ProjectsArea>
+            <ProjectsArea><FeaturedProjects /></ProjectsArea>
             <ExperienceArea><Experience /></ExperienceArea>
-            <SandboxArea><IOSSandbox /></SandboxArea>
             <SkillsArea><Skills /></SkillsArea>
+            <OtherProjectsArea><OtherProjects /></OtherProjectsArea>
+            <SandboxArea><IOSSandbox /></SandboxArea>
             <CertificationsArea><Certifications /></CertificationsArea>
             <TestimonialsArea><Testimonials /></TestimonialsArea>
             <AchievementsArea><Achievements /></AchievementsArea>

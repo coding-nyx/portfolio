@@ -17,16 +17,31 @@ const pulseAnim = keyframes`
   50% { opacity: 0.7; text-shadow: 0 0 2px var(--neon-green); }
 `;
 
-const ProjectsGrid = styled.div`
+const SectionStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+`;
+
+const FeaturedGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  /* Add padding to prevent hover shadows/transform clipping at grid edges */
+  padding: 5px;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const OtherGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
   padding: 5px;
 `;
 
 const ProjectCard = styled.div`
-  /* Default Cyberpunk Style */
   background: rgba(0,0,0,0.3);
   border: 1px solid var(--text-dim);
   padding: 15px;
@@ -37,7 +52,10 @@ const ProjectCard = styled.div`
   position: relative;
   overflow: hidden;
 
-  /* Professional Theme Override */
+  ${props => props.$featured && `
+    min-height: 320px;
+  `}
+
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     background: #ffffff;
@@ -74,6 +92,46 @@ const ProjectCard = styled.div`
   }
 `;
 
+const ImageSlot = styled.div`
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+
+  [data-theme='cyberpunk'] & {
+    background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(20, 0, 40, 0.95));
+    border-color: var(--text-dim);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+`;
+
+const PlaceholderLabel = styled.span`
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 12px;
+
+  [data-theme='cyberpunk'] & {
+    color: var(--text-dim);
+  }
+`;
+
 const ProjectHeader = styled.div`
     display: flex;
     justify-content: space-between;
@@ -81,19 +139,19 @@ const ProjectHeader = styled.div`
     margin-bottom: 10px;
     position: relative;
     z-index: 1;
+    gap: 8px;
 `;
 
 const ProjectTitle = styled.h4`
   color: var(--neon-yellow);
   margin: 0;
-  font-size: 1.1rem;
+  font-size: ${props => props.$featured ? '1.25rem' : '1.05rem'};
 
   ${ProjectCard}:hover &,
   ${ProjectCard}:focus-within & {
     animation: ${glitchAnim} 0.5s cubic-bezier(.25, .46, .45, .94) both;
   }
 
-  /* Simplify for professional theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     color: #0f172a;
@@ -136,7 +194,7 @@ const TechTag = styled.span`
 `;
 
 const Description = styled.p`
-  font-size: 0.85rem;
+  font-size: ${props => props.$featured ? '0.92rem' : '0.82rem'};
   color: #ccc;
   line-height: 1.4;
   flex-grow: 1;
@@ -202,53 +260,115 @@ const ProjectLink = styled.a`
   }
 `;
 
-const Projects = () => {
-  return (
-    <PixelCard title="Projects">
-      <ProjectsGrid>
-        {projects.map((project, idx) => { // Changed from projectsData to projects
-          const liveLink = project.liveUrl || project.link;
+const SubSectionTitle = styled.h3`
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 
-          return (
-            <ProjectCard key={idx}>
-              <div>
-                  <ProjectHeader>
-                      <ProjectTitle>{project.name}</ProjectTitle> {/* Changed from project.title to project.name */}
-                      <Status>{project.status}</Status>
-                  </ProjectHeader>
-                  <TechStack>
-                  {project.tags.map(t => <TechTag key={t}>{t}</TechTag>)} {/* Changed from project.tech to project.tags */}
-                  </TechStack>
-                  <Description>{project.description}</Description>
-              </div>
-              <ProjectLinks>
-                {liveLink && (
-                  <ProjectLink
-                    href={liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Live demo of ${project.name}`} // Changed from project.title to project.name
-                  >
-                    <FaExternalLinkAlt /> Live
-                  </ProjectLink>
-                )}
-                {project.repoUrl && ( // Changed from project.sourceUrl to project.repoUrl
-                  <ProjectLink
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Source code for ${project.name}`} // Changed from project.title to project.name
-                  >
-                    <FaGithub /> Source
-                  </ProjectLink>
-                )}
-              </ProjectLinks>
-            </ProjectCard>
-          );
-        })}
-      </ProjectsGrid>
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #64748b;
+  }
+`;
+
+function isReleasesUrl(url) {
+  return typeof url === 'string' && /\/releases\/?$/i.test(url);
+}
+
+function liveCtaLabel(url) {
+  return isReleasesUrl(url) ? 'Releases' : 'Live';
+}
+
+function ProjectCardItem({ project, featured }) {
+  const liveLink = project.liveUrl || project.link;
+
+  return (
+    <ProjectCard $featured={featured}>
+      <div>
+        {featured && (
+          <ImageSlot>
+            {project.imageUrl ? (
+              <img src={project.imageUrl} alt={`${project.name} screenshot`} />
+            ) : (
+              <PlaceholderLabel>{project.name}</PlaceholderLabel>
+            )}
+          </ImageSlot>
+        )}
+        <ProjectHeader>
+          <ProjectTitle $featured={featured}>{project.name}</ProjectTitle>
+          <Status>{project.status}</Status>
+        </ProjectHeader>
+        <TechStack>
+          {project.tags.map(t => <TechTag key={t}>{t}</TechTag>)}
+        </TechStack>
+        <Description $featured={featured}>{project.description}</Description>
+      </div>
+      <ProjectLinks>
+        {liveLink && (
+          <ProjectLink
+            href={liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${liveCtaLabel(liveLink)} for ${project.name}`}
+          >
+            <FaExternalLinkAlt /> {liveCtaLabel(liveLink)}
+          </ProjectLink>
+        )}
+        {project.repoUrl && (
+          <ProjectLink
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Source code for ${project.name}`}
+          >
+            <FaGithub /> Source
+          </ProjectLink>
+        )}
+      </ProjectLinks>
+    </ProjectCard>
+  );
+}
+
+export const FeaturedProjects = () => {
+  const featured = projects.filter(p => p.featured === true);
+
+  return (
+    <PixelCard title="Featured work" id="featured-work">
+      <FeaturedGrid>
+        {featured.map((project, idx) => (
+          <ProjectCardItem key={`featured-${idx}`} project={project} featured />
+        ))}
+      </FeaturedGrid>
     </PixelCard>
   );
 };
+
+export const OtherProjects = () => {
+  const other = projects.filter(p => p.featured !== true);
+
+  if (other.length === 0) return null;
+
+  return (
+    <PixelCard title="Other work" id="other-work">
+      <SubSectionTitle>Secondary projects</SubSectionTitle>
+      <OtherGrid>
+        {other.map((project, idx) => (
+          <ProjectCardItem key={`other-${idx}`} project={project} featured={false} />
+        ))}
+      </OtherGrid>
+    </PixelCard>
+  );
+};
+
+/** @deprecated Prefer FeaturedProjects + OtherProjects mounts for IA order */
+const Projects = () => (
+  <SectionStack>
+    <FeaturedProjects />
+    <OtherProjects />
+  </SectionStack>
+);
 
 export default Projects;
