@@ -36,7 +36,7 @@ export const experienceData = [
     company: "Zoho",
     role: "Member of Technical Staff",
     dates: "May 2022 - Present",
-    duration: "3 yrs 8 mos",
+    duration: "4 yrs 5 mos",
     type: "Full-time",
     description: "As a Member of Technical Staff at Zoho since May 2022, I have focused on engineering modular UI architectures, developing an agentic development framework for rapid component creation and verification, creating reusable components in Swift, and ensuring design consistency across the Zoho mobile ecosystem. My role has included leading the design of critical modules from wireframing to API integration using Swift and UIKit/SwiftUI, reducing frontend development time by 30%, and optimizing app performance resulting in a 20% improvement in launch speed and reduced memory overhead.",
     projects: [
@@ -91,6 +91,7 @@ export const projects = [
     description: "Native Android companion for a self-hosted Hermes Agent fleet: Tailscale pairing, bidirectional control, accessibility automation, and real-time chat.",
     imageUrl: null,
     liveUrl: "https://github.com/coding-nyx/hermes-companion-app/releases",
+    linkLabel: "Releases",
     repoUrl: "https://github.com/coding-nyx/hermes-companion-app",
     status: "Active"
   },
@@ -108,7 +109,8 @@ export const projects = [
     tags: ["React", "Firebase", "Stripe"],
     description: "A comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.",
     imageUrl: null,
-    liveUrl: "https://personal-trainer-mock.web.app/",
+    liveUrl: null,
+    linkLabel: "Source",
     repoUrl: "https://github.com/coding-nyx/personal-trainer",
     status: "In Progress"
   },
@@ -118,7 +120,8 @@ export const projects = [
     description: "Nexus (AGNES): A unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.",
     imageUrl: null,
     liveUrl: "https://agent-agnes-ai.web.app",
-    repoUrl: "https://github.com/coding-nyx/nexus-react-native",
+    linkLabel: "Live",
+    repoUrl: null,
     status: "In Progress"
   },
   {
