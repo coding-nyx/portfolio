@@ -53,15 +53,15 @@ Repo: https://github.com/coding-nyx/a0090-meta`
 Unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.
 Tech: LLM, React, React Native, Firebase, RAG
 Live: https://agent-agnes-ai.web.app
-Repo: https://github.com/coding-nyx/nexus-react-native`
+Repo: private — not published`
         },
         'fitpro-connect.md': {
           type: 'file',
           content: `# FitPro Connect [In Progress]
 Comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.
 Tech: React, Firebase, Stripe
-Live: https://personal-trainer-mock.web.app/
-Repo: https://github.com/coding-nyx/personal-trainer`
+Repo: https://github.com/coding-nyx/personal-trainer
+Live: not publicly deployed`
         },
         'hermes-companion-web.md': {
           type: 'file',

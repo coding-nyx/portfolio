@@ -76,3 +76,15 @@ To enable it:
 ## License
 
 MIT
+
+## Known issue: resume PDF header URL
+
+The résumé PDFs in `public/` (`resume-modern.pdf`, `resume-cyberpunk.pdf`) print
+`https://pac-dbe.web.app` in the header. That host no longer resolves (HTTP 404).
+
+The live portfolio is **https://iamnyx.web.app**.
+
+There is no résumé source (LaTeX/Markdown/Word) in this repository, so the PDFs
+cannot be regenerated here. They must be rebuilt from the résumé source and
+replaced in `public/` before the next application round. Until then, the résumé
+download from this site carries a dead URL in its header.

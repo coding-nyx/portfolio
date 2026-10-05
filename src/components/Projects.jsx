@@ -202,12 +202,24 @@ const ProjectLink = styled.a`
   }
 `;
 
+const ProjectNote = styled.span`
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  font-style: italic;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #94a3b8;
+  }
+`;
+
 const Projects = () => {
   return (
     <PixelCard title="Projects">
       <ProjectsGrid>
         {projects.map((project, idx) => { // Changed from projectsData to projects
           const liveLink = project.liveUrl || project.link;
+          const liveLabel = project.linkLabel || 'Live';
 
           return (
             <ProjectCard key={idx}>
@@ -227,9 +239,9 @@ const Projects = () => {
                     href={liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Live demo of ${project.name}`} // Changed from project.title to project.name
+                    aria-label={`${liveLabel} — ${project.name}`}
                   >
-                    <FaExternalLinkAlt /> Live
+                    <FaExternalLinkAlt /> {liveLabel}
                   </ProjectLink>
                 )}
                 {project.repoUrl && ( // Changed from project.sourceUrl to project.repoUrl
@@ -241,6 +253,9 @@ const Projects = () => {
                   >
                     <FaGithub /> Source
                   </ProjectLink>
+                )}
+                {!liveLink && !project.repoUrl && (
+                  <ProjectNote>Source not public</ProjectNote>
                 )}
               </ProjectLinks>
             </ProjectCard>

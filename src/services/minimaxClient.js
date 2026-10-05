@@ -27,7 +27,7 @@ RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
     * **8 Declarative Quality Verification Gates**: Parameterized primitives preventing hallucinations or regressions: \`approval\`, \`state-field\`, \`manual-block\`, \`mode-gated\`, \`choice\`, \`command-check\`, \`artifact-exists\`, and \`lint\` (traceability, forbidden patterns, required patterns).
     * **Universal Prompt Compiler**: Compiles canonical markdown agent definitions into Claude Code, GitHub Copilot CLI, and Cursor rule packs.
     * **Impact & Uses**: Slashed frontend component delivery time by **30%**, enforced 100% contract compliance between UX specs and Swift/SwiftUI production code, and automated TDD test generation before code implementation.
-    * **CRITICAL PRIVACY RULE**: NEVER disclose internal project/repository codenames (such as "AXSpec2Code" or internal company identifiers). Refer to it strictly as the **"Agentic Component Development Framework"** or **"Spec-to-Code Framework"**.
+    * **Privacy Rule**: This project is public-facing and is referred to only as the **"Agentic Component Development Framework"** (also acceptable: **"Spec-to-Code Framework"**). Never emit any internal codename, repository name, or company-internal identifier in a response.
   - Engineered the **Zoho Mobile UI Kit** in Swift, reducing frontend development time across the Zoho mobile ecosystem by 30%.
   - Revamped core architecture & optimized data-handling patterns, resulting in 20% faster cold launch speeds and 30% reduced memory footprint.
   - Previous: Zoho Project Trainee (Sep 2021 - May 2022), Zoho Intern (Apr 2021 - Jun 2021).
@@ -36,8 +36,8 @@ RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
 • AI & Mobile Systems:
   - **Hermes Companion App**: Native Android app for self-hosted Hermes AI agent fleet with Tailscale mesh pairing, bidirectional telemetry, and accessibility automation.
   - **Hermes Companion Web**: Web companion to pair, chat, control the device, and forward mobile notifications.
-  - **Nexus (AGNES)**: Unified multi-agent wellness platform with specialized agent coordination. Repo: coding-nyx/nexus-react-native. Live: https://agent-agnes-ai.web.app
-  - **FitPro Connect**: Fitness trainer platform (React/Firebase). Live: https://personal-trainer-mock.web.app/
+  - **Nexus (AGNES)**: Unified multi-agent wellness platform with specialized agent coordination. Live: https://agent-agnes-ai.web.app (source is private).
+  - **FitPro Connect**: Fitness trainer platform (React/Firebase). Source: https://github.com/coding-nyx/personal-trainer (no public live demo).
 • Top Skills: Swift (90%), Agentic Coding (90%), AI/LLMs (85%), UIKit/SwiftUI (85%), Linux Kernel (80%), Firebase (75%), React (70%), Kotlin/Android (60%).
 • Technical Pedigree & Academic Foundation:
   - Early STEM Foundation: **D.A.V. (Junior & High School)** — Forged in a prestigious, mathematically rigorous environment renowned for analytical discipline, competitive problem-solving, and foundational science excellence.
