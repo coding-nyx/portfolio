@@ -151,48 +151,7 @@ const SegmentBtn = styled.button`
   }
 `;
 
-const MetricRow = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
 
-const MetricItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const MetricLabel = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-
-  strong {
-    color: var(--text-main);
-  }
-`;
-
-const MetricBarTrack = styled.div`
-  height: 6px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    background: #e2e8f0;
-  }
-`;
-
-const MetricBarFill = styled(motion.div)`
-  height: 100%;
-  background: ${props => props.$color || 'var(--neon-cyan)'};
-  border-radius: 4px;
-`;
 
 export const IOSSandbox = () => {
   const [islandState, setIslandState] = useState('compact'); // 'compact', 'expanded', 'agent'
@@ -263,7 +222,7 @@ export const IOSSandbox = () => {
                       <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>Zoho Mobile UI Kit</div>
                       <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Modular Swift Components</div>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#22c55e', fontWeight: 'bold' }}>-30% Time</div>
+                    <div style={{ fontSize: '0.75rem', color: '#22c55e', fontWeight: 'bold' }}>Reduced Time</div>
                   </IslandContent>
                 </motion.div>
               )}
@@ -291,7 +250,7 @@ export const IOSSandbox = () => {
           </IslandWrapper>
 
           <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: 15 }}>
-            State: <strong>{islandState.toUpperCase()}</strong> (Interactive Spring Physics Simulation)
+            State: <strong>{islandState.toUpperCase()}</strong> (Browser physics illustration, not native SwiftUI)
           </div>
         </InteractivePanel>
 
@@ -317,55 +276,21 @@ export const IOSSandbox = () => {
             </SegmentBtn>
           </SegmentControl>
 
-          <MetricRow>
-            <MetricItem>
-              <MetricLabel>
-                <span>Frontend Dev Delivery Time</span>
-                <strong>{activeArch === 'agentic' ? '70% (-30% Faster)' : '100% (Baseline)'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '100%' }}
-                  animate={{ width: activeArch === 'agentic' ? '70%' : '100%' }}
-                  $color={activeArch === 'agentic' ? '#10b981' : '#f59e0b'}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
-
-            <MetricItem>
-              <MetricLabel>
-                <span>App Cold Launch Overhead</span>
-                <strong>{activeArch === 'agentic' ? '2.5s (20% Improvement)' : '3.2s'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '85%' }}
-                  animate={{ width: activeArch === 'agentic' ? '65%' : '85%' }}
-                  $color={activeArch === 'agentic' ? '#2563eb' : '#ef4444'}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
-
-            <MetricItem>
-              <MetricLabel>
-                <span>Memory Allocation Footprint</span>
-                <strong>{activeArch === 'agentic' ? '126 MB (-30%)' : '180 MB'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '90%' }}
-                  animate={{ width: activeArch === 'agentic' ? '60%' : '90%' }}
-                  $color={activeArch === 'agentic' ? '#8b5cf6' : '#f97316'}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
-          </MetricRow>
+          <div style={{ fontSize: '0.78rem', lineHeight: 1.6, color: 'var(--text-dim)' }}>
+            <p style={{ margin: '0 0 8px' }}>
+              {activeArch === 'agentic'
+                ? 'Component scaffolding from a specification through contract, test and verification steps, alongside the reusable Swift component library.'
+                : 'Reusable Swift/SwiftUI/UIKit components and modular structure for existing application modules.'}
+            </p>
+            <p style={{ margin: 0 }}>
+              Delivery-time and performance work is described qualitatively because no
+              public measurement record exists. Specific timings, memory values and
+              percentage improvements are therefore not shown.
+            </p>
+          </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#10b981', marginTop: 14 }}>
-            <FaCheckCircle size={12} /> Verified across Zoho Mobile ecosystem modules
+            <FaCheckCircle size={12} /> Qualitative description only — not a measured benchmark
           </div>
         </InteractivePanel>
       </SandboxContainer>

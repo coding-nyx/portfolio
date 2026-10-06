@@ -330,7 +330,7 @@ const Hero = ({ onAskRook }) => {
                 aria-label="Visit LinkedIn Profile"
               >
                 <ThemedIcon ascii="" icon={<FaLinkedin size={16} />} />
-                <GlitchText text="Professional" />
+                <GlitchText text="LinkedIn" />
               </SocialBtn>
 
               <SocialBtn
@@ -345,17 +345,17 @@ const Hero = ({ onAskRook }) => {
 
               <SocialBtn href={`mailto:${profileData.socialLinks.email}`} aria-label="Send Email">
                 <ThemedIcon ascii="" icon={<FaEnvelope size={16} />} />
-                <GlitchText text="Informal" />
+                <GlitchText text="Email" />
               </SocialBtn>
 
               <SocialBtn
                 as="button"
                 type="button"
                 onClick={() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })}
-                aria-label="Contact for Fun"
+                aria-label="Go to contact section"
               >
                 <ThemedIcon ascii="" icon={<FaGamepad size={16} />} />
-                <GlitchText text="Say Hello" />
+                <GlitchText text="Contact" />
               </SocialBtn>
             </Socials>
           </InfoSection>

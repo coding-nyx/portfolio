@@ -154,12 +154,9 @@ const Achievements = () => {
                   <FaTrophy size={15} />
                   <span>{item.title}</span>
                 </Title>
-                <StatusBadge>[Top 10% Finish]</StatusBadge>
               </Header>
-              <EventTag>@{item.event} (10km Course)</EventTag>
-              <Description>
-                {item.description} Completed with relentless stamina, high mental agility, and physical grit under demanding timed conditions.
-              </Description>
+              <EventTag>{item.event}</EventTag>
+              <Description>{item.description}</Description>
             </div>
             <TagRow>
               <Tag>Endurance</Tag>

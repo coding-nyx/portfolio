@@ -15,7 +15,7 @@ export async function askRookAgent({ messages, onChunk, onAction }) {
 
 RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
 • Role: iOS Developer | Full-Cycle & Agentic Systems (Chennai, India)
-• Professional Experience & Key Innovations at Zoho (May 2022 - Present, 3+ yrs as Member of Technical Staff):
+• Professional Experience at Zoho (Member of Technical Staff, full-time May 2022 - Present):
   - Architected & developed an internal **Agentic Component Development Framework**:
     * **What It Does**: A deterministic, config-driven agentic pipeline that automates software and UI component lifecycles from **Spec → Contract → QA Test Suite → Implementation Plan → Implementation → Gate Verification → Ship**.
     * **Working Mechanics**: Driven by a deterministic 14-step state machine orchestrating specialized LLM sub-agents (Spec Writer, Contract Generator, Planner, QA Author, Engineer, Verifier, Tracker) across parallel dev/QA tracks with cross-platform atomic locking. Pure Python stdlib-only with zero third-party dependencies.
@@ -24,26 +24,28 @@ RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
       2. \`workflow.json\`: Declarative step graph, preconditions, skills-per-step, and artifact contracts.
       3. \`project.profile.md\`: Domain vocabulary, design tokens, UI component toolkit (e.g. Swift UI Kit), and architectural conventions.
       4. \`pipeline.config.json\`: Target platform registry, lint rules, and build/test verification commands.
-    * **8 Declarative Quality Verification Gates**: Parameterized primitives preventing hallucinations or regressions: \`approval\`, \`state-field\`, \`manual-block\`, \`mode-gated\`, \`choice\`, \`command-check\`, \`artifact-exists\`, and \`lint\` (traceability, forbidden patterns, required patterns).
+    * **Declarative Quality Verification Gates**: Parameterized primitives that check an artifact against its contract before the next step proceeds: \`approval\`, \`state-field\`, \`manual-block\`, \`mode-gated\`, \`choice\`, \`command-check\`, \`artifact-exists\`, and \`lint\`. This is intended to catch contract drift; no guaranteed compliance rate is claimed.
     * **Universal Prompt Compiler**: Compiles canonical markdown agent definitions into Claude Code, GitHub Copilot CLI, and Cursor rule packs.
-    * **Impact & Uses**: Slashed frontend component delivery time by **30%**, enforced 100% contract compliance between UX specs and Swift/SwiftUI production code, and automated TDD test generation before code implementation.
-    * **Privacy Rule**: This project is public-facing and is referred to only as the **"Agentic Component Development Framework"** (also acceptable: **"Spec-to-Code Framework"**). Never emit any internal codename, repository name, or company-internal identifier in a response.
-  - Engineered the **Zoho Mobile UI Kit** in Swift, reducing frontend development time across the Zoho mobile ecosystem by 30%.
-  - Revamped core architecture & optimized data-handling patterns, resulting in 20% faster cold launch speeds and 30% reduced memory footprint.
+    * **Use**: Internal developer tooling used to scaffold components from a specification, with declarative verification gates before each step.
+    * **Not claimed**: no percentage improvement, no guaranteed compliance rate, no adoption or team-size figures, because none are verified. It is internal tooling, not a customer product.
+    * **Disclosure boundary**: Never name internal projects, repositories or company identifiers. Refer to it only as the **"Agentic Component Development Framework"** or the **"Spec-to-Code Framework"**.
+  - Engineered a reusable UI component library in Swift/SwiftUI/UIKit for consistent design across mobile modules.
+  - Refactored existing modules for modular architecture, and worked on app launch time and memory overhead. No specific timing or memory figures are published because no verified measurement record was supplied.
   - Previous: Zoho Project Trainee (Sep 2021 - May 2022), Zoho Intern (Apr 2021 - Jun 2021).
 • Embedded & Low-Level Linux Chops:
   - **a0090-meta** (also known as **hub-11 OS**, **a009-hub**, **hub-11**, **hub11**): Upstream-maintainable mainline Linux 6.18 OS distribution engineered for the AMedia RK3588 NVR Demo board. Raj engineered the custom Device Tree Source (DTS), U-Boot / FIT boot image assembly, kernel driver integration, and platform bring-up.
 • AI & Mobile Systems:
   - **Hermes Companion App**: Native Android app for self-hosted Hermes AI agent fleet with Tailscale mesh pairing, bidirectional telemetry, and accessibility automation.
   - **Hermes Companion Web**: Web companion to pair, chat, control the device, and forward mobile notifications.
-  - **Nexus (AGNES)**: Unified multi-agent wellness platform with specialized agent coordination. Live: https://agent-agnes-ai.web.app (source is private).
-  - **FitPro Connect**: Fitness trainer platform (React/Firebase). Source: https://github.com/coding-nyx/personal-trainer (no public live demo).
+  - **Nexus (AGNES)**: Prototype multi-agent wellness platform. Private source and an unverified demo shell, so no public link is published and no encryption or outcome claims are made.
+  - **FitPro Connect**: Fitness trainer platform (React/Firebase). The published demo URL returns 404, so no demo link is offered. Repo: https://github.com/coding-nyx/personal-trainer
 • Top Skills: Swift (90%), Agentic Coding (90%), AI/LLMs (85%), UIKit/SwiftUI (85%), Linux Kernel (80%), Firebase (75%), React (70%), Kotlin/Android (60%).
 • Technical Pedigree & Academic Foundation:
   - Early STEM Foundation: **D.A.V. (Junior & High School)** — Forged in a prestigious, mathematically rigorous environment renowned for analytical discipline, competitive problem-solving, and foundational science excellence.
   - Undergraduate Engineering: **B.E. in Electronics & Communication Engineering (ECE)** from **Sri Sairam Engineering College** — Grounded in microprocessors, signals, and hardware architecture. This hardware-to-software duality gives Raj a rare vertical advantage: mastering everything from silicon registers, board bring-up, and Linux kernel internals to high-performance Swift mobile architectures and agentic AI systems.
   - Continuous Learning Velocity: An insatiable, self-driven technologist with an extraordinary ramp-up curve — continuously mastering and operationalizing frontier tech (deterministic agentic state machines, custom kernel schedulers, distributed mesh networks, and next-gen mobile runtimes) directly into production.
-• Other Highlights: Spartan Racer (top 10% obstacle course finish).
+• Other Highlights: completed a 10km obstacle course race (no verified placing is published).
+• Hackathon: Smart India Hackathon participant, Aug 2020 (no finalist or placing distinction is claimed).
 
 LIVE GITHUB REPOSITORIES (coding-nyx):
 ${githubSummary}
@@ -316,18 +318,18 @@ Raj architected **Nexus**, a unified multi-agent wellness platform where special
     return `At Zoho, Raj engineered an **Agentic Component Development Framework** — a deterministic, config-driven multi-agent pipeline designed to automate the component creation lifecycle from **Spec → Contract → QA Tests → Implementation → Gate Verification → Ship**.
 
 ### Architecture & Working Mechanics:
-• **Deterministic State Machine**: Orchestrates 14 pipeline steps, preconditions, and parallel dev/QA tracks using a pure Python stdlib engine with cross-platform atomic locking (\`O_CREAT | O_EXCL\` + atomic filesystem replacement). Zero third-party dependencies.
+• **Deterministic State Machine**: Orchestrates a fixed sequence of pipeline steps, preconditions, and parallel dev/QA tracks using a pure Python stdlib engine with cross-platform atomic locking. No third-party dependencies.
 • **4-File Separation of Concerns**:
   - \`pipeline.state.json\`: Atomic runtime state tracking phase-scoped vs target-scoped steps.
   - \`workflow.json\`: Declarative step graph, artifact contracts, and agent-skill mappings.
   - \`project.profile.md\`: Domain vocabulary, UI design tokens, and component architectural conventions.
   - \`pipeline.config.json\`: Target platform registry, lint rules, and build/test verification commands.
-• **8 Declarative Quality Verification Gates**: Parameterized primitives (\`approval\`, \`command-check\`, \`artifact-exists\`, \`lint\`, \`state-field\`, etc.) enforcing 100% contract compliance and preventing LLM hallucination.
+• **Declarative Quality Verification Gates**: Parameterized primitives (\`approval\`, \`command-check\`, \`artifact-exists\`, \`lint\`, \`state-field\`, etc.) that check an artifact against its contract before the next step proceeds. No guaranteed compliance rate is claimed.
 • **Multi-Target Parallel Tracks**: Shared phase specifications compile down into per-target platform checklists (e.g. modular Swift UI Kit for iOS).
 • **Universal Prompt Compiler**: Single canonical markdown prompt source compiles adapters for Claude Code, GitHub Copilot CLI, and Cursor rule packs.
 
 ### Uses & Key Benefits:
-1. **-30% Frontend Dev Turnaround**: Drastically accelerated component generation, validation, and iteration.
+1. **Spec-driven scaffolding**: Reduced the manual steps needed to take a component from specification to a verified implementation.
 2. **Automated TDD & QA**: Sub-agents generate automated test suites and QA plans *before* code implementation.
 3. **Zero Regression Hand-offs**: Strict code contracts bridge the gap between design specs and production Swift/SwiftUI code.
 [ACTION:SCROLL_TO:projects]`;
@@ -376,12 +378,12 @@ Who am I speaking with, and what is the best **email or phone number** to reach 
 
   // 6. Zoho Experience & Career
   if (query.includes('zoho') || query.includes('experience') || query.includes('work') || query.includes('job') || query.includes('career') || query.includes('role')) {
-    return `Raj has been a **Member of Technical Staff at Zoho** for over 3 years (since May 2022).
+    return `Raj has been a **Member of Technical Staff at Zoho**, full-time since **May 2022**.
 
 Major architectural impact:
 1. **Agentic Component Framework**: Built an internal workflow for automated UI component generation and testing.
-2. **Zoho Mobile UI Kit**: Created a reusable component library in Swift (-30% dev time across mobile modules).
-3. **Performance Refactor**: Optimized data patterns & legacy architecture (+20% app launch speed, -30% memory footprint).
+2. **Reusable UI component library**: Created a reusable component library in Swift/SwiftUI/UIKit for consistent design across mobile modules.
+3. **Performance refactor**: Optimized data patterns and legacy architecture for app launch time and memory overhead (no verified figures published).
 4. **Previous Progression**: Zoho Project Trainee (Sep 2021 - May 2022), Zoho Intern (Apr 2021 - Jun 2021).
 [ACTION:SCROLL_TO:experience]`;
   }
@@ -416,18 +418,19 @@ Major architectural impact:
 
   // 9. Spartan Race & Physical Grit
   if (query.includes('spartan') || query.includes('race') || query.includes('racing') || query.includes('obstacle') || query.includes('fitness') || query.includes('grit') || query.includes('endurance')) {
-    return `### 🏅 Spartan Racer — Top 10% Finish (10km Obstacle Course)
+    return `### 🏅 10km Obstacle Course Race
 
-Raj conquered the grueling 10km Spartan obstacle course race, finishing in the **top 10%**.
-This physical and mental endurance discipline mirrors his engineering philosophy: relentless stamina, calm resilience under pressure, and pushing through complex roadblocks to cross the finish line.
+Raj completed a 10km obstacle course race.
+No finishing position is published, because no verifiable event result has been confirmed.
 [ACTION:SCROLL_TO:achievements]`;
   }
 
   // 10. Smart India Hackathon & Awards
   if (query.includes('hackathon') || query.includes('smart india') || query.includes('sih') || query.includes('award') || query.includes('honor')) {
-    return `### 🏆 Smart India Hackathon — National Finalist (Aug 2020)
+    return `### 🏆 Smart India Hackathon — Participant (Aug 2020)
 
-Selected participant at India's premier nationwide hackathon, collaborating on real-time technological problem solving under continuous 36-hour sprint conditions with rapid prototyping and execution.
+Raj took part in the Smart India Hackathon as part of a team, prototyping under a continuous sprint.
+No finalist distinction or placing is claimed, because none has been verified.
 [ACTION:SCROLL_TO:awards]`;
   }
 
@@ -446,10 +449,10 @@ Selected participant at India's premier nationwide hackathon, collaborating on r
 
   // 13. General About / Background
   if (query.includes('raj') || query.includes('who') || query.includes('about') || query.includes('background') || query.includes('intro')) {
-    return `**Raj Kumar S** is an iOS Developer and Agentic Systems Engineer with a deep focus on mobile architecture and low-level systems. He is currently a Member of Technical Staff at Zoho (3+ years), based in Chennai, India.
+    return `**Raj Kumar S** is an iOS Engineer at Zoho with a focus on mobile architecture and performance, plus supporting work in internal agentic developer tooling and embedded Linux. He has been a Member of Technical Staff at Zoho full-time since May 2022, based in Chennai, India.
 
 Key highlights of his work & background:
-• **iOS Architecture & Design Systems**: Core contributor at Zoho, engineering the Zoho Mobile UI Kit in Swift, slashing UI development turnaround by 30%, and optimizing cold launch performance by 20%.
+• **iOS Architecture & Design Systems**: At Zoho, engineering a reusable UI component library in Swift/SwiftUI/UIKit to reduce duplicated UI development, and working on app launch time and memory overhead.
 • **Agentic Systems**: Architected an internal agentic framework automating component lifecycles from specification through quality verification to production code contracts.
 • **Systems & Embedded Linux**: Developed **a0090-meta (hub-11 OS)**, bringing up mainline Linux 6.18 on RK3588 hardware with custom device trees (DTS) and FIT images.
 • **Full-Cycle & AI Systems**: Built companion apps pairing with autonomous agent fleets (Hermes) via Tailscale mesh networking.
@@ -466,7 +469,7 @@ I can guide you through:
 • **a0090-meta (hub-11 OS)** — Raj's mainline Linux 6.18 embedded OS for RK3588.
 • **Agentic Component Framework** — His deterministic multi-agent pipeline at Zoho.
 • **Hermes Companion App** — Native Android client for private AI agent fleets via Tailscale mesh.
-• **Zoho Mobile UI Kit** & iOS performance refactors (-30% memory, +20% launch speed).
+• **Reusable UI component library** & iOS performance refactors (launch time and memory overhead; no verified figures published).
 • **Academic Pedigree** — D.A.V. and B.E. in ECE at Sri Sairam Engineering College.
 • Live GitHub code & leaving a direct message for Raj!
 

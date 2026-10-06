@@ -13,14 +13,16 @@ A modern, responsive portfolio website built with React and Vite, featuring a "C
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/portfolio.git
+    git clone https://github.com/coding-nyx/portfolio.git
     cd portfolio
     ```
 
 2.  **Install dependencies**:
     ```bash
-    npm install
+    npm ci
     ```
+    A `pnpm-lock.yaml` is also present. `npm ci` with `package-lock.json` is what
+    CI uses, so treat npm as authoritative unless you deliberately use pnpm.
 
 3.  **Run Development Server**:
     ```bash
@@ -32,6 +34,42 @@ A modern, responsive portfolio website built with React and Vite, featuring a "C
     ```bash
     npm run build
     ```
+    Serve the output with `npm run preview`.
+
+## Checks
+
+```bash
+npm run lint                  # ESLint
+npm run build                 # production bundle
+npm test                      # regression suite (node --test, no dependencies)
+node tests/bundle-audit.mjs   # scan dist/ for removed claims and identifiers
+```
+
+The regression suite covers the runtime crash that shipped on this branch, the
+reachability of the case-study views, unsupported-claim and testimonial leakage,
+curated link states, immediate rendering and the recruiter contact actions.
+
+### Browser verification (optional)
+
+`verification/*.py` drive a real browser against a running dev server. They need
+Playwright, which is not a project dependency:
+
+```bash
+pip install playwright && playwright install chromium
+npm run dev &                  # verification scripts target localhost:5173
+python3 verification/verify_loading.py
+python3 verification/verify_skills.py
+python3 verification/verify_themes.py
+```
+
+## Configuration
+
+Firebase web config is read from `VITE_FIREBASE_*` environment variables and the
+app degrades gracefully when they are unset. The deploy workflow supplies them
+from repository secrets. See `.github/workflows/firebase-hosting-merge.yml`.
+
+Contact/chat services (EmailJS) read `VITE_EMAILJS_*` variables. No secrets are
+committed; without configuration those UI paths do not report success.
 
 ## Deployment (Firebase Hosting)
 

@@ -1,21 +1,8 @@
-import styled, { keyframes } from 'styled-components';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { FaExternalLinkAlt, FaGithub, FaChevronDown, FaInfoCircle } from 'react-icons/fa';
 import PixelCard from './common/PixelCard';
 import { projects } from '../data/portfolio';
-
-const glitchAnim = keyframes`
-  0% { transform: scale(1); clip-path: inset(0 0 0 0); }
-  20% { clip-path: inset(10% 0 0 0); }
-  40% { clip-path: inset(0 0 0 0); }
-  60% { transform: scale(1.02); clip-path: inset(0 0 10% 0); }
-  80% { clip-path: inset(0 0 0 0); }
-  100% { transform: scale(1); clip-path: inset(0 0 0 0); }
-`;
-
-const pulseAnim = keyframes`
-  0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--neon-green); }
-  50% { opacity: 0.7; text-shadow: 0 0 2px var(--neon-green); }
-`;
 
 const ProjectsGrid = styled.div`
   display: grid;
@@ -53,34 +40,16 @@ const ProjectCard = styled.div`
       transform: translateY(-2px);
     }
   }
-
-  [data-theme='cyberpunk'] &:hover,
-  [data-theme='cyberpunk'] &:focus-within {
-    border-color: var(--neon-pink);
-    box-shadow: 3px 3px 0 var(--neon-cyan);
-    transform: translate(-2px, -2px);
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 0, 255, 0.05);
-      pointer-events: none;
-      z-index: 0;
-    }
-  }
 `;
 
 const ProjectHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+  gap: 8px;
 `;
 
 const ProjectTitle = styled.h4`
@@ -88,41 +57,77 @@ const ProjectTitle = styled.h4`
   margin: 0;
   font-size: 1.1rem;
 
-  ${ProjectCard}:hover &,
-  ${ProjectCard}:focus-within & {
-    animation: ${glitchAnim} 0.5s cubic-bezier(.25, .46, .45, .94) both;
-  }
-
   /* Simplify for professional theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     color: #0f172a;
     font-weight: 700;
   }
+`;
 
-  [data-theme='professional'] ${ProjectCard}:hover &,
-  [data-theme='professional'] ${ProjectCard}:focus-within &,
-  [data-theme='modern'] ${ProjectCard}:hover &,
-  [data-theme='modern'] ${ProjectCard}:focus-within & {
-    animation: none;
-    color: #2563eb;
+const Status = styled.span`
+  font-size: 0.7rem;
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+  padding: 2px 5px;
+  white-space: nowrap;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    border: 1px solid #a7f3d0;
+    background: #ecfdf5;
+    color: #059669;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+`;
+
+const ScopeNote = styled.p`
+  margin: 6px 0 0;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  position: relative;
+  z-index: 1;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #64748b;
+  }
+`;
+
+const Description = styled.p`
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 10px 0 0;
+  position: relative;
+  z-index: 1;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #475569;
   }
 `;
 
 const TechStack = styled.div`
   display: flex;
-  gap: 5px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-top: 10px;
   position: relative;
   z-index: 1;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #334155;
+  }
 `;
 
 const TechTag = styled.span`
   font-size: 0.7rem;
   background: var(--neon-cyan);
   color: var(--bg-color);
-  padding: 2px 5px;
+  padding: 2px 6px;
   font-weight: bold;
 
   [data-theme='professional'] &,
@@ -135,36 +140,90 @@ const TechTag = styled.span`
   }
 `;
 
-const Description = styled.p`
-  font-size: 0.85rem;
-  color: #ccc;
-  line-height: 1.4;
-  flex-grow: 1;
+const CaseStudyRegion = styled.div`
+  margin-top: 12px;
   position: relative;
   z-index: 1;
+`;
+
+const CaseStudyBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--neon-pink);
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-top: 0;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+
+  &:hover {
+    background: #d946ef;
+  }
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #334155;
+    background: #2563eb;
+    border-radius: 4px;
+    clip-path: none;
+    font-weight: 600;
+
+    &:hover {
+      background: #1d4ed8;
+    }
   }
 `;
 
-const Status = styled.span`
-  font-size: 0.7rem;
-  color: var(--neon-green);
-  border: 1px solid var(--neon-green);
-  padding: 2px 5px;
-  white-space: nowrap;
-  animation: ${pulseAnim} 2s infinite;
+const CaseStudyPanel = styled.div`
+  display: ${props => (props.$isOpen ? 'block' : 'none')};
+  margin-top: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  border-top: 1px dashed var(--text-dim);
+  padding-top: 10px;
+
+  dt {
+    font-weight: 700;
+    color: var(--text-main);
+    margin-top: 8px;
+  }
+
+  dd {
+    margin: 2px 0 0;
+  }
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    border: 1px solid #a7f3d0;
-    background: #ecfdf5;
-    color: #059669;
-    border-radius: 4px;
-    animation: none;
-    font-weight: 600;
+    color: #475569;
+    border-top-color: #e2e8f0;
+
+    dt {
+      color: #0f172a;
+    }
+  }
+`;
+
+const UnavailableNote = styled.p`
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--text-dim);
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #64748b;
   }
 `;
 
@@ -186,7 +245,6 @@ const ProjectLink = styled.a`
 
   &:hover {
     color: var(--neon-yellow);
-    text-shadow: 0 0 5px var(--neon-yellow);
   }
 
   [data-theme='professional'] &,
@@ -196,66 +254,108 @@ const ProjectLink = styled.a`
 
     &:hover {
       color: #1d4ed8;
-      text-shadow: none;
       text-decoration: underline;
     }
   }
 `;
 
-const ProjectNote = styled.span`
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  font-style: italic;
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    color: #94a3b8;
-  }
-`;
+const CASESTUDY_FIELDS = [
+  ['problem', 'Problem'],
+  ['approach', 'Approach'],
+  ['scope', 'Scope / Type'],
+  ['evidence', 'Evidence'],
+  ['limitations', 'Limitations'],
+];
 
 const Projects = () => {
+  const [openCaseStudy, setOpenCaseStudy] = useState(null);
+
+  const toggleCaseStudy = (idx) => {
+    setOpenCaseStudy(prev => (prev === idx ? null : idx));
+  };
+
   return (
     <PixelCard title="Projects">
       <ProjectsGrid>
-        {projects.map((project, idx) => { // Changed from projectsData to projects
+        {projects.map((project, idx) => {
           const liveLink = project.liveUrl || project.link;
-          const liveLabel = project.linkLabel || 'Live';
+          const hasCaseStudy = Boolean(project.caseStudy);
+          const isOpen = hasCaseStudy && openCaseStudy === idx;
+          const panelId = `case-study-${idx}`;
 
           return (
-            <ProjectCard key={idx}>
+            <ProjectCard key={project.name}>
               <div>
-                  <ProjectHeader>
-                      <ProjectTitle>{project.name}</ProjectTitle> {/* Changed from project.title to project.name */}
-                      <Status>{project.status}</Status>
-                  </ProjectHeader>
-                  <TechStack>
-                  {project.tags.map(t => <TechTag key={t}>{t}</TechTag>)} {/* Changed from project.tech to project.tags */}
-                  </TechStack>
-                  <Description>{project.description}</Description>
+                <ProjectHeader>
+                  <ProjectTitle>{project.name}</ProjectTitle>
+                  <Status>{project.status}</Status>
+                </ProjectHeader>
+
+                {project.scope && <ScopeNote>{project.scope}</ScopeNote>}
+
+                <TechStack>
+                  {project.tags.map(t => (
+                    <TechTag key={t}>{t}</TechTag>
+                  ))}
+                </TechStack>
+
+                <Description>{project.description}</Description>
+
+                {hasCaseStudy && (
+                  <CaseStudyRegion>
+                    <CaseStudyBtn
+                      type="button"
+                      onClick={() => toggleCaseStudy(idx)}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                    >
+                      <FaChevronDown size={11} aria-hidden="true" />
+                      {isOpen ? 'Hide case study' : 'View case study'}
+                    </CaseStudyBtn>
+                    <CaseStudyPanel id={panelId} $isOpen={isOpen}>
+                      <dl>
+                        {CASESTUDY_FIELDS
+                          .filter(([key]) => project.caseStudy[key])
+                          .map(([key, label]) => (
+                            <div key={key}>
+                              <dt>{label}</dt>
+                              <dd>{project.caseStudy[key]}</dd>
+                            </div>
+                          ))}
+                      </dl>
+                    </CaseStudyPanel>
+                  </CaseStudyRegion>
+                )}
+
+                {!liveLink && !project.repoUrl && project.linksUnavailableReason && (
+                  <UnavailableNote>
+                    <FaInfoCircle size={12} aria-hidden="true" />
+                    <span>{project.linksUnavailableReason}</span>
+                  </UnavailableNote>
+                )}
               </div>
+
               <ProjectLinks>
                 {liveLink && (
                   <ProjectLink
                     href={liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${liveLabel} — ${project.name}`}
+                    aria-label={`${project.linkLabel || 'Live demo'} of ${project.name}`}
                   >
-                    <FaExternalLinkAlt /> {liveLabel}
+                    <FaExternalLinkAlt aria-hidden="true" />
+                    {project.linkLabel || 'Live'}
                   </ProjectLink>
                 )}
-                {project.repoUrl && ( // Changed from project.sourceUrl to project.repoUrl
+                {project.repoUrl && (
                   <ProjectLink
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Source code for ${project.name}`} // Changed from project.title to project.name
+                    aria-label={`Source code for ${project.name}`}
                   >
-                    <FaGithub /> Source
+                    <FaGithub aria-hidden="true" /> Source
                   </ProjectLink>
-                )}
-                {!liveLink && !project.repoUrl && (
-                  <ProjectNote>Source not public</ProjectNote>
                 )}
               </ProjectLinks>
             </ProjectCard>

@@ -54,6 +54,11 @@ const InputRow = styled.div`
   align-items: center;
   gap: 6px;
   margin-top: 4px;
+  /* Without this, the flex row's min-content width (driven by the hidden
+     input's default size=20, ~173px) forces the parent CSS grid track wider
+     than the viewport and produces horizontal scrolling at 360/390px. */
+  min-width: 0;
+  max-width: 100%;
 `;
 
 const HiddenInput = styled.input`
@@ -66,6 +71,7 @@ const HiddenInput = styled.input`
   flex: 1;
   padding: 0;
   caret-color: var(--neon-cyan);
+  min-width: 0;
 `;
 
 const BUILTIN_COMMANDS = [
@@ -81,7 +87,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
     { text: "NYX-OS Kernel v6.18 (hub-11 arm64)", color: "var(--neon-green)" },
     { text: "Type 'help' for command list | 'ask <query>' to chat with Rook Agent.", color: "var(--text-dim)" },
     { text: "guest@nyx-hub11:~$ cat bio.txt", color: "var(--neon-pink)" },
-    { text: "Passionate iOS Developer with 3+ years at Zoho. Expert in modular Swift UI architecture, agentic component workflows, and low-level Linux systems.", color: "var(--text-main)" }
+    { text: "iOS Engineer at Zoho, full-time since May 2022. Working on reusable Swift UI components, modular mobile architecture and app performance.", color: "var(--text-main)" }
   ]);
   const [inputVal, setInputVal] = useState('');
   const [cmdHistory, setCmdHistory] = useState([]);
@@ -384,6 +390,7 @@ Kotlin & Android [=========] 60%`,
           spellCheck={false}
           autoComplete="off"
           autoCapitalize="off"
+          size="1"
         />
       </InputRow>
     </ShellWrapper>
