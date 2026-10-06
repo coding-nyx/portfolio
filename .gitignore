@@ -26,3 +26,9 @@ dist-ssr
 .firebase/
 .env
 Edit your public profile _ LinkedIn.html
+
+# Screenshots written by verification/*.py runs are regenerated artifacts and
+# are not tracked. The historical screenshots already committed under
+# verification/ remain tracked; add future ones here only if they should not be.
+verification/error.png
+verification/*.tmp.png

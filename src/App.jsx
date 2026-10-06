@@ -12,7 +12,6 @@ import Contact from './components/Contact';
 import BootSequence from './components/BootSequence';
 import Certifications from './components/Certifications';
 import Awards from './components/Awards';
-import Testimonials from './components/Testimonials';
 import SystemAlert from './components/SystemAlert';
 import { logSystemLogin } from './firebase';
 import BackToTop from './components/common/BackToTop';
@@ -60,7 +59,6 @@ const BentoGrid = styled.div`
     "A"
     "W"
     "I"
-    "T"
     "C";
 
   /* Tablet Layout */
@@ -74,7 +72,6 @@ const BentoGrid = styled.div`
       "S S"
       "L L"
       "A W"
-      "T T"
       "I I"
       "C C";
   }
@@ -90,7 +87,7 @@ const BentoGrid = styled.div`
       "B B B B"
       "S S S S"
       "L L A W"
-      "T T I I"
+      "I I I I"
       "C C C C";
   }
 `;
@@ -106,11 +103,9 @@ const InterestsArea = styled.div` grid-area: I; `;
 const ContactArea = styled.div` grid-area: C; `;
 const CertificationsArea = styled.div` grid-area: L; `;
 const AwardsArea = styled.div` grid-area: W; `;
-const TestimonialsArea = styled.div` grid-area: T; `;
-
 
 function App() {
-  const [bootComplete, setBootComplete] = useState(false);
+  const [bootComplete, setBootComplete] = useState(true);
   const [rookPrompt, setRookPrompt] = useState(null);
   const { theme } = useTheme();
 
@@ -142,7 +137,6 @@ function App() {
             <SandboxArea><IOSSandbox /></SandboxArea>
             <SkillsArea><Skills /></SkillsArea>
             <CertificationsArea><Certifications /></CertificationsArea>
-            <TestimonialsArea><Testimonials /></TestimonialsArea>
             <AchievementsArea><Achievements /></AchievementsArea>
             <AwardsArea><Awards /></AwardsArea>
             <InterestsArea><Interests /></InterestsArea>

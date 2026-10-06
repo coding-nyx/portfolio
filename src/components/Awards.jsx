@@ -144,7 +144,7 @@ const AwardsContainer = styled.div`
 
 const Awards = () => {
   return (
-    <PixelCard title="Awards & Honors">
+    <PixelCard title="Hackathons & Participation">
       <AwardsContainer>
         {awardsData.map((award, idx) => (
           <AwardCard key={idx}>
@@ -154,17 +154,14 @@ const Awards = () => {
                   <FaAward size={16} />
                   <span>{award.name}</span>
                 </Title>
-                <StatusBadge>[National Stage]</StatusBadge>
+                <StatusBadge>[Participant]</StatusBadge>
               </Header>
-              <IssuerTag>{award.issuer} • {award.date}</IssuerTag>
-              <Description>
-                Selected participant at India's premier nationwide hackathon, collaborating on real-time technological problem solving under continuous 36-hour sprint conditions.
-              </Description>
+              <IssuerTag>{award.issuer} · {award.date}</IssuerTag>
+              <Description>{award.description}</Description>
             </div>
             <TagRow>
               <Tag>Hackathon</Tag>
               <Tag>Rapid Prototyping</Tag>
-              <Tag>National Finalist</Tag>
             </TagRow>
           </AwardCard>
         ))}
