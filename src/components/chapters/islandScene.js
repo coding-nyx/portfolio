@@ -98,7 +98,7 @@ const rip=new T.Mesh(new T.RingGeometry(.25,.33,32).rotateX(-Math.PI/2),new T.Me
 ks.forEach((g,i)=>{const el=c.pin(PR[i].n.replace(' (sample)',''),g,new T.Vector3(0,3.35,0));el.onclick=()=>walkTo(i)});
 // input
 const keys={};const km={ArrowLeft:'l',a:'l',A:'l',ArrowRight:'r',d:'r',D:'r',ArrowUp:'u',w:'u',W:'u',ArrowDown:'d',s:'d',S:'d'};const dirs={l:[-1,1],r:[1,-1],u:[-1,-1],d:[1,1]};let tgtP=null;
-c.listen(c.st,'keydown',e=>{if(km[e.key]){keys[km[e.key]]=1;tgtP=null;e.preventDefault()}if(e.key=='Enter'&&e.target===c.st&&near!=null)c.openDet(near)});c.listen(c.st,'keyup',e=>{if(km[e.key])keys[km[e.key]]=0});
+c.listen(c.st,'keydown',e=>{if(km[e.key]){keys[km[e.key]]=1;tgtP=null;e.preventDefault()}if(e.key=='Enter'&&e.target===c.st&&near!=null){e.preventDefault();c.openDet(near)}});c.listen(c.st,'keyup',e=>{if(km[e.key])keys[km[e.key]]=0});
 c.st.querySelectorAll('.island-controls button').forEach(b=>{const d=b.dataset.d;c.listen(b,'pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);keys[d]=1;tgtP=null;});['pointerup','pointercancel','lostpointercapture'].forEach(type=>c.listen(b,type,()=>{keys[d]=0;}));c.listen(b,'keydown',e=>{if(e.key===' '||e.key==='Enter'){keys[d]=1;tgtP=null;e.preventDefault();}});c.listen(b,'keyup',()=>{keys[d]=0;});});c.listen(c.st,'focusout',()=>Object.keys(keys).forEach(k=>keys[k]=0));c.listen(window,'blur',()=>Object.keys(keys).forEach(k=>keys[k]=0));
 const gp=new T.Mesh(new T.PlaneGeometry(40,40).rotateX(-Math.PI/2),new T.MeshBasicMaterial({visible:false}));S.add(gp);
 function setTgt(p){tgtP=p;rip.position.x=p.x;rip.position.z=p.z;ript=0}
