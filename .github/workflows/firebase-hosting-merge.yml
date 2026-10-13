@@ -39,11 +39,7 @@ jobs:
         run: |
           node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync(process.env.RUNNER_TEMP + "/firebase-service-account.json", process.env.FIREBASE_SERVICE_ACCOUNT, { mode: 0o600 }); console.log("Firebase deployment account:", JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT).client_email);'
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json" >> "$GITHUB_ENV"
-      - name: Deploy Rook when billing and runtime access are ready
-        if: env.ROOK_DEPLOY_ENABLED == 'true'
-        run: |
-          npx --yes --package firebase-tools@15.26.0 firebase deploy --only functions:rook --project nyx-port --non-interactive
-      - name: Deploy portfolio
+      - name: Deploy portfolio and pinned Rook backend
         run: |
           node scripts/hosting-config.mjs
           npx --yes --package firebase-tools@15.26.0 firebase deploy --only hosting --config firebase.hosting.json --project nyx-port --non-interactive
