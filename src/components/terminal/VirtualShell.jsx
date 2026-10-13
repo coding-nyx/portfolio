@@ -1,5 +1,3 @@
-import { projects, skillsData } from '../../data/portfolio';
-import { publicText } from '../../utils/publicText';
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { normalizePath, getNode, getCompletions } from '../../utils/vfs';
@@ -9,7 +7,7 @@ const ShellWrapper = styled.div`
   background: rgba(8, 8, 16, 0.85);
   border: 1px solid var(--neon-cyan);
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
-  padding: 16px;
+  padding: 14px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.85rem;
   min-height: 180px;
@@ -39,9 +37,7 @@ const OutputLine = styled.div`
   line-height: 1.45;
   color: ${props => props.$color || 'var(--text-main)'};
   white-space: pre-wrap;
-  overflow-wrap: break-word;
-  word-break: normal;
-  hyphens: none;
+  word-break: break-word;
 `;
 
 const PromptPrefix = styled.span`
@@ -56,8 +52,13 @@ const PathPrefix = styled.span`
 const InputRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-top: 4px;
+  /* Without this, the flex row's min-content width (driven by the hidden
+     input's default size=20, ~173px) forces the parent CSS grid track wider
+     than the viewport and produces horizontal scrolling at 360/390px. */
+  min-width: 0;
+  max-width: 100%;
 `;
 
 const HiddenInput = styled.input`
@@ -68,9 +69,9 @@ const HiddenInput = styled.input`
   font-size: inherit;
   outline: none;
   flex: 1;
-  min-width: 0;
   padding: 0;
   caret-color: var(--neon-cyan);
+  min-width: 0;
 `;
 
 const BUILTIN_COMMANDS = [
@@ -86,7 +87,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
     { text: "NYX-OS Kernel v6.18 (hub-11 arm64)", color: "var(--neon-green)" },
     { text: "Type 'help' for command list | 'ask <query>' to chat with Rook Agent.", color: "var(--text-dim)" },
     { text: "guest@nyx-hub11:~$ cat bio.txt", color: "var(--neon-pink)" },
-    { text: "Passionate iOS Developer at Zoho since May 2022. Expert in modular Swift UI architecture, agentic component workflows, and low-level Linux systems.", color: "var(--text-main)" }
+    { text: "iOS Engineer at Zoho, full-time since May 2022. Working on reusable Swift UI components, modular mobile architecture and app performance.", color: "var(--text-main)" }
   ]);
   const [inputVal, setInputVal] = useState('');
   const [cmdHistory, setCmdHistory] = useState([]);
@@ -188,7 +189,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
   clear             - Clear terminal buffer
   projects          - List active and completed projects
   skills            - Display technical capabilities
-  theme [portfolio|cyber]- Switch portfolio visual theme
+  theme [light|cyber]- Switch portfolio visual theme
   resume            - Open official resume PDF modal
   goto <section>    - Navigate to (projects, experience, skills, contact)
   ask <query>       - Query Rook Agent
@@ -260,22 +261,35 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
 
       case 'projects':
         output.push({
-          text: projects.map(p => `${p.featured ? 'Featured' : 'Other'}: ${p.name} — ${publicText(p.description)}`).join('\n'),
+          text: `FEATURED PROJECTS:
+• [Hermes Companion App]   - Native Android companion for self-hosted Hermes AI fleet (Tailscale mesh)
+• [Hermes Companion Web]   - Web companion: pair, chat, device control, notification forwarding
+• [a0090-meta (hub-11 OS)] - Mainline Linux 6.18 OS distribution for RK3588 NVR
+• [FitPro Connect]         - Comprehensive platform for fitness trainers (React/Firebase/Stripe)
+• [Nexus (AGNES)]          - Unified multi-agent wellness platform
+• [Agentic Component Framework] - Production spec-to-code pipeline (Zoho)
+(Type 'goto projects' to view cards or 'cat projects/<name>.md')`,
           color: "var(--neon-green)"
         });
         break;
 
       case 'skills':
         output.push({
-          text: skillsData.map(s => `${s.name}: ${s.level}%`).join('\n'),
+          text: `SKILL MATRIX:
+Swift [====================] 90% (iOS, UIKit, SwiftUI, Architecture)
+Agentic Coding [===========] 90% (Fleet orchestration, Tool calling)
+AI / LLMs [================] 85% (MiniMax, Gemini, RAG, OpenAI API)
+Linux Kernel [=============] 80% (RK3588, Device Trees, U-Boot)
+React & Frontend [=========] 70%
+Kotlin & Android [=========] 60%`,
           color: "var(--neon-yellow)"
         });
         break;
 
       case 'theme':
-        if (arg.toLowerCase() === 'portfolio' || arg.toLowerCase() === 'light' || arg.toLowerCase() === 'professional') {
+        if (arg.toLowerCase() === 'light' || arg.toLowerCase() === 'professional') {
           if (theme !== 'professional') toggleTheme();
-          output.push({ text: "Switched to Portfolio theme.", color: "var(--neon-cyan)" });
+          output.push({ text: "Switched to Professional Light theme.", color: "var(--neon-cyan)" });
         } else if (arg.toLowerCase() === 'cyber' || arg.toLowerCase() === 'cyberpunk') {
           if (theme !== 'cyberpunk') toggleTheme();
           output.push({ text: "Switched to Cyberpunk Dark theme.", color: "var(--neon-green)" });
@@ -301,7 +315,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
         if (targetId) {
           const el = document.getElementById(targetId) || document.querySelector(`[title*="${targetId}"]`);
           if (el) {
-            el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             output.push({ text: `Navigating to ${sec}...`, color: "var(--neon-cyan)" });
           } else {
             output.push({ text: `Navigated to ${sec}.`, color: "var(--neon-cyan)" });
@@ -376,6 +390,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
           spellCheck={false}
           autoComplete="off"
           autoCapitalize="off"
+          size="1"
         />
       </InputRow>
     </ShellWrapper>

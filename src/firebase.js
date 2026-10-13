@@ -2,23 +2,34 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported, logEvent } from "firebase/analytics";
 
-// Your web app's Firebase configuration
+// Firebase web config is supplied at build time via VITE_-prefixed env vars.
+// These are public Firebase *web* identifiers (not secrets), but they were
+// previously hardcoded here and are still present in git history — rotate them.
 const firebaseConfig = {
-  apiKey: "AIzaSyCBZW-V3-51jsaqgb3_n_ajOi2DyXtPFpY",
-  authDomain: "iamnyx.firebaseapp.com",
-  projectId: "nyx-port",
-  storageBucket: "nyx-port.firebasestorage.app",
-  messagingSenderId: "395259503882",
-  appId: "1:395259503882:web:da7da68c550e3f854e86f3",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || undefined
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Fail soft: without a configured project the app still builds and renders,
+// it simply skips Firebase init and analytics.
+const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId);
+
+const app = isConfigured ? initializeApp(firebaseConfig) : null;
+
+if (!isConfigured) {
+  console.warn(
+    "[firebase] VITE_FIREBASE_* env vars are not set — skipping Firebase init and analytics."
+  );
+}
 
 let analytics = null;
-// Only attempt to initialize analytics if a valid measurement ID is configured
-if (firebaseConfig.measurementId) {
+// Only attempt to initialize analytics if the app initialised and a measurement ID is configured
+if (isConfigured && firebaseConfig.measurementId) {
   isSupported().then((supported) => {
     if (supported) {
       try {

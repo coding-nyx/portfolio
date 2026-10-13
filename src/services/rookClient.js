@@ -27,7 +27,7 @@ export function generateFallbackResponse(messagesInput) {
     ? messagesInput
     : [{ role: 'user', content: String(messagesInput || '') }];
   const query = (msgs[msgs.length - 1]?.content || '').toLowerCase();
-  const projectReply = (project) => `### ${project.name}\n\n${publicText(project.description)}\n\n[Source](${project.repoUrl})\n[ACTION:SCROLL_TO:projects]`;
+  const projectReply = (project) => `### ${project.name}\n\n${publicText(project.description)}\n\n${project.repoUrl ? `[Source](${project.repoUrl})` : 'Public source is not available.'}\n[ACTION:SCROLL_TO:projects]`;
 
   const project = projects.find((p) => query.includes(p.name.toLowerCase())) ||
     (/linux|kernel|rk3588|embedded|device tree|hub-?11|a009/.test(query) ? projects.find((p) => p.name.startsWith('a0090')) : undefined) ||
@@ -58,7 +58,7 @@ export function generateFallbackResponse(messagesInput) {
     return `**Raj is a Member of Technical Staff at Zoho. Since May 2022.**\n\n${publicText(experienceData[0].description)}\n[ACTION:SCROLL_TO:experience]`;
   }
   if (/github|repo|project|code/.test(query)) {
-    return projects.map((p) => `• [${p.name}](${p.repoUrl}) — ${publicText(p.description)}`).join('\n') + '\n[ACTION:SCROLL_TO:projects]';
+    return projects.map((p) => `• ${p.repoUrl ? `[${p.name}](${p.repoUrl})` : p.name} — ${publicText(p.description)}`).join('\n') + '\n[ACTION:SCROLL_TO:projects]';
   }
   if (/raj|who|about|background|intro/.test(query)) {
     return `**${profileData.name}** — ${profileData.location}\n\n${publicText(profileData.summary)}\n[ACTION:SCROLL_TO:bio]`;

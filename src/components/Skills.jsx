@@ -1,105 +1,189 @@
 import styled from 'styled-components';
 import PixelCard from './common/PixelCard';
-import { skillsData } from '../data/portfolio';
-
-const CATEGORY_ORDER = ['Mobile', 'Language', 'Frontend', 'Backend', 'AI', 'OS'];
-
-const CATEGORY_LABELS = {
-  Mobile: 'Mobile',
-  Language: 'Language / Frontend',
-  Frontend: 'Language / Frontend',
-  Backend: 'Backend / AI / OS',
-  AI: 'Backend / AI / OS',
-  OS: 'Backend / AI / OS',
-};
-
-const GROUP_ORDER = ['Mobile', 'Language / Frontend', 'Backend / AI / OS'];
+import { FaApple, FaMicrochip, FaRobot, FaCloud } from 'react-icons/fa';
+import { skillGroupsData } from '../data/portfolio';
 
 const SkillsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 4px;
-`;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 5px;
 
-const CategoryBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const CategoryTitle = styled.h4`
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--neon-yellow);
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    color: var(--text-main);
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ChipRow = styled.div`
+const DomainCard = styled.div`
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--text-dim);
+  padding: 18px;
+  transition: all 0.3s ease;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-`;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 
-const Chip = styled.span`
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 4px 8px;
-  background: var(--neon-cyan);
-  color: var(--bg-color);
-  border: 1px solid transparent;
+  [data-theme='cyberpunk'] &:hover,
+  [data-theme='cyberpunk'] &:focus-within {
+    border-color: var(--neon-cyan);
+    box-shadow: 3px 3px 0 var(--neon-cyan);
+    transform: translate(-2px, -2px);
+  }
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: var(--surface-raised);
-    color: var(--text-muted);
+    background: #ffffff;
     border: 1px solid var(--border-color);
-    border-radius: 9999px;
-    font-weight: 500;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+    &:hover,
+    &:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
   }
+`;
+
+const DomainHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+`;
+
+const DomainTitle = styled.h3`
+  margin: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
   [data-theme='cyberpunk'] & {
-    clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px);
+    color: var(--neon-yellow);
+  }
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #0f172a;
+    font-weight: 700;
   }
 `;
 
-function groupSkills(skills) {
-  const groups = {};
-  for (const skill of skills) {
-    if (skill.category === 'Core') continue; // soft skills out
-    const label = CATEGORY_LABELS[skill.category] || skill.category;
-    if (!groups[label]) groups[label] = [];
-    groups[label].push(skill);
+const DomainSubtitle = styled.p`
+  font-size: 0.8rem;
+  color: #ccc;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    color: #64748b;
   }
-  return GROUP_ORDER
-    .filter(label => groups[label]?.length)
-    .map(label => ({ label, skills: groups[label] }));
-}
+`;
+
+const EvidenceList = styled.ul`
+  margin: 0;
+  padding-left: 18px;
+  position: relative;
+  z-index: 1;
+
+  li {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    li {
+      color: #475569;
+    }
+  }
+`;
+
+const TechStack = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-color);
+  position: relative;
+  z-index: 1;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    border-top: 1px solid #f1f5f9;
+  }
+`;
+
+const TechTag = styled.span`
+  font-size: 0.7rem;
+  background: var(--neon-cyan);
+  color: var(--bg-color);
+  padding: 2px 6px;
+  font-weight: bold;
+
+  [data-theme='professional'] &,
+  [data-theme='modern'] & {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+`;
+
+/**
+ * Skill groups replace the previous 0-100 percentage bars.
+ *
+ * Those bars (including Adaptability 90% and Teamwork 90%) had no defined basis
+ * and were not defensible in a hiring conversation, so they were removed rather
+ * than rescaled into another unsupported rating.
+ */
+const ICONS = {
+  'ios-mobile': <FaApple size={16} />,
+  'agentic-ai': <FaRobot size={16} />,
+  'systems-linux': <FaMicrochip size={16} />,
+  'android-web': <FaCloud size={16} />,
+};
 
 const Skills = () => {
-  const groups = groupSkills(skillsData);
-
   return (
-    <PixelCard title="Skills">
+    <PixelCard title="Skills & Evidence">
       <SkillsContainer>
-        {groups.map(group => (
-          <CategoryBlock key={group.label}>
-            <CategoryTitle>{group.label}</CategoryTitle>
-            <ChipRow>
-              {group.skills.map(s => (
-                <Chip key={s.name}>{s.name}</Chip>
+        {skillGroupsData.map(group => (
+          <DomainCard key={group.id}>
+            <div>
+              <DomainHeader>
+                <DomainTitle>
+                  {ICONS[group.id]}
+                  <span>{group.title}</span>
+                </DomainTitle>
+              </DomainHeader>
+              <DomainSubtitle>{group.subtitle}</DomainSubtitle>
+              <EvidenceList>
+                {group.evidence.map(item => (
+                  <li key={item}>{item}</li>
+                ))}
+              </EvidenceList>
+            </div>
+            <TechStack>
+              {group.tags.map(tag => (
+                <TechTag key={tag}>{tag}</TechTag>
               ))}
-            </ChipRow>
-          </CategoryBlock>
+            </TechStack>
+          </DomainCard>
         ))}
       </SkillsContainer>
     </PixelCard>

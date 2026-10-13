@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import PixelCard from '../common/PixelCard';
 import { FaApple, FaBolt, FaLayerGroup, FaCheckCircle, FaRobot } from 'react-icons/fa';
 
 const SandboxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 20px;
   width: 100%;
 
   @media (min-width: 900px) {
@@ -36,8 +36,8 @@ const InteractivePanel = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: var(--surface-raised);
-    border-color: var(--border-color);
+    background: #f8fafc;
+    border-color: #e2e8f0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 `;
@@ -47,7 +47,7 @@ const PanelHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-dim);
@@ -55,7 +55,7 @@ const PanelHeader = styled.div`
   span {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     color: var(--text-main);
   }
 `;
@@ -69,7 +69,7 @@ const IslandWrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  padding: 10px 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
   user-select: none;
   overflow: hidden;
@@ -90,7 +90,7 @@ const IslandContent = styled.div`
 const Waveform = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   height: 16px;
 
   span {
@@ -115,7 +115,7 @@ const Waveform = styled.div`
 const SegmentControl = styled.div`
   display: flex;
   background: rgba(0, 0, 0, 0.06);
-  padding: 4px;
+  padding: 3px;
   border-radius: 8px;
   margin-bottom: 16px;
   width: 100%;
@@ -127,13 +127,13 @@ const SegmentControl = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: var(--border-color);
+    background: #e2e8f0;
   }
 `;
 
 const SegmentBtn = styled.button`
   flex: 1;
-  padding: 8px 8px;
+  padding: 8px 12px;
   font-size: 0.8rem;
   font-weight: 600;
   border: none;
@@ -145,57 +145,15 @@ const SegmentBtn = styled.button`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: ${props => props.$active ? 'var(--card-bg)' : 'transparent'};
-    color: ${props => props.$active ? 'var(--neon-cyan)' : 'var(--text-dim)'};
+    background: ${props => props.$active ? '#ffffff' : 'transparent'};
+    color: ${props => props.$active ? '#2563eb' : '#64748b'};
     box-shadow: ${props => props.$active ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};
   }
 `;
 
-const MetricRow = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
 
-const MetricItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const MetricLabel = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-
-  strong {
-    color: var(--text-main);
-  }
-`;
-
-const MetricBarTrack = styled.div`
-  height: 6px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    background: var(--border-color);
-  }
-`;
-
-const MetricBarFill = styled(motion.div)`
-  height: 100%;
-  background: ${props => props.$color || 'var(--neon-cyan)'};
-  border-radius: 4px;
-`;
 
 export const IOSSandbox = () => {
-  const reduceMotion = useReducedMotion();
   const [islandState, setIslandState] = useState('compact'); // 'compact', 'expanded', 'agent'
   const [activeArch, setActiveArch] = useState('agentic'); // 'legacy', 'agentic'
 
@@ -207,12 +165,12 @@ export const IOSSandbox = () => {
 
   const islandVariants = {
     compact: { width: 190, height: 44, borderRadius: 22 },
-    expanded: { width: '100%', height: 96, borderRadius: 28 },
-    agent: { width: '100%', height: 144, borderRadius: 30 }
+    expanded: { width: 330, height: 80, borderRadius: 28 },
+    agent: { width: 340, height: 110, borderRadius: 30 }
   };
 
   return (
-    <PixelCard title="iOS Component Lab (SwiftUI)">
+    <PixelCard title="iOS Component Lab (SwiftUI & Agentic Framework)">
       <SandboxContainer>
         {/* Module 1: Fluid Dynamic Island */}
         <InteractivePanel>
@@ -225,9 +183,7 @@ export const IOSSandbox = () => {
             variants={islandVariants}
             animate={islandState}
             onClick={toggleIsland}
-            transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 450, damping: 32, mass: 0.8 }}
-            tabIndex={0}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleIsland(); } }}
+            transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.8 }}
             role="button"
             aria-label="Interactive Dynamic Island component"
           >
@@ -266,7 +222,7 @@ export const IOSSandbox = () => {
                       <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>Zoho Mobile UI Kit</div>
                       <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Modular Swift Components</div>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#22c55e', fontWeight: 'bold' }}>Demo</div>
+                    <div style={{ fontSize: '0.75rem', color: '#22c55e', fontWeight: 'bold' }}>Reduced Time</div>
                   </IslandContent>
                 </motion.div>
               )}
@@ -280,10 +236,10 @@ export const IOSSandbox = () => {
                   style={{ width: '100%' }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.82rem', color: '#38bdf8', fontWeight: 600 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.82rem', color: '#38bdf8', fontWeight: 600 }}>
                       <FaBolt /> Agentic Component Generator
                     </div>
-                    <span style={{ fontSize: '0.7rem', background: '#22c55e33', color: '#4ade80', padding: '4px 8px', borderRadius: 9999 }}>Active</span>
+                    <span style={{ fontSize: '0.7rem', background: '#22c55e33', color: '#4ade80', padding: '2px 8px', borderRadius: 9999 }}>Active</span>
                   </div>
                   <div style={{ fontSize: '0.75rem', color: '#cbd5e1', lineHeight: 1.4 }}>
                     Automated UI generation, component contract verification & live property injection in Swift.
@@ -293,8 +249,8 @@ export const IOSSandbox = () => {
             </AnimatePresence>
           </IslandWrapper>
 
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: 16 }}>
-            State: <strong>{islandState.toUpperCase()}</strong> (Interactive Spring Physics Simulation)
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: 15 }}>
+            State: <strong>{islandState.toUpperCase()}</strong> (Browser physics illustration, not native SwiftUI)
           </div>
         </InteractivePanel>
 
@@ -302,7 +258,7 @@ export const IOSSandbox = () => {
         <InteractivePanel>
           <PanelHeader>
             <span><FaBolt size={14} /> Architecture Benchmark</span>
-            <span>Sample values</span>
+            <span>Refactor Impact</span>
           </PanelHeader>
 
           <SegmentControl>
@@ -316,59 +272,25 @@ export const IOSSandbox = () => {
               $active={activeArch === 'agentic'}
               onClick={() => setActiveArch('agentic')}
             >
-              Swift UI Kit
+              Swift UI Kit + Agentic
             </SegmentBtn>
           </SegmentControl>
 
-          <MetricRow>
-            <MetricItem>
-              <MetricLabel>
-                <span>Frontend Dev Delivery Time</span>
-                <strong>{activeArch === 'agentic' ? '70% (sample)' : '100% (Baseline)'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '100%' }}
-                  animate={{ width: activeArch === 'agentic' ? '70%' : '100%' }}
-                  $color={activeArch === 'agentic' ? '#10b981' : '#f59e0b'}
-                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
+          <div style={{ fontSize: '0.78rem', lineHeight: 1.6, color: 'var(--text-dim)' }}>
+            <p style={{ margin: '0 0 8px' }}>
+              {activeArch === 'agentic'
+                ? 'Component scaffolding from a specification through contract, test and verification steps, alongside the reusable Swift component library.'
+                : 'Reusable Swift/SwiftUI/UIKit components and modular structure for existing application modules.'}
+            </p>
+            <p style={{ margin: 0 }}>
+              Delivery-time and performance work is described qualitatively because no
+              public measurement record exists. Specific timings, memory values and
+              percentage improvements are therefore not shown.
+            </p>
+          </div>
 
-            <MetricItem>
-              <MetricLabel>
-                <span>App Cold Launch Overhead</span>
-                <strong>{activeArch === 'agentic' ? '2.5s (sample)' : '3.2s'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '85%' }}
-                  animate={{ width: activeArch === 'agentic' ? '65%' : '85%' }}
-                  $color={activeArch === 'agentic' ? '#2563eb' : '#ef4444'}
-                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
-
-            <MetricItem>
-              <MetricLabel>
-                <span>Memory Allocation Footprint</span>
-                <strong>{activeArch === 'agentic' ? '126 MB (sample)' : '180 MB'}</strong>
-              </MetricLabel>
-              <MetricBarTrack>
-                <MetricBarFill
-                  initial={{ width: '90%' }}
-                  animate={{ width: activeArch === 'agentic' ? '60%' : '90%' }}
-                  $color={activeArch === 'agentic' ? '#8b5cf6' : '#f97316'}
-                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 25 }}
-                />
-              </MetricBarTrack>
-            </MetricItem>
-          </MetricRow>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.72rem', color: '#10b981', marginTop: 16 }}>
-            <FaCheckCircle size={12} /> Illustrative demo — sample values
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#10b981', marginTop: 14 }}>
+            <FaCheckCircle size={12} /> Qualitative description only — not a measured benchmark
           </div>
         </InteractivePanel>
       </SandboxContainer>

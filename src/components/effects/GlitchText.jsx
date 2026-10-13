@@ -46,9 +46,9 @@ const CYBERPUNK_DICTIONARY = {
   "Awards": "RECOGNITION PROTOCOLS",
   "Certifications": "AUTH KEYS",
   "Interests": "BACKGROUND PROCESSES",
-  "Testimonials": "USER REVIEWS",
-  "Professional": "NETWORK_LINK",
-  "Informal": "EMAIL_UPLINK",
+
+  "LinkedIn": "NETWORK_LINK",
+  "Email": "EMAIL_UPLINK",
   "Say Hello": "GAME_START"
 };
 

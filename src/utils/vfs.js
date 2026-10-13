@@ -1,6 +1,3 @@
-import { experienceData, projects } from '../data/portfolio.js';
-import { publicText } from './publicText.js';
-
 // In-Memory Virtual File System (VFS) for Portfolio Shell
 
 export const VFS = {
@@ -9,10 +6,11 @@ export const VFS = {
     'bio.txt': {
       type: 'file',
       content: `Raj Kumar S
-Role: iOS Developer | Full-Cycle & Agentic Systems
+Role: iOS Engineer at Zoho | Swift, SwiftUI & UIKit
 Location: Chennai, India
-Experience: Zoho, Member of Technical Staff since May 2022
-Core Stack: Swift, SwiftUI, UIKit, Agentic Coding, AI/LLMs, Linux Kernel, Kotlin, React`
+Experience: Member of Technical Staff at Zoho, full-time since May 2022
+Core Work: Reusable UI components, modular mobile architecture, app performance
+Also: Internal agentic developer tooling, Android, embedded Linux`
     },
     'resume.pdf': {
       type: 'file',
@@ -24,15 +22,16 @@ Core Stack: Swift, SwiftUI, UIKit, Agentic Coding, AI/LLMs, Linux Kernel, Kotlin
       children: {
         'agentic-framework.md': {
           type: 'file',
-          content: `# Agentic Component Development Framework [Production]
-A deterministic, config-driven agentic pipeline that automates UI component lifecycles from spec → contract → QA test suite → implementation → gate verification.
-Key Features:
-- 14-step deterministic state machine orchestrating specialized LLM sub-agents
-- 4-file separation of concerns: state, workflow, domain profile, target config
-- 8 declarative quality verification gates (linters, artifact contracts, command checks)
-- Multi-target parallel tracks with multi-ecosystem prompt compilation
-- Slashed frontend component delivery by 30% across the mobile ecosystem
-Tech: Agentic AI, Python (stdlib-only), State Machine, Swift / iOS, Multi-Agent`
+          content: `# Agentic Component Development Workflow [Internal Tooling]
+A deterministic, config-driven pipeline that scaffolds UI components from spec → contract → test suite → implementation → verification.
+Characteristics:
+- Deterministic pipeline state rather than free-form generation order
+- Declarative verification gates (linters, artifact contracts, command checks)
+- Per-target configuration with no third-party runtime dependencies
+Note: internal developer tooling. Adoption and measured impact are not stated because
+they are not confirmed. No performance figures are claimed. No proprietary
+identifiers are published here.
+Tech: Agentic AI, Python, State Machine, Swift / iOS`
         },
         'hermes-companion.md': {
           type: 'file',
@@ -52,18 +51,19 @@ Repo: https://github.com/coding-nyx/a0090-meta`
         },
         'nexus.md': {
           type: 'file',
-          content: `# Nexus (AGNES) [In Progress]
-Unified, multi-agent AI wellness platform with specialized agents and E2EE for holistic stability.
+          content: `# Nexus (AGNES) [Prototype]
+Prototype multi-agent wellness platform.
 Tech: LLM, React, React Native, Firebase, RAG
-Live: https://agent-agnes-ai.web.app
-Repo: https://github.com/coding-nyx/nexus-react-native`
+Links: none published. The source repository is private and the demo URL renders an
+unverified shell, so no destination is offered and no encryption or outcome
+claims are made.`
         },
         'fitpro-connect.md': {
           type: 'file',
           content: `# FitPro Connect [In Progress]
-Comprehensive platform empowering fitness trainers to manage classes, showcase portfolios, and connect with clients.
+Platform for fitness trainers to manage classes, showcase portfolios and connect with clients.
 Tech: React, Firebase, Stripe
-Live: https://personal-trainer-mock.web.app/
+Demo: unavailable (published demo URL returns 404), so no demo link is offered.
 Repo: https://github.com/coding-nyx/personal-trainer`
         },
         'hermes-companion-web.md': {
@@ -80,11 +80,12 @@ Repo: https://github.com/coding-nyx/hermes-companion-web`
       children: {
         'zoho-mts.log': {
           type: 'file',
-          content: `[LOG: Zoho - Member of Technical Staff (May 2022 - Present)]
-- Engineered Zoho Mobile UI Kit: Reusable component library in Swift, cutting frontend dev time by 30%.
-- Agentic Component Framework: Built automated agentic development workflow for rapid component generation & iteration.
-- Core Modules Revamp: Led module design from UI/UX wireframing to API integration.
-- Performance Overhaul: Refactored legacy code yielding 20% app launch speedup and reduced memory overhead.`
+          content: `[LOG: Zoho - Member of Technical Staff (May 2022 - Present, full-time)]
+- Reusable UI component library in Swift/SwiftUI/UIKit for consistent mobile module design.
+- Internal agentic development workflow for spec-driven component scaffolding.
+- Core module architecture: worked critical modules from wireframes to API integration.
+- Performance work: refactored existing code to improve app launch time and memory overhead.
+Note: no percentage or timing figures are published; no verified measurement record exists.`
         },
         'zoho-trainee.log': {
           type: 'file',
@@ -104,12 +105,10 @@ Enterprise software solutions and team collaboration.`
         'mobile.txt': {
           type: 'file',
           content: `MOBILE SKILLS:
-- Swift: 90%
-- SwiftUI: 85%
-- UIKit: 85%
-- Kotlin: 60%
-- Android: 60%
-- React Native: 30%`
+- Swift, SwiftUI, UIKit: production iOS component and architecture work at Zoho
+- Kotlin, Android: personal project work (Hermes Companion App)
+- React Native: personal prototype work
+(No numeric proficiency ratings are published; they had no defined basis.)`
         },
         'ai-agentic.txt': {
           type: 'file',
@@ -120,10 +119,9 @@ Enterprise software solutions and team collaboration.`
         'systems.txt': {
           type: 'file',
           content: `SYSTEMS & BACKEND:
-- Linux: 80% (RK3588, Device Trees, Kernel modules, U-Boot, Armbian)
-- Firebase: 75%
-- React: 70%
-- Java: 65%`
+- Embedded Linux: RK3588 device trees, boot image assembly, kernel driver integration
+- Backend: Firebase, React web applications
+(No numeric proficiency ratings are published; they had no defined basis.)`
         }
       }
     },
@@ -190,19 +188,6 @@ export function getNode(path) {
     current = current.children[part];
   }
 
-  if (current.type === 'file') {
-    const projectNames = {
-      '/projects/hermes-companion.md': 'Hermes Companion App',
-      '/projects/hermes-companion-web.md': 'Hermes Companion Web',
-      '/projects/a0090-meta.md': 'a0090-meta (hub-11 OS)',
-      '/projects/nexus.md': 'Nexus',
-      '/projects/fitpro-connect.md': 'FitPro Connect',
-    };
-    const project = projects.find((p) => p.name === projectNames[path]);
-    if (project) return { ...current, content: `# ${project.name} [${project.status}]\n${publicText(project.description)}\nTech: ${project.tags.join(', ')}\nRepo: ${project.repoUrl}` };
-    if (path === '/projects/agentic-framework.md') return { ...current, content: `# Agentic component tooling\n${publicText(experienceData[0].projects.find((p) => p.name === 'Agentic component tooling').desc)}` };
-    if (path === '/experience/zoho-mts.log') return { ...current, content: `Zoho — Member of Technical Staff. Since May 2022.\n${publicText(experienceData[0].description)}` };
-  }
   return current;
 }
 

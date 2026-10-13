@@ -16,3 +16,24 @@ test('empty provider answers fail honestly',async()=>{await withServer({apiKey:'
 test('provider timeout aborts the request',async()=>{let aborted=false;await withServer({apiKey:'test',timeoutMs:15,fetchImpl:async(_url,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>{aborted=true;reject(new Error('aborted'));}))},async post=>{const r=await post(input);assert.equal(r.status,504);assert.equal((await r.json()).error,'timeout');});assert.equal(aborted,true);});
 test('rate limit blocks additional provider calls',async()=>{let calls=0;await withServer({apiKey:'test',rateLimit:1,fetchImpl:async()=>{calls++;return response('ok');}},async post=>{assert.equal((await post(input)).status,200);const r=await post(input);assert.equal(r.status,429);assert.ok(Number(r.headers.get('Retry-After'))>0);});assert.equal(calls,1);});
 test('concurrency limit rejects simultaneous calls',async()=>{let release,started;const gate=new Promise(r=>{release=r;}),ready=new Promise(r=>{started=r;});await withServer({apiKey:'test',maxConcurrent:1,fetchImpl:async()=>{started();await gate;return response('ok');}},async post=>{const first=post(input);await ready;assert.equal((await post(input)).status,429);release();assert.equal((await first).status,200);});});
+
+test('Firebase parsed requests use rawBody and isolate rate limits by request IP',async()=>{
+  let calls=0;
+  const handler=createRookHandler({apiKey:'test',rateLimit:1,fetchImpl:async()=>{calls++;return response('Hosted answer');}});
+  const server=createServer(async(req,res)=>{
+    const chunks=[];for await(const chunk of req)chunks.push(chunk);
+    req.rawBody=Buffer.concat(chunks);req.ip=req.headers['x-test-client'];
+    return handler(req,res);
+  });
+  await new Promise(r=>server.listen(0,'127.0.0.1',r));
+  const url=`http://127.0.0.1:${server.address().port}`;
+  const post=(ip,body=JSON.stringify(input))=>fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-test-client':ip},body});
+  try{
+    assert.equal((await post('one')).status,200);
+    assert.equal((await post('one')).status,429);
+    assert.equal((await post('two')).status,200);
+    assert.equal((await post('three','x'.repeat(24001))).status,413);
+    assert.equal((await post('four','{')).status,400);
+    assert.equal(calls,2);
+  }finally{server.closeAllConnections();await new Promise(r=>server.close(r));}
+});

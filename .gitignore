@@ -31,3 +31,9 @@ Edit your public profile _ LinkedIn.html
 .env.*
 !.env.example
 .secret*
+
+verification/error.png
+verification/*.tmp.png
+functions/lib/
+
+firebase.hosting.json

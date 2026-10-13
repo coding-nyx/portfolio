@@ -48,7 +48,7 @@ const Chapter = ({ id, children, full }) => (
 
 function App() {
   const reduceMotion = useReducedMotion();
-  const [bootComplete, setBootComplete] = useState(false);
+  const [bootComplete, setBootComplete] = useState(true);
   const [rookOpen, setRookOpen] = useState(false);
   const askOpener = useRef(null);
   const { theme } = useTheme();
