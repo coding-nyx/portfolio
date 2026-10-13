@@ -1,3 +1,4 @@
+import { publicText } from '../utils/publicText';
 import styled from 'styled-components';
 import PixelCard from './common/PixelCard';
 import { experienceData } from '../data/portfolio';
@@ -7,12 +8,12 @@ import ThemedIcon from './common/ThemedIcon';
 const Timeline = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 `;
 
 const JobItem = styled.div`
   border-left: 2px solid var(--neon-cyan);
-  padding-left: 15px;
+  padding-left: 16px;
   position: relative;
 
   &::before {
@@ -30,8 +31,8 @@ const JobItem = styled.div`
   [data-theme='modern'] & {
     border-left: 2px solid var(--border-color);
     &::before {
-      background: #2563eb;
-      box-shadow: 0 0 0 3px #dbeafe;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 0 3px var(--accent-soft);
       border-radius: 50%;
     }
   }
@@ -51,7 +52,7 @@ const Company = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
   }
 `;
@@ -62,8 +63,8 @@ const Dates = styled.span`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    padding: 2px 8px;
+    background: var(--surface-raised);
+    padding: 4px 8px;
     border-radius: 4px;
     font-weight: 500;
   }
@@ -72,12 +73,12 @@ const Dates = styled.span`
 const Role = styled.div`
   color: var(--neon-cyan);
   font-size: 0.9rem;
-  margin: 5px 0;
+  margin: 4px 0;
   font-weight: bold;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
     font-weight: 600;
   }
 `;
@@ -86,18 +87,18 @@ const Description = styled.p`
   font-size: 0.85rem;
   line-height: 1.4;
   color: var(--text-main);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 `;
 
 const ProjectList = styled.ul`
   list-style: none;
-  padding-left: 10px;
-  margin: 5px 0;
+  padding-left: 8px;
+  margin: 4px 0;
 `;
 
 const ProjectItem = styled.li`
   font-size: 0.85rem;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   color: var(--text-dim);
   display: flex;
   gap: 8px;
@@ -118,13 +119,13 @@ const Experience = () => {
               <Dates>{exp.dates}</Dates>
             </JobHeader>
             <Role>{exp.role}</Role>
-            {exp.description && <Description>{exp.description}</Description>}
+            {exp.description && <Description>{publicText(exp.description)}</Description>}
             {exp.projects && (
               <ProjectList>
                 {exp.projects.map((proj, pIndex) => (
                   <ProjectItem key={pIndex}>
                     <ThemedIcon ascii=">> " icon={<FaChevronRight size={12} style={{marginTop: '3px'}} />} />
-                    <span><strong>{proj.name}:</strong> {proj.desc}</span>
+                    <span><strong>{proj.name}:</strong> {publicText(proj.desc)}</span>
                   </ProjectItem>
                 ))}
               </ProjectList>

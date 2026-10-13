@@ -6,7 +6,7 @@ const SkipAnchor = styled.a`
   left: -1000px;
   background: var(--neon-pink);
   color: #fff;
-  padding: 10px 20px;
+  padding: 8px 8px;
   z-index: 9999;
   text-decoration: none;
   font-weight: bold;
@@ -22,7 +22,7 @@ const SkipAnchor = styled.a`
   [data-theme='modern'] &,
   [data-theme='professional'] & {
     background: var(--neon-cyan);
-    color: white;
+    color: var(--on-accent);
   }
 `;
 

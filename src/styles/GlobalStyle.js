@@ -28,29 +28,34 @@ export const GlobalStyle = createGlobalStyle`
     --bg-size: 40px 40px;
   }
 
-  /* PROFESSIONAL / LIGHT THEME */
+  /* Portfolio theme — same dark surfaces and orange accent as Entry D2. */
   [data-theme='professional'],
   [data-theme='modern'] {
-    --bg-color: #f8fafc; /* Crisp slate-50 */
-    --card-bg: #ffffff;
-    --text-main: #0f172a; /* Slate-900: sharp, legible contrast */
-    --text-muted: #334155; /* Slate-700 */
-    --text-dim: #64748b; /* Slate-500 */
-    --border-color: #e2e8f0; /* Slate-200 */
-
-    /* Professional tech palette */
-    --neon-cyan: #2563eb; /* Tech Blue-600 */
-    --neon-pink: #4f46e5; /* Indigo-600 */
-    --neon-yellow: #d97706; /* Amber-600 */
-    --neon-green: #059669; /* Emerald-600 */
-
-    --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color-scheme: dark;
+    --bg-color: #0B0B0F;
+    --card-bg: #15151B;
+    --surface-raised: #1D1D25;
+    --surface-hover: #25252E;
+    --text-main: #F4F4F5;
+    --text-muted: #D4D4D8;
+    --text-dim: #A1A1AA;
+    --border-color: #2C2C35;
+    --border-strong: #3A3A46;
+    --neon-cyan: #FF8A3D;
+    --neon-pink: #FF8A3D;
+    --neon-yellow: #FF8A3D;
+    --neon-green: #86EFAC;
+    --on-accent: #0B0B0F;
+    --accent-hover: #FFA96A;
+    --accent-soft: #2B211A;
+    --accent-border: #614028;
+    --success-soft: #14281D;
+    --font-main: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --border-radius: 12px;
     --letter-spacing: normal;
     --text-transform: none;
-
-    --bg-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-    --bg-size: 24px 24px;
+    --bg-image: none;
+    --bg-size: auto;
   }
 
   * {
@@ -63,28 +68,76 @@ export const GlobalStyle = createGlobalStyle`
   input[type="button"],
   input[type="submit"],
   input[type="reset"] {
-    outline: none !important;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
   }
 
-  button:focus,
-  button:focus-visible,
-  button:active,
-  button:focus:not(:focus-visible),
-  [role="button"]:focus,
-  [role="button"]:focus-visible,
-  [role="button"]:active {
-    outline: none !important;
+  /* Keyboard focus only — mouse clicks stay clean via :focus-visible */
+  :focus {
+    outline: none;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
     box-shadow: none;
   }
 
-  a:focus,
   a:focus-visible,
-  a:active,
-  a:focus:not(:focus-visible) {
-    outline: none !important;
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+  }
+
+  [data-theme='professional'] a:focus-visible,
+  [data-theme='professional'] button:focus-visible,
+  [data-theme='professional'] [role="button"]:focus-visible,
+  [data-theme='professional'] summary:focus-visible,
+  [data-theme='professional'] input:focus-visible,
+  [data-theme='professional'] select:focus-visible,
+  [data-theme='professional'] textarea:focus-visible,
+  [data-theme='professional'] [tabindex]:not([tabindex="-1"]):focus-visible,
+  [data-theme='modern'] a:focus-visible,
+  [data-theme='modern'] button:focus-visible,
+  [data-theme='modern'] [role="button"]:focus-visible,
+  [data-theme='modern'] summary:focus-visible,
+  [data-theme='modern'] input:focus-visible,
+  [data-theme='modern'] select:focus-visible,
+  [data-theme='modern'] textarea:focus-visible,
+  [data-theme='modern'] [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 138, 61, 0.25);
+  }
+
+  [data-theme='cyberpunk'] a:focus-visible,
+  [data-theme='cyberpunk'] button:focus-visible,
+  [data-theme='cyberpunk'] [role="button"]:focus-visible,
+  [data-theme='cyberpunk'] summary:focus-visible,
+  [data-theme='cyberpunk'] [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  [data-theme='professional'] input::placeholder,
+  [data-theme='professional'] textarea::placeholder {
+    color: var(--text-dim);
+    opacity: 1;
   }
 
   body {
@@ -101,7 +154,7 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     text-transform: var(--text-transform);
     letter-spacing: var(--letter-spacing);
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
   }
 
   [data-theme='professional'] h1,
@@ -116,7 +169,7 @@ export const GlobalStyle = createGlobalStyle`
   [data-theme='modern'] h4,
   [data-theme='modern'] h5,
   [data-theme='modern'] h6 {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
     letter-spacing: -0.015em;
   }
@@ -134,11 +187,11 @@ export const GlobalStyle = createGlobalStyle`
 
   [data-theme='professional'] a,
   [data-theme='modern'] a {
-    color: #2563eb;
+    color: var(--neon-cyan);
     text-shadow: none;
 
     &:hover {
-      color: #1d4ed8;
+      color: var(--accent-hover);
       text-shadow: none;
       text-decoration: underline;
     }
@@ -158,7 +211,7 @@ export const GlobalStyle = createGlobalStyle`
 
   [data-theme='professional'] ::-webkit-scrollbar-thumb,
   [data-theme='modern'] ::-webkit-scrollbar-thumb {
-     background: #cbd5e1;
+     background: var(--border-strong);
      border-radius: 4px;
      &:hover {
        background: #94a3b8;
@@ -167,7 +220,7 @@ export const GlobalStyle = createGlobalStyle`
 
   [data-theme='professional'] ::selection,
   [data-theme='modern'] ::selection {
-    background: rgba(37, 99, 235, 0.15);
-    color: #0f172a;
+    background: rgba(255, 138, 61, 0.15);
+    color: var(--text-main);
   }
 `;

@@ -27,8 +27,13 @@ dist-ssr
 .env
 Edit your public profile _ LinkedIn.html
 
-# Screenshots written by verification/*.py runs are regenerated artifacts and
-# are not tracked. The historical screenshots already committed under
-# verification/ remain tracked; add future ones here only if they should not be.
+# Server credentials and Firebase local secret files
+.env.*
+!.env.example
+.secret*
+
 verification/error.png
 verification/*.tmp.png
+functions/lib/
+
+firebase.hosting.json

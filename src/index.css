@@ -1,3 +1,5 @@
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/space-grotesk-variable.ttf') format('truetype'); }
+
 :root {
   color-scheme: light dark;
   -webkit-font-smoothing: antialiased;
@@ -20,27 +22,20 @@ body {
   min-height: 100vh;
 }
 
-/* Remove ugly default browser focus outlines and black borders on selecting buttons */
+/* Base control reset — visible keyboard rings live in GlobalStyle (:focus-visible) */
 button,
 [role="button"],
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  outline: none;
   font-family: inherit;
   user-select: none;
   -webkit-user-select: none;
 }
 
-button:focus,
-button:focus-visible,
-button:active {
-  outline: none !important;
-}
-
-a:focus,
-a:focus-visible,
-a:active {
-  outline: none !important;
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) {
+  outline: none;
 }
 

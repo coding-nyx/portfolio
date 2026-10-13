@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-rook",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.mjs",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-functions": "^7.4.0"
+  }
+}

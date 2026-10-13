@@ -14,7 +14,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 24px;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
@@ -41,12 +41,12 @@ const ModalContent = styled.div`
 
   [data-theme='professional'] & ::-webkit-scrollbar-track,
   [data-theme='modern'] & ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: var(--surface-raised);
   }
 
   [data-theme='professional'] & ::-webkit-scrollbar-thumb,
   [data-theme='modern'] & ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--border-strong);
     border-radius: 4px;
 
     &:hover {
@@ -91,7 +91,7 @@ const CloseButton = styled.button`
         top: -40px; /* Position OUTSIDE the card */
         right: 0;
         font-size: 1.2rem;
-        color: white; /* White text on dark overlay */
+        color: var(--on-accent); /* White text on dark overlay */
         background: transparent;
         border-radius: 50%;
         width: 32px;
@@ -101,7 +101,7 @@ const CloseButton = styled.button`
         &:hover {
             opacity: 1;
             background: rgba(255,255,255,0.1);
-            color: white;
+            color: var(--on-accent);
             text-shadow: none;
         }
     }

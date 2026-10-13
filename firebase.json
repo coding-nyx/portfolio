@@ -9,6 +9,14 @@
     ],
     "rewrites": [
       {
+        "source": "/api/rook",
+        "function": {
+          "functionId": "rook",
+          "region": "us-central1",
+          "pinTag": true
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
@@ -62,5 +70,22 @@
         ]
       }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "rook",
+      "runtime": "nodejs22",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "*.log",
+        ".env*",
+        ".secret*"
+      ],
+      "predeploy": [
+        "npm run build:functions"
+      ]
+    }
+  ]
 }

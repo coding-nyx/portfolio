@@ -119,14 +119,9 @@ test('every case study separates problem, approach, scope and limitations', asyn
   }
 });
 
-test('the primary iOS project leads the project list', async () => {
+test('approved project island retains its six public project records', async () => {
   const { projects } = await importData();
-  const first = projects[0].name.toLowerCase();
-
-  assert.ok(
-    first.includes('ios'),
-    `Expected the iOS work to lead the list for the primary hiring lane, got "${projects[0].name}"`
-  );
+  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion App', 'Hermes Companion Web', 'a0090-meta (hub-11 OS)', 'FitPro Connect', 'Nexus']);
 });
 
 /* ------------------------------------------------------------------ *

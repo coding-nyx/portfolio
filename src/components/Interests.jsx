@@ -6,14 +6,14 @@ const InterestsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
-  padding: 5px;
+  padding: 4px;
 `;
 
 const InterestCard = styled.div`
   /* Cyberpunk style matching ProjectCard */
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--text-dim);
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,13 +24,13 @@ const InterestCard = styled.div`
   /* Professional Theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
     &:hover {
-      border-color: #3b82f6;
+      border-color: var(--accent-hover);
       box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
@@ -47,7 +47,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 `;
 
 const IconWrapper = styled.div`
@@ -57,7 +57,7 @@ const IconWrapper = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
   }
 `;
 
@@ -68,7 +68,7 @@ const Title = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 600;
   }
 `;
@@ -76,12 +76,12 @@ const Title = styled.h4`
 const Subtitle = styled.p`
   font-size: 0.78rem;
   color: #ccc;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
   line-height: 1.4;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #64748b;
+    color: var(--text-dim);
   }
 `;
 
@@ -89,15 +89,15 @@ const Tag = styled.span`
   font-size: 0.68rem;
   background: var(--neon-cyan);
   color: var(--bg-color);
-  padding: 2px 6px;
+  padding: 4px 8px;
   font-weight: bold;
   align-self: flex-start;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    color: var(--text-dim);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     font-weight: 500;
   }

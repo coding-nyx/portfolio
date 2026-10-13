@@ -8,9 +8,9 @@ import { FaMapMarkerAlt, FaEnvelope, FaBolt, FaRobot, FaArrowRight, FaPaperPlane
 const ContactGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: 20px;
+  gap: 24px;
   align-items: stretch;
-  padding: 5px;
+  padding: 4px;
 
   @media (max-width: 868px) {
     grid-template-columns: 1fr;
@@ -21,7 +21,7 @@ const ContactGrid = styled.div`
 const InfoCard = styled.div`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--text-dim);
-  padding: 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,7 +31,7 @@ const InfoCard = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -57,13 +57,13 @@ const InfoTitle = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
   }
 `;
 
 const StatusBadge = styled.span`
   font-size: 0.68rem;
-  padding: 2px 8px;
+  padding: 4px 8px;
   background: rgba(34, 197, 94, 0.15);
   border: 1px solid #22c55e;
   color: #22c55e;
@@ -82,9 +82,9 @@ const StatusBadge = styled.span`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f0fdf4;
+    background: var(--success-soft);
     border-color: #86efac;
-    color: #166534;
+    color: var(--neon-green);
     border-radius: 4px;
   }
 `;
@@ -92,14 +92,14 @@ const StatusBadge = styled.span`
 const MetaList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   font-size: 0.84rem;
 `;
 
 const MetaItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   color: var(--text-main);
 
   svg {
@@ -109,10 +109,10 @@ const MetaItem = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #334155;
+    color: var(--text-muted);
 
     svg {
-      color: #2563eb;
+      color: var(--neon-cyan);
     }
   }
 
@@ -128,7 +128,7 @@ const MetaItem = styled.div`
     [data-theme='professional'] &,
     [data-theme='modern'] & {
       &:hover {
-        color: #2563eb;
+        color: var(--neon-cyan);
       }
     }
   }
@@ -138,7 +138,7 @@ const RookCallout = styled.div`
   background: rgba(0, 243, 255, 0.05);
   border: 1px solid var(--neon-cyan);
   padding: 12px;
-  margin-top: 6px;
+  margin-top: 8px;
 
   [data-theme='cyberpunk'] & {
     clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
@@ -146,8 +146,8 @@ const RookCallout = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
   }
 `;
@@ -167,13 +167,13 @@ const RookChatBtn = styled.button`
   background: transparent;
   border: 1px solid var(--neon-pink);
   color: var(--neon-pink);
-  padding: 6px 12px;
+  padding: 8px 8px;
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   transition: all 0.2s ease;
 
   [data-theme='cyberpunk'] & {
@@ -187,14 +187,14 @@ const RookChatBtn = styled.button`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #eff6ff;
-    color: #2563eb;
-    border: 1px solid #bfdbfe;
+    background: var(--accent-soft);
+    color: var(--neon-cyan);
+    border: 1px solid var(--accent-border);
     border-radius: 6px;
 
     &:hover {
-      background: #2563eb;
-      color: #ffffff;
+      background: var(--neon-cyan);
+      color: var(--on-accent);
     }
   }
 `;
@@ -210,28 +210,27 @@ const Input = styled.input`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--text-dim);
   color: var(--text-main);
-  padding: 10px 12px;
+  padding: 8px 8px;
   font-family: inherit;
   font-size: 0.85rem;
 
-  &:focus {
-    outline: none;
+  &:focus-visible {
     border-color: var(--neon-cyan);
     box-shadow: 0 0 5px var(--neon-cyan);
   }
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
     border-radius: 6px;
-    color: #0f172a;
+    color: var(--text-main);
     font-size: 0.88rem;
-    padding: 10px 12px;
+    padding: 8px 8px;
 
-    &:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    &:focus-visible {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 0 3px rgba(255, 138, 61, 0.15);
     }
   }
 `;
@@ -240,31 +239,30 @@ const TextArea = styled.textarea`
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--text-dim);
   color: var(--text-main);
-  padding: 10px 12px;
+  padding: 8px 8px;
   font-family: inherit;
   font-size: 0.85rem;
   flex: 1;
   min-height: 90px;
   resize: vertical;
 
-  &:focus {
-    outline: none;
+  &:focus-visible {
     border-color: var(--neon-cyan);
     box-shadow: 0 0 5px var(--neon-cyan);
   }
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
+    background: var(--card-bg);
+    border: 1px solid var(--border-strong);
     border-radius: 6px;
-    color: #0f172a;
+    color: var(--text-main);
     font-size: 0.88rem;
-    padding: 10px 12px;
+    padding: 8px 8px;
 
-    &:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    &:focus-visible {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 0 3px rgba(255, 138, 61, 0.15);
     }
   }
 `;
@@ -273,7 +271,7 @@ const Button = styled.button`
   background: var(--neon-pink);
   color: #fff;
   border: none;
-  padding: 10px 16px;
+  padding: 8px 8px;
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
@@ -298,7 +296,8 @@ const Button = styled.button`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #2563eb;
+    background: var(--neon-cyan);
+    color: var(--on-accent);
     border-radius: 6px;
     clip-path: none;
     text-transform: none;
@@ -306,8 +305,8 @@ const Button = styled.button`
     font-weight: 600;
 
     &:hover:not(:disabled) {
-      background: #1d4ed8;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+      background: var(--accent-hover);
+      box-shadow: 0 4px 10px rgba(255, 138, 61, 0.25);
       transform: translateY(-1px);
     }
   }
@@ -415,7 +414,7 @@ const Contact = ({ onOpenRook }) => {
           <div>
             <InfoHeader>
               <InfoTitle>Direct Uplink</InfoTitle>
-              <StatusBadge>Available</StatusBadge>
+              {/* "Available" badge hidden 2026-10-13: quiet job search (Lead). Re-enable when Nyx says. */}
             </InfoHeader>
             <MetaList style={{ marginTop: '14px' }}>
               <MetaItem>
@@ -428,7 +427,7 @@ const Contact = ({ onOpenRook }) => {
               </MetaItem>
               <MetaItem>
                 <FaBolt size={14} />
-                <span>Typically responds within 24h</span>
+                <span>Send a message below</span>
               </MetaItem>
             </MetaList>
           </div>
