@@ -143,10 +143,13 @@ const AchievementsContainer = styled.div`
 `;
 
 const Achievements = () => {
+  // Entries flagged pendingConfirmation stay in data but are not rendered.
+  const visible = achievementsData.filter((a) => !a.pendingConfirmation);
+  if (visible.length === 0) return null;
   return (
     <PixelCard title="Achievements">
       <AchievementsContainer>
-        {achievementsData.map((item, idx) => (
+        {visible.map((item, idx) => (
           <AchievementCard key={idx}>
             <div>
               <Header>

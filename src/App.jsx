@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { useTheme } from './context/ThemeContext';
 import Hero from './components/Hero';
+import EntryHero from './components/EntryHero';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import { FeaturedProjects, OtherProjects } from './components/Projects';
@@ -13,122 +14,101 @@ import BootSequence from './components/BootSequence';
 import Certifications from './components/Certifications';
 import Awards from './components/Awards';
 import Testimonials from './components/Testimonials';
-import SystemAlert from './components/SystemAlert';
 import { logSystemLogin } from './firebase';
 import BackToTop from './components/common/BackToTop';
 import CyberpunkOverlay from './components/effects/CyberpunkOverlay';
 import ThemeSwitcher from './components/common/ThemeSwitcher';
-import MobileNav from './components/common/MobileNav';
 import SkipLink from './components/common/SkipLink';
 import IOSSandbox from './components/sandbox/IOSSandbox';
 import RookAgentModal from './components/agent/RookAgentModal';
+import NavA from './components/nav/NavA';
+import { chapterLabel } from './data/chapters';
 
 const MainWrapper = styled.div`
   min-height: 100vh;
   position: relative;
-  /* Ensure centering on ultra-wide screens */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-top: var(--navh);
 `;
 
-const BentoGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--grid-gap);
-  padding: 20px;
+// Chapters stack in the locked order (scope 2026-10-13). Spacing scale 12/16/24/32.
+const Chapters = styled.main`
   width: 100%;
   max-width: 1400px;
-  /* Margin auto is good, but flex center on parent is safer for some browsers */
   margin: 0 auto;
-  flex: 1;
-  padding-bottom: 50px;
+  padding: 0 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 
-  @media (max-width: 768px) {
-    padding-bottom: 100px; /* Extra padding for mobile nav */
-  }
-
-  /* Mobile Layout — recruiter path: Featured → Experience → Skills → Other */
-  grid-template-areas:
-    "H"
-    "J"
-    "E"
-    "S"
-    "O"
-    "B"
-    "L"
-    "A"
-    "W"
-    "I"
-    "T"
-    "C";
-
-  /* Tablet Layout */
-  @media (min-width: 700px) and (max-width: 1100px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "H H"
-      "J J"
-      "E E"
-      "S S"
-      "O O"
-      "B B"
-      "L L"
-      "A W"
-      "T T"
-      "I I"
-      "C C";
-  }
-
-  /* Desktop Layout */
-  @media (min-width: 1101px) {
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: min-content;
-
-    grid-template-areas:
-      "H H H H"
-      "J J J J"
-      "E E E E"
-      "S S S S"
-      "O O O O"
-      "B B B B"
-      "L L A W"
-      "T T I I"
-      "C C C C";
+  @media (max-width: 700px) {
+    padding: 0 12px 24px;
+    gap: 24px;
   }
 `;
 
-// Wrappers to assign grid areas
-const HeroArea = styled.div` grid-area: H; `;
-const SkillsArea = styled.div` grid-area: S; `;
-const ExperienceArea = styled.div` grid-area: E; `;
-const ProjectsArea = styled.div` grid-area: J; `;
-const OtherProjectsArea = styled.div` grid-area: O; `;
-const SandboxArea = styled.div` grid-area: B; `;
-const AchievementsArea = styled.div` grid-area: A; `;
-const InterestsArea = styled.div` grid-area: I; `;
-const ContactArea = styled.div` grid-area: C; `;
-const CertificationsArea = styled.div` grid-area: L; `;
-const AwardsArea = styled.div` grid-area: W; `;
-const TestimonialsArea = styled.div` grid-area: T; `;
+const Group = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
 
+  @media (min-width: 1101px) {
+    grid-template-columns: ${({ $cols }) => $cols || '1fr'};
+  }
+`;
+
+const Chapter = ({ id, children, full }) => (
+  <section id={id} className={full ? 'chapter full' : 'chapter'} aria-labelledby={`h-${id}`}>
+    {id !== 'entry' && <p className="chl" id={`h-${id}`} tabIndex={-1}>{chapterLabel(id)}</p>}
+    {children}
+  </section>
+);
+
+const ResumeCard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  p { margin: 0; flex: 1 1 240px; color: var(--text-main); }
+`;
 
 function App() {
   const [bootComplete, setBootComplete] = useState(false);
   const [rookPrompt, setRookPrompt] = useState(null);
+  const [rookOpen, setRookOpen] = useState(false);
+  const askOpener = useRef(null);
   const { theme } = useTheme();
+  const resumeUrl = theme === 'cyberpunk' ? '/resume-cyberpunk.pdf' : '/resume-modern.pdf';
 
   useEffect(() => {
-    if (bootComplete) {
-      logSystemLogin();
-    }
+    if (bootComplete) logSystemLogin();
   }, [bootComplete]);
 
-  // Apply theme to body via data-attribute
   useEffect(() => {
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
+
+  const askRook = (prompt) => setRookPrompt(prompt);
 
   return (
     <>
@@ -139,37 +119,65 @@ function App() {
         <MainWrapper>
           <SkipLink />
           <CyberpunkOverlay />
-          <SystemAlert onOpenRook={(prompt) => setRookPrompt(prompt || "Tell me about Raj, his background, and his work")} />
-          <BentoGrid id="main-content">
-            <HeroArea><Hero onAskRook={(prompt) => setRookPrompt(prompt)} /></HeroArea>
-            <ProjectsArea><FeaturedProjects /></ProjectsArea>
-            <ExperienceArea><Experience /></ExperienceArea>
-            <SkillsArea><Skills /></SkillsArea>
-            <OtherProjectsArea><OtherProjects /></OtherProjectsArea>
-            <SandboxArea><IOSSandbox /></SandboxArea>
-            <CertificationsArea><Certifications /></CertificationsArea>
-            <TestimonialsArea><Testimonials /></TestimonialsArea>
-            <AchievementsArea><Achievements /></AchievementsArea>
-            <AwardsArea><Awards /></AwardsArea>
-            <InterestsArea><Interests /></InterestsArea>
-            <ContactArea><Contact onOpenRook={(prompt) => setRookPrompt(prompt)} /></ContactArea>
-          </BentoGrid>
+          <NavA
+            resumeUrl={resumeUrl}
+            askOpen={rookOpen}
+            onAsk={(el) => { askOpener.current = el; setRookOpen(true); }}
+          />
+          <Chapters id="main-content">
+            <Chapter id="entry" full><EntryHero resumeUrl={resumeUrl} /></Chapter>
+            <Chapter id="bio">
+              <Group $cols="3fr 1fr">
+                <Hero onAskRook={askRook} />
+                <Interests />
+              </Group>
+            </Chapter>
+            <Chapter id="experience"><Experience /></Chapter>
+            <Chapter id="projects">
+              <Group>
+                <FeaturedProjects />
+                <OtherProjects />
+                <IOSSandbox />
+              </Group>
+            </Chapter>
+            <Chapter id="skills"><Skills /></Chapter>
+            <Chapter id="achievements">
+              <Group>
+                <Certifications />
+                <Group $cols="1fr 1fr">
+                  <Achievements />
+                  <Awards />
+                </Group>
+                <Testimonials />
+              </Group>
+            </Chapter>
+            <Chapter id="resume">
+              <ResumeCard>
+                <p>Resume for Raj Kumar S, iOS engineer at Zoho since May 2022.</p>
+                <a href="/resume-modern.pdf" target="_blank" rel="noreferrer">Open resume (PDF)</a>
+                <a href="/resume-cyberpunk.pdf" target="_blank" rel="noreferrer">Terminal edition (PDF)</a>
+              </ResumeCard>
+            </Chapter>
+            <Chapter id="contact"><Contact onOpenRook={askRook} /></Chapter>
+          </Chapters>
           <BackToTop />
-          <MobileNav />
           <RookAgentModal
+            open={rookOpen}
+            onOpenChange={setRookOpen}
+            returnFocusRef={askOpener}
             externalPrompt={rookPrompt}
             onClearExternalPrompt={() => setRookPrompt(null)}
-            onOpenResume={() => window.open(theme === 'cyberpunk' ? '/resume-cyberpunk.pdf' : '/resume-modern.pdf', '_blank')}
+            onOpenResume={() => window.open(resumeUrl, '_blank')}
           />
-          <div style={{textAlign: 'center', padding: '20px', color: 'var(--text-dim)', fontSize: '0.8rem', position: 'relative', zIndex: 10, width: '100%'}}>
+          <footer style={{ textAlign: 'center', padding: '24px', color: 'var(--text-dim)', fontSize: '0.8rem', position: 'relative', zIndex: 10, width: '100%' }}>
             <ThemeSwitcher />
-            <br/>
-            SYSTEM STATUS: ONLINE | © {new Date().getFullYear()} RAJ KUMAR S
-          </div>
+            <br />
+            © {new Date().getFullYear()} RAJ KUMAR S
+          </footer>
         </MainWrapper>
       )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

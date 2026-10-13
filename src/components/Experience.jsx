@@ -1,3 +1,4 @@
+import { publicText } from '../utils/publicText';
 import styled from 'styled-components';
 import PixelCard from './common/PixelCard';
 import { experienceData } from '../data/portfolio';
@@ -118,13 +119,13 @@ const Experience = () => {
               <Dates>{exp.dates}</Dates>
             </JobHeader>
             <Role>{exp.role}</Role>
-            {exp.description && <Description>{exp.description}</Description>}
+            {exp.description && <Description>{publicText(exp.description)}</Description>}
             {exp.projects && (
               <ProjectList>
                 {exp.projects.map((proj, pIndex) => (
                   <ProjectItem key={pIndex}>
                     <ThemedIcon ascii=">> " icon={<FaChevronRight size={12} style={{marginTop: '3px'}} />} />
-                    <span><strong>{proj.name}:</strong> {proj.desc}</span>
+                    <span><strong>{proj.name}:</strong> {publicText(proj.desc)}</span>
                   </ProjectItem>
                 ))}
               </ProjectList>

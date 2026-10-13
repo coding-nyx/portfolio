@@ -8,7 +8,7 @@ export const VFS = {
       content: `Raj Kumar S
 Role: iOS Developer | Full-Cycle & Agentic Systems
 Location: Chennai, India
-Experience: 3+ years at Zoho (Member of Technical Staff)
+Experience: Zoho, Member of Technical Staff since May 2022
 Core Stack: Swift, SwiftUI, UIKit, Agentic Coding, AI/LLMs, Linux Kernel, Kotlin, React`
     },
     'resume.pdf': {

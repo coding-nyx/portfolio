@@ -15,7 +15,7 @@ export async function askRookAgent({ messages, onChunk, onAction }) {
 
 RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
 • Role: iOS Developer | Full-Cycle & Agentic Systems (Chennai, India)
-• Professional Experience & Key Innovations at Zoho (May 2022 - Present, 3+ yrs as Member of Technical Staff):
+• Professional Experience & Key Innovations at Zoho (Member of Technical Staff since May 2022):
   - Architected & developed an internal **Agentic Component Development Framework**:
     * **What It Does**: A deterministic, config-driven agentic pipeline that automates software and UI component lifecycles from **Spec → Contract → QA Test Suite → Implementation Plan → Implementation → Gate Verification → Ship**.
     * **Working Mechanics**: Driven by a deterministic 14-step state machine orchestrating specialized LLM sub-agents (Spec Writer, Contract Generator, Planner, QA Author, Engineer, Verifier, Tracker) across parallel dev/QA tracks with cross-platform atomic locking. Pure Python stdlib-only with zero third-party dependencies.
@@ -27,7 +27,7 @@ RAJ'S PROFILE & TECHNICAL ARCHITECTURE:
     * **8 Declarative Quality Verification Gates**: Parameterized primitives preventing hallucinations or regressions: \`approval\`, \`state-field\`, \`manual-block\`, \`mode-gated\`, \`choice\`, \`command-check\`, \`artifact-exists\`, and \`lint\` (traceability, forbidden patterns, required patterns).
     * **Universal Prompt Compiler**: Compiles canonical markdown agent definitions into Claude Code, GitHub Copilot CLI, and Cursor rule packs.
     * **Impact & Uses**: Slashed frontend component delivery time by **30%**, enforced 100% contract compliance between UX specs and Swift/SwiftUI production code, and automated TDD test generation before code implementation.
-    * **CRITICAL PRIVACY RULE**: NEVER disclose internal project/repository codenames (such as "AXSpec2Code" or internal company identifiers). Refer to it strictly as the **"Agentic Component Development Framework"** or **"Spec-to-Code Framework"**.
+    * **CRITICAL PRIVACY RULE**: NEVER disclose internal project/repository codenames (or internal company identifiers). Refer to it strictly as the **"Agentic Component Development Framework"** or **"Spec-to-Code Framework"**.
   - Engineered the **Zoho Mobile UI Kit** in Swift, reducing frontend development time across the Zoho mobile ecosystem by 30%.
   - Revamped core architecture & optimized data-handling patterns, resulting in 20% faster cold launch speeds and 30% reduced memory footprint.
   - Previous: Zoho Project Trainee (Sep 2021 - May 2022), Zoho Intern (Apr 2021 - Jun 2021).
@@ -361,14 +361,14 @@ Thank you **${sender}**! I have forwarded your message and contact details (\`${
 
     // Case B: User introduced their name (e.g. "i am nyx, look to hire raj")
     if (hasIntroducedName) {
-      return `Hello **${contactInfo.name}**! It's fantastic to connect with you. Raj is open to high-impact iOS, systems, and agentic engineering opportunities.
+      return `Hello **${contactInfo.name}**! It's fantastic to connect with you.
 
 What is the best **email address or phone number** to reach you? Please share it right here in chat, and I will dispatch an instant notification directly to Raj's inbox so he can follow up with you promptly!
 [ACTION:PREFILL_FORM:${contactInfo.name}||${contactInfo.note}]`;
     }
 
     // Case C: General hire/contact intent without name or contact
-    return `Raj is actively open to high-impact iOS, systems, and agentic engineering opportunities!
+    return `Happy to pass a note to Raj.
 
 Who am I speaking with, and what is the best **email or phone number** to reach you? You can share your details right here in chat, and I will dispatch an immediate alert directly to Raj.
 [ACTION:SHOW_INLINE_CONTACT_FORM]`;
@@ -376,7 +376,7 @@ Who am I speaking with, and what is the best **email or phone number** to reach 
 
   // 6. Zoho Experience & Career
   if (query.includes('zoho') || query.includes('experience') || query.includes('work') || query.includes('job') || query.includes('career') || query.includes('role')) {
-    return `Raj has been a **Member of Technical Staff at Zoho** for over 3 years (since May 2022).
+    return `Raj has been a **Member of Technical Staff at Zoho** since May 2022.
 
 Major architectural impact:
 1. **Agentic Component Framework**: Built an internal workflow for automated UI component generation and testing.
@@ -446,7 +446,7 @@ Selected participant at India's premier nationwide hackathon, collaborating on r
 
   // 13. General About / Background
   if (query.includes('raj') || query.includes('who') || query.includes('about') || query.includes('background') || query.includes('intro')) {
-    return `**Raj Kumar S** is an iOS Developer and Agentic Systems Engineer with a deep focus on mobile architecture and low-level systems. He is currently a Member of Technical Staff at Zoho (3+ years), based in Chennai, India.
+    return `**Raj Kumar S** is an iOS Developer and Agentic Systems Engineer with a deep focus on mobile architecture and low-level systems. He is currently a Member of Technical Staff at Zoho since May 2022, based in Chennai, India.
 
 Key highlights of his work & background:
 • **iOS Architecture & Design Systems**: Core contributor at Zoho, engineering the Zoho Mobile UI Kit in Swift, slashing UI development turnaround by 30%, and optimizing cold launch performance by 20%.

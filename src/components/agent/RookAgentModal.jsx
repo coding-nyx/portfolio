@@ -7,71 +7,34 @@ import { sendRookAlert } from '../../services/emailService';
 import { logAgentInteraction } from '../../firebase';
 import { FaPaperPlane, FaTimes, FaRobot, FaCheckCircle, FaEnvelope } from 'react-icons/fa';
 
-const FloatingRookButton = styled(motion.button)`
+const Scrim = styled.div`
   position: fixed;
-  bottom: 80px;
-  left: 20px;
-  z-index: 995;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 9999px;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  backdrop-filter: blur(12px);
-  transition: all 0.25s ease;
-
-  [data-theme='cyberpunk'] & {
-    background: rgba(10, 10, 20, 0.9);
-    border: 1px solid var(--neon-cyan);
-    color: var(--neon-cyan);
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-    border-radius: 0;
-
-    &:hover {
-      background: var(--neon-cyan);
-      color: #000;
-      box-shadow: 0 0 25px var(--neon-cyan);
-      transform: translateY(-2px);
-    }
-  }
-
-  [data-theme='professional'] &,
-  [data-theme='modern'] & {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    color: #0f172a;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-
-    &:hover {
-      border-color: #2563eb;
-      color: #2563eb;
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15);
-      transform: translateY(-2px);
-    }
-  }
-
-  @media (max-width: 768px) {
-    bottom: 80px;
-    left: 15px;
-    padding: 8px 14px;
-    font-size: 0.78rem;
-  }
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.56);
 `;
 
+// Rook popover (opened only from the nav "Ask" control). Anchored under the bar at 1280; bottom sheet at 390.
 const ChatDrawer = styled(motion.div)`
   position: fixed;
-  bottom: 90px;
-  left: 20px;
+  top: 72px;
+  right: 24px;
   width: 400px;
-  max-width: calc(100vw - 40px);
+  max-width: calc(100vw - 48px);
   height: 520px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 96px);
   z-index: 1000;
+
+  @media (max-width: 700px) {
+    top: auto;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100vh - 80px);
+  }
+
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -222,10 +185,9 @@ const MessageBubble = styled.div`
 
 const QuickChips = styled.div`
   display: flex;
-  gap: 6px;
-  padding: 6px 16px 10px 16px;
-  overflow-x: auto;
-  white-space: nowrap;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px 12px 16px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -505,8 +467,11 @@ const SendButton = styled.button`
   }
 `;
 
-export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenResume }) => {
-  const [isOpen, setIsOpen] = useState(() => {
+export const RookAgentModal = ({ open: isOpen, onOpenChange, returnFocusRef, externalPrompt, onClearExternalPrompt, onOpenResume }) => {
+  const setIsOpen = (v) => onOpenChange && onOpenChange(v);
+  const drawerRef = useRef(null);
+  const inputRef = useRef(null);
+  const [_initialOpen] = useState(() => {
     if (typeof window !== 'undefined') {
       return new URLSearchParams(window.location.search).get('agent') === 'open';
     }
@@ -515,7 +480,7 @@ export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenRe
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hello! I am **Rook**, Raj's portfolio assistant. Ask me anything about Raj, his iOS engineering at Zoho, systems projects, or background. If you'd like to get in touch with Raj, feel free to leave a message right here in chat, use the quick message card, or the contact section below!"
+      content: "Hi, I’m **Rook**. I answer a few preset questions about Raj’s work. Ask me anything about Raj, his iOS engineering at Zoho, systems projects, or background. If you'd like to get in touch with Raj, feel free to leave a message right here in chat, use the quick message card, or the contact section below!"
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -535,8 +500,37 @@ export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenRe
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ block: 'nearest' });
   }, [messages]);
+
+  useEffect(() => { if (_initialOpen) setIsOpen(true); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Focus trap + Esc closes and returns focus to the opener.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const t = setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 0);
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeRook(); return; }
+      if (e.key !== 'Tab' || !drawerRef.current) return;
+      const f = [...drawerRef.current.querySelectorAll('button,input,textarea,a[href],[tabindex]:not([tabindex="-1"])')]
+        .filter((x) => !x.disabled && x.getClientRects().length > 0);
+      if (!f.length) return;
+      const a = f[0], z = f[f.length - 1];
+      if (!drawerRef.current.contains(document.activeElement)) { e.preventDefault(); a.focus(); }
+      else if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    };
+    document.addEventListener('keydown', onKey, true);
+    return () => { clearTimeout(t); document.removeEventListener('keydown', onKey, true); };
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const closeRook = () => {
+    setIsOpen(false);
+    const el = returnFocusRef?.current;
+    const visible = el && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden';
+    const fallback = [...document.querySelectorAll('button[data-ask]')].find((x) => x.getClientRects().length > 0 && getComputedStyle(x).visibility !== 'hidden');
+    setTimeout(() => (visible ? el : fallback)?.focus({ preventScroll: true }), 0);
+  };
 
   // Handle external prompt passed from VirtualShell (`ask <query>`)
   useEffect(() => {
@@ -646,25 +640,18 @@ export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenRe
 
   return (
     <>
-      <FloatingRookButton
-        onClick={() => {
-          const next = !isOpen;
-          setIsOpen(next);
-          if (next) {
-            logAgentInteraction('rook_chat_opened', { source: 'floating_button' });
-          }
-        }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Open Rook Chat"
-      >
-        <FaRobot size={16} />
-        <span>Rook</span>
-      </FloatingRookButton>
 
       <AnimatePresence>
+        {isOpen && <Scrim key="scrim" onClick={closeRook} />}
         {isOpen && (
           <ChatDrawer
+            key="drawer"
+            ref={drawerRef}
+            id="rook-popover"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="rook-title"
+            aria-describedby="rook-sub"
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -674,15 +661,16 @@ export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenRe
               <HeaderTitle>
                 <FaRobot color="#22c55e" size={18} />
                 <div>
-                  Rook Agent
-                  <small>Live GitHub Context</small>
+                  <h2 id="rook-title" style={{ margin: 0, fontSize: '1rem', lineHeight: 1.2 }}>Rook</h2>
+                  <small id="rook-sub">Preset answers about Raj</small>
                 </div>
               </HeaderTitle>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  type="button"
+                  onClick={closeRook}
                   style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontSize: '1rem' }}
-                  aria-label="Close Chat"
+                  aria-label="Close Rook"
                 >
                   <FaTimes />
                 </button>
@@ -747,47 +735,38 @@ export const RookAgentModal = ({ externalPrompt, onClearExternalPrompt, onOpenRe
               <div ref={messagesEndRef} />
             </MessagesContainer>
 
-            <QuickChips>
-              <Chip onClick={() => {
+            <QuickChips aria-label="Suggested questions">
+              <Chip type="button" onClick={() => {
                 logAgentInteraction('rook_chip_click', { chip: 'About Raj' });
                 handleSendMessage("Tell me about Raj and his background");
               }}>
-                About Raj
+                What does Raj work on?
               </Chip>
-              <Chip onClick={() => {
+              <Chip type="button" onClick={() => {
                 logAgentInteraction('rook_chip_click', { chip: 'Linux & Systems' });
                 handleSendMessage("What did Raj build for Linux and embedded systems?");
               }}>
-                Linux & Systems
+                Linux & systems work
               </Chip>
-              <Chip onClick={() => {
-                logAgentInteraction('rook_chip_click', { chip: 'GitHub Repos' });
-                handleSendMessage("What are his live GitHub repos?");
-              }}>
-                GitHub Repos
-              </Chip>
-              <Chip onClick={() => {
+              <Chip type="button" onClick={() => {
                 logAgentInteraction('rook_chip_click', { chip: 'Leave Message' });
                 setShowInlineForm(prev => !prev);
               }}>
-                <FaEnvelope size={10} /> Leave a Message
-              </Chip>
-              <Chip onClick={() => {
-                logAgentInteraction('rook_chip_click', { chip: 'Contact Form' });
-                scrollToContactSection();
-              }}>
-                Contact Form ↓
+                <FaEnvelope size={10} /> Leave a message
               </Chip>
             </QuickChips>
 
             <InputForm onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}>
+              <label htmlFor="rook-q" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>Ask Rook a question</label>
               <TextInput
-                placeholder="Ask Rook Agent anything..."
+                id="rook-q"
+                ref={inputRef}
+                placeholder="Ask about Raj (stays on this page)"
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
                 disabled={isLoading}
               />
-              <SendButton type="submit" disabled={isLoading || !inputValue.trim()} aria-label="Send Message">
+              <SendButton type="submit" disabled={isLoading || !inputValue.trim()} aria-label="Send to Rook">
                 <FaPaperPlane size={13} />
               </SendButton>
             </InputForm>

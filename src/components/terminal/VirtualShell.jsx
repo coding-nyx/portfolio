@@ -83,7 +83,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
     { text: "NYX-OS Kernel v6.18 (hub-11 arm64)", color: "var(--neon-green)" },
     { text: "Type 'help' for command list | 'ask <query>' to chat with Rook Agent.", color: "var(--text-dim)" },
     { text: "guest@nyx-hub11:~$ cat bio.txt", color: "var(--neon-pink)" },
-    { text: "Passionate iOS Developer with 3+ years at Zoho. Expert in modular Swift UI architecture, agentic component workflows, and low-level Linux systems.", color: "var(--text-main)" }
+    { text: "Passionate iOS Developer at Zoho since May 2022. Expert in modular Swift UI architecture, agentic component workflows, and low-level Linux systems.", color: "var(--text-main)" }
   ]);
   const [inputVal, setInputVal] = useState('');
   const [cmdHistory, setCmdHistory] = useState([]);

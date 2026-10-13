@@ -1,3 +1,4 @@
+import { publicText } from '../utils/publicText';
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PixelCard from './common/PixelCard';
@@ -281,7 +282,7 @@ const ModalBtn = styled(SocialBtn)`
 const Hero = ({ onAskRook }) => {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [iframeLoading, setIframeLoading] = useState(true);
-  const bioText = profileData.summary;
+  const bioText = publicText(profileData.summary);
   const { theme } = useTheme();
 
   // Determine resume file based on theme (cyberpunk vs professional)

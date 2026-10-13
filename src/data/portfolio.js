@@ -155,7 +155,9 @@ export const achievementsData = [
   {
     title: "Spartan Racer",
     event: "Obstacle Course",
-    description: "Completed the 10km obstacle race in top 10%."
+    description: "Completed the 10km obstacle race in top 10%.",
+    // Hidden on page until Nyx confirms "top 10%" (Lead 2026-10-13). Data kept.
+    pendingConfirmation: true
   }
 ];
 
