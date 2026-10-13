@@ -20,14 +20,14 @@ const pulseAnim = keyframes`
 const SectionStack = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
 `;
 
 const FeaturedGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 5px;
+  gap: 24px;
+  padding: 4px;
 
   @media (max-width: 1023px) {
     grid-template-columns: 1fr;
@@ -38,13 +38,13 @@ const OtherGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
-  padding: 5px;
+  padding: 4px;
 `;
 
 const ProjectCard = styled.div`
   background: rgba(0,0,0,0.3);
   border: 1px solid var(--text-dim);
-  padding: 15px;
+  padding: 16px;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@ const ProjectCard = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     border-radius: 10px;
@@ -66,7 +66,7 @@ const ProjectCard = styled.div`
 
     &:hover,
     &:focus-within {
-      border-color: #3b82f6;
+      border-color: var(--accent-hover);
       box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
@@ -136,7 +136,7 @@ const ProjectHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     position: relative;
     z-index: 1;
     gap: 8px;
@@ -154,7 +154,7 @@ const ProjectTitle = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
   }
 
@@ -169,9 +169,9 @@ const ProjectTitle = styled.h4`
 
 const TechStack = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 4px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   position: relative;
   z-index: 1;
 `;
@@ -180,14 +180,14 @@ const TechTag = styled.span`
   font-size: 0.7rem;
   background: var(--neon-cyan);
   color: var(--bg-color);
-  padding: 2px 5px;
+  padding: 4px 4px;
   font-weight: bold;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    color: var(--text-dim);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     font-weight: 500;
   }
@@ -203,7 +203,7 @@ const Description = styled.p`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #334155;
+    color: var(--text-muted);
   }
 `;
 
@@ -211,15 +211,15 @@ const Status = styled.span`
   font-size: 0.7rem;
   color: var(--neon-green);
   border: 1px solid var(--neon-green);
-  padding: 2px 5px;
+  padding: 4px 4px;
   white-space: nowrap;
   animation: ${pulseAnim} 2s infinite;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     border: 1px solid #a7f3d0;
-    background: #ecfdf5;
-    color: #059669;
+    background: var(--success-soft);
+    color: var(--neon-green);
     border-radius: 4px;
     animation: none;
     font-weight: 600;
@@ -227,9 +227,9 @@ const Status = styled.span`
 `;
 
 const ProjectLinks = styled.div`
-  margin-top: 15px;
+  margin-top: 16px;
   display: flex;
-  gap: 15px;
+  gap: 16px;
   position: relative;
   z-index: 1;
 `;
@@ -239,7 +239,7 @@ const ProjectLink = styled.a`
   font-size: 0.9rem;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   text-decoration: none;
 
   &:hover {
@@ -249,11 +249,11 @@ const ProjectLink = styled.a`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
     font-weight: 600;
 
     &:hover {
-      color: #1d4ed8;
+      color: var(--accent-hover);
       text-shadow: none;
       text-decoration: underline;
     }
@@ -270,7 +270,7 @@ const SubSectionTitle = styled.h3`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #64748b;
+    color: var(--text-dim);
   }
 `;
 

@@ -26,3 +26,8 @@ dist-ssr
 .firebase/
 .env
 Edit your public profile _ LinkedIn.html
+
+# Server credentials and Firebase local secret files
+.env.*
+!.env.example
+.secret*

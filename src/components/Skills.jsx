@@ -18,14 +18,14 @@ const GROUP_ORDER = ['Mobile', 'Language / Frontend', 'Backend / AI / OS'];
 const SkillsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 5px;
+  gap: 16px;
+  padding: 4px;
 `;
 
 const CategoryBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 `;
 
 const CategoryTitle = styled.h4`
@@ -38,14 +38,14 @@ const CategoryTitle = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
   }
 `;
 
 const ChipRow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
 `;
 
 const Chip = styled.span`
@@ -53,16 +53,16 @@ const Chip = styled.span`
   align-items: center;
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 4px 8px;
   background: var(--neon-cyan);
   color: var(--bg-color);
   border: 1px solid transparent;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    color: #334155;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
     border-radius: 9999px;
     font-weight: 500;
   }

@@ -1,3 +1,5 @@
+import { projects, skillsData } from '../../data/portfolio';
+import { publicText } from '../../utils/publicText';
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { normalizePath, getNode, getCompletions } from '../../utils/vfs';
@@ -7,7 +9,7 @@ const ShellWrapper = styled.div`
   background: rgba(8, 8, 16, 0.85);
   border: 1px solid var(--neon-cyan);
   box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
-  padding: 14px;
+  padding: 16px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.85rem;
   min-height: 180px;
@@ -54,7 +56,7 @@ const PathPrefix = styled.span`
 const InputRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin-top: 4px;
 `;
 
@@ -66,6 +68,7 @@ const HiddenInput = styled.input`
   font-size: inherit;
   outline: none;
   flex: 1;
+  min-width: 0;
   padding: 0;
   caret-color: var(--neon-cyan);
 `;
@@ -185,7 +188,7 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
   clear             - Clear terminal buffer
   projects          - List active and completed projects
   skills            - Display technical capabilities
-  theme [light|cyber]- Switch portfolio visual theme
+  theme [portfolio|cyber]- Switch portfolio visual theme
   resume            - Open official resume PDF modal
   goto <section>    - Navigate to (projects, experience, skills, contact)
   ask <query>       - Query Rook Agent
@@ -257,35 +260,22 @@ export const VirtualShell = ({ onOpenResume, onAskRook }) => {
 
       case 'projects':
         output.push({
-          text: `FEATURED PROJECTS:
-• [Hermes Companion App]   - Native Android companion for self-hosted Hermes AI fleet (Tailscale mesh)
-• [Hermes Companion Web]   - Web companion: pair, chat, device control, notification forwarding
-• [a0090-meta (hub-11 OS)] - Mainline Linux 6.18 OS distribution for RK3588 NVR
-• [FitPro Connect]         - Comprehensive platform for fitness trainers (React/Firebase/Stripe)
-• [Nexus (AGNES)]          - Unified multi-agent wellness platform
-• [Agentic Component Framework] - Production spec-to-code pipeline (Zoho)
-(Type 'goto projects' to view cards or 'cat projects/<name>.md')`,
+          text: projects.map(p => `${p.featured ? 'Featured' : 'Other'}: ${p.name} — ${publicText(p.description)}`).join('\n'),
           color: "var(--neon-green)"
         });
         break;
 
       case 'skills':
         output.push({
-          text: `SKILL MATRIX:
-Swift [====================] 90% (iOS, UIKit, SwiftUI, Architecture)
-Agentic Coding [===========] 90% (Fleet orchestration, Tool calling)
-AI / LLMs [================] 85% (MiniMax, Gemini, RAG, OpenAI API)
-Linux Kernel [=============] 80% (RK3588, Device Trees, U-Boot)
-React & Frontend [=========] 70%
-Kotlin & Android [=========] 60%`,
+          text: skillsData.map(s => `${s.name}: ${s.level}%`).join('\n'),
           color: "var(--neon-yellow)"
         });
         break;
 
       case 'theme':
-        if (arg.toLowerCase() === 'light' || arg.toLowerCase() === 'professional') {
+        if (arg.toLowerCase() === 'portfolio' || arg.toLowerCase() === 'light' || arg.toLowerCase() === 'professional') {
           if (theme !== 'professional') toggleTheme();
-          output.push({ text: "Switched to Professional Light theme.", color: "var(--neon-cyan)" });
+          output.push({ text: "Switched to Portfolio theme.", color: "var(--neon-cyan)" });
         } else if (arg.toLowerCase() === 'cyber' || arg.toLowerCase() === 'cyberpunk') {
           if (theme !== 'cyberpunk') toggleTheme();
           output.push({ text: "Switched to Cyberpunk Dark theme.", color: "var(--neon-green)" });
@@ -311,7 +301,7 @@ Kotlin & Android [=========] 60%`,
         if (targetId) {
           const el = document.getElementById(targetId) || document.querySelector(`[title*="${targetId}"]`);
           if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
             output.push({ text: `Navigating to ${sec}...`, color: "var(--neon-cyan)" });
           } else {
             output.push({ text: `Navigated to ${sec}.`, color: "var(--neon-cyan)" });

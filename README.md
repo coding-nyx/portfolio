@@ -76,3 +76,11 @@ To enable it:
 ## License
 
 MIT
+
+## Rook / DeepSeek local verification
+
+Rook calls the same-origin `/api/rook` endpoint. Vite's development and preview servers run the server handler in `server/rook.mjs`; the browser never receives the provider credential. Copy `.env.example` to `.env.rook.local` and set `DEEPSEEK_API_KEY` there. The file is ignored by Git. The default model is `deepseek-flash`. Restart the server after changing server credentials.
+
+Run `npm run test:rook`, `npm run lint`, and `npm run build`. Live answers are labeled DeepSeek in the popover. If the backend/provider fails, the UI explicitly labels the saved portfolio fallback. Visitor questions are processed by DeepSeek; Rook does not send emails.
+
+The current Firebase Hosting workflow serves static files. Production live Rook still needs a deployed server endpoint, Hosting rewrite and a runtime secret binding. A GitHub Actions secret alone does not provide a backend or configure a deployed runtime. Do not put the DeepSeek key into a Vite variable or static build.

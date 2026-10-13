@@ -10,7 +10,7 @@ const StyledContainer = styled.div`
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 
-  /* Professional / Light Theme Base */
+  /* Portfolio theme base */
   border-radius: var(--border-radius, 12px);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
   padding: 24px;
@@ -20,12 +20,12 @@ const StyledContainer = styled.div`
   [data-theme='modern'] &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-    border-color: #cbd5e1;
+    border-color: var(--border-strong);
   }
 
   /* Cyberpunk Theme Overrides */
   [data-theme='cyberpunk'] & {
-    padding: 20px;
+    padding: 24px;
     border: 2px solid var(--neon-cyan);
     box-shadow: 0 0 8px rgba(0, 243, 255, 0.15);
     border-radius: 0;
@@ -69,8 +69,8 @@ const StyledContainer = styled.div`
 
 export const CardTitle = styled.h3`
   color: var(--neon-cyan);
-  padding-bottom: 10px;
-  margin-bottom: 15px;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,7 +82,7 @@ export const CardTitle = styled.h3`
     border-bottom: 2px solid var(--neon-pink);
     &::before {
       content: ">";
-      margin-right: 10px;
+      margin-right: 8px;
       color: var(--neon-pink);
       text-shadow: 0 0 8px var(--neon-pink);
     }
@@ -91,11 +91,11 @@ export const CardTitle = styled.h3`
   /* Professional specific */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
     text-transform: none;
     letter-spacing: -0.015em;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--surface-raised);
   }
 `;
 

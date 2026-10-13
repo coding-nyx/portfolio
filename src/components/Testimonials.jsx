@@ -8,7 +8,7 @@ const TestimonialCard = styled.div`
   /* Cyberpunk style matching ProjectCard */
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--text-dim);
-  padding: 24px 30px;
+  padding: 24px 32px;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -19,7 +19,7 @@ const TestimonialCard = styled.div`
   /* Professional Theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -38,7 +38,7 @@ const QuoteIconWrapper = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
     opacity: 0.3;
   }
 `;
@@ -48,11 +48,11 @@ const QuoteText = styled.blockquote`
   font-style: italic;
   color: var(--text-main);
   line-height: 1.6;
-  margin: 0 0 18px 0;
+  margin: 0 0 16px 0;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #334155;
+    color: var(--text-muted);
   }
 `;
 
@@ -67,14 +67,14 @@ const AuthorMeta = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--surface-raised);
   }
 `;
 
 const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 `;
 
 const AuthorName = styled.span`
@@ -84,7 +84,7 @@ const AuthorName = styled.span`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
   }
 `;
 
@@ -94,22 +94,22 @@ const AuthorRole = styled.span`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #64748b;
+    color: var(--text-dim);
   }
 `;
 
 const CompanyBadge = styled.span`
   font-size: 0.7rem;
-  padding: 3px 8px;
+  padding: 4px 8px;
   background: var(--neon-cyan);
   color: var(--bg-color);
   font-weight: bold;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #eff6ff;
-    color: #1d4ed8;
-    border: 1px solid #bfdbfe;
+    background: var(--accent-soft);
+    color: var(--accent-hover);
+    border: 1px solid var(--accent-border);
     border-radius: 4px;
     font-weight: 500;
   }
@@ -119,13 +119,13 @@ const ControlsRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
+  margin-top: 16px;
   padding: 0 4px;
 `;
 
 const Indicators = styled.div`
   display: flex;
-  gap: 6px;
+  gap: 8px;
 `;
 
 const Dot = styled.button`
@@ -139,7 +139,7 @@ const Dot = styled.button`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: ${props => props.$active ? '#2563eb' : '#cbd5e1'};
+    background: ${props => props.$active ? 'var(--neon-cyan)' : 'var(--border-strong)'};
     width: ${props => props.$active ? '18px' : '8px'};
     border-radius: 9999px;
   }
@@ -169,16 +169,16 @@ const NavBtn = styled.button`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    color: #475569;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
     border-radius: 50%;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
     &:hover {
-      background: #2563eb;
-      color: #ffffff;
-      border-color: #2563eb;
+      background: var(--neon-cyan);
+      color: var(--on-accent);
+      border-color: var(--neon-cyan);
     }
   }
 `;

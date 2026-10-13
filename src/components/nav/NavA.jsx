@@ -11,6 +11,7 @@ const Cur = ({ i }) => (
 // navA: solid top bar that collapses into an opaque floating pill (current chapter + Resume + Ask).
 const NavA = ({ resumeUrl, onAsk, askOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [wide, setWide] = useState(() => window.innerWidth > 1180);
   const [active, setActive] = useState(0);
   const [sheetOpen, setSheetOpen] = useState(false);
   const opener = useRef(null);
@@ -18,6 +19,7 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
   const collapsedRef = useRef(false);
 
   const spy = useCallback(() => {
+    setWide(window.innerWidth > 1180);
     const c = window.scrollY > 140;
     if (c !== collapsedRef.current) { collapsedRef.current = c; setCollapsed(c); setSheetOpen(false); }
     const y = 56 + 80;
@@ -83,7 +85,7 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
   );
 
   return (
-    <div className={`na${collapsed ? ' collapsed' : ''}`}>
+    <div className={`na${collapsed ? ' collapsed' : ''}`} data-wide={wide}>
       <header className="na-bar" aria-label="Site" aria-hidden={collapsed || undefined}>
         <a className="brand" href="#entry" data-sec="entry">Raj Kumar S</a>
         <nav aria-label="Chapters">

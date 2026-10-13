@@ -34,7 +34,7 @@ const Container = styled.div`
   overflow: hidden;
 
   /* Theme-based Background */
-  background-color: ${props => props.$theme === 'professional' ? '#f8fafc' : '#000'};
+  background-color: ${props => props.$theme === 'professional' ? 'var(--bg-color)' : '#000'};
 
   /* Animation based on theme */
   animation: ${props => props.$theme === 'professional'
@@ -45,14 +45,14 @@ const Container = styled.div`
 
 const LogContainer = styled.div`
   font-family: ${props => props.$theme === 'professional' ? 'inherit' : "'Courier New', monospace"};
-  color: ${props => props.$theme === 'professional' ? '#334155' : 'var(--neon-green)'};
+  color: ${props => props.$theme === 'professional' ? 'var(--text-muted)' : 'var(--neon-green)'};
   width: 80%;
   max-width: 600px;
   text-align: left;
 `;
 
 const LogLine = styled.div`
-  margin: 5px 0;
+  margin: 4px 0;
   opacity: 0;
   animation: fadeIn 0.1s forwards;
 
@@ -64,8 +64,8 @@ const LogLine = styled.div`
 const ProgressBar = styled.div`
   width: 100%;
   height: 4px;
-  background: ${props => props.$theme === 'cyberpunk' ? '#333' : '#e2e8f0'};
-  margin-top: 20px;
+  background: ${props => props.$theme === 'cyberpunk' ? '#333' : 'var(--border-color)'};
+  margin-top: 24px;
   position: relative;
   border-radius: ${props => props.$theme === 'cyberpunk' ? '0' : '4px'};
   overflow: hidden;
@@ -77,17 +77,17 @@ const ProgressBar = styled.div`
     left: 0;
     height: 100%;
     width: ${props => props.$progress}%;
-    background: ${props => props.$theme === 'cyberpunk' ? 'var(--neon-cyan)' : 'linear-gradient(90deg, #2563eb, #3b82f6)'};
+    background: ${props => props.$theme === 'cyberpunk' ? 'var(--neon-cyan)' : 'linear-gradient(90deg, #FF8A3D, #FFA96A)'};
     box-shadow: ${props => props.$theme === 'cyberpunk' ? '0 0 10px var(--neon-cyan)' : 'none'};
     transition: width 0.1s linear;
   }
 `;
 
 const AccessText = styled.h1`
-  color: ${props => props.$theme === 'cyberpunk' ? 'var(--neon-pink)' : '#0f172a'};
+  color: ${props => props.$theme === 'cyberpunk' ? 'var(--neon-pink)' : 'var(--text-main)'};
   font-size: 2rem;
   font-weight: ${props => props.$theme === 'cyberpunk' ? 'bold' : '600'};
-  margin-top: 20px;
+  margin-top: 24px;
   text-align: center;
   text-transform: ${props => props.$theme === 'cyberpunk' ? 'uppercase' : 'none'};
   letter-spacing: ${props => props.$theme === 'cyberpunk' ? '5px' : 'normal'};
@@ -106,7 +106,7 @@ const SkipButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   z-index: 100;
   transition: opacity 0.3s;
 
@@ -171,6 +171,10 @@ const BootSequence = ({ onComplete }) => {
 
   useEffect(() => {
     if (skipped) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      handleSkip();
+      return;
+    }
 
     let currentLog = 0;
 

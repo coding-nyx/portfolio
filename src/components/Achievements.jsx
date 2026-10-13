@@ -19,13 +19,13 @@ const AchievementCard = styled.div`
   /* Professional Theme */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
     &:hover {
-      border-color: #3b82f6;
+      border-color: var(--accent-hover);
       box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
@@ -55,7 +55,7 @@ const Title = styled.h4`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
     font-weight: 700;
 
     svg {
@@ -66,7 +66,7 @@ const Title = styled.h4`
 
 const StatusBadge = styled.span`
   font-size: 0.68rem;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border: 1px solid var(--neon-yellow);
   color: var(--neon-yellow);
   text-transform: uppercase;
@@ -89,7 +89,7 @@ const EventTag = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
   }
 `;
 
@@ -101,20 +101,20 @@ const Description = styled.p`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #64748b;
+    color: var(--text-dim);
   }
 `;
 
 const TagRow = styled.div`
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px dashed var(--border-color);
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--surface-raised);
   }
 `;
 
@@ -122,14 +122,14 @@ const Tag = styled.span`
   font-size: 0.7rem;
   background: var(--neon-cyan);
   color: var(--bg-color);
-  padding: 2px 6px;
+  padding: 4px 8px;
   font-weight: bold;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    color: var(--text-dim);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     font-weight: 500;
   }
@@ -137,7 +137,7 @@ const Tag = styled.span`
 
 const AchievementsContainer = styled.div`
   height: 100%;
-  padding: 5px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
 `;

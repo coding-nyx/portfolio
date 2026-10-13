@@ -1,3 +1,6 @@
+import { experienceData, projects } from '../data/portfolio.js';
+import { publicText } from './publicText.js';
+
 // In-Memory Virtual File System (VFS) for Portfolio Shell
 
 export const VFS = {
@@ -187,6 +190,19 @@ export function getNode(path) {
     current = current.children[part];
   }
 
+  if (current.type === 'file') {
+    const projectNames = {
+      '/projects/hermes-companion.md': 'Hermes Companion App',
+      '/projects/hermes-companion-web.md': 'Hermes Companion Web',
+      '/projects/a0090-meta.md': 'a0090-meta (hub-11 OS)',
+      '/projects/nexus.md': 'Nexus',
+      '/projects/fitpro-connect.md': 'FitPro Connect',
+    };
+    const project = projects.find((p) => p.name === projectNames[path]);
+    if (project) return { ...current, content: `# ${project.name} [${project.status}]\n${publicText(project.description)}\nTech: ${project.tags.join(', ')}\nRepo: ${project.repoUrl}` };
+    if (path === '/projects/agentic-framework.md') return { ...current, content: `# Agentic component tooling\n${publicText(experienceData[0].projects.find((p) => p.name === 'Agentic component tooling').desc)}` };
+    if (path === '/experience/zoho-mts.log') return { ...current, content: `Zoho — Member of Technical Staff. Since May 2022.\n${publicText(experienceData[0].description)}` };
+  }
   return current;
 }
 

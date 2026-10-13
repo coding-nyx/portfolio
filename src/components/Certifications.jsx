@@ -5,7 +5,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const Details = styled.details`
   width: 100%;
-  padding: 5px;
+  padding: 4px;
 
   summary {
     cursor: pointer;
@@ -13,7 +13,7 @@ const Details = styled.details`
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--neon-cyan);
-    padding: 10px 12px;
+    padding: 8px 8px;
     border: 1px solid var(--text-dim);
     background: rgba(0, 0, 0, 0.25);
     display: flex;
@@ -33,9 +33,9 @@ const Details = styled.details`
 
     [data-theme='professional'] &,
     [data-theme='modern'] & {
-      color: #0f172a;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      color: var(--text-main);
+      background: var(--surface-raised);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
     }
   }
@@ -53,13 +53,13 @@ const CertList = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
-  padding: 2px;
+  padding: 4px;
 `;
 
 const CertCard = styled.div`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--text-dim);
-  padding: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -69,13 +69,13 @@ const CertCard = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
     &:hover {
-      border-color: #3b82f6;
+      border-color: var(--accent-hover);
       box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.08);
       transform: translateY(-2px);
     }
@@ -95,13 +95,13 @@ const CertHeader = styled.div`
 const CertName = styled.h4`
   color: var(--neon-cyan);
   font-size: 0.88rem;
-  margin: 0 0 6px 0;
+  margin: 0 0 8px 0;
   line-height: 1.35;
   font-weight: 600;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #0f172a;
+    color: var(--text-main);
   }
 `;
 
@@ -109,15 +109,15 @@ const IssuerTag = styled.span`
   font-size: 0.72rem;
   background: rgba(0, 243, 255, 0.1);
   color: var(--neon-cyan);
-  padding: 2px 6px;
+  padding: 4px 8px;
   display: inline-block;
   font-weight: 600;
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #f1f5f9;
-    color: #475569;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-raised);
+    color: var(--text-dim);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     font-weight: 500;
   }
@@ -127,7 +127,7 @@ const CertFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 8px;
   padding-top: 8px;
   border-top: 1px dashed var(--border-color);
   font-size: 0.76rem;
@@ -135,7 +135,7 @@ const CertFooter = styled.div`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    border-top: 1px solid #f8fafc;
+    border-top: 1px solid var(--surface-raised);
   }
 `;
 
@@ -154,7 +154,7 @@ const CredentialLink = styled.a`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    color: #2563eb;
+    color: var(--neon-cyan);
 
     &:hover {
       text-decoration: underline;
@@ -186,7 +186,7 @@ const Certifications = () => {
                     Verify <FaExternalLinkAlt size={9} />
                   </CredentialLink>
                 ) : (
-                  <span>Verified</span>
+                  <span>Certificate</span>
                 )}
               </CertFooter>
             </CertCard>

@@ -5,6 +5,7 @@ const Button = styled.button`
   position: fixed;
   bottom: 80px; /* Moved up to not overlap with SystemAlert/ThemeSwitcher */
   right: 20px;
+  padding: 0;
   width: 40px;
   height: 40px;
   display: flex;
@@ -40,7 +41,7 @@ const Button = styled.button`
   /* Professional Styles */
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: white;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-main);
     border-radius: 50%;
@@ -48,7 +49,7 @@ const Button = styled.button`
 
     &:hover {
       background: var(--neon-cyan); /* Accent color */
-      color: white;
+      color: var(--on-accent);
       border-color: var(--neon-cyan);
       transform: translateY(-3px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -74,7 +75,7 @@ const BackToTop = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
     });
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();

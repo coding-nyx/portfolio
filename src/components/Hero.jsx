@@ -13,13 +13,13 @@ import VirtualShell from './terminal/VirtualShell';
 const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 32px;
   height: 100%;
 
   @media (min-width: 900px) {
     flex-direction: row;
     align-items: center;
-    padding: 20px;
+    padding: 24px;
   }
 `;
 
@@ -33,7 +33,7 @@ const ProfileSection = styled.div`
 
   @media (min-width: 900px) {
     border-right: 1px solid rgba(0, 243, 255, 0.2);
-    padding-right: 30px;
+    padding-right: 32px;
   }
 
   [data-theme='professional'] &,
@@ -46,7 +46,7 @@ const InfoSection = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 `;
 
 const Avatar = styled.img`
@@ -66,14 +66,14 @@ const Avatar = styled.img`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    border: 3px solid #ffffff;
+    border: 3px solid var(--card-bg);
     border-radius: 50%;
     filter: none;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 0 0 0 1px #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--border-color);
 
     &:hover {
       transform: scale(1.02);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px #cbd5e1;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border-strong);
     }
   }
 `;
@@ -82,7 +82,7 @@ const GlitchName = styled.h1`
   font-size: 3rem;
   color: var(--neon-pink);
   text-shadow: 3px 3px var(--neon-cyan);
-  margin: 20px 0 5px 0;
+  margin: 24px 0 4px 0;
   text-transform: uppercase;
 
   @media (max-width: 768px) {
@@ -102,7 +102,7 @@ const Role = styled.h2`
   font-size: 1.2rem;
   color: var(--neon-green);
   background: rgba(80, 250, 123, 0.1);
-  padding: 5px 10px;
+  padding: 4px 8px;
   border-left: 3px solid var(--neon-green);
 
   [data-theme='professional'] &,
@@ -118,7 +118,7 @@ const Role = styled.h2`
 const TerminalBox = styled.div`
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--text-dim);
-  padding: 15px;
+  padding: 16px;
   font-family: 'Courier New', monospace;
   position: relative;
   min-height: 150px;
@@ -128,8 +128,8 @@ const TerminalBox = styled.div`
     display: block;
     color: var(--neon-pink);
     border-bottom: 1px solid var(--text-dim);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
     font-size: 0.9rem;
   }
 
@@ -160,8 +160,8 @@ const TypingText = styled.p`
 
 const Socials = styled.div`
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 16px;
+  margin-top: 24px;
   justify-content: center;
   flex-wrap: wrap; /* Ensure buttons wrap on mobile */
 
@@ -174,7 +174,7 @@ const SocialBtn = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   background: rgba(0, 243, 255, 0.1);
   border: 1px solid var(--neon-cyan);
   color: var(--neon-cyan);
@@ -197,23 +197,23 @@ const SocialBtn = styled.a`
 
   [data-theme='professional'] &,
   [data-theme='modern'] & {
-    background: #ffffff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-main);
     border-radius: 8px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
     &:hover {
-      background: #2563eb;
-      color: white;
-      border-color: #2563eb;
-      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+      background: var(--neon-cyan);
+      color: var(--on-accent);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 4px 6px -1px rgba(255, 138, 61, 0.2);
     }
 
     &:focus-visible {
-      outline: 2px solid #2563eb;
+      outline: 2px solid var(--neon-cyan);
       outline-offset: 3px;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+      box-shadow: 0 0 0 4px rgba(255, 138, 61, 0.25);
     }
   }
 `;
@@ -224,7 +224,7 @@ const IframeWrapper = styled.div`
   min-height: 400px;
   background: #f0f0f0;
   border: 1px solid var(--text-dim);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   position: relative;
   display: flex;
   align-items: center;
@@ -261,13 +261,13 @@ const Spinner = styled.div`
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     border: 4px solid rgba(0, 0, 0, 0.08);
-    border-top: 4px solid #2563eb;
+    border-top: 4px solid var(--neon-cyan);
   }
 `;
 
 const ActionButtons = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 16px;
   margin-top: auto;
   justify-content: center;
   flex-wrap: wrap;
@@ -303,7 +303,7 @@ const Hero = ({ onAskRook }) => {
             <Avatar src={profileData.profileImage || "https://ui-avatars.com/api/?name=Raj+Kumar+S&background=0a0a1a&color=00f3ff&size=150"} alt="Avatar" />
             <GlitchName>{profileData.name}</GlitchName>
             <Role>{profileData.headline}</Role>
-            <p style={{color: 'var(--text-dim)', marginTop: '10px'}}>{profileData.location}</p>
+            <p style={{color: 'var(--text-dim)', marginTop: '8px'}}>{profileData.location}</p>
           </ProfileSection>
 
           <InfoSection>
@@ -347,7 +347,7 @@ const Hero = ({ onAskRook }) => {
               <SocialBtn
                 as="button"
                 type="button"
-                onClick={() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('contact-section')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}
                 aria-label="Contact for Fun"
               >
                 <ThemedIcon ascii="" icon={<FaGamepad size={16} />} />
