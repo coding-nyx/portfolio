@@ -415,7 +415,7 @@ const Contact = ({ onOpenRook }) => {
           <div>
             <InfoHeader>
               <InfoTitle>Direct Uplink</InfoTitle>
-              <StatusBadge>Available</StatusBadge>
+              {/* "Available" badge hidden 2026-10-13: quiet job search (Lead). Re-enable when Nyx says. */}
             </InfoHeader>
             <MetaList style={{ marginTop: '14px' }}>
               <MetaItem>
