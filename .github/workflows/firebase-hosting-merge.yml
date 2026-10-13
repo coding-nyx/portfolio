@@ -37,14 +37,11 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_PAC }}
         run: |
-          node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync(process.env.RUNNER_TEMP + "/firebase-service-account.json", process.env.FIREBASE_SERVICE_ACCOUNT, { mode: 0o600 });'
+          node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync(process.env.RUNNER_TEMP + "/firebase-service-account.json", process.env.FIREBASE_SERVICE_ACCOUNT, { mode: 0o600 }); console.log("Firebase deployment account:", JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT).client_email);'
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json" >> "$GITHUB_ENV"
       - name: Deploy Rook when billing and runtime access are ready
         if: env.ROOK_DEPLOY_ENABLED == 'true'
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
-          printf '%s' "$DEEPSEEK_API_KEY" | npx --yes --package firebase-tools@15.26.0 firebase functions:secrets:set DEEPSEEK_API_KEY --data-file - --project nyx-port --non-interactive
           npx --yes --package firebase-tools@15.26.0 firebase deploy --only functions:rook --project nyx-port --non-interactive
       - name: Deploy portfolio
         run: |

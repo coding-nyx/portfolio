@@ -181,7 +181,8 @@ export const projects = [
     ],
     "description": "Canonical work-item brain for agent fleets: multi-board kanban, REST + MCP (15 tools), Firestore live sync, command-queue brain, and connector plugins (Hermes, Claude Code, Codex, and more).",
     "imageUrl": "/projects/worktracker-kanban.webp",
-    "liveUrl": "https://worktracker-nyx.web.app",
+    "liveUrl": null,
+    "linksUnavailableReason": "The published deployment is currently unavailable. The public source repository remains available.",
     "repoUrl": "https://github.com/coding-nyx/worktracker",
     "status": "Active"
   },
