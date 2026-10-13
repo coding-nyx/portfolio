@@ -63,28 +63,62 @@ export const GlobalStyle = createGlobalStyle`
   input[type="button"],
   input[type="submit"],
   input[type="reset"] {
-    outline: none !important;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
   }
 
-  button:focus,
-  button:focus-visible,
-  button:active,
-  button:focus:not(:focus-visible),
-  [role="button"]:focus,
-  [role="button"]:focus-visible,
-  [role="button"]:active {
-    outline: none !important;
+  /* Keyboard focus only — mouse clicks stay clean via :focus-visible */
+  :focus {
+    outline: none;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
     box-shadow: none;
   }
 
-  a:focus,
   a:focus-visible,
-  a:active,
-  a:focus:not(:focus-visible) {
-    outline: none !important;
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+  }
+
+  [data-theme='professional'] a:focus-visible,
+  [data-theme='professional'] button:focus-visible,
+  [data-theme='professional'] [role="button"]:focus-visible,
+  [data-theme='professional'] summary:focus-visible,
+  [data-theme='professional'] input:focus-visible,
+  [data-theme='professional'] select:focus-visible,
+  [data-theme='professional'] textarea:focus-visible,
+  [data-theme='professional'] [tabindex]:not([tabindex="-1"]):focus-visible,
+  [data-theme='modern'] a:focus-visible,
+  [data-theme='modern'] button:focus-visible,
+  [data-theme='modern'] [role="button"]:focus-visible,
+  [data-theme='modern'] summary:focus-visible,
+  [data-theme='modern'] input:focus-visible,
+  [data-theme='modern'] select:focus-visible,
+  [data-theme='modern'] textarea:focus-visible,
+  [data-theme='modern'] [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+  }
+
+  [data-theme='cyberpunk'] a:focus-visible,
+  [data-theme='cyberpunk'] button:focus-visible,
+  [data-theme='cyberpunk'] [role="button"]:focus-visible,
+  [data-theme='cyberpunk'] summary:focus-visible,
+  [data-theme='cyberpunk'] [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.55);
   }
 
   body {

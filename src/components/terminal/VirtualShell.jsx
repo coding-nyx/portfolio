@@ -37,7 +37,9 @@ const OutputLine = styled.div`
   line-height: 1.45;
   color: ${props => props.$color || 'var(--text-main)'};
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 `;
 
 const PromptPrefix = styled.span`

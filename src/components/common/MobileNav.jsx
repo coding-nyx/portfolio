@@ -56,6 +56,12 @@ const NavItem = styled.button`
     transform: scale(0.95);
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: -4px;
+    box-shadow: inset 0 0 0 2px rgba(0, 243, 255, 0.35);
+  }
+
   &:hover, &.active {
     color: var(--neon-cyan);
     text-shadow: 0 0 5px var(--neon-cyan);
@@ -68,6 +74,12 @@ const NavItem = styled.button`
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     color: var(--text-dim);
+
+    &:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: -4px;
+      box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.35);
+    }
 
     &:hover, &.active {
       color: var(--neon-pink);

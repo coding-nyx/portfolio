@@ -18,9 +18,12 @@ const SwitcherContainer = styled.button`
   color: var(--text-dim);
   transition: all 0.2s ease;
 
-  &:hover, &:focus-visible {
+  &:hover {
     color: var(--neon-cyan);
-    outline: none;
+  }
+
+  &:focus-visible {
+    color: var(--neon-cyan);
   }
 
   [data-theme='cyberpunk'] &:focus-visible {

@@ -89,7 +89,7 @@ export const projects = [
     tags: ["TypeScript", "Firebase", "Next.js", "MCP", "Kanban"],
     description:
       "Canonical work-item brain for agent fleets: multi-board kanban, REST + MCP (15 tools), Firestore live sync, command-queue brain, and connector plugins (Hermes, Claude Code, Codex, and more).",
-    imageUrl: null, // @Design: needs real screenshot
+    imageUrl: "/projects/worktracker-kanban.webp", // shot-worktracker-kanban
     liveUrl: "https://worktracker-nyx.web.app",
     repoUrl: "https://github.com/coding-nyx/worktracker",
     status: "Active"
@@ -100,7 +100,7 @@ export const projects = [
     tags: ["Android", "Kotlin", "Jetpack Compose", "Tailscale", "AI Agents"],
     description:
       "Native Android companion for a self-hosted Hermes agent fleet: Tailscale pairing, bidirectional control, accessibility automation, and real-time chat.",
-    imageUrl: null, // @Design: needs real screenshot
+    imageUrl: "/projects/hermes-companion-chat.webp", // shot-companion-chat (pair deferred: emulator blocked)
     liveUrl: "https://github.com/coding-nyx/hermes-companion-app/releases",
     repoUrl: "https://github.com/coding-nyx/hermes-companion-app",
     status: "Active"

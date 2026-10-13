@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PixelCard from './common/PixelCard';
 import { profileData } from '../data/portfolio';
@@ -150,16 +150,11 @@ const TypingText = styled.p`
   color: var(--text-main);
   line-height: 1.6;
   margin: 0;
-
-  [data-theme='cyberpunk'] &::after {
-    content: '_';
-    animation: blink 1s infinite;
-    color: var(--neon-cyan);
-  }
-
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
+  /* Keep words intact — no mid-word chopping */
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+  white-space: normal;
 `;
 
 const Socials = styled.div`
@@ -193,6 +188,12 @@ const SocialBtn = styled.a`
     box-shadow: 0 0 10px var(--neon-cyan);
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--neon-cyan);
+    outline-offset: 3px;
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.55);
+  }
+
   [data-theme='professional'] &,
   [data-theme='modern'] & {
     background: #ffffff;
@@ -206,6 +207,12 @@ const SocialBtn = styled.a`
       color: white;
       border-color: #2563eb;
       box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
     }
   }
 `;
@@ -272,22 +279,10 @@ const ModalBtn = styled(SocialBtn)`
 `;
 
 const Hero = ({ onAskRook }) => {
-  const [bioText, setBioText] = useState('');
-  const [idx, setIdx] = useState(0);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [iframeLoading, setIframeLoading] = useState(true);
-  const fullText = profileData.summary;
+  const bioText = profileData.summary;
   const { theme } = useTheme();
-
-  useEffect(() => {
-    if (idx < fullText.length) {
-      const timeout = setTimeout(() => {
-        setBioText((prev) => prev + fullText.charAt(idx));
-        setIdx(idx + 1);
-      }, 10);
-      return () => clearTimeout(timeout);
-    }
-  }, [idx, fullText]);
 
   // Determine resume file based on theme (cyberpunk vs professional)
   const resumeUrl = theme === 'cyberpunk' ? '/resume-cyberpunk.pdf' : '/resume-modern.pdf';
