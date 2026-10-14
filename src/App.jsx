@@ -77,9 +77,9 @@ function App() {
             askOpen={rookOpen}
             onAsk={(el) => { askOpener.current = el; setRookOpen(true); }}
           />
-          <Chapters id="main-content">
+          <Chapters id="main-content" tabIndex={-1}>
             <Chapter id="entry" full><EntryHero resumeUrl={resumeUrl} /></Chapter>
-            <Chapter id="bio"><BioB resumeUrl={resumeUrl} /></Chapter>
+            <Chapter id="bio"><BioB /></Chapter>
             <Chapter id="experience"><ExperienceD /></Chapter>
             <Chapter id="projects"><ProjectsG3v2 /></Chapter>
             <Chapter id="skills"><SkillsAD /></Chapter>

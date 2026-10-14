@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import PixelCard from './common/PixelCard';
 import { sendEmail } from '../services/emailService';
 import { useTheme } from '../context/ThemeContext';
+import { profileData } from '../data/portfolio';
 import { FaMapMarkerAlt, FaEnvelope, FaBolt, FaRobot, FaArrowRight, FaPaperPlane } from 'react-icons/fa';
 
 const ContactGrid = styled.div`
@@ -423,7 +424,7 @@ const Contact = ({ onOpenRook }) => {
               </MetaItem>
               <MetaItem>
                 <FaEnvelope size={14} />
-                <a href="mailto:raju9112000@gmail.com">raju9112000@gmail.com</a>
+                <a href={`mailto:${profileData.socialLinks.email}`}>{profileData.socialLinks.email}</a>
               </MetaItem>
               <MetaItem>
                 <FaBolt size={14} />

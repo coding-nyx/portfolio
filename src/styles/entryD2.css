@@ -4,16 +4,16 @@
 .entry-d2 .muted{color:#A1A1AA}
 .chapter.full{margin:0 -24px}
 @media(max-width:700px){.chapter.full{margin:0 -12px}}
-.entry-d2 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 8px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px;letter-spacing:normal;text-transform:none}
+.entry-d2 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px;letter-spacing:normal;text-transform:none}
 .entry-d2 .primary{background:#FF8A3D;color:#0B0B0F}
 .entry-d2 .ghost{border:1px solid #3A3A46;background:#0B0B0F;color:#F4F4F5}
 .entry-d2 .role{color:#FF8A3D;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:14px;display:block;line-height:18px}
 .entry-d2 .chl{line-height:16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FF8A3D;font-weight:600;margin:12px 0 0}
 .entry-d2 .acts{display:flex;gap:16px;flex-wrap:wrap}
-.entry-d2 .cue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:14px;color:#A1A1AA;text-decoration:none;z-index:20;white-space:nowrap}
+.entry-d2 .cue{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:44px;padding:8px 12px;font-size:14px;color:#A1A1AA;text-decoration:none;z-index:20;white-space:nowrap}
 .entry-d2 .cue .arr{display:inline-block;animation:d2bo 1.6s infinite}
 @keyframes d2bo{50%{transform:translateY(6px)}}
-.entry-d2 .hero{min-height:calc(100svh - 56px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;padding:32px 80px 72px;position:relative;max-width:1280px;margin:0 auto}
+.entry-d2 .hero{min-height:calc(100svh - var(--navh));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;padding:32px 80px 72px;position:relative;max-width:1280px;margin:0 auto}
 .entry-d2 .hero h1{color:#F4F4F5;font-size:var(--fit-name,clamp(48px, 8vw, 96px));white-space:nowrap;line-height:1;letter-spacing:-.03em;margin:8px 0 16px;font-family:inherit;text-transform:none}
 .entry-d2 .line{font-size:22px;width:460px;max-width:100%;line-height:28px;margin-bottom:32px}
 .entry-d2 .line>span{white-space:nowrap}

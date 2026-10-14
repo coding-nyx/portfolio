@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     --bg-color: #050510;
     --card-bg: #0a0a1a;
     --text-main: #f8f8f2;
-    --text-dim: #6272a4;
+    --text-dim: #9ba7d0;
     --border-color: #bd93f9;
 
     --neon-cyan: #00f3ff;

@@ -54,6 +54,7 @@ const FORBIDDEN = [
   ['private repository destination', /nexus-react-native/],
   ['unverified demo destination', /agent-agnes-ai/],
   ['retired site URL', /pac-dbe/],
+  ['retired contact email', /raju9112000/],
   ['internal employment codename', /AXSpec2Code/i],
 ];
 
