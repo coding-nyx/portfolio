@@ -31,10 +31,9 @@ test('private project answers explain architecture without inventing public link
   const tally=generateFallbackResponse('How does Tally import statements and recover data?');
   assert.match(tally,/column mapping, date review and duplicate detection/);
   assert.match(tally,/JSON backup, restore and migration/);
-  assert.match(tally,/Open-source release planned/);
-  assert.match(tally,/repository is currently private/);
+  assert.doesNotMatch(tally,/public soon|repository is currently private|Open-source release planned/);
   assert.match(tally,/https:\/\/github\.com\/coding-nyx\/tally/);
-  assert.match(tally,/Source \(public soon\)/);
+  assert.match(tally,/Source/);
   const integration=generateFallbackResponse('Can Hermes or ChatGPT upload statements through Tally MCP?');
   assert.match(integration,/stdio MCP bridge backed by a shared-ledger REST service/);
   assert.match(integration,/statement upload\/import/);
