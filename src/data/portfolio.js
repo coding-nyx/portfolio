@@ -187,15 +187,17 @@ export const projects = [
     "status": "Active"
   },
   {
-    "name": "Hermes Companion App",
+    "name": "Hermes Companion",
     "featured": true,
     "tags": [
       "Android",
       "Kotlin",
       "Jetpack Compose",
-      "Tailscale"
+      "Tailscale",
+      "TypeScript",
+      "Web"
     ],
-    "description": "Native Android companion for a self-hosted agent fleet, with published APK releases.",
+    "description": "Android app and TypeScript web client for the same self-hosted Hermes agent fleet: pair, chat, control devices and forward notifications.",
     "imageUrl": "/projects/hermes-companion-chat.webp",
     "liveUrl": "https://github.com/coding-nyx/hermes-companion-app/releases",
     "repoUrl": "https://github.com/coding-nyx/hermes-companion-app",
@@ -204,28 +206,33 @@ export const projects = [
     "linkLabel": "Releases / Download APK",
     "availability": "live",
     "caseStudy": {
-      "problem": "Controlling and observing a self-hosted agent fleet from a phone needs a real device connection with clear permission boundaries, not a simulated dashboard.",
-      "approach": "Built a Kotlin/Jetpack Compose app that pairs over a Tailscale mesh, performs device control through accessibility automation, and keeps a bidirectional connection lifecycle with state synchronisation and recovery after interrupted sessions.",
-      "scope": "Personal project with a public repository and signed release assets. Separate from the iOS production track.",
-      "evidence": "Public repository, Gradle module layout and published v0.2.0 / v0.1.0 APK assets. The repository's most recent CI run is known to have failed, so the project is not presented as unqualified green.",
+      "problem": "The same self-hosted agent fleet needs a connected mobile and web experience for pairing, chat and device control.",
+      "approach": "Built a Kotlin/Jetpack Compose Android app with Tailscale pairing, accessibility automation and connection recovery, alongside a TypeScript web client for pairing, chat, device control and notification forwarding.",
+      "scope": "One personal project with Android and web clients. Separate from the professional iOS track.",
+      "evidence": "Public Android and web source repositories, plus published Android APK releases.",
       "limitations": "The public source supports the existence of the project; it is not independent validation of every advertised capability. No adoption or user numbers are claimed."
-    }
-  },
-  {
-    "name": "Hermes Companion Web",
-    "featured": false,
-    "tags": [
-      "TypeScript",
-      "Web",
-      "Hermes"
+    },
+    "sourceLinks": [
+      {
+        "label": "Android source",
+        "url": "https://github.com/coding-nyx/hermes-companion-app"
+      },
+      {
+        "label": "Web source",
+        "url": "https://github.com/coding-nyx/hermes-companion-web"
+      }
     ],
-    "description": "TypeScript web companion for the same agent fleet: pair, chat, control the device and forward mobile notifications.",
-    "imageUrl": null,
-    "liveUrl": null,
-    "repoUrl": "https://github.com/coding-nyx/hermes-companion-web",
-    "status": "Active project",
-    "scope": "Personal project",
-    "linksUnavailableReason": "No public hosted demo deployment."
+    "platforms": [
+      {
+        "name": "Android app",
+        "language": "Kotlin",
+        "uiFramework": "Jetpack Compose"
+      },
+      {
+        "name": "Web client",
+        "language": "TypeScript"
+      }
+    ]
   },
   {
     "name": "a0090-meta (hub-11 OS)",
@@ -250,22 +257,6 @@ export const projects = [
       "evidence": "Public repository containing a substantial board DTS plus kernel, config, patch, FIT, rootfs and recovery layout, with documented build and flash verification steps. The README also documents an unresolved Wi-Fi/AP limitation.",
       "limitations": "\"Upstream-maintainable\" means maintainable against upstream, not that anything was merged upstream. No board execution or kernel build was performed for this description."
     }
-  },
-  {
-    "name": "FitPro Connect",
-    "featured": false,
-    "tags": [
-      "React",
-      "Firebase",
-      "Stripe"
-    ],
-    "description": "Platform for fitness trainers to manage classes, showcase portfolios and connect with clients. In progress.",
-    "imageUrl": null,
-    "liveUrl": null,
-    "repoUrl": "https://github.com/coding-nyx/personal-trainer",
-    "status": "In progress",
-    "scope": "Personal project",
-    "linksUnavailableReason": "The previously published demo URL returns HTTP 404, so no demo action is shown rather than linking to a dead page."
   },
   {
     "name": "Nexus",

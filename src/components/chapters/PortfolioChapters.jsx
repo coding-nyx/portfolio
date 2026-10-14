@@ -43,7 +43,7 @@ const SKILL_GROUPS = [
 // Use the confirmed category data rather than inventing daily/learning claims.
 function usedIn(skill) {
   if (/Swift|UIKit|SPM/.test(skill.name)) return [{label:'Zoho · mobile platforms',href:'#experience'}];
-  if (/Kotlin|Android/.test(skill.name)) return [{label:'Hermes Companion App',href:'#projects'}];
+  if (/Kotlin|Android/.test(skill.name)) return [{label:'Hermes Companion',href:'#projects'}];
   if (/Linux/.test(skill.name)) return [{label:'a0090-meta (hub-11 OS)',href:'#projects'}];
   return projects.filter(p=>p.tags.some(t=>skill.name.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(skill.name.split(' / ')[0].toLowerCase()))).map(p=>({label:p.name,href:'#projects'}));
 }

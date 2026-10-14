@@ -27,11 +27,11 @@ export function generateFallbackResponse(messagesInput) {
     ? messagesInput
     : [{ role: 'user', content: String(messagesInput || '') }];
   const query = (msgs[msgs.length - 1]?.content || '').toLowerCase();
-  const projectReply = (project) => `### ${project.name}\n\n${publicText(project.description)}\n\n${project.repoUrl ? `[Source](${project.repoUrl})` : 'Public source is not available.'}\n[ACTION:SCROLL_TO:projects]`;
+  const projectReply = (project) => `### ${project.name}\n\n${publicText(project.description)}\n\n${(project.sourceLinks || (project.repoUrl ? [{label:'Source',url:project.repoUrl}] : [])).map(link=>`[${link.label}](${link.url})`).join(' · ') || 'Public source is not available.'}\n[ACTION:SCROLL_TO:projects]`;
 
   const project = projects.find((p) => query.includes(p.name.toLowerCase())) ||
     (/linux|kernel|rk3588|embedded|device tree|hub-?11|a009/.test(query) ? projects.find((p) => p.name.startsWith('a0090')) : undefined) ||
-    (/hermes|companion|tailscale/.test(query) ? projects.find((p) => p.name === 'Hermes Companion App') : undefined);
+    (/hermes|companion|tailscale/.test(query) ? projects.find((p) => p.name === 'Hermes Companion') : undefined);
   if (project) return projectReply(project);
 
   if (/contact|hire|interview|touch|reach|message|email|phone|@/.test(query)) {

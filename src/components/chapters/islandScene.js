@@ -1,5 +1,5 @@
 // Scene geometry and walking mechanics ported from the approved Projects G3v2 reference.
-// The reference's sample projects are replaced with the six actual portfolio projects.
+// The reference's sample projects are replaced with the curated portfolio projects.
 export function createIsland(stage, projects, { onSelect, onOpen, onFailure }) {
   let stopped = false, renderer, scene, resizeObserver, visibleObserver;
   const controller = new AbortController();
@@ -10,7 +10,7 @@ export function createIsland(stage, projects, { onSelect, onOpen, onFailure }) {
   io.observe(stage);
   function dispose(){
     stopped=true;controller.abort();io.disconnect();resizeObserver?.disconnect();visibleObserver?.disconnect();
-    if(renderer){renderer.setAnimationLoop(null);const disposed=new Set();scene?.traverse(o=>{if(o.geometry&&!disposed.has(o.geometry)){o.geometry.dispose();disposed.add(o.geometry);}for(const m of (Array.isArray(o.material)?o.material:[o.material])){if(!m||disposed.has(m))continue;for(const v of Object.values(m))if(v?.isTexture&&!disposed.has(v)){v.dispose();disposed.add(v);}m.dispose();disposed.add(m);}});renderer.dispose();renderer.domElement.remove();}
+    if(renderer){renderer.setAnimationLoop(null);const disposed=new Set();scene?.traverse(o=>{if(o.geometry&&!disposed.has(o.geometry)){o.geometry.dispose();disposed.add(o.geometry);}for(const m of (Array.isArray(o.material)?o.material:[o.material])){if(!m||disposed.has(m))continue;for(const v of Object.values(m))if(v?.isTexture&&!disposed.has(v)){v.dispose();disposed.add(v);}m.dispose();disposed.add(m);}});renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();}
     stage.querySelector('[data-island-pins]')?.replaceChildren();
   }
   async function boot(){
@@ -48,7 +48,7 @@ const cells=[];for(let x=-6;x<=6;x++)for(let z=-6;z<=6;z++)if(Math.hypot(x,z)<=6
 const tiles=new T.InstancedMesh(new T.BoxGeometry(.97,.5,.97),fm(0xffffff),cells.length);const D=new T.Object3D();
 cells.forEach(([x,z],i)=>{D.position.set(x,-.25+((x*7+z*13)%3)*.012,z);D.updateMatrix();tiles.setMatrixAt(i,D.matrix);tiles.setColorAt(i,new T.Color((x+z)&1?0x2F4B3B:0x365644))});S.add(tiles);
 const plaza=new T.Mesh(new T.CylinderGeometry(1.4,1.4,.06,24),fm(0x4E485C));plaza.position.y=.03;S.add(plaza);
-const KP=[[-3.7,-1.3],[.7,-4.1],[3.9,-.5],[1.4,3.7],[-2.7,3.1],[4.6,3.4]];
+const KP=(PR.length===4?[[-3.2,-2.6],[3.2,-2.6],[3.2,2.6],[-3.2,2.6]]:[[-3.7,-1.3],[.7,-4.1],[3.9,-.5],[1.4,3.7],[-2.7,3.1],[4.6,3.4]]).slice(0,PR.length);
 // paths
 const pp=[];KP.forEach(([x,z])=>{const L=Math.hypot(x,z),dx=x/L,dz=z/L;for(let d=1.75;d<L-1.05;d+=.72)pp.push([dx*d,dz*d,Math.atan2(dx,dz)])});
 const paths=new T.InstancedMesh(new T.BoxGeometry(.56,.05,.5),fm(0x5A536A),pp.length);pp.forEach(([x,z,r],i)=>{D.position.set(x+(i%2?.05:-.05),.025,z);D.rotation.set(0,r+(i%3-1)*.15,0);D.updateMatrix();paths.setMatrixAt(i,D.matrix)});S.add(paths);D.rotation.set(0,0,0);
@@ -67,7 +67,7 @@ const NF=60,fp=new Float32Array(NF*3),fb=[];for(let i=0;i<NF;i++){const a=Math.r
 const fg=new T.BufferGeometry();fg.setAttribute('position',new T.BufferAttribute(fp,3));const ff=new T.Points(fg,new T.PointsMaterial({color:0xFFD08A,size:.09,transparent:true,opacity:.8,blending:T.AdditiveBlending,depthWrite:false}));S.add(ff);
 // kiosks
 const ks=[];
-function kiosk(i,[x,z],build){const col=new T.Color(PR[i].c);const g=new T.Group();g.position.set(x,0,z);g.rotation.y=Math.atan2(-x,-z);const base=new T.Mesh(new T.CylinderGeometry(1.05,1.15,.18,8),fm(0x3A3A46));base.position.y=.09;g.add(base);
+function kiosk(i,position,build){if(!PR[i])return;const [x,z]=position;const col=new T.Color(PR[i].c);const g=new T.Group();g.position.set(x,0,z);g.rotation.y=Math.atan2(-x,-z);const base=new T.Mesh(new T.CylinderGeometry(1.05,1.15,.18,8),fm(0x3A3A46));base.position.y=.09;g.add(base);
 const body=new T.Group();g.add(body);const mats=[];const M2=c2=>{const m=fm(c2);mats.push(m);return m};build(body,col,M2);
 const glow=new T.Mesh(new T.RingGeometry(1.2,1.45,40).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:col,transparent:true,opacity:0,depthWrite:false}));glow.position.y=.02;g.add(glow);
 blob(2.6,x,z);g.userData={i,body,mats,glow,col,s:0,v:0};S.add(g);ks.push(g);return g}

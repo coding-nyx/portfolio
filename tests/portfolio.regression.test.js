@@ -119,9 +119,9 @@ test('every case study separates problem, approach, scope and limitations', asyn
   }
 });
 
-test('approved project island retains its six public project records', async () => {
+test('curated projects merge Hermes clients and exclude the removed showcase', async () => {
   const { projects } = await importData();
-  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion App', 'Hermes Companion Web', 'a0090-meta (hub-11 OS)', 'FitPro Connect', 'Nexus']);
+  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion', 'a0090-meta (hub-11 OS)', 'Nexus']);
 });
 
 /* ------------------------------------------------------------------ *
@@ -308,13 +308,13 @@ test('no dead or private destinations are published', () => {
 
 test('working public repositories stay linked', async () => {
   const { projects } = await importData();
-  const linked = projects.filter(p => p.repoUrl).map(p => p.repoUrl);
+  const linked = projects.flatMap(p => [p.repoUrl, ...(p.sourceLinks || []).map(link => link.url)]).filter(Boolean);
 
   for (const url of [
     'https://github.com/coding-nyx/hermes-companion-app',
     'https://github.com/coding-nyx/hermes-companion-web',
     'https://github.com/coding-nyx/a0090-meta',
-    'https://github.com/coding-nyx/personal-trainer',
+    'https://github.com/coding-nyx/worktracker',
   ]) {
     assert.ok(linked.includes(url), `${url} is publicly reachable and must stay linked`);
   }
@@ -322,7 +322,7 @@ test('working public repositories stay linked', async () => {
 
 test('the APK destination is labelled as releases, not a live demo', async () => {
   const { projects } = await importData();
-  const companion = projects.find(p => p.name === 'Hermes Companion App');
+  const companion = projects.find(p => p.name === 'Hermes Companion');
 
   assert.match(companion.liveUrl, /releases/);
   assert.match(
