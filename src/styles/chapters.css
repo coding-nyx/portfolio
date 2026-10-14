@@ -19,12 +19,11 @@
 /* Hiring-focused reading and interaction layout. */
 .contact-d .mail-row input:focus,.contact-d .mail-body textarea:focus{outline:none;box-shadow:inset 0 -1px 0 #A1A1AA}
 .contact-d .mail-row input[aria-invalid=true],.contact-d .mail-body textarea[aria-invalid=true]{box-shadow:inset 0 -1px 0 #FCA5A5}
-.contact-direct{display:flex;flex-direction:column;gap:12px}
-.contact-address{font-size:clamp(20px,4vw,28px);font-weight:500;overflow-wrap:anywhere;user-select:all}
-.contact-email-row{display:flex;align-items:center;gap:4px;min-width:0}
-.contact-copy{display:grid;place-items:center;flex:none;width:44px;height:44px;border:0;border-radius:8px;background:transparent;color:#A1A1AA!important}
+.mail-recipient{display:flex;align-items:center;flex-wrap:wrap;column-gap:12px;row-gap:2px;min-width:0;flex:1}
+.contact-address{font-size:inherit;font-weight:400;user-select:all}
+.contact-email-row{display:inline-flex;align-items:center;gap:2px;min-width:0}
+.contact-copy{display:grid;place-items:center;flex:none;width:32px;height:32px;border:0;border-radius:6px;background:transparent;color:#A1A1AA!important}
 .contact-copy:hover{background:#1D1D25;color:#F4F4F5!important}
-.contact-copy-status{font-size:13px;color:#A1A1AA;min-height:21px}
 .contact-composer{width:100%}
 .contact-composer>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;cursor:pointer;list-style:none;color:#D4D4D8;font-size:14px}
 .contact-composer>summary::-webkit-details-marker{display:none}
