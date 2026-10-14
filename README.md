@@ -125,7 +125,7 @@ engineering experience. Product adoption is described without naming apps or tea
 `src/data/portfolio.js`. Education is carried forward from the previous résumé
 in the script. The selected projects are Hermes Companion, Nexus and Tally;
 project-specific `resumeSummary` copy keeps their scope concise and accurate.
-Private projects render without source links unless their upcoming release destination is explicitly supplied; Tally is labelled "public soon". It needs Node.js plus Python packages `reportlab`, `pypdf`, and
+Private projects render without source links; Tally links to its public repository. The generator needs Node.js plus Python packages `reportlab`, `pypdf`, and
 `pypdfium2` (available in the Codex bundled Python runtime).
 
 ```bash
