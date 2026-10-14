@@ -314,13 +314,13 @@ export const projects = [
       "CSV / PDF",
       "MCP"
     ],
-    "description": "A personal finance tracker for multiple accounts, credit cards, loans and monthly budgets, with statement import and review, separate INR/USD ledgers and backup recovery. Includes a stdio MCP bridge for shared-ledger tools; AI-client connections are in progress.",
-    "resumeSummary": "Open-source React/TypeScript finance tracker for multiple accounts, credit cards, loans and budgets, with statement imports, recovery and REST/stdio MCP tools. AI-client connections are in progress.",
+    "description": "A personal finance tracker for multiple accounts, credit cards, loans and monthly budgets, with statement import and review, separate INR/USD ledgers and backup recovery. Includes MCP access for compatible AI clients through a stdio bridge and shared-ledger service.",
+    "resumeSummary": "Open-source React/TypeScript finance tracker for multiple accounts, credit cards, loans and budgets, with statement imports, recovery and REST/stdio MCP tools.",
     "architecture": {
       "title": "Tally tool connection",
-      "note": "Implemented service and MCP bridge; client connections are in progress",
+      "note": "Deployed application with shared-ledger tools and a stdio MCP bridge",
       "steps": [
-        { "name": "Compatible AI client", "detail": "Intended Hermes, ChatGPT and other client workflows" },
+        { "name": "Compatible AI client", "detail": "Hermes, ChatGPT and other compatible clients" },
         { "name": "Local stdio MCP bridge", "detail": "Discovers tools and forwards typed calls" },
         { "name": "Private HTTPS REST service", "detail": "Shared-ledger operations" }
       ],
@@ -337,16 +337,16 @@ export const projects = [
     "liveUrl": null,
     "repoUrl": "https://github.com/coding-nyx/tally",
     "sourceLinks": [{ "label": "Source", "url": "https://github.com/coding-nyx/tally" }],
-    "status": "Personal project",
+    "status": "Deployed personal project",
     "scope": "Personal web application",
     "linksUnavailableReason": null,
     "caseStudy": {
       "problem": "Track multiple accounts, credit cards, loans and monthly budgets, turn transaction files into reviewed records, and make financial data accessible through a shared tool interface for AI clients.",
       "approach": "Implemented a React/TypeScript personal finance tracker with multiple-account tracking, credit-card tracking, loan tracking and category budgets. Browser-local persistence supports separate INR/USD ledgers and integer minor-unit amounts. CSV and text-PDF imports include column mapping, date review and duplicate detection before confirmation. JSON backup, restore and migration support data recovery.",
-      "integration": "Implemented a stdio MCP bridge backed by a shared-ledger REST service for transaction entry and retrieval, statement upload/import, summaries and exports. Client integration is in progress and targets compatible AI clients, including intended Hermes and ChatGPT workflows.",
-      "scope": "Personal web application with browser-local budgeting, a persistent private shared ledger and implemented REST/MCP tooling. Browser-local and shared data are separate modes; AI-client connections remain in progress.",
-      "evidence": "Repository implementation includes import-review UI and tests for parsing, duplicate detection, date ambiguity and currency conflicts. Live read-only discovery verified 95 advertised tools, and service status reported persistent storage ready with statement features enabled. Client-specific end-to-end behavior has not been verified in this review.",
-      "limitations": "Client connections, including Hermes and ChatGPT, remain in progress. Text-PDF extraction is best effort; scanned and password-protected statements are unsupported. Browser-local records require backups. No public demo or usage figures are published."
+      "integration": "Implemented a stdio MCP bridge backed by a shared-ledger REST service for transaction entry and retrieval, statement upload/import, summaries and exports. Supports compatible AI clients, including Hermes and ChatGPT workflows.",
+      "scope": "Deployed personal web application with browser-local budgeting, a persistent private shared ledger and REST/MCP tooling. Browser-local and shared data are separate modes.",
+      "evidence": "Repository implementation includes import-review UI and tests for parsing, duplicate detection, date ambiguity and currency conflicts. Live read-only discovery verified 95 advertised tools, and service status reported persistent storage ready with statement features enabled.",
+      "limitations": "Text-PDF extraction is best effort; scanned and password-protected statements are unsupported. Browser-local records require backups. No public demo or usage figures are published."
     }
   },
   {

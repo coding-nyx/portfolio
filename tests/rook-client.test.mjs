@@ -37,8 +37,9 @@ test('private project answers explain architecture without inventing public link
   const integration=generateFallbackResponse('Can Hermes or ChatGPT upload statements through Tally MCP?');
   assert.match(integration,/stdio MCP bridge backed by a shared-ledger REST service/);
   assert.match(integration,/statement upload\/import/);
-  assert.match(integration,/integration is in progress/);
-  assert.match(integration,/intended Hermes and ChatGPT workflows/);
+  assert.match(integration,/Supports compatible AI clients/);
+  assert.doesNotMatch(integration,/in progress|intended Hermes/);
+  assert.match(integration,/Hermes and ChatGPT workflows/);
 });
 
 test('iOS component questions return work evidence rather than a generic skill list',()=>{
