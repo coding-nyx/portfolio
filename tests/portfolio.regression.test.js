@@ -288,7 +288,7 @@ test('no surface hardcodes a year count or a stale duration', () => {
  * 5. Destinations must be honest
  * ------------------------------------------------------------------ */
 
-test('no dead or private destinations are published', () => {
+test('unapproved unavailable destinations are not published', () => {
   const combined = SOURCE_FILES.map(f => readFileSync(f, 'utf8')).join('\n');
 
   // Verified unavailable: 404 to unauthenticated visitors / private repo.
