@@ -33,7 +33,8 @@ test('private project answers explain architecture without inventing public link
   assert.match(tally,/JSON backup, restore and migration/);
   assert.match(tally,/Open-source release planned/);
   assert.match(tally,/repository is currently private/);
-  assert.doesNotMatch(tally,/https?:\/\//);
+  assert.match(tally,/https:\/\/github\.com\/coding-nyx\/tally/);
+  assert.match(tally,/Source \(public soon\)/);
   const integration=generateFallbackResponse('Can Hermes or ChatGPT upload statements through Tally MCP?');
   assert.match(integration,/stdio MCP bridge backed by a shared-ledger REST service/);
   assert.match(integration,/statement upload\/import/);

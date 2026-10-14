@@ -32,7 +32,8 @@ export function generateFallbackResponse(messagesInput) {
     const detail = caseStudy && /architect|implement|built|memory|orchestrat|persona|compress|rag|import|recover|currency|how|mcp|hermes|chatgpt|upload|agent tool/.test(query)
       ? `\n\n${publicText(caseStudy.approach)}${caseStudy.integration ? `\n\n${publicText(caseStudy.integration)}` : ''}\n\n${publicText(caseStudy.limitations)}` : '';
     const links = (project.sourceLinks || (project.repoUrl ? [{label:'Source',url:project.repoUrl}] : [])).map(link=>`[${link.label}](${link.url})`).join(' · ');
-    return `### ${project.name}\n\n${publicText(project.description)}${detail}\n\n${links || publicText(project.linksUnavailableReason) || 'Public source is not available.'}\n[ACTION:SCROLL_TO:projects]`;
+    const destinations = links ? `${links}${project.linksUnavailableReason ? `\n\n${publicText(project.linksUnavailableReason)}` : ''}` : publicText(project.linksUnavailableReason) || 'Public source is not available.';
+    return `### ${project.name}\n\n${publicText(project.description)}${detail}\n\n${destinations}\n[ACTION:SCROLL_TO:projects]`;
   };
 
   const project = projects.find((p) => query.includes(p.name.toLowerCase())) ||

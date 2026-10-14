@@ -335,10 +335,11 @@ export const projects = [
     "imageAlt": "Tally budget dashboard showing synthetic sample records",
     "imageCaption": "Budget dashboard · sample data",
     "liveUrl": null,
-    "repoUrl": null,
+    "repoUrl": "https://github.com/coding-nyx/tally",
+    "sourceLinks": [{ "label": "Source (public soon)", "url": "https://github.com/coding-nyx/tally" }],
     "status": "Personal project",
     "scope": "Personal web application",
-    "linksUnavailableReason": "Open-source release planned. The repository is currently private; no public demo is linked.",
+    "linksUnavailableReason": "Open-source release planned. The linked repository is currently private and will be public soon; no public demo is linked.",
     "caseStudy": {
       "problem": "Track multiple accounts, credit cards, loans and monthly budgets, turn transaction files into reviewed records, and make financial data accessible through a shared tool interface for AI clients.",
       "approach": "Implemented a React/TypeScript personal finance tracker with multiple-account tracking, credit-card tracking, loan tracking and category budgets. Browser-local persistence supports separate INR/USD ledgers and integer minor-unit amounts. CSV and text-PDF imports include column mapping, date review and duplicate detection before confirmation. JSON backup, restore and migration support data recovery.",
