@@ -40,14 +40,31 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
   }, [spy]);
 
   useEffect(() => {
+    let disposed = false, frame;
+    const syncHash = () => {
+      const id = window.location.hash.slice(1);
+      if (!CHAPTERS.some(([chapter]) => chapter === id)) return;
+      const section = document.getElementById(id);
+      section?.scrollIntoView({behavior:'instant', block:'start'});
+      document.getElementById('h-' + id)?.focus({preventScroll:true});
+      spy();
+    };
+    document.fonts.ready.then(() => {
+      if (!disposed) frame = requestAnimationFrame(syncHash);
+    });
+    window.addEventListener('hashchange', syncHash);
+    return () => { disposed = true; cancelAnimationFrame(frame); window.removeEventListener('hashchange', syncHash); };
+  }, [spy]);
+
+  useEffect(() => {
     if (!sheetOpen) return;
     const a = sheetRef.current?.querySelector('[aria-current]') || sheetRef.current?.querySelector('a');
     a?.focus({ preventScroll: true });
-    const key = (e) => { if (e.key === 'Escape') { e.preventDefault(); setSheetOpen(false); opener.current?.focus(); } };
+    const key = (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setSheetOpen(false); opener.current?.focus(); } };
     const click = (e) => { if (!sheetRef.current?.contains(e.target) && !e.target.closest('[data-picker]')) setSheetOpen(false); };
-    document.addEventListener('keydown', key);
+    document.addEventListener('keydown', key, true);
     document.addEventListener('click', click);
-    return () => { document.removeEventListener('keydown', key); document.removeEventListener('click', click); };
+    return () => { document.removeEventListener('keydown', key, true); document.removeEventListener('click', click); };
   }, [sheetOpen]);
 
   // Delegated jump for any in-page chapter link (nav, sheet, hero buttons).
@@ -76,7 +93,7 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
       aria-label={`${label}, current: ${chapterNum(active)} ${CHAPTERS[active][1]}`}
       onClick={(e) => { opener.current = e.currentTarget; setSheetOpen((o) => !o); }}
     >
-      <Cur i={active} /><span className="chev" aria-hidden="true">▾</span>
+      <span className="menu-label">Menu</span><Cur i={active} /><span className="chev" aria-hidden="true">▾</span>
     </button>
   );
   const ask = (

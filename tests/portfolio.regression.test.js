@@ -121,7 +121,7 @@ test('every case study separates problem, approach, scope and limitations', asyn
 
 test('curated projects merge Hermes clients and exclude the removed showcase', async () => {
   const { projects } = await importData();
-  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion', 'a0090-meta (hub-11 OS)', 'Nexus']);
+  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Nexus']);
 });
 
 /* ------------------------------------------------------------------ *
@@ -312,7 +312,6 @@ test('working public repositories stay linked', async () => {
 
   for (const url of [
     'https://github.com/coding-nyx/hermes-companion-app',
-    'https://github.com/coding-nyx/hermes-companion-web',
     'https://github.com/coding-nyx/a0090-meta',
     'https://github.com/coding-nyx/worktracker',
   ]) {
@@ -337,12 +336,10 @@ test('the APK destination is labelled as releases, not a live demo', async () =>
  * ------------------------------------------------------------------ */
 
 test('hero exposes recruiter actions with unambiguous labels', () => {
-  const hero = read('src/components/Hero.jsx');
-
-  assert.ok(hero.includes('text="LinkedIn"'), 'Professional must be renamed to LinkedIn');
-  assert.ok(hero.includes('text="Email"'), 'Informal must be renamed to Email');
-  assert.ok(!hero.includes('Contact for Fun'), '"Contact for Fun" is ambiguous for recruiters');
-  assert.ok(hero.includes('View Resume'), 'Résumé action must remain available');
+  const hero = read('src/components/EntryHero.jsx');
+  assert.match(hero, /href="#experience"[^>]*>View iOS work</, 'native work needs a direct hiring path');
+  assert.match(hero, /href=\{resumeUrl\}[^>]*download>Resume/, 'résumé download must remain available');
+  assert.match(hero, /href="#contact"[^>]*>Contact</, 'contact action must remain available');
 });
 
 test('recruiter content renders without waiting for a boot animation', () => {
@@ -405,7 +402,7 @@ test('professional name and contact details are preserved', async () => {
 
   assert.equal(profileData.name, 'Raj Kumar S');
   assert.equal(profileData.socialLinks.linkedin, 'https://www.linkedin.com/in/raj-kumar-s');
-  assert.match(profileData.socialLinks.email, /@/);
+  assert.equal(profileData.socialLinks.email, '9080251@gmail.com');
 
   const zoho = experienceData.find(e => e.company === 'Zoho' && e.type === 'Full-time');
   assert.ok(zoho, 'Zoho full-time role must be preserved');

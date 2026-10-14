@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { createElement, useEffect, useRef, useState } from 'react';
+import { FiMapPin, FiBriefcase, FiCalendar, FiLayers, FiChevronDown, FiCopy } from 'react-icons/fi';
 import { profileData, experienceData, skillsData, projects, awardsData, achievementsData, certificationsData, interestsData } from '../../data/portfolio';
 import { publicText } from '../../utils/publicText';
 import { sendEmail } from '../../services/emailService';
@@ -10,13 +11,27 @@ const EMAIL_CONFIGURED = Boolean(import.meta.env.VITE_EMAILJS_SERVICE_ID && impo
 const LinkOut = ({ href, children, ...props }) => <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>;
 const Next = ({ id, children }) => <a className="chapter-next" href={`#${id}`} data-sec={id}>Next: <b>{children} ↓</b></a>;
 
-export function BioB({ resumeUrl }) {
-  const rows = [ ['⌖', 'Location', profileData.location], ['◇', 'Role', experienceData[0].role], ['◷', 'Experience', 'Since May 2022'], ['⌘', 'Stack', 'Swift · UIKit · SwiftUI · SPM'] ];
+export function BioB() {
+  const rows = [
+    [FiMapPin, 'Location', profileData.location],
+    [FiBriefcase, 'Role', experienceData[0].role],
+    [FiCalendar, 'Experience', 'Since May 2022'],
+    [FiLayers, 'Stack', 'Swift · UIKit · SwiftUI · SPM'],
+  ];
   return <div className="port-section bio-b" data-design="Bio B">
-    <div className="bio-card"><div className="bio-top"><img className="bio-avatar" src={profileData.profileImage} alt="Raj Kumar S" width="72" height="72" /><h2>{profileData.name}</h2><p>iOS / Apple Platform Engineer</p><div className="bio-actions"><a href={resumeUrl} download><span aria-hidden="true">↓</span>Resume</a><a href="#contact"><span aria-hidden="true">✉</span>Contact</a><a href="#experience"><span aria-hidden="true">⌘</span>Work</a></div></div>
-    <div className="bio-group">{rows.map(([icon,label,value]) => <div className="bio-row" key={label}><i aria-hidden="true">{icon}</i><b>{label}</b><span>{value}</span></div>)}</div>
-    <div className="bio-group"><details className="bio-about"><summary><i aria-hidden="true">✎</i>About me<span aria-hidden="true">⌄</span></summary><p>{publicText(profileData.summary)}</p><ul className="interest-list">{interestsData.map(i => <li key={i}>{i}</li>)}</ul></details></div>
-    <div className="social-row"><LinkOut href={profileData.socialLinks.github}>GitHub ↗</LinkOut><LinkOut href={profileData.socialLinks.linkedin}>LinkedIn ↗</LinkOut><a href={`mailto:${profileData.socialLinks.email}`}>Email ↗</a></div></div><Next id="experience">Experience</Next>
+    <div className="bio-card">
+      <div className="bio-top">
+        <img className="bio-avatar" src={profileData.profileImage} alt="Raj Kumar S" width="96" height="96" />
+        <h2>{profileData.name}</h2><p>{profileData.roleTitle}</p>
+      </div>
+      <p className="bio-intro">{publicText(profileData.summary)}</p>
+      <div className="bio-group">{rows.map(([icon, label, value]) => <div className="bio-row" key={label}>
+        <i aria-hidden="true">{createElement(icon, {size:20, focusable:false})}</i><b>{label}</b><span>{value}</span>
+      </div>)}</div>
+      <details className="bio-interests"><summary>Outside work <FiChevronDown aria-hidden="true" /></summary>
+        <ul className="interest-list">{interestsData.map(interest => <li key={interest}>{interest}</li>)}</ul>
+      </details>
+    </div><Next id="experience">Experience</Next>
   </div>;
 }
 
@@ -30,9 +45,53 @@ const careerRange = (item) => {
 };
 
 export function ExperienceD() {
-  const [selected,setSelected] = useState(0);
+  const [selected, setSelected] = useState(0);
+  const uiDialog = useRef(null), uiOpener = useRef(null);
   const role = experienceData[selected];
-  return <div className="port-section experience-d" data-design="Experience D"><h2>Experience</h2><div className="career-summary"><span><b>{new Set(experienceData.map(r=>r.company)).size}</b> companies</span><span><b>{experienceData.length}</b> roles</span><span>Since May 2022 at Zoho</span></div><div className="career-grid"><div className="career-tracks"><div className="career-axis" aria-hidden="true"><span>2019</span><span>2021</span><span>2023</span><span>2026</span></div>{experienceData.map((r,i)=><button key={`${r.company}-${r.dates}`} className="career-bar" aria-pressed={selected===i} aria-controls="career-detail" onClick={()=>setSelected(i)}><span className="career-label"><b>{r.role}</b><small>{r.company}</small></span><span className="career-track" aria-hidden="true"><span style={careerRange(r)} /></span><span className="sr-only">{r.dates}</span></button>)}</div><div className="career-panel" id="career-detail" aria-live="polite"><p className="port-eyebrow">{role.dates}</p><h3>{role.role}</h3><p className="port-meta">{role.company} · {role.type}</p><p>{publicText(role.description)}</p>{role.projects && <ul>{role.projects.map(p=><li key={p.name}><b>{p.name}</b><p>{publicText(p.desc)}</p></li>)}</ul>}</div></div><Next id="projects">Projects</Next></div>;
+  const notes = role.projects?.filter(item => ['adaptive-navigation-layout', 'spreadsheet-layout-performance', 'kanban-column-layout'].includes(item.id)) || [];
+  return <div className="port-section experience-d" data-design="Experience D">
+    <h2>Experience</h2>
+    <p className="career-summary">Zoho · Full-time iOS engineering since May 2022</p>
+    <div className="career-grid">
+      <div className="career-tracks">
+        <div className="career-axis" aria-hidden="true"><span>2019</span><span>2021</span><span>2023</span><span>{new Date().getFullYear()}</span></div>
+        {experienceData.map((item, index) => <button key={item.company + item.dates} className="career-bar" aria-pressed={selected === index} aria-controls="career-detail" onClick={() => setSelected(index)}>
+          <span className="career-label"><b>{item.role}</b><small>{item.company}</small><small className="career-dates">{item.dates}</small></span>
+          <span className="career-track" aria-hidden="true"><span style={careerRange(item)} /></span>
+        </button>)}
+      </div>
+      <div className="career-panel" id="career-detail" aria-live="polite">
+        <p className="port-eyebrow">{role.dates}</p><h3>{role.role}</h3><p className="port-meta">{role.company} · {role.type}</p>
+        <p>{publicText(role.description)}</p>
+        {role.projects && <ul>{role.projects.filter(item => !notes.includes(item)).map(item => <li key={item.name}>
+          <b>{item.name}</b><p>{publicText(item.desc)}</p>
+          {item.details && <details className="career-work-details">
+            <summary>How it works <FiChevronDown aria-hidden="true" /></summary>
+            <div className="career-work-explanation">
+              <p>{publicText(item.details.intro)}</p>
+              <ol className="component-workflow">{item.details.steps.map(step => <li key={step.title}><h4>{step.title}</h4><p>{publicText(step.body)}</p></li>)}</ol>
+              <section><h4>Adding features and new versions</h4><p>{publicText(item.details.updates)}</p></section>
+            </div>
+          </details>}
+        </li>)}</ul>}
+        {role.uiWork && <button className="ui-work-card" type="button" aria-haspopup="dialog" aria-controls="ui-work-dialog" onClick={event => {uiOpener.current = event.currentTarget; uiDialog.current.showModal();}}>
+          <span><b>{role.uiWork.title}</b><span>{role.uiWork.summary}</span><span className="ui-work-action">View examples</span></span>
+          <span className="ui-work-arrow" aria-hidden="true">↗</span>
+        </button>}
+      </div>
+    </div>
+    {role.uiWork && <dialog ref={uiDialog} id="ui-work-dialog" className="project-dialog ui-work-dialog" aria-labelledby="ui-work-title" aria-describedby="ui-work-intro" onClose={() => uiOpener.current?.focus({preventScroll:true})}>
+      <div className="project-dialog-toolbar"><span>Component work</span><button type="button" className="port-close" aria-label="Close UI work examples" onClick={() => uiDialog.current.close()}>×</button></div>
+      <div className="project-dialog-content">
+        <h3 id="ui-work-title">{role.uiWork.title}</h3><p id="ui-work-intro">{role.uiWork.intro}</p>
+        <div className="ui-work-examples">{role.uiWork.examples.map(example => <section className="ui-work-example" key={example.title} aria-label={example.title}>
+          <h4>{example.title}</h4>
+          <dl>{[[example.contextLabel || 'Issue', example.context], [example.analysisLabel || 'Investigation', example.analysis], [example.changeLabel || 'Change', example.change], [example.reasoningLabel || 'Why this approach', example.reasoning]].filter(([, content]) => content).map(([label, content]) => <div key={label}><dt>{label}</dt><dd>{content}</dd></div>)}</dl>
+        </section>)}</div>
+      </div>
+    </dialog>}
+    <Next id="projects">Projects</Next>
+  </div>;
 }
 
 const SKILL_GROUPS = [
@@ -42,38 +101,88 @@ const SKILL_GROUPS = [
 ];
 // Use the confirmed category data rather than inventing daily/learning claims.
 function usedIn(skill) {
-  if (/Swift|UIKit|SPM/.test(skill.name)) return [{label:'Zoho · mobile platforms',href:'#experience'}];
+  if (/Swift|UIKit|SPM/.test(skill.name)) return [{label:'Zoho · native component work',href:'#experience'}];
   if (/Kotlin|Android/.test(skill.name)) return [{label:'Hermes Companion',href:'#projects'}];
   if (/Linux/.test(skill.name)) return [{label:'a0090-meta (hub-11 OS)',href:'#projects'}];
+  if (/MCP/.test(skill.name)) return [{label:'Zoho · component integration tooling',href:'#experience'},{label:'WorkTracker',href:'#projects'}];
+  if (/Catalyst/.test(skill.name)) return [{label:'MCP hosting, internal docs and issue tracking',href:'#skills'}];
   return projects.filter(p=>p.tags.some(t=>skill.name.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(skill.name.split(' / ')[0].toLowerCase()))).map(p=>({label:p.name,href:'#projects'}));
 }
 export function SkillsAD() {
-  const [selected,setSelected] = useState(null);
-  const last = useRef(null);
-  const buttons = useRef([]);
-  const close = () => { setSelected(null);last.current?.focus({preventScroll:true}); };
-  useEffect(()=>{if(!selected)return;const esc=e=>{if(e.key==='Escape'){setSelected(null);last.current?.focus({preventScroll:true});}};window.addEventListener('keydown',esc);return()=>window.removeEventListener('keydown',esc);},[selected]);
+  const [selected, setSelected] = useState(null);
+  const last = useRef(null), detail = useRef(null), buttons = useRef([]);
+  const close = () => { setSelected(null); last.current?.focus({preventScroll:true}); };
+  useEffect(() => {
+    if (selected) detail.current?.scrollIntoView({behavior:'instant', block:'nearest'});
+  }, [selected]);
   const used = selected ? usedIn(selected) : [];
-  return <div className="port-section skills-ad" data-design="Skills A+D"><h2>Skills</h2><p className="port-meta">Tap a skill to see where it is used.</p><div className="skills-wrap"><div className="skill-groups">{SKILL_GROUPS.map(g=><section className="skill-cluster" key={g.name}><h3>{g.name}<small>{g.skills.length} skills</small></h3><div className="skill-chips">{g.skills.map(s=>{const i=skillsData.indexOf(s);return <button key={s.name} ref={el=>{buttons.current[i]=el;}} className={`skill-chip ${g.className}`} aria-expanded={selected?.name===s.name} aria-controls="skill-detail" onClick={e=>{last.current=e.currentTarget;setSelected(s);}} onKeyDown={e=>{const delta={ArrowRight:1,ArrowDown:1,ArrowLeft:-1,ArrowUp:-1}[e.key];if(delta){e.preventDefault();buttons.current[(i+delta+skillsData.length)%skillsData.length]?.focus();}}}>{s.name}</button>;})}</div></section>)}</div><aside id="skill-detail" className="skill-detail" aria-live="polite">{selected?<><button className="port-close" aria-label="Close skill details" onClick={close}>×</button><span className="port-eyebrow">{selected.category}</span><h3>{selected.name}</h3><dl><dt>Used in</dt><dd>{used.length?used.map(u=><a key={u.label} href={u.href}>{u.label} ↗</a>):'Listed in Raj’s portfolio stack.'}</dd></dl></>:<p className="port-meta">Select a skill to see its portfolio context.</p>}</aside></div><Next id="achievements">Achievements</Next></div>;
+  return <div className="port-section skills-ad" data-design="Skills A+D">
+    <h2>Skills</h2><p className="port-meta">Select a skill for examples from my work.</p>
+    <div className="skill-groups">{SKILL_GROUPS.map(group => <section className="skill-cluster" key={group.name} onKeyDown={event => {
+      if (event.key === 'Escape' && selected && group.skills.includes(selected)) { event.preventDefault(); event.stopPropagation(); close(); }
+    }}>
+      <h3>{group.name}<small>{group.skills.length} skills</small></h3>
+      <div className="skill-chips">{group.skills.map(skill => {
+        const index = skillsData.indexOf(skill);
+        return <button key={skill.name} ref={element => { buttons.current[index] = element; }} className={'skill-chip ' + group.className} aria-expanded={selected?.name === skill.name} aria-controls={selected?.name === skill.name ? 'skill-detail' : undefined} onClick={event => {
+          last.current = event.currentTarget; setSelected(selected?.name === skill.name ? null : skill);
+        }} onKeyDown={event => {
+          const delta = {ArrowRight:1, ArrowDown:1, ArrowLeft:-1, ArrowUp:-1}[event.key];
+          if (delta) { event.preventDefault(); buttons.current[(index + delta + skillsData.length) % skillsData.length]?.focus(); }
+        }}>{skill.name}</button>;
+      })}</div>
+      {selected && group.skills.includes(selected) && <div id="skill-detail" className="skill-detail" ref={detail} aria-live="polite">
+        <div className="skill-detail-header"><h4>{selected.name}</h4><button className="port-close" aria-label="Close skill details" onClick={close}>×</button></div>
+        {selected.evidence && <p>{selected.evidence}</p>}
+        <dl><dt>Used in</dt><dd>{used.length ? used.map(item => <a key={item.label} href={item.href}>{item.label} ↗</a>) : 'Listed in my portfolio stack.'}</dd></dl>
+      </div>}
+    </section>)}</div><Next id="achievements">Achievements</Next>
+  </div>;
 }
 
 export function AchievementsC() {
-  const [expanded,setExpanded] = useState(null);
-  const evidence = [ ...awardsData.map(a=>({title:a.name,kind:'Participation',proof:a.issuer,date:a.date,detail:`${a.issuer} participation · ${a.date}.`})), ...achievementsData.filter(a=>!a.pendingConfirmation).map(a=>({title:a.title,kind:'Achievement',proof:a.event,date:'',detail:publicText(a.description)})) ];
-  return <div className="port-section achievements-c" data-design="Achievements C"><h2>Achievements</h2><p className="port-meta">Confirmed milestones and their supporting records.</p><p className="port-eyebrow">Featured evidence</p><div className="achievement-featured">{evidence.map((a,i)=><button className="achievement-card" key={a.title} aria-expanded={expanded===i} onClick={()=>setExpanded(expanded===i?null:i)} onKeyDown={e=>{if(e.key==='Escape')setExpanded(null);}}><span className="port-meta">{a.kind}</span><strong>{a.title}</strong><span>{a.proof}</span><span className="port-meta">{a.date}</span><span className="evidence-toggle">{expanded===i?'Hide':'Show'} evidence {expanded===i?'−':'+'}</span>{expanded===i&&<span className="evidence-body">{a.detail}</span>}</button>)}</div><details className="older-certs"><summary>Older certifications (2020) <span>{certificationsData.length} records</span></summary><div className="proof-grid">{certificationsData.map(c=><article className="proof-card" key={c.name}><h3>{c.name}</h3><p className="port-meta">{c.issuer} · {c.date}</p>{c.credentialUrl?<LinkOut href={c.credentialUrl}>View credential ↗</LinkOut>:<span className="port-meta">Certificate</span>}</article>)}</div></details><Next id="resume">Resume</Next></div>;
+  const milestones = [
+    ...awardsData.map(item => ({title:item.name, kind:'Participation', proof:item.issuer, date:item.date, description:item.description})),
+    ...achievementsData.filter(item => !item.pendingConfirmation).map(item => ({title:item.title, kind:'Achievement', proof:item.event, description:item.description})),
+  ];
+  return <div className="port-section achievements-c" data-design="Achievements C">
+    <h2>Achievements</h2><p className="port-meta">Participation and continued learning.</p>
+    <div className="achievement-featured">{milestones.map(item => <article className="achievement-card" key={item.title}>
+      <span className="port-meta">{item.kind}</span><strong>{item.title}</strong><span>{item.proof} · {item.date}</span><p>{publicText(item.description)}</p>
+    </article>)}</div>
+    <details className="older-certs"><summary>Older certifications (2020) <span>{certificationsData.length} records</span></summary>
+      <div className="proof-grid">{certificationsData.map(item => <article className="proof-card" key={item.name}><h3>{item.name}</h3><p className="port-meta">{item.issuer} · {item.date}</p>{item.credentialUrl ? <LinkOut href={item.credentialUrl}>View credential ↗</LinkOut> : <span className="port-meta">Certificate</span>}</article>)}</div>
+    </details><Next id="resume">Resume</Next>
+  </div>;
 }
 
 export function ResumeC({ resumeUrl }) {
-  const [preview,setPreview] = useState(false);
-  return <div className="port-section resume-c" data-design="Resume C"><h2>Resume</h2><div className="resume-grid"><div className="resume-overview"><p className="port-eyebrow">Role</p><h3>{experienceData[0].role}</h3><div className="resume-facts"><div><p className="port-eyebrow">Experience</p><p>Since May 2022</p></div><div><p className="port-eyebrow">Focus</p><p>iOS · Apple platforms</p></div></div><p className="port-eyebrow">Top skills</p><ul className="resume-skill-list">{skillsData.slice(0,4).map(s=><li key={s.name}>{s.name}</li>)}</ul><p className="port-eyebrow">Last two roles</p><ol className="resume-roles">{experienceData.slice(0,2).map(r=><li key={r.role}><b>{r.role}</b><span>{r.company} · {r.dates}</span></li>)}</ol></div><aside className="resume-download"><a className="resume-download-button" href={resumeUrl} download><span aria-hidden="true">↓</span><span><b>Download resume</b><small>PDF · existing résumé</small></span></a><p className="port-meta">Opens in any PDF viewer</p><button className="port-button secondary" aria-expanded={preview} aria-controls="resume-preview" onClick={()=>setPreview(!preview)}>{preview?'Hide':'Show'} preview</button>{preview&&<img id="resume-preview" src="/resume-preview.png" width="595" height="842" alt="First page of Raj’s existing resume" />}<a href={resumeUrl} target="_blank" rel="noreferrer">Open PDF ↗</a></aside></div><Next id="contact">Contact</Next></div>;
+  const [preview, setPreview] = useState(false);
+  return <div className="port-section resume-c" data-design="Resume C">
+    <h2>Resume</h2><div className="resume-grid">
+      <div className="resume-overview"><p className="port-eyebrow">Native UI · Product engineering</p><h3>{profileData.roleTitle}</h3><p>A concise overview of my component engineering, performance work, integration tooling and selected projects.</p><p className="port-meta">Member of Technical Staff at Zoho · Since May 2022</p></div>
+      <aside className="resume-download">
+        <a className="resume-download-button" href={resumeUrl} download><span aria-hidden="true">↓</span><span><b>Download resume</b><small>PDF · Updated October 2026</small></span></a>
+        <button className="port-button secondary" aria-expanded={preview} aria-controls={preview ? 'resume-preview' : undefined} onClick={() => setPreview(!preview)}>{preview ? 'Hide' : 'Show'} preview</button>
+        {preview && <img id="resume-preview" src="/resume-preview.png" width="595" height="842" alt="First page of Raj’s resume" />}
+        <a href={resumeUrl} target="_blank" rel="noreferrer">Open PDF ↗</a>
+      </aside>
+    </div><Next id="contact">Contact</Next>
+  </div>;
 }
 
 export function ContactD() {
+  const [copyStatus,setCopyStatus] = useState('');
   const [form,setForm] = useState({ name:'',email:'',subject:'Job',message:'' });
   const [errors,setErrors] = useState({});
   const [status,setStatus] = useState('');
   const [sending,setSending] = useState(false);
   const refs = useRef({});
+  const draftUrl = `mailto:${profileData.socialLinks.email}?subject=${encodeURIComponent(form.subject+' — '+form.name.trim())}&body=${encodeURIComponent(form.message.trim()+'\n\nFrom: '+form.name.trim()+' <'+form.email.trim()+'>')}`;
+  const copyEmail = async () => {
+    try { await navigator.clipboard.writeText(profileData.socialLinks.email); setCopyStatus('Email copied.'); }
+    catch { setCopyStatus('Select the email address above to copy it.'); }
+  };
   const changed = e => {setForm({...form,[e.target.name]:e.target.value});setErrors({...errors,[e.target.name]:undefined});setStatus('');};
   const reset = () => {setForm({name:'',email:'',subject:'Job',message:''});setErrors({});setStatus('');};
   const submit = async e => {
@@ -90,12 +199,11 @@ export function ContactD() {
         await sendEmail({name:form.name.trim(),email:form.email.trim(),message:`Subject: ${form.subject}\n\n${form.message.trim()}`});
         setStatus('sent');
       } else {
-        window.location.href=`mailto:${profileData.socialLinks.email}?subject=${encodeURIComponent(form.subject+' — '+form.name.trim())}&body=${encodeURIComponent(form.message.trim()+'\n\nFrom: '+form.name+' <'+form.email+'>')}`;
-        setStatus('draft');
+        setStatus('unavailable');
       }
     } catch {setStatus('error');} finally {setSending(false);}
   };
-  return <div className="port-section contact-d" data-design="Contact D"><h2>Contact</h2><div className="mail-sheet"><form noValidate onSubmit={submit}><div className="mail-toolbar"><button type="button" onClick={reset} disabled={sending}>Clear</button><b>New message</b><button type="submit" className="mail-send" disabled={sending} aria-label="Send message">{sending?'Sending…':'Send ↑'}</button></div><div className="mail-row"><span>To</span><b>{profileData.name}</b></div>{[['name','From','Your name','text'],['email','Reply to','Your email','email']].map(([name,label,placeholder,type])=><div className="mail-field" key={name}><label className="mail-row" htmlFor={`contact-${name}`}><span>{label}</span><input id={`contact-${name}`} ref={el=>{refs.current[name]=el;}} type={type} name={name} autoComplete={name} placeholder={placeholder} value={form[name]} onChange={changed} aria-invalid={Boolean(errors[name])} aria-describedby={errors[name]?`contact-error-${name}`:undefined} /></label>{errors[name]&&<p className="field-error" id={`contact-error-${name}`}>{errors[name]}</p>}</div>)}<fieldset className="mail-subject"><legend>Subject</legend>{['Job','Freelance','Just hi'].map(s=><label key={s}><input type="radio" name="subject" value={s} checked={form.subject===s} onChange={changed} />{s}</label>)}</fieldset><div className="mail-body"><label className="sr-only" htmlFor="contact-message">Message</label><textarea id="contact-message" ref={el=>{refs.current.message=el;}} name="message" placeholder="Write your message…" value={form.message} onChange={changed} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message?'contact-error-message':undefined} rows="7" />{errors.message&&<p className="field-error" id="contact-error-message">{errors.message}</p>}</div>{!EMAIL_CONFIGURED&&<p className="mail-delivery-note">Send opens an email draft you can review and send in your mail app.</p>}{Object.values(errors).some(Boolean)&&<p className="mail-status field-error" role="alert">Please check the highlighted fields.</p>}{status&&<div className="mail-status" role={status==='error'?'alert':'status'}>{status==='sent'?<><b>Message sent.</b><p>Thank you for reaching out.</p><button type="button" onClick={reset}>Write another message</button></>:status==='draft'?'Email draft opened. Send it in your mail app.':<>The message could not be sent. Try again or <a href={`mailto:${profileData.socialLinks.email}`}>email Raj directly</a>.</>}</div>}</form></div><div className="social-row"><a href={`mailto:${profileData.socialLinks.email}`}>Email ↗</a><LinkOut href={profileData.socialLinks.linkedin}>LinkedIn ↗</LinkOut><LinkOut href={profileData.socialLinks.github}>GitHub ↗</LinkOut></div></div>;
+  return <div className="port-section contact-d" data-design="Contact D"><h2>Contact</h2><div className="contact-direct"><span className="port-meta">Email</span><div className="contact-email-row"><a className="contact-address" href={`mailto:${profileData.socialLinks.email}`}>{profileData.socialLinks.email}</a><button className="contact-copy" type="button" aria-label="Copy email address" title="Copy email" onClick={copyEmail}><FiCopy size={16} aria-hidden="true" /></button></div><p className="contact-copy-status" role="status">{copyStatus}</p></div><details className="contact-composer" open><summary>Write a message <FiChevronDown aria-hidden="true" /></summary><div className="mail-sheet"><form noValidate onSubmit={submit}><div className="mail-toolbar"><button type="button" onClick={reset} disabled={sending}>Clear</button><b>New message</b></div><div className="mail-row"><span>To</span><b>{profileData.name}</b></div>{[['name','Name','Your name','text'],['email','Email','Your email','email']].map(([name,label,placeholder,type])=><div className="mail-field" key={name}><label className="mail-row" htmlFor={`contact-${name}`}><span>{label}</span><input id={`contact-${name}`} ref={el=>{refs.current[name]=el;}} type={type} name={name} autoComplete={name} placeholder={placeholder} value={form[name]} onChange={changed} aria-invalid={Boolean(errors[name])} aria-describedby={errors[name]?`contact-error-${name}`:undefined} /></label>{errors[name]&&<p className="field-error" id={`contact-error-${name}`}>{errors[name]}</p>}</div>)}<fieldset className="mail-subject"><legend>Subject</legend>{['Job','Freelance','Just hi'].map(s=><label key={s}><input type="radio" name="subject" value={s} checked={form.subject===s} onChange={changed} />{s}</label>)}</fieldset><div className="mail-body"><label className="sr-only" htmlFor="contact-message">Message</label><textarea id="contact-message" ref={el=>{refs.current.message=el;}} name="message" placeholder="Write your message…" value={form.message} onChange={changed} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message?'contact-error-message':undefined} rows="7" />{errors.message&&<p className="field-error" id="contact-error-message">{errors.message}</p>}</div><div className="mail-submit"><button type="submit" className="port-button" disabled={sending || !EMAIL_CONFIGURED} aria-label="Send message">{sending?'Sending…':'Send message ↑'}</button></div>{!EMAIL_CONFIGURED&&<p className="mail-delivery-note">Direct sending is unavailable. <a href={draftUrl}>Open an email draft</a> to send through your mail app.</p>}{Object.values(errors).some(Boolean)&&<p className="mail-status field-error" role="alert">Please check the highlighted fields.</p>}{status&&<div className="mail-status" role={status==='error'?'alert':'status'}>{status==='sent'?<><b>Message sent.</b><p>Thank you for reaching out.</p><button type="button" onClick={reset}>Write another message</button></>:<>The message could not be sent. Try again or <a href={draftUrl}>open an email draft</a> to review and send through your mail app.</>}</div>}</form></div></details><div className="social-row"><LinkOut href={profileData.socialLinks.linkedin}>LinkedIn ↗</LinkOut><LinkOut href={profileData.socialLinks.github}>GitHub ↗</LinkOut></div></div>;
 }
 
 export function ProjectsG3v2() { return <ProjectIsland />; }

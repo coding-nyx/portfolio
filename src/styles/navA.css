@@ -1,13 +1,13 @@
 /* navA — ported from Design stitched-navA.html (20:05 save). Spacing: 12/16/24/32 between controls, 4/8 inside. */
-:root{--navh:56px}
+:root{--navh:64px}
 .na{--acc:#FF8A3D;--bar:#16161C;--line:#2C2C35;--ease:cubic-bezier(.32,.72,0,1);font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:normal;text-transform:none}
 .na a{color:inherit}
-.na .btn-res{display:inline-flex;align-items:center;gap:12px;height:36px;padding:0 8px;border-radius:999px;background:var(--acc);color:#0B0B0F;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
-.na .pk{font:inherit;color:#F4F4F5;background:#22222A;border:1px solid var(--line);border-radius:999px;height:36px;padding:0 8px;display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:15px;white-space:nowrap;max-width:100%}
+.na .btn-res{display:inline-flex;align-items:center;gap:12px;height:44px;padding:0 8px;border-radius:999px;background:var(--acc);color:#0B0B0F;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap}
+.na .pk{font:inherit;color:#F4F4F5;background:#22222A;border:1px solid var(--line);border-radius:999px;height:44px;padding:0 8px;display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:15px;white-space:nowrap;max-width:100%}
 .na small{font-variant-numeric:tabular-nums;color:#8E8E99;font-size:12px}
 .na .cur{display:inline-flex;gap:12px;align-items:baseline;min-width:0}
 .na .pk .chev{transition:transform .25s var(--ease)}.na .pk[aria-expanded=true] .chev{transform:rotate(180deg)}
-.na .nask{display:inline-flex;align-items:center;font:inherit;font-weight:700;font-size:15px;height:36px;padding:0 8px;border-radius:999px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;flex:none}
+.na .nask{display:inline-flex;align-items:center;font:inherit;font-weight:700;font-size:15px;height:44px;padding:0 8px;border-radius:999px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;flex:none}
 .na-bar{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--navh);background:var(--bar);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 24px;color:#F4F4F5;transition:transform .3s var(--ease),opacity .2s}
 .na .na-bar .brand{color:#F4F4F5;font-weight:700;font-size:17px;text-decoration:none;white-space:nowrap}
 .na-bar nav{flex:1 1 auto;display:flex;justify-content:center;min-width:0}
@@ -48,3 +48,17 @@
 .na .sheet ol{display:flex;flex-direction:column;gap:12px}
 .chapter>.chl{max-width:1132px;margin:16px auto 0}
 @media(max-width:700px){.chapter>.chl{margin:12px 4px 0}}
+
+.na .menu-label{display:none}
+.na-bar ol a{min-height:44px;align-items:center}
+.na .na-bar .brand{display:inline-flex;align-items:center;min-height:44px}
+.na .sheet a{min-height:44px}
+.na .sheet{max-height:calc(100svh - 88px);overflow-y:auto}
+@media(max-width:380px){
+ .na-bar{gap:8px;padding:0 10px}
+ .na .na-bar .brand{font-size:13px}
+ .na-bar .pk .cur{display:none}
+ .na-bar .pk .menu-label{display:inline}
+ .na-bar .pk{flex:none;min-width:64px;gap:6px}
+ .na .btn-res,.na .nask{font-size:14px}
+}

@@ -44,12 +44,13 @@ const EntryHero = ({ resumeUrl }) => {
   <div className="entry-d2">
     <div className="hero">
       <div className="t">
-        <span className="role">iOS Engineer · Since May 2022</span>
+        <span className="role">{profileData.roleTitle} · Since May 2022</span>
         <p className="chl">{chapterLabel('entry')}</p>
         <h1 ref={name} id="h-entry" tabIndex={-1}>{profileData.name}</h1>
-        <p className="line muted"><span>Native apps.</span>{' '}<span>New platforms.</span>{' '}<span>Always building.</span></p>
+        <p className="line muted">{profileData.heroSummary}</p>
         <div className="acts">
-          <a className="btn primary" href={resumeUrl} download>Resume ↓</a>
+          <a className="btn primary" href="#experience" data-sec="experience">View iOS work</a>
+          <a className="btn ghost" href={resumeUrl} download>Resume ↓</a>
           <a className="btn ghost" href="#contact" data-sec="contact">Contact</a>
         </div>
       </div>
@@ -71,7 +72,7 @@ const EntryHero = ({ resumeUrl }) => {
           </div>
           <div className="fw">
             <div className="fc n2"><small>Steps this week</small><div className="bars"><s style={{ height: '40%' }} /><s style={{ height: '70%' }} /><s style={{ height: '55%' }} /><s style={{ height: '95%' }} /><s style={{ height: '60%' }} /></div></div>
-            <div className="fc n1"><small>GITHUB ACTIONS · now</small><span className="tx">Build passed · WorkTracker</span></div>
+            <div className="fc n1"><small>NATIVE UI · ILLUSTRATION</small><span className="tx">Components · Layout · State</span></div>
           </div>
           <div className="fc n3"><Toggle />Focus mode</div>
           <div className="fc n4"><small>Up next</small><b>Design review · 4 PM</b></div>
