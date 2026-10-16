@@ -25,16 +25,14 @@ if (!existsSync(DIST)) {
 
 const bundleFiles = [
   ...readdirSync(join(DIST, 'assets'))
-    .filter(f => f.endsWith('.js') || f.endsWith('.css'))
-    .map(f => join(DIST, 'assets', f)),
+    .filter((f) => f.endsWith('.js') || f.endsWith('.css'))
+    .map((f) => join(DIST, 'assets', f)),
   ...readdirSync(DIST)
-    .filter(f => f.endsWith('.html'))
-    .map(f => join(DIST, f)),
+    .filter((f) => f.endsWith('.html'))
+    .map((f) => join(DIST, f)),
 ];
 
-const bundle = bundleFiles
-  .map(f => readFileSync(f, 'utf8'))
-  .join('\n');
+const bundle = bundleFiles.map((f) => readFileSync(f, 'utf8')).join('\n');
 
 /**
  * Must be absent from the public bundle.
@@ -47,9 +45,15 @@ const FORBIDDEN = [
   ['hardcoded duration string', /\b\d+\s*yrs?\s+\d+\s*mos?\b/],
   ['unverified race ranking', /\btop[\s-]*10\s*%/i],
   ['unverified finalist distinction', /national\s+finalist/i],
-  ['unverified improvement percentage', /\b(?:30|20|21|126|180)\s*%\s*(?:faster|less|more|improvement|reduction)/i],
+  [
+    'unverified improvement percentage',
+    /\b(?:30|20|21|126|180)\s*%\s*(?:faster|less|more|improvement|reduction)/i,
+  ],
   ['testimonial quotation', /quote\s*:\s*["'`]/],
-  ['named endorsement attribution', /(?:Senior Software Engineer|Engineering Manager|Product Manager)\s*,\s*[A-Z]/],
+  [
+    'named endorsement attribution',
+    /(?:Senior Software Engineer|Engineering Manager|Product Manager)\s*,\s*[A-Z]/,
+  ],
   ['dead demo destination', /personal-trainer-mock/],
   ['private repository destination', /nexus-react-native/],
   ['superseded Ara preview destination', /agent-nexus\.web\.app/],
@@ -83,5 +87,48 @@ for (const [label, pattern] of REQUIRED) {
   console.log(`  ${present ? 'present  ' : 'MISSING  '}  ${label}`);
 }
 
-console.log(`\nBundle audit: ${clean ? 'CLEAN' : 'NOT CLEAN'}`);
-process.exit(clean ? 0 : 1);
+console.log(`\nPublic-content audit: ${clean ? 'CLEAN' : 'NOT CLEAN'}`);
+if (!clean) process.exit(1);
+
+// Audit the dependency graph, not just individual chunk names. Motion features
+// load immediately after bootstrap, so they count toward the first-view budget.
+const manifestPath = join(DIST, '.vite/manifest.json');
+if (!existsSync(manifestPath)) throw new Error('Build manifest is required for bundle budgets.');
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+const initialKeys = new Set();
+function includeStaticDependencies(key) {
+  if (initialKeys.has(key)) return;
+  if (!manifest[key]) throw new Error(`Unknown build manifest entry: ${key}`);
+  initialKeys.add(key);
+  for (const dependency of manifest[key].imports || []) includeStaticDependencies(dependency);
+}
+includeStaticDependencies('index.html');
+includeStaticDependencies('src/shared/motion/animationFeatures.js');
+const { gzipSync } = await import('node:zlib');
+let initialBytes = 0;
+let compressedBytes = 0;
+for (const key of initialKeys) {
+  const content = readFileSync(join(DIST, manifest[key].file));
+  initialBytes += content.byteLength;
+  compressedBytes += gzipSync(content).byteLength;
+}
+for (const key of [
+  'src/features/rook/RookDialog.jsx',
+  'src/features/projects/island/createIsland.js',
+  'src/vendor/three.module.min.js',
+]) {
+  if (!manifest[key]?.isDynamicEntry || initialKeys.has(key))
+    throw new Error(`Optional feature must remain deferred: ${key}`);
+}
+console.log(
+  `First-view JavaScript (including motion): ${(initialBytes / 1000).toFixed(1)} kB / ${(compressedBytes / 1000).toFixed(1)} kB gzip`,
+);
+assertBudget(initialBytes, 450000, 'minified');
+assertBudget(compressedBytes, 150000, 'gzip');
+
+function assertBudget(actual, limit, label) {
+  if (actual > limit)
+    throw new Error(`First-view JavaScript exceeds the ${limit / 1000} kB ${label} budget.`);
+}
+
+console.log('Bundle loading and startup budgets: PASS');

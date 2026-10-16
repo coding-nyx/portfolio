@@ -1,0 +1,444 @@
+.project-carousel {
+  padding: 36px 0 52px;
+  scroll-margin-top: 24px;
+  min-width: 0;
+}
+.project-carousel.pc-portfolio {
+  padding: 0;
+  scroll-margin-top: 88px;
+}
+.project-carousel button,
+.project-carousel a {
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.project-carousel button {
+  cursor: pointer;
+}
+.project-carousel .pc-selectors button {
+  font-size: 12px;
+}
+.project-carousel .pc-copy h3 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.project-carousel .pc-copy > p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.project-carousel .pc-actions .pc-details {
+  font-size: 13px;
+  color: #23160f;
+}
+.project-carousel .pc-actions > a {
+  color: #e1c1ac;
+}
+.project-carousel .pc-controls > p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.project-carousel .pc-controls {
+  margin-top: 28px;
+}
+.project-carousel .pc-hint {
+  margin-top: 18px;
+}
+.pc-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.pc-selectors button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 7px 10px;
+  border: 1px solid #625868;
+  border-radius: 999px;
+  background: #19171d;
+  color: #e1dce5;
+  font-size: 11px;
+}
+.pc-selectors button > span {
+  color: #b3a9bb;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.pc-selectors button[aria-pressed='true'] {
+  background: #3d2c22;
+  border-color: #ffac78;
+  color: #fff2e9;
+}
+.pc-selectors button[aria-pressed='true'] > span {
+  color: #ffc095;
+}
+.pc-viewport {
+  position: relative;
+  isolation: isolate;
+  padding: 20px 12px 0;
+  margin: 0 4px;
+  touch-action: pan-y;
+}
+.pc-paper {
+  position: absolute;
+  inset: 16px 28px 12px;
+  border: 1px solid #81768b;
+  border-radius: 24px;
+  pointer-events: none;
+  transform-origin: center;
+}
+.pc-paper-back {
+  background: #4a4258;
+}
+.pc-paper-middle {
+  background: #8a8d75;
+  border-color: #acae92;
+}
+.pc-window {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #4b424f;
+  border-radius: 22px;
+  background: #1b191f;
+  box-shadow: 0 22px 50px #0005;
+  isolation: isolate;
+}
+.pc-surface {
+  position: relative;
+  grid-area: 1/1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  min-width: 0;
+  min-height: 380px;
+  background: #1b191f;
+  overflow: hidden;
+}
+.pc-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  background: #111115;
+  padding: 24px;
+  min-width: 0;
+}
+.pc-image img {
+  display: block;
+  width: 100%;
+  height: 286px;
+  object-fit: contain;
+  background: #0b0b0f;
+  border: 1px solid #302c37;
+  border-radius: 10px;
+  pointer-events: none;
+}
+.pc-image > span {
+  font-size: 10px;
+  color: #9e95a7;
+}
+.pc-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 32px;
+  min-width: 0;
+}
+.pc-status {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffac78;
+}
+.pc-copy h3 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.pc-copy > p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #c6bfcd;
+}
+.pc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pc-tags li {
+  padding: 5px 8px;
+  border: 1px solid #49414f;
+  border-radius: 7px;
+  color: #bbb0c5;
+  font-size: 10px;
+}
+.pc-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.pc-actions .pc-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid #ffb084;
+  border-radius: 999px;
+  background: #ffa167;
+  color: #23160f;
+  font-size: 13px;
+  font-weight: 600;
+}
+.pc-actions > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #e1c1ac;
+  font-size: 12px;
+}
+.pc-private {
+  color: #a79aaa;
+  font-size: 11px;
+}
+.pc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 28px;
+}
+.pc-controls > button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #49414e;
+  border-radius: 50%;
+  background: #1d1a22;
+  color: #f3e8f5;
+}
+.pc-controls > button:hover {
+  background: #342b39;
+}
+.pc-controls > p {
+  color: #95899e;
+  text-align: center;
+  min-width: 180px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pc-controls b {
+  font-weight: 500;
+  color: #f0e4f3;
+}
+.pc-controls p > span {
+  display: block;
+  color: #bdb0c7;
+  margin-top: 3px;
+  font-size: 11px;
+}
+.project-carousel .pc-hint {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 11px;
+  color: #968b9f;
+}
+.pc-blueprint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px;
+  color: #c8b0d8;
+  background: radial-gradient(ellipse at center, #2e253b, #15121b 80%);
+}
+.pc-blueprint-linux {
+  color: #bdcca9;
+  background: radial-gradient(ellipse at center, #293127, #121612 80%);
+}
+.pc-blueprint-label {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.pc-blueprint ol {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: min(260px, 100%);
+}
+.pc-blueprint li {
+  position: relative;
+  padding: 9px 14px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #6f5f80;
+  border-radius: 9px;
+  background: #1f1a27;
+}
+.pc-blueprint-linux li {
+  border-color: #5f7054;
+  background: #1b231a;
+}
+.pc-blueprint li + li::before {
+  content: '↓';
+  position: absolute;
+  top: -23px;
+  left: calc(50% - 6px);
+  font-size: 15px;
+  color: #8d809d;
+}
+.pc-blueprint-linux li + li::before {
+  color: #849574;
+}
+.project-carousel .portfolio-dialog-content {
+  line-height: 1.65;
+}
+.project-carousel .portfolio-dialog-content p {
+  margin: 0;
+}
+.project-carousel .portfolio-dialog-content > h3 {
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .pc-surface {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pc-copy {
+    padding: 24px;
+    gap: 14px;
+  }
+  .pc-image {
+    padding: 20px;
+  }
+  .pc-image img {
+    height: 270px;
+  }
+}
+@media (max-width: 700px) {
+  .project-carousel {
+    padding: 16px 0 40px;
+  }
+  .project-carousel .pc-selectors button {
+    font-size: 11px;
+  }
+  .project-carousel .pc-copy h3 {
+    font-size: 27px;
+  }
+  .project-carousel .pc-copy > p {
+    font-size: 13px;
+  }
+  .pc-selectors {
+    gap: 7px;
+    margin-bottom: 24px;
+  }
+  .pc-selectors button {
+    font-size: 10px;
+    padding: 7px 9px;
+    min-height: 38px;
+  }
+  .pc-viewport {
+    padding: 18px 6px 0;
+    margin: 0 2px;
+  }
+  .pc-paper {
+    inset: 12px 16px 10px;
+    border-radius: 19px;
+  }
+  .pc-window {
+    border-radius: 18px;
+  }
+  .pc-surface {
+    grid-template-columns: 1fr;
+  }
+  .pc-image {
+    padding: 18px;
+    gap: 8px;
+    min-height: 246px;
+  }
+  .pc-image img {
+    height: 180px;
+  }
+  .pc-copy {
+    padding: 24px;
+    min-height: 340px;
+  }
+  .pc-copy h3 {
+    font-size: 27px;
+  }
+  .pc-copy > p {
+    font-size: 13px;
+  }
+  .pc-blueprint {
+    min-height: 246px;
+    padding: 22px;
+    gap: 12px;
+  }
+  .pc-blueprint > svg {
+    width: 30px;
+    height: 30px;
+  }
+  .pc-blueprint ol {
+    gap: 19px;
+  }
+  .pc-blueprint li {
+    padding: 7px 12px;
+    font-size: 11px;
+  }
+  .pc-blueprint li + li::before {
+    top: -21px;
+  }
+  .pc-controls {
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .pc-controls > p {
+    min-width: 0;
+    max-width: 210px;
+    flex: 1;
+  }
+  .project-carousel .pc-hint {
+    max-width: 250px;
+    margin: 16px auto 0;
+    line-height: 1.7;
+  }
+}
+@media (max-width: 360px) {
+  .pc-copy {
+    padding: 20px;
+    min-height: 380px;
+  }
+  .pc-selectors button {
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+  .pc-image {
+    padding: 14px;
+  }
+  .project-carousel .pc-copy h3 {
+    font-size: 25px;
+  }
+}

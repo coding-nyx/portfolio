@@ -1,0 +1,83 @@
+.portfolio-dialog {
+  margin: auto;
+  color: #f4f4f5;
+  background: #15151b;
+  border: 1px solid #3a3a46;
+  border-radius: 22px;
+  padding: 24px;
+  width: min(560px, calc(100vw - 32px));
+  max-height: 86svh;
+}
+.portfolio-dialog::backdrop {
+  background: #000b;
+}
+.portfolio-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  clear: both;
+  padding-top: 16px;
+}
+.portfolio-dialog-content img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.portfolio-dialog-content h3 {
+  font-size: 24px;
+}
+.portfolio-dialog-content > p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.portfolio-dialog-content .port-button {
+  color: #0b0b0f;
+}
+@media (max-width: 700px) {
+  .portfolio-dialog {
+    padding: 16px;
+  }
+  .portfolio-dialog-content h3 {
+    font-size: 22px;
+  }
+}
+
+.portfolio-dialog {
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.portfolio-dialog-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #15151b;
+  border-bottom: 1px solid #2c2c35;
+}
+.portfolio-dialog-toolbar > span {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+.portfolio-dialog-toolbar .port-close {
+  float: none;
+  flex: none;
+}
+.portfolio-dialog-content {
+  padding: 24px;
+  clear: none;
+}
+@media (max-width: 700px) {
+  .portfolio-dialog-content {
+    padding: 16px;
+  }
+  .portfolio-dialog-toolbar {
+    padding: 8px 16px;
+  }
+}

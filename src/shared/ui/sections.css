@@ -1,0 +1,139 @@
+.port-section {
+  color: #f4f4f5;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 24px 24px;
+}
+.port-section * {
+  box-sizing: border-box;
+}
+.port-section h2,
+.port-section h3,
+.port-section p,
+.port-section ul,
+.port-section ol,
+.port-section dl,
+.port-section dd {
+  margin: 0;
+}
+.port-section h2 {
+  font-size: 36px;
+  line-height: 1.2;
+}
+.port-section h3 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+.port-section p {
+  line-height: 1.6;
+}
+.port-section a {
+  color: #ff8a3d;
+  text-decoration: none;
+}
+.port-section button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.port-section button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.port-section button,
+.port-section a {
+  touch-action: manipulation;
+}
+.port-meta {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+.port-eyebrow {
+  color: #ff8a3d;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.port-section .chapter-next {
+  align-self: center;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid #3a3a46;
+  border-radius: 999px;
+  color: #a1a1aa;
+  margin-top: 8px;
+}
+.chapter-next b {
+  color: #ff8a3d;
+}
+.port-close {
+  border: 1px solid #3a3a46;
+  background: #1d1d25;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  float: right;
+  font-size: 22px !important;
+}
+.port-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border: 0;
+  background: #ff8a3d;
+  color: #0b0b0f !important;
+  font-weight: 600;
+  border-radius: 999px;
+}
+.port-button.secondary {
+  border: 1px solid #3a3a46;
+  background: #1d1d25;
+  color: #f4f4f5 !important;
+}
+.interest-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+  padding: 16px 0 0;
+  font-size: 12px;
+  color: #a1a1aa;
+}
+@media (max-width: 700px) {
+  .port-section {
+    padding: 24px 4px;
+    gap: 24px;
+  }
+  .port-section h2 {
+    font-size: 26px;
+  }
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

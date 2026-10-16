@@ -1,0 +1,250 @@
+.social-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.social-row a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.contact-d {
+  max-width: 688px;
+}
+.mail-sheet {
+  background: #15151b;
+  border: 1px solid #3a3a46;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.mail-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #2c2c35;
+}
+.mail-toolbar button {
+  min-height: 44px;
+  border: 0;
+  background: none;
+  color: #ff8a3d;
+  padding: 8px;
+  font-size: 14px;
+}
+.mail-toolbar b {
+  font-size: 15px;
+}
+.mail-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-height: 60px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #2c2c35;
+  font-size: 14px;
+}
+.mail-row > span {
+  width: 64px;
+  flex: none;
+  color: #a1a1aa;
+}
+.mail-row input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #f4f4f5;
+  font: inherit;
+  min-height: 36px;
+  padding: 4px;
+}
+.mail-subject {
+  border: 0;
+  border-bottom: 1px solid #2c2c35;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 16px 24px;
+}
+.mail-subject legend {
+  float: left;
+  color: #a1a1aa;
+  margin-right: 16px;
+  font-size: 14px;
+  padding-top: 12px;
+}
+.mail-subject label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  border: 1px solid #3a3a46;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.mail-subject input {
+  accent-color: #ff8a3d;
+  width: 16px;
+  height: 16px;
+}
+.mail-body {
+  padding: 24px;
+}
+.mail-body textarea {
+  width: 100%;
+  min-height: 200px;
+  background: none;
+  color: #f4f4f5;
+  border: 0;
+  resize: vertical;
+  font: inherit;
+  line-height: 1.6;
+  padding: 4px;
+}
+.field-error {
+  color: #fca5a5;
+  font-size: 13px;
+}
+.mail-field > .field-error {
+  padding: 12px 24px;
+}
+.mail-status {
+  margin: 0 24px 24px !important;
+  padding: 16px;
+  border: 1px solid #3a3a46;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.mail-status button {
+  margin-top: 16px;
+  color: #ff8a3d;
+  border: 0;
+  background: none;
+  min-height: 44px;
+}
+@media (max-width: 700px) {
+  .mail-toolbar {
+    padding: 12px;
+  }
+  .mail-row {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .mail-row > span {
+    width: 56px;
+  }
+  .mail-subject {
+    padding: 16px;
+    gap: 12px;
+  }
+  .mail-subject legend {
+    width: 100%;
+    padding: 0;
+    margin: 0 0 12px;
+  }
+  .mail-body {
+    padding: 16px;
+  }
+  .mail-status {
+    margin: 0 16px 16px !important;
+  }
+  .mail-toolbar b {
+    font-size: 13px;
+  }
+}
+
+.mail-delivery-note {
+  padding: 0 24px 24px;
+  color: #a1a1aa;
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .mail-delivery-note {
+    padding: 0 16px 16px;
+  }
+}
+.contact-d .mail-row input:focus,
+.contact-d .mail-body textarea:focus {
+  outline: none;
+  box-shadow: inset 0 -1px 0 #a1a1aa;
+}
+.contact-d .mail-row input[aria-invalid='true'],
+.contact-d .mail-body textarea[aria-invalid='true'] {
+  box-shadow: inset 0 -1px 0 #fca5a5;
+}
+.mail-recipient {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.contact-address {
+  font-size: inherit;
+  font-weight: 400;
+  user-select: all;
+}
+.contact-email-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.contact-copy {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #a1a1aa !important;
+}
+.contact-copy:hover {
+  background: #1d1d25;
+  color: #f4f4f5 !important;
+}
+.contact-composer {
+  width: 100%;
+}
+.contact-composer > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  color: #d4d4d8;
+  font-size: 14px;
+}
+.contact-composer > summary::-webkit-details-marker {
+  display: none;
+}
+.contact-composer[open] > summary {
+  margin-bottom: 16px;
+}
+.contact-composer[open] > summary svg {
+  transform: rotate(180deg);
+}
+.mail-submit {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px 24px;
+}
+@media (max-width: 700px) {
+  .mail-submit {
+    padding: 0 16px 24px;
+  }
+}

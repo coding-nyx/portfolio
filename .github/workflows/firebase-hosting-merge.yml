@@ -30,7 +30,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run lint && npm test && npm run test:rook
+      - run: npm run lint && npm run format:check && npm test && npm run test:rook
       - run: npm run build && npm run audit:bundle
       - run: npm ci --prefix functions && npm run build:functions
       - name: Configure Firebase authentication

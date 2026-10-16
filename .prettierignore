@@ -1,0 +1,9 @@
+node_modules/
+dist/
+functions/lib/
+src/vendor/
+src/components/prototypes/
+src/styles/motionLab.css
+verification/
+NEXT.md
+package-lock.json

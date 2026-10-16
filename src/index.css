@@ -1,4 +1,10 @@
-@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/space-grotesk-variable.ttf') format('truetype'); }
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-variable.ttf') format('truetype');
+}
 
 :root {
   color-scheme: light dark;
@@ -6,7 +12,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -15,8 +23,8 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #0B0B0F;
-  color: #F4F4F5;
+  background: #0b0b0f;
+  color: #f4f4f5;
   font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
@@ -27,10 +35,10 @@ body {
 
 /* Base control reset — visible keyboard rings live in GlobalStyle (:focus-visible) */
 button,
-[role="button"],
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+[role='button'],
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
   font-family: inherit;
   user-select: none;
   -webkit-user-select: none;
@@ -38,7 +46,6 @@ input[type="reset"] {
 
 button:focus:not(:focus-visible),
 a:focus:not(:focus-visible),
-[role="button"]:focus:not(:focus-visible) {
+[role='button']:focus:not(:focus-visible) {
   outline: none;
 }
-

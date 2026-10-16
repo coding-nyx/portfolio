@@ -64,12 +64,14 @@ The [GitHub workflow](.github/workflows/firebase-hosting-merge.yml) handles `mai
 
 Use a protected service-account/Secret Manager configuration and choose the target Firebase project explicitly. Hosting deployment, function deployment and provider-secret provisioning are separate operations. Publishing documentation does not imply a provider credential was rotated or a new backend was deployed.
 
+Read [the architecture](docs/ARCHITECTURE.md), [API contract](docs/API.md) and [coding-principles review](docs/CODING_STANDARDS.md) before extending the app. Run `npm run check` for the automated quality gates.
+
 ## Customize
 
 - **Content:** `src/data/portfolio.js`.
-- **Sections:** `src/components/` and the app shell in `src/App.jsx`.
-- **Theme:** `src/styles/GlobalStyle.js` and component styles.
-- **Contact:** `src/services/emailService.js` and the configured client environment.
+- **Sections:** `src/features/`; composition and navigation in `src/app/`.
+- **Theme:** `src/shared/theme/`; CSS lives beside its feature.
+- **Contact:** `src/features/contact/`, `src/services/contactService.js` and the configured client environment.
 - **Rook:** `server/rook.mjs`, `functions/` and `scripts/build-functions.mjs`.
 
 ## Rebuild the résumé
@@ -82,6 +84,6 @@ The generator uses portfolio facts and requires Node plus Python `reportlab`, `p
 
 ## Checks
 
-`npm test` covers portfolio regressions; `npm run test:rook` covers the Rook handler/UI contract; `npm run audit:bundle` checks the built output. Browser verification scripts in `verification/` require a separately installed Playwright environment and a deliberately started local server.
+`npm test` covers portfolio regressions; `npm run test:rook` covers the Rook handler/UI contract; `npm run audit:bundle` checks the built output. Generated browser screenshots and local verification scripts are excluded from Git. Interactive browser checks are separate from these automated gates.
 
 No top-level license file is present in the current tree. The README does not introduce a new license grant.

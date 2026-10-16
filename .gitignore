@@ -32,8 +32,12 @@ Edit your public profile _ LinkedIn.html
 !.env.example
 .secret*
 
-verification/error.png
-verification/*.tmp.png
 functions/lib/
 
 firebase.hosting.json
+
+# Local design studies and verification notes are not production sources.
+/src/components/prototypes/
+/src/styles/motionLab.css
+/verification/
+/NEXT.md

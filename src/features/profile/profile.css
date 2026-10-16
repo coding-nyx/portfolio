@@ -1,0 +1,187 @@
+.bio-b {
+  align-items: center;
+}
+.bio-card {
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.bio-top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  align-items: center;
+}
+.bio-top h2 {
+  font-size: 32px;
+}
+.bio-top p {
+  color: #a1a1aa;
+}
+.bio-avatar {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.bio-group {
+  background: #15151b;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.bio-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #2a2a33;
+  font-size: 14px;
+}
+.bio-row:last-child {
+  border: 0;
+}
+.bio-row i {
+  font-style: normal;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #2a2a33;
+  display: grid;
+  place-items: center;
+}
+.bio-row b {
+  font-weight: 500;
+}
+.bio-row span {
+  margin-left: auto;
+  text-align: right;
+  color: #a1a1aa;
+  min-width: 0;
+}
+.resume-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.resume-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.resume-overview h3 {
+  font-size: 32px;
+}
+.resume-download {
+  position: sticky;
+  top: 88px;
+  background: #15151b;
+  border: 1px solid #3a3a46;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.resume-download-button {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: #ff8a3d;
+  color: #0b0b0f !important;
+  border-radius: 12px;
+  padding: 16px;
+}
+.resume-download-button > span:first-child {
+  font-size: 32px;
+}
+.resume-download-button > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.resume-download-button small {
+  font-size: 12px;
+}
+.resume-download img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.resume-download > a:last-child {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  .bio-top h2 {
+    font-size: 26px;
+  }
+  .bio-row {
+    padding: 12px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  .bio-row span {
+    flex-basis: calc(100% - 40px);
+    margin-left: 40px;
+    text-align: left;
+  }
+  .resume-grid {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+  .resume-download {
+    width: 100%;
+    position: static;
+    padding: 16px;
+  }
+  .resume-overview {
+    width: 100%;
+  }
+  .resume-overview h3 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 700px) {
+  .bio-row {
+    flex-wrap: nowrap;
+  }
+  .bio-row b {
+    flex: none;
+  }
+  .bio-row span {
+    flex: 1 1 auto;
+    margin-left: auto;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+}
+.bio-intro {
+  font-size: 16px;
+  color: #d4d4d8;
+  line-height: 1.7 !important;
+}
+.resume-overview > p:not(.port-eyebrow) {
+  max-width: 48ch;
+  color: #d4d4d8;
+}
+@media (max-width: 700px) {
+  .bio-row {
+    gap: 8px;
+  }
+  .bio-row i {
+    width: 32px;
+    height: 32px;
+  }
+  .bio-row span {
+    font-size: 12px;
+  }
+}

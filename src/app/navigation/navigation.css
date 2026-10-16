@@ -1,0 +1,319 @@
+/* navA — ported from Design stitched-navA.html (20:05 save). Spacing: 12/16/24/32 between controls, 4/8 inside. */
+:root {
+  --navh: 64px;
+}
+.na {
+  --acc: #ff8a3d;
+  --bar: #16161c;
+  --line: #2c2c35;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.na a {
+  color: inherit;
+}
+.na .btn-res {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--acc);
+  color: #0b0b0f;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.na .pk {
+  font: inherit;
+  color: #f4f4f5;
+  background: #22222a;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  height: 44px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.na small {
+  font-variant-numeric: tabular-nums;
+  color: #8e8e99;
+  font-size: 12px;
+}
+.na .cur {
+  display: inline-flex;
+  gap: 12px;
+  align-items: baseline;
+  min-width: 0;
+}
+.na .pk .chev {
+  transition: transform 0.25s var(--ease);
+}
+.na .pk[aria-expanded='true'] .chev {
+  transform: rotate(180deg);
+}
+.na .nask {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--acc);
+  background: transparent;
+  color: var(--acc);
+  cursor: pointer;
+  flex: none;
+}
+.na .nask:hover,
+.na .nask[aria-expanded='true'] {
+  background: #ff8a3d1a;
+}
+.na-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--navh);
+  background: var(--bar);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  color: #f4f4f5;
+  transition:
+    transform 0.3s var(--ease),
+    opacity 0.2s;
+}
+.na-bar nav {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-start;
+  min-width: 0;
+}
+.na-bar ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+}
+.na-bar ol a {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 4px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #c7c7cf;
+  background: #1e1e25;
+}
+.na-bar ol a[aria-current] {
+  background: #2c2c36;
+  color: #fff;
+}
+.na-bar ol a[aria-current] small {
+  color: var(--acc);
+}
+.na-bar .pk {
+  display: none;
+  margin-left: auto;
+}
+.na-pill {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  z-index: 51;
+  transform: translate(-50%, -70px);
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px;
+  background: var(--bar);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 0 12px 40px #000a;
+  color: #f4f4f5;
+  transition:
+    transform 0.35s var(--ease),
+    opacity 0.2s;
+  max-width: calc(100vw - 24px);
+}
+.na.collapsed .na-bar {
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+}
+.na.collapsed .na-pill {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+.na .sheet {
+  position: fixed;
+  z-index: 60;
+  top: 68px;
+  left: 50%;
+  width: min(320px, calc(100vw - 24px));
+  background: #1c1c23;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px #000c;
+  padding: 8px;
+  color: #f4f4f5;
+}
+.na:not(.collapsed) .sheet {
+  top: 64px;
+}
+.na .sheet ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.na .sheet a {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 16px;
+}
+.na .sheet a:hover {
+  background: #26262e;
+}
+.na .sheet a[aria-current] {
+  background: #2a2a33;
+  color: #fff;
+}
+.na .sheet a[aria-current] small {
+  color: var(--acc);
+}
+.na .sheet {
+  transform: translateX(-50%);
+}
+.na a:focus-visible,
+.na button:focus-visible {
+  outline: 2px solid #f4f4f5;
+  outline-offset: 2px;
+}
+.chapter {
+  scroll-margin-top: calc(var(--navh) + 16px);
+}
+/* Leave room for the personal chapter before switching to the chapter picker. */
+.na[data-wide='false'] .na-bar ol {
+  display: none;
+}
+.na[data-wide='false'] .na-bar {
+  justify-content: center;
+}
+.na[data-wide='false'] .na-bar nav {
+  display: none;
+}
+.na[data-wide='false'] .na-bar .pk {
+  display: inline-flex;
+  margin-left: 0;
+  max-width: 300px;
+}
+@media (max-width: 700px) {
+  .na-bar {
+    padding: 0 12px;
+    gap: 12px;
+  }
+  .na-bar nav {
+    display: none;
+  }
+  .na-bar .pk,
+  .na-pill .pk {
+    padding: 0 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .na-pill {
+    width: calc(100vw - 24px);
+    justify-content: space-between;
+  }
+  .na-bar .btn-res,
+  .na-pill .btn-res,
+  .na .nask {
+    padding: 0 8px;
+    flex: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .na *,
+  .na {
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+.na .cur > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 360px) {
+  .na-bar {
+    gap: 12px;
+  }
+  .na .pk .chev {
+    flex: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .na .pk {
+    font-size: 13px;
+  }
+}
+
+.na .btn-res:hover {
+  color: #0b0b0f;
+  text-decoration: none;
+}
+
+.na .sheet ol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.na-bar ol a {
+  min-height: 44px;
+  align-items: center;
+}
+.na .sheet a {
+  min-height: 44px;
+}
+.na .sheet {
+  max-height: calc(100svh - 88px);
+  overflow-y: auto;
+}
+@media (max-width: 380px) {
+  .na-bar {
+    gap: 8px;
+    padding: 0 10px;
+  }
+  .na .btn-res,
+  .na .nask {
+    font-size: 14px;
+  }
+}
