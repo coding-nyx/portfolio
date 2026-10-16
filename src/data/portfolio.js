@@ -13,10 +13,26 @@ export const SITE = {
 
 export const achievementsData = [
   {
-    "title": "10km Obstacle Race",
-    "pendingConfirmation": true,
+    "id": "devils-circuit",
+    "title": "Devils Circuit",
+    "category": "Personal",
     "event": "Obstacle course race",
-    "description": "Completed a 10km obstacle course race. The finishing position is not published because no verifiable event result has been confirmed."
+    "year": "2022",
+    "status": "Finisher",
+    "description": "Completed Devils Circuit in 2022.",
+    "imageUrl": "/personal/devils-circuit.webp",
+    "imageAlt": "Devils Circuit medal photo in front of the event's finisher backdrop"
+  },
+  {
+    "id": "wild-warrior",
+    "title": "Wild Warrior",
+    "category": "Personal",
+    "event": "Obstacle course race",
+    "year": "2023",
+    "status": "Finisher",
+    "description": "Completed Wild Warrior in 2023.",
+    "imageUrl": "/personal/wild-warrior.webp",
+    "imageAlt": "Wild Warrior finisher holding a medal with a raised fist and mud-covered race clothes"
   }
 ];
 
@@ -222,10 +238,12 @@ export const interestsData = [
   "Obstacle Course Races",
   "Linux Customization",
   "System Architecture",
-  "Retro Gaming"
+  "Retro Gaming",
+  "Volunteering"
 ];
 
 export const profileData = {
+  "volunteeringInterest": "Interested in volunteering opportunities.",
   "name": "Raj Kumar S",
   "roleTitle": "iOS Product Engineer",
   "heroSummary": "iOS product delivery, reusable native components and performance.",
@@ -245,6 +263,7 @@ export const profileData = {
 export const projects = [
   {
     "name": "WorkTracker",
+    "cardSummary": "A shared Kanban workspace for coordinating AI agents, with live updates and REST/MCP access.",
     "featured": true,
     "tags": [
       "TypeScript",
@@ -262,6 +281,7 @@ export const projects = [
   },
   {
     "name": "Hermes Companion",
+    "cardSummary": "Android and web clients for a self-hosted agent fleet, with pairing, chat, device control and notification forwarding.",
     "featured": true,
     "tags": [
       "Android",
@@ -306,6 +326,7 @@ export const projects = [
   },
   {
     "name": "Tally",
+    "cardSummary": "A personal finance tracker with multiple accounts, statement imports, budgets and MCP tools.",
     "featured": false,
     "tags": [
       "React",
@@ -351,6 +372,7 @@ export const projects = [
   },
   {
     "name": "a0090-meta (hub-11 OS)",
+    "cardSummary": "A reproducible Linux distribution for an RK3588 NVR demo board, with a custom device tree and boot image.",
     "featured": false,
     "tags": [
       "Linux Kernel",
@@ -374,7 +396,8 @@ export const projects = [
     }
   },
   {
-    "name": "Nexus",
+    "name": "Ara",
+    "cardSummary": "A personal multi-agent prototype with specialist personas, indexed memory retrieval and orchestration.",
     "featured": false,
     "tags": [
       "LLM",
@@ -383,10 +406,10 @@ export const projects = [
       "Agent Orchestration",
       "Retrieval"
     ],
-    "description": "A working personal multi-agent prototype with specialist personas, an orchestrator, indexed Firestore memory retrieval and context compression. Includes image analysis and web scraping.",
+    "description": "A personal multi-agent prototype with specialist personas, an orchestrator, indexed Firestore memory retrieval and context compression. Includes image analysis and web scraping.",
     "resumeSummary": "React Native multi-agent prototype with personally implemented specialist personas, orchestration, indexed Firestore memory retrieval and context compression, plus image analysis and web scraping.",
     "architecture": {
-      "title": "Nexus agent architecture",
+      "title": "Ara agent architecture",
       "note": "Overview of the implemented personal prototype",
       "steps": [
         { "name": "React Native interface" },
@@ -401,16 +424,18 @@ export const projects = [
       "capabilities": ["Image analysis", "Web scraping"]
     },
     "imageUrl": null,
-    "liveUrl": null,
+    "liveUrl": "https://agent-agnes-ai.web.app/",
+    "linkLabel": "Preview interface",
     "repoUrl": null,
-    "status": "Prototype",
+    "status": "Prototype · on hold",
+    "developmentStatus": "on-hold",
     "scope": "Personal prototype",
-    "linksUnavailableReason": "Source is private; no verified public demo is available.",
+    "linksUnavailableReason": "Development is on hold. Source is private. The hosted interface currently displays the Nexus name. The available page loads, but sign-in and agent functionality have not been verified.",
     "caseStudy": {
       "problem": "Maintain distinct specialist-agent personalities and access earlier information as conversations grow, while presenting one interface over the agents.",
       "approach": "Personally implemented specialist agents with psychiatrist, trainer, finance, research and doctor personas. Designed structured agent/model mappings with persona definitions (\"soul\"), persisted data in Firestore, and implemented indexed retrieval and context compression. Built an orchestrator to encapsulate the agents behind a shared interface, with image-analysis and web-scraping capabilities.",
-      "scope": "Personal React Native prototype with an end-to-end working agent system. The work included implementing agent behavior and personalities, memory structures, retrieval, compression and orchestration.",
-      "evidence": "Personal implementation covering specialist-agent behavior, orchestration and Firestore-backed memory. The architecture overview documents these pieces; source remains private and no public demo is linked.",
+      "scope": "Personal React Native prototype with an implemented agent system. The work included implementing agent behavior and personalities, memory structures, retrieval, compression and orchestration.",
+      "evidence": "Personal implementation covering specialist-agent behavior, orchestration and Firestore-backed memory. The architecture overview documents these pieces. A hosted interface preview is available; source remains private.",
       "limitations": "Retrieval and compression manage what enters each prompt; model context limits still apply. No published evaluation of persona consistency, retrieval quality or image-analysis accuracy is available."
     }
   }

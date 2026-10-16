@@ -7,10 +7,10 @@
 .na small{font-variant-numeric:tabular-nums;color:#8E8E99;font-size:12px}
 .na .cur{display:inline-flex;gap:12px;align-items:baseline;min-width:0}
 .na .pk .chev{transition:transform .25s var(--ease)}.na .pk[aria-expanded=true] .chev{transform:rotate(180deg)}
-.na .nask{display:inline-flex;align-items:center;font:inherit;font-weight:700;font-size:15px;height:44px;padding:0 8px;border-radius:999px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;flex:none}
+.na .nask{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer;flex:none}
+.na .nask:hover,.na .nask[aria-expanded=true]{background:#FF8A3D1A}
 .na-bar{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--navh);background:var(--bar);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 24px;color:#F4F4F5;transition:transform .3s var(--ease),opacity .2s}
-.na .na-bar .brand{color:#F4F4F5;font-weight:700;font-size:17px;text-decoration:none;white-space:nowrap}
-.na-bar nav{flex:1 1 auto;display:flex;justify-content:center;min-width:0}
+.na-bar nav{flex:1 1 auto;display:flex;justify-content:flex-start;min-width:0}
 .na-bar ol{list-style:none;margin:0;padding:0;display:flex;gap:12px}
 .na-bar ol a{display:flex;gap:12px;align-items:baseline;padding:4px 8px;border-radius:8px;text-decoration:none;font-size:14px;color:#C7C7CF;background:#1E1E25}
 .na-bar ol a[aria-current]{background:#2C2C36;color:#fff}.na-bar ol a[aria-current] small{color:var(--acc)}
@@ -26,12 +26,13 @@
 .na .sheet{transform:translateX(-50%)}
 .na a:focus-visible,.na button:focus-visible{outline:2px solid #F4F4F5;outline-offset:2px}
 .chapter{scroll-margin-top:calc(var(--navh) + 16px)}
-.chapter .chl{margin:0 0 16px;font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:#FF8A3D;font-weight:600;font-family:'Space Grotesk',system-ui,sans-serif}
-/* innerWidth keeps the 1180/1181 switch consistent with WebKit scrollbars. */
+/* Leave room for the personal chapter before switching to the chapter picker. */
 .na[data-wide="false"] .na-bar ol{display:none}
-.na[data-wide="false"] .na-bar .pk{display:inline-flex}
+.na[data-wide="false"] .na-bar{justify-content:center}
+.na[data-wide="false"] .na-bar nav{display:none}
+.na[data-wide="false"] .na-bar .pk{display:inline-flex;margin-left:0;max-width:300px}
 @media(max-width:700px){
- .na-bar{padding:0 12px;gap:12px}.na-bar .brand{flex:none}.na-bar nav{display:none}
+ .na-bar{padding:0 12px;gap:12px}.na-bar nav{display:none}
  .na-bar .pk,.na-pill .pk{padding:0 8px;min-width:0;flex:1 1 auto}
  .na-pill{width:calc(100vw - 24px);justify-content:space-between}
  .na-bar .btn-res,.na-pill .btn-res,.na .nask{padding:0 8px;flex:none}
@@ -39,26 +40,18 @@
 @media(prefers-reduced-motion:reduce){.na *,.na{transition:none!important}html{scroll-behavior:auto!important}}
 
 .na .cur>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:360px){.na-bar .brand{font-size:14px}.na-bar{gap:12px}.na .pk .chev{flex:none}}
+@media(max-width:360px){.na-bar{gap:12px}.na .pk .chev{flex:none}}
 
-@media(max-width:700px){.na .na-bar .brand{font-size:14px}.na .pk{font-size:13px}}
+@media(max-width:700px){.na .pk{font-size:13px}}
 
 .na .btn-res:hover{color:#0B0B0F;text-decoration:none}
 
 .na .sheet ol{display:flex;flex-direction:column;gap:12px}
-.chapter>.chl{max-width:1132px;margin:16px auto 0}
-@media(max-width:700px){.chapter>.chl{margin:12px 4px 0}}
 
-.na .menu-label{display:none}
 .na-bar ol a{min-height:44px;align-items:center}
-.na .na-bar .brand{display:inline-flex;align-items:center;min-height:44px}
 .na .sheet a{min-height:44px}
 .na .sheet{max-height:calc(100svh - 88px);overflow-y:auto}
 @media(max-width:380px){
  .na-bar{gap:8px;padding:0 10px}
- .na .na-bar .brand{font-size:13px}
- .na-bar .pk .cur{display:none}
- .na-bar .pk .menu-label{display:inline}
- .na-bar .pk{flex:none;min-width:64px;gap:6px}
  .na .btn-res,.na .nask{font-size:14px}
 }

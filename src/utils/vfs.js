@@ -49,14 +49,14 @@ Features: Mainline Linux 6.18, custom board DTS, FIT boot image assembly, and dr
 Tech: Linux Kernel, RK3588, Device Tree, C, Armbian
 Repo: https://github.com/coding-nyx/a0090-meta`
         },
-        'nexus.md': {
+        'ara.md': {
           type: 'file',
-          content: `# Nexus (AGNES) [Prototype]
+          content: `# Ara [Prototype | On hold]
 Prototype multi-agent wellness platform.
 Tech: LLM, React, React Native, Firebase, RAG
-Links: none published. The source repository is private and the demo URL renders an
-unverified shell, so no destination is offered and no encryption or outcome
-claims are made.`
+Preview interface: https://agent-agnes-ai.web.app/
+Development is on hold. Source is private. The hosted page currently displays
+the Nexus name. Sign-in and agent functionality have not been verified.`
         },
         'fitpro-connect.md': {
           type: 'file',

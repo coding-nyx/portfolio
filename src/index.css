@@ -15,6 +15,9 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: #0B0B0F;
+  color: #F4F4F5;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
 #root {

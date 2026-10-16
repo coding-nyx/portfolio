@@ -1,25 +1,35 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import { useSiteMotion } from '../../context/MotionContext';
+import RookLauncher from '../common/RookLauncher';
+import SpringAction from '../common/SpringAction';
 import '../../styles/navA.css';
 import { CHAPTERS, chapterNum } from '../../data/chapters';
 
-const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced = () => document.body.dataset.motion === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const Cur = ({ i }) => (
-  <span className="cur"><small>{chapterNum(i)}</small><span>{CHAPTERS[i][1]}</span></span>
-);
+function Cur({ i }) {
+  const { enabled } = useSiteMotion();
+  return <span className="cur-slot"><AnimatePresence initial={false} mode="wait">
+    <Motion.span className="cur" key={i} initial={enabled ? { opacity: 0, y: 5 } : false} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: enabled ? -5 : 0 }} transition={{ duration: enabled ? .12 : 0 }}>
+      <small>{chapterNum(i)}</small><span>{CHAPTERS[i][1]}</span>
+    </Motion.span>
+  </AnimatePresence></span>;
+}
 
 // navA: solid top bar that collapses into an opaque floating pill (current chapter + Resume + Ask).
 const NavA = ({ resumeUrl, onAsk, askOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [wide, setWide] = useState(() => window.innerWidth > 1180);
+  const [wide, setWide] = useState(() => window.innerWidth > 1360);
   const [active, setActive] = useState(0);
   const [sheetOpen, setSheetOpen] = useState(false);
   const opener = useRef(null);
   const sheetRef = useRef(null);
   const collapsedRef = useRef(false);
+  const selectedRef = useRef(null), selectionTimer = useRef(null);
 
   const spy = useCallback(() => {
-    setWide(window.innerWidth > 1180);
+    setWide(window.innerWidth > 1360);
     const c = window.scrollY > 140;
     if (c !== collapsedRef.current) { collapsedRef.current = c; setCollapsed(c); setSheetOpen(false); }
     const y = 56 + 80;
@@ -29,7 +39,7 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
       if (s && s.getBoundingClientRect().top <= y) a = i;
     });
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) a = CHAPTERS.length - 1;
-    setActive(a);
+    setActive(selectedRef.current ?? a);
   }, []);
 
   useEffect(() => {
@@ -69,23 +79,38 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
 
   // Delegated jump for any in-page chapter link (nav, sheet, hero buttons).
   useEffect(() => {
+    const release = () => { selectedRef.current = null; clearTimeout(selectionTimer.current); spy(); };
     const onClick = (e) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = e.target.closest('a[data-sec], a[href^="#"]');
-      if (!a) return;
+      if (!a || a.target === '_blank') return;
       const id = a.dataset.sec || a.getAttribute('href').slice(1);
       const i = CHAPTERS.findIndex(([c]) => c === id);
       if (i < 0) return;
       e.preventDefault();
       setSheetOpen(false);
+      selectedRef.current = i;
+      clearTimeout(selectionTimer.current);
       const s = document.getElementById(id);
+      window.dispatchEvent(new CustomEvent('portfolio:chapter-select', { detail: { id } }));
       s?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
       window.history.replaceState(null, '', `#${id}`);
       (document.getElementById(`h-${id}`) || s)?.focus({ preventScroll: true });
       setActive(i);
+      selectionTimer.current = setTimeout(release, reduced() ? 0 : 1600);
     };
     document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
-  }, []);
+    window.addEventListener('scrollend', release);
+    window.addEventListener('wheel', release, { passive: true });
+    window.addEventListener('touchstart', release, { passive: true });
+    return () => {
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('scrollend', release);
+      window.removeEventListener('wheel', release);
+      window.removeEventListener('touchstart', release);
+      clearTimeout(selectionTimer.current);
+    };
+  }, [spy]);
 
   const picker = (label) => (
     <button
@@ -93,18 +118,14 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
       aria-label={`${label}, current: ${chapterNum(active)} ${CHAPTERS[active][1]}`}
       onClick={(e) => { opener.current = e.currentTarget; setSheetOpen((o) => !o); }}
     >
-      <span className="menu-label">Menu</span><Cur i={active} /><span className="chev" aria-hidden="true">▾</span>
+      <Cur i={active} /><span className="chev" aria-hidden="true">▾</span>
     </button>
   );
-  const ask = (
-    <button className="nask" type="button" data-ask aria-haspopup="dialog" aria-controls="rook-popover"
-      aria-expanded={!!askOpen} aria-label="Ask Rook" onClick={(e) => onAsk(e.currentTarget)}>Ask</button>
-  );
+  const ask = <RookLauncher open={askOpen} onAsk={onAsk} />;
 
   return (
     <div className={`na${collapsed ? ' collapsed' : ''}`} data-wide={wide}>
       <header className="na-bar" aria-label="Site" aria-hidden={collapsed || undefined}>
-        <a className="brand" href="#entry" data-sec="entry">Raj Kumar S</a>
         <nav aria-label="Chapters">
           <ol>
             {CHAPTERS.map(([id, n], i) => id === 'resume' ? null : (
@@ -113,12 +134,12 @@ const NavA = ({ resumeUrl, onAsk, askOpen }) => {
           </ol>
         </nav>
         {picker('Chapters')}
-        <a className="btn-res" href={resumeUrl} download>Resume</a>
+        <SpringAction as="a" className="btn-res" href={resumeUrl} download>Resume</SpringAction>
         {ask}
       </header>
       <div className="na-pill" role="navigation" aria-label="Chapters (compact)" aria-hidden={!collapsed || undefined}>
         {picker('Chapters')}
-        <a className="btn-res" href={resumeUrl} download>Resume</a>
+        <SpringAction as="a" className="btn-res" href={resumeUrl} download>Resume</SpringAction>
         {ask}
       </div>
       {sheetOpen && (

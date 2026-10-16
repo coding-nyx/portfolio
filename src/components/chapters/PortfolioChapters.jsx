@@ -1,15 +1,16 @@
 import { createElement, useEffect, useRef, useState } from 'react';
 import { FiMapPin, FiBriefcase, FiCalendar, FiLayers, FiChevronDown, FiCopy, FiCheck } from 'react-icons/fi';
-import { profileData, experienceData, skillsData, projects, awardsData, achievementsData, certificationsData, interestsData } from '../../data/portfolio';
+import { profileData, experienceData, skillsData, projects, awardsData, certificationsData } from '../../data/portfolio';
 import { publicText } from '../../utils/publicText';
 import { sendEmail } from '../../services/emailService';
 import ProjectIsland from './ProjectIsland';
+import SpringAction from '../common/SpringAction';
 import '../../styles/chapters.css';
 
 const EMAIL_CONFIGURED = Boolean(import.meta.env.VITE_EMAILJS_SERVICE_ID && import.meta.env.VITE_EMAILJS_TEMPLATE_ID && import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 const LinkOut = ({ href, children, ...props }) => <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>;
-const Next = ({ id, children }) => <a className="chapter-next" href={`#${id}`} data-sec={id}>Next: <b>{children} ↓</b></a>;
+const Next = ({ id, children }) => <SpringAction as="a" className="chapter-next" href={`#${id}`} data-sec={id}>Next: <b>{children} ↓</b></SpringAction>;
 
 export function BioB() {
   const rows = [
@@ -22,15 +23,13 @@ export function BioB() {
     <div className="bio-card">
       <div className="bio-top">
         <img className="bio-avatar" src={profileData.profileImage} alt="Raj Kumar S" width="96" height="96" />
-        <h2>{profileData.name}</h2><p>{profileData.roleTitle}</p>
+        <h2 id="h-bio" tabIndex={-1}>{profileData.name}</h2><p>{profileData.roleTitle}</p>
       </div>
       <p className="bio-intro">{publicText(profileData.summary)}</p>
       <div className="bio-group">{rows.map(([icon, label, value]) => <div className="bio-row" key={label}>
         <i aria-hidden="true">{createElement(icon, {size:20, focusable:false})}</i><b>{label}</b><span>{value}</span>
       </div>)}</div>
-      <details className="bio-interests"><summary>Outside work <FiChevronDown aria-hidden="true" /></summary>
-        <ul className="interest-list">{interestsData.map(interest => <li key={interest}>{interest}</li>)}</ul>
-      </details>
+      <a className="bio-personal-link" href="#personal">Outside work: obstacle courses & other interests ↗</a>
     </div><Next id="experience">Experience</Next>
   </div>;
 }
@@ -50,7 +49,7 @@ export function ExperienceD() {
   const role = experienceData[selected];
   const notes = role.projects?.filter(item => ['adaptive-navigation-layout', 'spreadsheet-layout-performance', 'kanban-column-layout'].includes(item.id)) || [];
   return <div className="port-section experience-d" data-design="Experience D">
-    <h2>Experience</h2>
+    <h2 id="h-experience" tabIndex={-1}>Experience</h2>
     <p className="career-summary">Zoho · Full-time iOS engineering since May 2022</p>
     <div className="career-grid">
       <div className="career-tracks">
@@ -117,7 +116,7 @@ export function SkillsAD() {
   }, [selected]);
   const used = selected ? usedIn(selected) : [];
   return <div className="port-section skills-ad" data-design="Skills A+D">
-    <h2>Skills</h2><p className="port-meta">Select a skill for examples from my work.</p>
+    <h2 id="h-skills" tabIndex={-1}>Skills</h2><p className="port-meta">Select a skill for examples from my work.</p>
     <div className="skill-groups">{SKILL_GROUPS.map(group => <section className="skill-cluster" key={group.name} onKeyDown={event => {
       if (event.key === 'Escape' && selected && group.skills.includes(selected)) { event.preventDefault(); event.stopPropagation(); close(); }
     }}>
@@ -143,10 +142,9 @@ export function SkillsAD() {
 export function AchievementsC() {
   const milestones = [
     ...awardsData.map(item => ({title:item.name, kind:'Participation', proof:item.issuer, date:item.date, description:item.description})),
-    ...achievementsData.filter(item => !item.pendingConfirmation).map(item => ({title:item.title, kind:'Achievement', proof:item.event, description:item.description})),
   ];
   return <div className="port-section achievements-c" data-design="Achievements C">
-    <h2>Achievements</h2><p className="port-meta">Participation and continued learning.</p>
+    <h2 id="h-achievements" tabIndex={-1}>Professional milestones</h2><p className="port-meta">Hackathon participation and continued learning.</p>
     <div className="achievement-featured">{milestones.map(item => <article className="achievement-card" key={item.title}>
       <span className="port-meta">{item.kind}</span><strong>{item.title}</strong><span>{item.proof} · {item.date}</span><p>{publicText(item.description)}</p>
     </article>)}</div>
@@ -159,15 +157,15 @@ export function AchievementsC() {
 export function ResumeC({ resumeUrl }) {
   const [preview, setPreview] = useState(false);
   return <div className="port-section resume-c" data-design="Resume C">
-    <h2>Resume</h2><div className="resume-grid">
+    <h2 id="h-resume" tabIndex={-1}>Resume</h2><div className="resume-grid">
       <div className="resume-overview"><p className="port-eyebrow">Native UI · Product engineering</p><h3>{profileData.roleTitle}</h3><p>A concise overview of my component engineering, performance work, integration tooling and selected projects.</p><p className="port-meta">Member of Technical Staff at Zoho · Since May 2022</p></div>
       <aside className="resume-download">
-        <a className="resume-download-button" href={resumeUrl} download><span aria-hidden="true">↓</span><span><b>Download resume</b><small>PDF · Updated October 2026</small></span></a>
-        <button className="port-button secondary" aria-expanded={preview} aria-controls={preview ? 'resume-preview' : undefined} onClick={() => setPreview(!preview)}>{preview ? 'Hide' : 'Show'} preview</button>
+        <SpringAction as="a" className="resume-download-button" href={resumeUrl} download><span aria-hidden="true">↓</span><span><b>Download resume</b><small>PDF · Updated October 2026</small></span></SpringAction>
+        <SpringAction className="port-button secondary" aria-expanded={preview} aria-controls={preview ? 'resume-preview' : undefined} onClick={() => setPreview(!preview)}>{preview ? 'Hide' : 'Show'} preview</SpringAction>
         {preview && <img id="resume-preview" src="/resume-preview.png" width="595" height="842" alt="First page of Raj’s resume" />}
         <a href={resumeUrl} target="_blank" rel="noreferrer">Open PDF ↗</a>
       </aside>
-    </div><Next id="contact">Contact</Next>
+    </div><Next id="personal">Off the clock</Next>
   </div>;
 }
 
@@ -203,7 +201,7 @@ export function ContactD() {
       }
     } catch {setStatus('error');} finally {setSending(false);}
   };
-  return <div className="port-section contact-d" data-design="Contact D"><h2>Contact</h2><details className="contact-composer" open><summary>Write a message <FiChevronDown aria-hidden="true" /></summary><div className="mail-sheet"><form noValidate onSubmit={submit}><div className="mail-toolbar"><button type="button" onClick={reset} disabled={sending}>Clear</button><b>New message</b></div><div className="mail-row mail-recipient-row"><span>To</span><div className="mail-recipient"><b>{profileData.name}</b><span className="contact-email-row"><a className="contact-address" href={`mailto:${profileData.socialLinks.email}`}>{profileData.socialLinks.email}</a><button className="contact-copy" type="button" aria-label="Copy email address" title={copyStatus === 'Email copied.' ? 'Email copied' : 'Copy email'} onClick={copyEmail}>{copyStatus === 'Email copied.' ? <FiCheck size={14} aria-hidden="true" /> : <FiCopy size={14} aria-hidden="true" />}</button></span><span className="sr-only" role="status">{copyStatus}</span></div></div>{[['name','Name','Your name','text'],['email','Email','Your email','email']].map(([name,label,placeholder,type])=><div className="mail-field" key={name}><label className="mail-row" htmlFor={`contact-${name}`}><span>{label}</span><input id={`contact-${name}`} ref={el=>{refs.current[name]=el;}} type={type} name={name} autoComplete={name} placeholder={placeholder} value={form[name]} onChange={changed} aria-invalid={Boolean(errors[name])} aria-describedby={errors[name]?`contact-error-${name}`:undefined} /></label>{errors[name]&&<p className="field-error" id={`contact-error-${name}`}>{errors[name]}</p>}</div>)}<fieldset className="mail-subject"><legend>Subject</legend>{['Job','Freelance','Just hi'].map(s=><label key={s}><input type="radio" name="subject" value={s} checked={form.subject===s} onChange={changed} />{s}</label>)}</fieldset><div className="mail-body"><label className="sr-only" htmlFor="contact-message">Message</label><textarea id="contact-message" ref={el=>{refs.current.message=el;}} name="message" placeholder="Write your message…" value={form.message} onChange={changed} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message?'contact-error-message':undefined} rows="7" />{errors.message&&<p className="field-error" id="contact-error-message">{errors.message}</p>}</div><div className="mail-submit"><button type="submit" className="port-button" disabled={sending || !EMAIL_CONFIGURED} aria-label="Send message">{sending?'Sending…':'Send message ↑'}</button></div>{!EMAIL_CONFIGURED&&<p className="mail-delivery-note">Direct sending is unavailable. <a href={draftUrl}>Open an email draft</a> to send through your mail app.</p>}{Object.values(errors).some(Boolean)&&<p className="mail-status field-error" role="alert">Please check the highlighted fields.</p>}{status&&<div className="mail-status" role={status==='error'?'alert':'status'}>{status==='sent'?<><b>Message sent.</b><p>Thank you for reaching out.</p><button type="button" onClick={reset}>Write another message</button></>:<>The message could not be sent. Try again or <a href={draftUrl}>open an email draft</a> to review and send through your mail app.</>}</div>}</form></div></details><div className="social-row"><LinkOut href={profileData.socialLinks.linkedin}>LinkedIn ↗</LinkOut><LinkOut href={profileData.socialLinks.github}>GitHub ↗</LinkOut></div></div>;
+  return <div className="port-section contact-d" data-design="Contact D"><h2 id="h-contact" tabIndex={-1}>Contact</h2><details className="contact-composer" open><summary>Write a message <FiChevronDown aria-hidden="true" /></summary><div className="mail-sheet"><form noValidate onSubmit={submit}><div className="mail-toolbar"><button type="button" onClick={reset} disabled={sending}>Clear</button><b>New message</b></div><div className="mail-row mail-recipient-row"><span>To</span><div className="mail-recipient"><b>{profileData.name}</b><span className="contact-email-row"><a className="contact-address" href={`mailto:${profileData.socialLinks.email}`}>{profileData.socialLinks.email}</a><button className="contact-copy" type="button" aria-label="Copy email address" title={copyStatus === 'Email copied.' ? 'Email copied' : 'Copy email'} onClick={copyEmail}>{copyStatus === 'Email copied.' ? <FiCheck size={14} aria-hidden="true" /> : <FiCopy size={14} aria-hidden="true" />}</button></span><span className="sr-only" role="status">{copyStatus}</span></div></div>{[['name','Name','Your name','text'],['email','Email','Your email','email']].map(([name,label,placeholder,type])=><div className="mail-field" key={name}><label className="mail-row" htmlFor={`contact-${name}`}><span>{label}</span><input id={`contact-${name}`} ref={el=>{refs.current[name]=el;}} type={type} name={name} autoComplete={name} placeholder={placeholder} value={form[name]} onChange={changed} aria-invalid={Boolean(errors[name])} aria-describedby={errors[name]?`contact-error-${name}`:undefined} /></label>{errors[name]&&<p className="field-error" id={`contact-error-${name}`}>{errors[name]}</p>}</div>)}<fieldset className="mail-subject"><legend>Subject</legend>{['Job','Freelance','Volunteering','Just hi'].map(s=><label key={s}><input type="radio" name="subject" value={s} checked={form.subject===s} onChange={changed} />{s}</label>)}</fieldset><div className="mail-body"><label className="sr-only" htmlFor="contact-message">Message</label><textarea id="contact-message" ref={el=>{refs.current.message=el;}} name="message" placeholder="Write your message…" value={form.message} onChange={changed} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message?'contact-error-message':undefined} rows="7" />{errors.message&&<p className="field-error" id="contact-error-message">{errors.message}</p>}</div><div className="mail-submit"><SpringAction type="submit" className="port-button" disabled={sending || !EMAIL_CONFIGURED} aria-label="Send message">{sending?'Sending…':'Send message ↑'}</SpringAction></div>{!EMAIL_CONFIGURED&&<p className="mail-delivery-note">Direct sending is unavailable. <a href={draftUrl}>Open an email draft</a> to send through your mail app.</p>}{Object.values(errors).some(Boolean)&&<p className="mail-status field-error" role="alert">Please check the highlighted fields.</p>}{status&&<div className="mail-status" role={status==='error'?'alert':'status'}>{status==='sent'?<><b>Message sent.</b><p>Thank you for reaching out.</p><button type="button" onClick={reset}>Write another message</button></>:<>The message could not be sent. Try again or <a href={draftUrl}>open an email draft</a> to review and send through your mail app.</>}</div>}</form></div></details><div className="social-row"><LinkOut href={profileData.socialLinks.linkedin}>LinkedIn ↗</LinkOut><LinkOut href={profileData.socialLinks.github}>GitHub ↗</LinkOut></div></div>;
 }
 
 export function ProjectsG3v2() { return <ProjectIsland />; }

@@ -78,7 +78,7 @@ Use a protected service-account/Secret Manager configuration and choose the targ
 python3 scripts/build-resume.py --output-dir public
 ```
 
-The generator uses portfolio facts and requires Node plus Python `reportlab`, `pypdf` and `pypdfium2`. Review the generated preview and both PDFs before publishing; keep claims and links tied to confirmed facts.
+The generator uses portfolio facts and requires Node plus Python `reportlab`, `pypdf` and `pypdfium2`. Selected projects include Hermes Companion, Ara and Tally. Review the generated preview and both PDFs before publishing; keep claims and links tied to confirmed facts.
 
 ## Checks
 

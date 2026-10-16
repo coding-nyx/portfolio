@@ -121,7 +121,7 @@ test('every case study separates problem, approach, scope and limitations', asyn
 
 test('curated projects merge Hermes clients and exclude the removed showcase', async () => {
   const { projects } = await importData();
-  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Nexus']);
+  assert.deepEqual(projects.map(p => p.name), ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Ara']);
 });
 
 /* ------------------------------------------------------------------ *
@@ -298,12 +298,22 @@ test('unapproved unavailable destinations are not published', () => {
   );
   assert.ok(
     !combined.includes('coding-nyx/nexus-react-native'),
-    'Nexus repository is private and 404s for recruiters'
+    'Ara repository is private and 404s for recruiters'
   );
   assert.ok(
-    !combined.includes('agent-agnes-ai.web.app'),
-    'Nexus demo renders an unverified shell and must not be presented as working'
+    !combined.includes('agent-nexus.web.app'),
+    'Superseded Ara interface URL should not remain in public content'
   );
+});
+
+test('Ara distinguishes its on-hold interface preview from a working agent demo', async () => {
+  const { projects } = await importData();
+  const ara = projects.find(p => p.name === 'Ara');
+  assert.equal(ara.liveUrl, 'https://agent-agnes-ai.web.app/');
+  assert.equal(ara.linkLabel, 'Preview interface');
+  assert.match(ara.status, /on hold/i);
+  assert.match(ara.linksUnavailableReason, /currently displays the Nexus name/);
+  assert.equal(ara.repoUrl, null);
 });
 
 test('working public repositories stay linked', async () => {

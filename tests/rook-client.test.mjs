@@ -22,12 +22,15 @@ test('saved project answers treat Hermes as one project with both clients',()=>{
 });
 
 test('private project answers explain architecture without inventing public links or unlimited memory',()=>{
-  const nexus=generateFallbackResponse('How did Raj implement memory and orchestration in Nexus?');
-  assert.match(nexus,/Personally implemented specialist agents/);
-  assert.match(nexus,/Firestore/);
-  assert.match(nexus,/model context limits still apply/);
-  assert.match(nexus,/Source is private/);
-  assert.doesNotMatch(nexus,/https?:\/\//);
+  const ara=generateFallbackResponse('How did Raj implement memory and orchestration in Ara?');
+  assert.ok(ara.startsWith('### Ara\n'));
+  assert.ok(!generateFallbackResponse('Tell me about Raj’s character').startsWith('### Ara\n'));
+  assert.match(ara,/Personally implemented specialist agents/);
+  assert.match(ara,/Firestore/);
+  assert.match(ara,/model context limits still apply/);
+  assert.match(ara,/Source is private/);
+  assert.match(ara,/\[Preview interface\]\(https:\/\/agent-agnes-ai\.web\.app\/\)/);
+  assert.match(ara,/hosted interface currently displays the Nexus name/);
   const tally=generateFallbackResponse('How does Tally import statements and recover data?');
   assert.match(tally,/column mapping, date review and duplicate detection/);
   assert.match(tally,/JSON backup, restore and migration/);

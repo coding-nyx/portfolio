@@ -4,12 +4,13 @@ import './index.css'
 import App from './App.jsx'
 import ErrorBoundary from './components/common/ErrorBoundary.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { MotionProvider } from './context/MotionContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
       <ThemeProvider>
-        <App />
+        <MotionProvider><App /></MotionProvider>
       </ThemeProvider>
     </ErrorBoundary>
   </StrictMode>,

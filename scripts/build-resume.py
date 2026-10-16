@@ -79,7 +79,7 @@ def build(filename, accent):
     for role in roles[1:]:
         story.append(para("<b>" + text(role["role"]) + " | " + text(role["company"]) + "</b> | " + text(role["dates"]), "small"))
     section("Selected projects")
-    for name in ["Hermes Companion", "Nexus", "Tally"]:
+    for name in ["Hermes Companion", "Ara", "Tally"]:
         project = next(item for item in projects if item["name"] == name)
         label = text(name)
         if project["repoUrl"]:

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import '../styles/entryD2.css';
 import { profileData } from '../data/portfolio';
-import { chapterLabel } from '../data/chapters';
+import SpringAction from './common/SpringAction';
 
 const Ico = ({ fill }) => (
   <svg className="ic" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect width="18" height="18" rx="5" fill={fill} /></svg>
@@ -45,13 +45,12 @@ const EntryHero = ({ resumeUrl }) => {
     <div className="hero">
       <div className="t">
         <span className="role">{profileData.roleTitle} · Since May 2022</span>
-        <p className="chl">{chapterLabel('entry')}</p>
         <h1 ref={name} id="h-entry" tabIndex={-1}>{profileData.name}</h1>
         <p className="line muted">{profileData.heroSummary}</p>
         <div className="acts">
-          <a className="btn primary" href="#experience" data-sec="experience">View iOS work</a>
-          <a className="btn ghost" href={resumeUrl} download>Resume ↓</a>
-          <a className="btn ghost" href="#contact" data-sec="contact">Contact</a>
+          <SpringAction as="a" className="btn primary" href="#experience" data-sec="experience">View iOS work</SpringAction>
+          <SpringAction as="a" className="btn ghost" href={resumeUrl} download>Resume ↓</SpringAction>
+          <SpringAction as="a" className="btn ghost" href="#contact" data-sec="contact">Contact</SpringAction>
         </div>
       </div>
       <div className="stage">

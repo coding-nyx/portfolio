@@ -1,5 +1,5 @@
 // The browser calls our server; provider credentials are never present here.
-import { profileData, experienceData, projects, skillsData, awardsData, certificationsData } from '../data/portfolio.js';
+import { profileData, experienceData, projects, skillsData, awardsData, certificationsData, achievementsData, interestsData } from '../data/portfolio.js';
 import { publicText } from '../utils/publicText.js';
 
 export async function askRookAgent({ messages, onChunk, onAction, onMode, signal }) {
@@ -31,12 +31,12 @@ export function generateFallbackResponse(messagesInput) {
     const caseStudy = project.caseStudy;
     const detail = caseStudy && /architect|implement|built|memory|orchestrat|persona|compress|rag|import|recover|currency|how|mcp|hermes|chatgpt|upload|agent tool/.test(query)
       ? `\n\n${publicText(caseStudy.approach)}${caseStudy.integration ? `\n\n${publicText(caseStudy.integration)}` : ''}\n\n${publicText(caseStudy.limitations)}` : '';
-    const links = (project.sourceLinks || (project.repoUrl ? [{label:'Source',url:project.repoUrl}] : [])).map(link=>`[${link.label}](${link.url})`).join(' · ');
+    const links = [...(project.liveUrl ? [{ label: project.linkLabel || 'Open project', url: project.liveUrl }] : []), ...(project.sourceLinks || (project.repoUrl ? [{label:'Source',url:project.repoUrl}] : []))].map(link=>`[${link.label}](${link.url})`).join(' · ');
     const destinations = links ? `${links}${project.linksUnavailableReason ? `\n\n${publicText(project.linksUnavailableReason)}` : ''}` : publicText(project.linksUnavailableReason) || 'Public source is not available.';
     return `### ${project.name}\n\n${publicText(project.description)}${detail}\n\n${destinations}\n[ACTION:SCROLL_TO:projects]`;
   };
 
-  const project = projects.find((p) => query.includes(p.name.toLowerCase())) ||
+  const project = projects.find((p) => p.name === 'Ara' ? /\bara\b/.test(query) : query.includes(p.name.toLowerCase())) ||
     (/linux|kernel|rk3588|embedded|device tree|hub-?11|a009/.test(query) ? projects.find((p) => p.name.startsWith('a0090')) : undefined) ||
     (/hermes|companion|tailscale/.test(query) ? projects.find((p) => p.name === 'Hermes Companion') : undefined);
   if (project) return projectReply(project);
@@ -45,8 +45,14 @@ export function generateFallbackResponse(messagesInput) {
     return "Use the Contact chapter to compose a message to Raj. Rook does not send messages.\n[ACTION:SCROLL_TO:contact]";
   }
 
-  if (/spartan|race|racing|obstacle|endurance/.test(query)) {
-    return 'Raj lists obstacle course racing among his interests. Race results are awaiting confirmation.';
+  if (/volunteer/.test(query)) {
+    return `${profileData.name}: ${profileData.volunteeringInterest} Choose Volunteering in the Contact form to get in touch.\n[ACTION:SCROLL_TO:contact]`;
+  }
+  if (/outside work|off the clock|hobbies|interests|beyond (?:work|the screen)/.test(query)) {
+    return `A few of Raj’s interests: ${interestsData.join(', ')}.\n\n${profileData.volunteeringInterest}\n[ACTION:SCROLL_TO:personal]`;
+  }
+  if (/spartan|race|racing|obstacle|endurance|devils? circuit|wild\s?warrior/.test(query)) {
+    return 'Outside work, Raj takes part in obstacle course races.\n\n' + achievementsData.map(race => `• **${race.title} (${race.year})** — ${race.status}`).join('\n') + '\n\nThese are personal milestones.\n[ACTION:SCROLL_TO:personal]';
   }
   if (/hackathon|smart india|sih|award|honor/.test(query)) {
     return awardsData.map((a) => `**${a.name}** — ${a.issuer}, ${a.date}`).join('\n') + '\n[ACTION:SCROLL_TO:achievements]';

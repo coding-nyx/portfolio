@@ -8,7 +8,6 @@
 .entry-d2 .primary{background:#FF8A3D;color:#0B0B0F}
 .entry-d2 .ghost{border:1px solid #3A3A46;background:#0B0B0F;color:#F4F4F5}
 .entry-d2 .role{color:#FF8A3D;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:14px;display:block;line-height:18px}
-.entry-d2 .chl{line-height:16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FF8A3D;font-weight:600;margin:12px 0 0}
 .entry-d2 .acts{display:flex;gap:16px;flex-wrap:wrap}
 .entry-d2 .cue{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:44px;padding:8px 12px;font-size:14px;color:#A1A1AA;text-decoration:none;z-index:20;white-space:nowrap}
 .entry-d2 .cue .arr{display:inline-block;animation:d2bo 1.6s infinite}
@@ -71,8 +70,7 @@
 
 .entry-d2 .t{min-width:0}
 
-/* Explicit text-group spacing takes precedence over the shared chapter caption. */
+/* Keep the role and name consistently spaced. */
 .entry-d2 .t>.role{margin-bottom:12px}
-.entry-d2 .t>.chl{margin:0 0 12px}
 .entry-d2 .hero h1{margin:0 0 16px}
 @media(max-width:700px){.entry-d2 .hero h1{margin:0 0 12px}}

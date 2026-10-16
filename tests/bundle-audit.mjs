@@ -52,7 +52,7 @@ const FORBIDDEN = [
   ['named endorsement attribution', /(?:Senior Software Engineer|Engineering Manager|Product Manager)\s*,\s*[A-Z]/],
   ['dead demo destination', /personal-trainer-mock/],
   ['private repository destination', /nexus-react-native/],
-  ['unverified demo destination', /agent-agnes-ai/],
+  ['superseded Ara preview destination', /agent-nexus\.web\.app/],
   ['retired site URL', /pac-dbe/],
   ['retired contact email', /raju9112000/],
   ['internal employment codename', /AXSpec2Code/i],
@@ -63,6 +63,7 @@ const REQUIRED = [
   ['LinkedIn profile URL', /linkedin\.com\/in\/raj-kumar-s/],
   ['résumé PDF path', /resume-modern\.pdf/],
   ['public companion repository', /coding-nyx\/hermes-companion-app/],
+  ['Ara interface preview', /agent-agnes-ai\.web\.app/],
   ['contact mailto', /mailto:/],
 ];
 
