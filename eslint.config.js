@@ -11,6 +11,7 @@ export default defineConfig([
     'dist',
     'src/vendor/**',
     'functions/lib/**',
+    'verification/**',
     'src/components/prototypes/**',
     'src/styles/motionLab.css',
   ]),

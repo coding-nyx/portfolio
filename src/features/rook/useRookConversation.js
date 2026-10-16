@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { askRookAgent } from '../../services/rookClient.js';
+import {
+  getRookAction,
+  getRookGuidance,
+  getRookSuggestions,
+  rookActionReply,
+} from './rookConversationModel.js';
 
 export default function useRookConversation({ onOpenResume, onNavigate }) {
   const request = useRef(null);
@@ -13,7 +19,6 @@ export default function useRookConversation({ onOpenResume, onNavigate }) {
     },
   ]);
   const [busy, setBusy] = useState(false);
-  const [mode, setMode] = useState(null);
   const [notice, setNotice] = useState('');
   const cancel = useCallback(() => request.current?.abort(), []);
   useEffect(() => cancel, [cancel]);
@@ -28,24 +33,45 @@ export default function useRookConversation({ onOpenResume, onNavigate }) {
     setNotice('');
     const next = [...messages, { role: 'user', content: text }];
     setMessages(next);
+    const { question: contextualQuestion, ...guidance } = getRookGuidance(text, messages);
+    const action = getRookAction(text);
     try {
+      if (action) {
+        setMessages([
+          ...next,
+          { role: 'assistant', content: rookActionReply(action), ...guidance },
+        ]);
+        if (action.type === 'open_resume') onOpenResume?.();
+        if (action.type === 'scroll') onNavigate?.(action.target);
+        return;
+      }
+      let source;
       const answer = await askRookAgent({
-        messages: next,
+        messages: [...messages, { role: 'user', content: contextualQuestion }],
         signal: request.current.signal,
-        onMode: setMode,
-        onAction: (action) => {
-          if (action.type === 'open_resume') onOpenResume?.();
-          if (action.type === 'scroll') onNavigate?.(action.target);
+        onMode: (mode) => {
+          source = mode.source;
         },
       });
-      setMessages([...next, { role: 'assistant', content: answer }]);
+      if (!request.current.signal.aborted)
+        setMessages([...next, { role: 'assistant', content: answer, source, ...guidance }]);
     } catch {
       setNotice('Response cancelled. You can ask again.');
     } finally {
       pending.current = false;
       setBusy(false);
+      request.current = null;
     }
   };
 
-  return { query, setQuery, messages, busy, mode, notice, send, cancel };
+  return {
+    query,
+    setQuery,
+    messages,
+    busy,
+    notice,
+    suggestions: getRookSuggestions(messages),
+    send,
+    cancel,
+  };
 }

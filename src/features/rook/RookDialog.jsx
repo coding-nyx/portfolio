@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ROOK_LIMITS } from '../../data/rookContract.js';
-import ReactMarkdown from 'react-markdown';
 import useRookConversation from './useRookConversation.js';
+import RookMessage from './RookMessage.jsx';
+import useRookDialog from './useRookDialog.js';
 import './rook.css';
 
 export default function RookDialog({
@@ -11,7 +12,6 @@ export default function RookDialog({
   onOpenResume,
   onNavigate,
 }) {
-  const panel = useRef(null);
   const input = useRef(null);
   const transcript = useRef(null);
   const {
@@ -19,49 +19,24 @@ export default function RookDialog({
     setQuery,
     messages,
     busy,
-    mode,
     notice,
+    suggestions,
     send: sendMessage,
     cancel,
   } = useRookConversation({ onOpenResume, onNavigate });
-  const close = useCallback(() => {
-    cancel();
-    onOpenChange(false);
-    requestAnimationFrame(() => {
-      const visible = (el) => el?.checkVisibility() && getComputedStyle(el).visibility !== 'hidden';
-      const opener = returnFocusRef?.current;
-      const fallback = [...document.querySelectorAll('[data-ask]')].find(visible);
-      (visible(opener) ? opener : fallback)?.focus({ preventScroll: true });
-    });
-  }, [cancel, onOpenChange, returnFocusRef]);
-  useEffect(() => {
-    if (!open) return;
-    input.current?.focus({ preventScroll: true });
-    const key = (e) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        e.stopPropagation();
-        close();
-        return;
-      }
-      if (e.key !== 'Tab') return;
-      const focusable = [...panel.current.querySelectorAll('button,input,a[href]')].filter(
-        (el) => !el.disabled && el.checkVisibility(),
-      );
-      if (!focusable.length) return;
-      e.preventDefault();
-      const i = focusable.indexOf(document.activeElement);
-      focusable[(i + (e.shiftKey ? -1 : 1) + focusable.length) % focusable.length].focus();
-    };
-    document.addEventListener('keydown', key, true);
-    return () => document.removeEventListener('keydown', key, true);
-  }, [open, close]);
+  const { panel, close } = useRookDialog({
+    open,
+    onOpenChange,
+    returnFocusRef,
+    initialFocusRef: input,
+    cancel,
+  });
   useEffect(() => {
     if (transcript.current) transcript.current.scrollTop = transcript.current.scrollHeight;
-  }, [messages]);
-  const send = async (value) => {
-    await sendMessage(value);
+  }, [messages, open]);
+  const send = (value) => {
     input.current?.focus({ preventScroll: true });
+    sendMessage(value);
   };
   if (!open) return null;
   return (
@@ -85,36 +60,44 @@ export default function RookDialog({
             ×
           </button>
         </div>
-        {mode && (
-          <p className="rook-status" role="status" data-source={mode.source}>
-            {mode.source === 'deepseek'
-              ? `DeepSeek · ${mode.model}`
-              : 'Live answer unavailable. Showing saved portfolio information.'}
-          </p>
-        )}
         {notice && (
           <p className="rook-status" role="status">
             {notice}
           </p>
         )}
-        <div ref={transcript} className="rook-transcript" role="log" aria-live="polite">
+        {busy && (
+          <p className="rook-status" role="status">
+            Thinking…
+          </p>
+        )}
+        <div
+          ref={transcript}
+          className="rook-transcript"
+          role="log"
+          aria-live="polite"
+          aria-busy={busy}
+        >
           {messages.map((m, i) => (
-            <div key={i} className={`rook-message ${m.role}`}>
-              {m.role === 'user' ? m.content : <ReactMarkdown>{m.content}</ReactMarkdown>}
-            </div>
+            <RookMessage
+              key={i}
+              message={m}
+              onNavigate={(target) => {
+                cancel();
+                onNavigate?.(target);
+              }}
+              onOpenResume={onOpenResume}
+            />
           ))}
         </div>
-        <div className="rook-chips" aria-label="Suggested questions">
-          <button disabled={busy} onClick={() => send('What does Raj work on?')}>
-            What does Raj work on?
-          </button>
-          <button disabled={busy} onClick={() => send('Linux and embedded systems')}>
-            Linux &amp; systems work
-          </button>
-          <button disabled={busy} onClick={() => send('Contact Raj')}>
-            Contact Raj
-          </button>
-        </div>
+        {!busy && suggestions.length > 0 && (
+          <div className="rook-chips" role="group" aria-label="Suggested questions">
+            {suggestions.map(({ label, question }) => (
+              <button key={question} type="button" disabled={busy} onClick={() => send(question)}>
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
         <form
           className="rook-input"
           onSubmit={(e) => {
@@ -138,7 +121,7 @@ export default function RookDialog({
             {busy ? '…' : '↑'}
           </button>
         </form>
-        <p className="rook-privacy">Questions are processed by DeepSeek.</p>
+        <p className="rook-caption">Curiosity brought you here. Rook handles the rest.</p>
       </div>
     </>
   );

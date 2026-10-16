@@ -10,17 +10,18 @@ import {
   interestsData,
 } from '../data/portfolio.js';
 import { publicText } from '../utils/publicText.js';
+import { findRookProject, normalizeRookQuestion } from './rookKnowledge.js';
 
 export function generateFallbackResponse(messagesInput) {
   const msgs = Array.isArray(messagesInput)
     ? messagesInput
     : [{ role: 'user', content: String(messagesInput || '') }];
-  const query = (msgs[msgs.length - 1]?.content || '').toLowerCase();
+  const query = normalizeRookQuestion(msgs[msgs.length - 1]?.content || '');
   const projectReply = (project) => {
     const caseStudy = project.caseStudy;
     const detail =
       caseStudy &&
-      /architect|implement|built|memory|orchestrat|persona|compress|rag|import|recover|currency|how|mcp|hermes|chatgpt|upload|agent tool/.test(
+      /architect|implement|built|memory|orchestrat|persona|compress|rag|import|recover|currency|how|mcp|hermes|chatgpt|upload|agent tool|limitations?|trade.?offs?|contribution|personally|scope/.test(
         query,
       )
         ? `\n\n${publicText(caseStudy.approach)}${caseStudy.integration ? `\n\n${publicText(caseStudy.integration)}` : ''}\n\n${publicText(caseStudy.limitations)}`
@@ -37,19 +38,17 @@ export function generateFallbackResponse(messagesInput) {
     const destinations = links
       ? `${links}${project.linksUnavailableReason ? `\n\n${publicText(project.linksUnavailableReason)}` : ''}`
       : publicText(project.linksUnavailableReason) || 'Public source is not available.';
-    return `### ${project.name}\n\n${publicText(project.description)}${detail}\n\n${destinations}\n[ACTION:SCROLL_TO:projects]`;
+    if (/limitations?|trade.?offs?/.test(query)) {
+      const limitations =
+        caseStudy?.limitations || 'Technical limitations are not specified in the portfolio.';
+      return `### ${project.name} — limitations\n\n${publicText(limitations)}\n\n${destinations}`;
+    }
+    if (caseStudy && /personally|contribution|scope/.test(query))
+      return `### ${project.name} — Raj’s contribution\n\n${publicText(caseStudy.scope)}\n\n${publicText(caseStudy.approach)}\n\n${destinations}`;
+    return `### ${project.name}\n\n${publicText(project.description)}${detail}\n\n${destinations}`;
   };
 
-  const project =
-    projects.find((p) =>
-      p.name === 'Ara' ? /\bara\b/.test(query) : query.includes(p.name.toLowerCase()),
-    ) ||
-    (/linux|kernel|rk3588|embedded|device tree|hub-?11|a009/.test(query)
-      ? projects.find((p) => p.name.startsWith('a0090'))
-      : undefined) ||
-    (/hermes|companion|tailscale/.test(query)
-      ? projects.find((p) => p.name === 'Hermes Companion')
-      : undefined);
+  const project = findRookProject(query);
   if (project) return projectReply(project);
 
   if (
@@ -57,14 +56,14 @@ export function generateFallbackResponse(messagesInput) {
       query,
     )
   ) {
-    return 'Use the Contact chapter to compose a message to Raj. Rook does not send messages.\n[ACTION:SCROLL_TO:contact]';
+    return 'Use the Contact chapter to compose a message to Raj. Rook does not send messages.';
   }
 
   if (/volunteer/.test(query)) {
-    return `${profileData.name}: ${profileData.volunteeringInterest} Choose Volunteering in the Contact form to get in touch.\n[ACTION:SCROLL_TO:contact]`;
+    return `${profileData.name}: ${profileData.volunteeringInterest} Choose Volunteering in the Contact form to get in touch.`;
   }
   if (/outside work|off the clock|hobbies|interests|beyond (?:work|the screen)/.test(query)) {
-    return `A few of Raj’s interests: ${interestsData.join(', ')}.\n\n${profileData.volunteeringInterest}\n[ACTION:SCROLL_TO:personal]`;
+    return `A few of Raj’s interests: ${interestsData.join(', ')}.\n\n${profileData.volunteeringInterest}`;
   }
   if (/spartan|race|racing|obstacle|endurance|devils? circuit|wild\s?warrior/.test(query)) {
     return (
@@ -72,28 +71,22 @@ export function generateFallbackResponse(messagesInput) {
       achievementsData
         .map((race) => `• **${race.title} (${race.year})** — ${race.status}`)
         .join('\n') +
-      '\n\nThese are personal milestones.\n[ACTION:SCROLL_TO:personal]'
+      '\n\nThese are personal milestones.'
     );
   }
   if (/hackathon|smart india|sih|award|honor/.test(query)) {
-    return (
-      awardsData.map((a) => `**${a.name}** — ${a.issuer}, ${a.date}`).join('\n') +
-      '\n[ACTION:SCROLL_TO:achievements]'
-    );
+    return awardsData.map((a) => `**${a.name}** — ${a.issuer}, ${a.date}`).join('\n');
   }
   if (/certificate|certification/.test(query)) {
-    return (
-      certificationsData.map((c) => `• ${c.name} — ${c.issuer}, ${c.date}`).join('\n') +
-      '\n[ACTION:SCROLL_TO:achievements]'
-    );
+    return certificationsData.map((c) => `• ${c.name} — ${c.issuer}, ${c.date}`).join('\n');
   }
   if (/education|college|school|degree|qualification|sairam|dav/.test(query)) {
     return 'Education details are not listed in this portfolio. Please ask Raj for confirmation.';
   }
-  if (/resume|\bcv\b/.test(query)) return "Opening Raj's resume PDF.\n[ACTION:OPEN_RESUME]";
+  if (/resume|\bcv\b/.test(query)) return 'Raj’s résumé is available in the Resume chapter.';
   if (/catalyst/.test(query)) {
     const skill = skillsData.find((item) => item.name === 'Zoho Catalyst');
-    return `**${skill.name}**\n\n${publicText(skill.evidence)}\n[ACTION:SCROLL_TO:skills]`;
+    return `**${skill.name}**\n\n${publicText(skill.evidence)}`;
   }
   if (
     /sdlc|agentic|component generation|generate.*component|spec.driven|development workflow/.test(
@@ -104,7 +97,7 @@ export function generateFallbackResponse(messagesInput) {
     const detail = /how|explain|workflow|steps|process|test|plan/.test(query)
       ? `\n\n${publicText(work.details.intro)}\n\n${work.details.steps.map((step, index) => `${index + 1}. **${step.title}** — ${publicText(step.body)}`).join('\n')}\n\n${publicText(work.details.updates)}`
       : '';
-    return `**${work.name}**\n\n${publicText(work.desc)}${detail}\n[ACTION:SCROLL_TO:experience]`;
+    return `**${work.name}**\n\n${publicText(work.desc)}${detail}`;
   }
   if (
     /navigation|split.?view|three.panel|rail.?view|tab.?bar|traitcollection|layout componentization/.test(
@@ -114,14 +107,14 @@ export function generateFallbackResponse(messagesInput) {
     const work = experienceData[0].projects.find(
       (item) => item.id === 'adaptive-navigation-layout',
     );
-    return `**${work.name}**\n\n${publicText(work.desc)}\n[ACTION:SCROLL_TO:experience]`;
+    return `**${work.name}**\n\n${publicText(work.desc)}`;
   }
   if (/revamp|redesign|middleware|api migration/.test(query)) {
     const work = experienceData[0].projects.find((item) => item.id === 'production-app-revamp');
-    return `**${work.name}**\n\n${publicText(work.desc)}\n\n${publicText(profileData.deliverySummary)}\n[ACTION:SCROLL_TO:experience]`;
+    return `**${work.name}**\n\n${publicText(work.desc)}\n\n${publicText(profileData.deliverySummary)}`;
   }
   if (/releases?|bug fixes|feature (?:additions|inclusions)|product delivery/.test(query)) {
-    return `**Production iOS delivery**\n\n${publicText(profileData.deliverySummary)}\n[ACTION:SCROLL_TO:experience]`;
+    return `**Production iOS delivery**\n\n${publicText(profileData.deliverySummary)}`;
   }
   const sheetQuestion =
     /spreadsheet|sheetview|collectionviewlayout|reindex|stutter|layout cach|scrolling performance/.test(
@@ -152,23 +145,21 @@ export function generateFallbackResponse(messagesInput) {
     const detail = specificWork
       ? `\n\n**${specificWork.name}**\n${publicText(specificWork.desc)}`
       : '';
-    return `**Raj is a Member of Technical Staff at Zoho. Since May 2022.**\n\n${publicText(role.description)}${detail}\n[ACTION:SCROLL_TO:experience]`;
+    return `**Raj is a Member of Technical Staff at Zoho. Since May 2022.**\n\n${publicText(role.description)}${detail}`;
   }
   if (/skill|stack|swift|ios|technolog|proficiency/.test(query)) {
-    return skillsData.map((s) => `• ${s.name}`).join('\n') + '\n[ACTION:SCROLL_TO:skills]';
+    return skillsData.map((s) => `• ${s.name}`).join('\n');
   }
   if (/github|repo|project|code/.test(query)) {
-    return (
-      projects
-        .map(
-          (p) =>
-            `• ${p.repoUrl ? `[${p.name}](${p.repoUrl})` : p.name} — ${publicText(p.description)}`,
-        )
-        .join('\n') + '\n[ACTION:SCROLL_TO:projects]'
-    );
+    return projects
+      .map(
+        (p) =>
+          `• ${p.repoUrl ? `[${p.name}](${p.repoUrl})` : p.name} — ${publicText(p.description)}`,
+      )
+      .join('\n');
   }
   if (/raj|who|about|background|intro/.test(query)) {
-    return `**${profileData.name}** — ${profileData.location}\n\n${publicText(profileData.summary)}\n[ACTION:SCROLL_TO:bio]`;
+    return `**${profileData.name}** — ${profileData.location}\n\n${publicText(profileData.summary)}`;
   }
   return 'Hi, I’m **Rook**. I answer questions about Raj’s work, public projects and background. Ask about iOS engineering, Linux & systems work, or use the Contact chapter to compose a message.';
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { LazyMotion, MotionConfig } from 'framer-motion';
 import { MotionContext } from './motionContext.js';
 import useSystemReducedMotion from './useSystemReducedMotion.js';
@@ -9,19 +9,8 @@ const loadAnimationFeatures = () =>
 
 export function MotionProvider({ children }) {
   const systemReduced = useSystemReducedMotion();
-  const [paused, setPaused] = useState(() => {
-    try {
-      return localStorage.getItem('portfolio-motion') === 'off';
-    } catch {
-      return false;
-    }
-  });
-  const enabled = !systemReduced && !paused;
-  const toggle = useCallback(() => setPaused((current) => !current), []);
-  const value = useMemo(
-    () => ({ enabled, systemReduced, toggle }),
-    [enabled, systemReduced, toggle],
-  );
+  const enabled = !systemReduced;
+  const value = useMemo(() => ({ enabled }), [enabled]);
 
   useEffect(() => {
     document.body.dataset.motion = enabled ? 'on' : 'off';
@@ -29,14 +18,6 @@ export function MotionProvider({ children }) {
       delete document.body.dataset.motion;
     };
   }, [enabled]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('portfolio-motion', paused ? 'off' : 'on');
-    } catch {
-      /* The in-memory preference still works when storage is unavailable. */
-    }
-  }, [paused]);
 
   return (
     <MotionContext.Provider value={value}>

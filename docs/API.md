@@ -75,7 +75,11 @@ The local rate-limit response includes `Retry-After`. Limit state is process-loc
 
 Network, non-JSON, provider or contract failures produce a client-side answer from `services/rookFallback.js`. This is explicitly labeled with client metadata `source: preset`; the server never presents a saved answer as a provider success. Cancellation is propagated instead of silently substituting a fallback.
 
-Fallback navigation is emitted through `onAction` as `scroll` with a chapter target or `open_resume`. The app performs the action through its navigation/resume controls. Service code does not query the DOM, control scrolling, send contact email or store leads.
+Live and fallback answers share the same browser-owned guidance model. `rookConversationModel.js` resolves the visitor's topic against the public portfolio, attaches related section/project links, and chooses up to three unused contextual questions. These are related portfolio links, not generated citations or proof that every model claim was independently verified. Short follow-ups are qualified with the prior topic for both answer paths. Per-answer source metadata keeps the saved-answer notice attached to the answer it describes.
+
+Explicit commands such as “show projects,” “contact Raj,” and “open Raj’s résumé” are handled locally before any HTTP request. Only known chapters and the existing résumé action are accepted. Ordinary questions do not trigger automatic scrolling. Model output and action-like text never execute navigation. The hook invokes app callbacks; the app closes Rook, scrolls and focuses the requested chapter, or opens the theme-appropriate PDF directly from the visitor interaction. Related internal links use the same callbacks. Service code does not query the DOM, control scrolling, send contact email or store leads.
+
+Conversation metadata and evidence URLs stay in browser memory. The HTTP client sends only `role` and `content`; the endpoint's request/response schema is unchanged.
 
 ## Contact integration
 

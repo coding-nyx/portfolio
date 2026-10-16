@@ -78,7 +78,10 @@ export default function App() {
           open={rookOpen}
           onOpenChange={setRookOpen}
           returnFocusRef={askOpener}
-          onNavigate={navigateToChapter}
+          onNavigate={(id) => {
+            setRookOpen(false);
+            navigateToChapter(id);
+          }}
           onOpenResume={() => window.open(resumeUrl, '_blank')}
         />
         <SiteFooter />

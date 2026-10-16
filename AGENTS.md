@@ -9,7 +9,7 @@ Read `docs/ARCHITECTURE.md`, `docs/API.md`, and `docs/CODING_STANDARDS.md` befor
 - Use semantic component/file names, explicit file extensions, Prettier formatting, strict equality, and no unused bindings. ESLint enforces hooks, JSX references and module boundaries.
 - Keep views focused on rendering. Put substantial state/side effects in feature hooks and pure calculations in feature model modules. Use callbacks at feature boundaries instead of reaching into another feature's state.
 - Defer Rook, the island and its engine, EmailJS, and analytics according to the loading policy. Use `m` under the shared `LazyMotion` provider rather than importing the full `motion` components.
-- Cancel requests and release observers, event listeners, timers and WebGL resources. Respect both the site motion setting and the system reduced-motion preference.
+- Cancel requests and release observers, event listeners, timers and WebGL resources. Respect the system reduced-motion preference; there is no separate site motion toggle.
 - Run `npm run check` and `npm run build:functions` for structural changes. Update existing regression tests to follow active code; do not retain dead implementations to satisfy obsolete tests.
 - Keep scratch verification files and design prototypes out of Git. The ignored local studies are not part of the production app. Use npm and the single `package-lock.json`; do not introduce another package-manager lockfile.
 - Report the architecture, API changes, validation evidence and remaining limitations honestly. Passing lint/build is not proof of browser behavior or performance.

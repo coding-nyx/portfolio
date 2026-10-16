@@ -3,15 +3,20 @@
   inset: 0;
   background: #0007;
   z-index: 80;
+  touch-action: none;
 }
 .rook-popover {
   position: fixed;
-  top: 76px;
+  --rook-inset-top: 76px;
+  --rook-inset-bottom: 24px;
+  top: calc(var(--rook-viewport-top, 0px) + var(--rook-inset-top));
   right: 24px;
   z-index: 81;
   width: 420px;
   max-width: calc(100vw - 24px);
-  max-height: calc(100svh - 100px);
+  max-height: calc(
+    var(--rook-viewport-height, 100dvh) - var(--rook-inset-top) - var(--rook-inset-bottom)
+  );
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -96,6 +101,35 @@
 .rook-message a {
   color: #ff8a3d;
 }
+.rook-evidence {
+  border-top: 1px solid #3a3a46;
+  padding-top: 8px;
+  font-size: 12px;
+}
+.rook-evidence > span {
+  color: #a1a1aa;
+}
+.rook-evidence > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+.rook-evidence a,
+.rook-evidence button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: #ff8a3d;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
 .rook-chips {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +160,7 @@
   color: #f4f4f5;
   border-radius: 8px;
   font:
-    13px 'Space Grotesk',
+    16px 'Space Grotesk',
     system-ui;
 }
 .rook-input button {
@@ -152,8 +186,8 @@
 @media (max-width: 700px) {
   .rook-popover {
     right: 12px;
-    top: 68px;
-    max-height: calc(100svh - 80px);
+    --rook-inset-top: 68px;
+    --rook-inset-bottom: 12px;
     width: calc(100vw - 24px);
   }
   .rook-header h2 {
@@ -165,7 +199,7 @@
 }
 
 .rook-status,
-.rook-privacy {
+.rook-caption {
   margin: 0;
   color: #a1a1aa;
   font-size: 12px;
@@ -173,6 +207,9 @@
 }
 .rook-status[data-source='preset'] {
   color: #fdba74;
+}
+.rook-caption {
+  text-align: center;
 }
 .rook-popover button:disabled {
   opacity: 0.5;
@@ -187,24 +224,22 @@
 .rook-chips,
 .rook-input,
 .rook-status,
-.rook-privacy {
+.rook-caption {
   flex-shrink: 0;
 }
-@media (max-height: 500px) {
-  .rook-popover {
-    top: 12px;
-    right: 12px;
-    max-height: calc(100svh - 24px);
-    padding: 12px;
-    gap: 12px;
-  }
-  .rook-header p,
-  .rook-chips {
-    display: none;
-  }
-  .rook-transcript {
-    min-height: 60px;
-    max-height: 30svh;
-    flex-shrink: 1;
-  }
+.rook-popover[data-compact='true'] {
+  --rook-inset-top: 12px;
+  --rook-inset-bottom: 12px;
+  right: 12px;
+  padding: 12px;
+  gap: 12px;
+}
+.rook-popover[data-compact='true'] .rook-header p,
+.rook-popover[data-compact='true'] .rook-chips {
+  display: none;
+}
+.rook-popover[data-compact='true'] .rook-transcript {
+  min-height: 60px;
+  max-height: calc(var(--rook-viewport-height, 100dvh) * 0.3);
+  flex-shrink: 1;
 }

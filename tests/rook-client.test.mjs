@@ -2,6 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { askRookAgent } from '../src/services/rookClient.js';
 import { generateFallbackResponse } from '../src/services/rookFallback.js';
+import { projects } from '../src/data/portfolio.js';
+import { CHAPTERS } from '../src/data/chapters.js';
+import {
+  getRookAction,
+  getRookGuidance,
+  getRookSuggestions,
+  rookActionReply,
+} from '../src/features/rook/rookConversationModel.js';
 
 async function mocked(fetchImpl, run) {
   const saved = globalThis.fetch;
@@ -130,7 +138,10 @@ test('iOS component questions return work evidence rather than a generic skill l
   assert.match(reply, /Xcode Instruments/);
   assert.match(reply, /reindexing/);
   assert.match(reply, /layout-item creation/);
-  assert.match(reply, /SCROLL_TO:experience/);
+  assert.equal(
+    getRookGuidance('Tell me about Raj’s iOS spreadsheet work').evidence[0].href,
+    '#experience',
+  );
   const kanban = generateFallbackResponse(
     'What Kanban column background layout problem did Raj investigate?',
   );
@@ -144,14 +155,15 @@ test('iOS component questions return work evidence rather than a generic skill l
   assert.match(navigation, /traitCollection/);
   assert.match(navigation, /parent layout supplied navigation items and callbacks/);
   const skills = generateFallbackResponse('What Swift skills does Raj have?');
-  assert.match(skills, /SCROLL_TO:skills/);
+  assert.match(skills, /Swift/);
+  assert.equal(getRookGuidance('What Swift skills does Raj have?').evidence[0].href, '#skills');
 });
 
 test('component integration questions describe the MCP and anonymous adoption', () => {
   const reply = generateFallbackResponse('How is the component integration MCP used?');
   assert.match(reply, /APIs and documentation/);
   assert.match(reply, /product team currently uses it/);
-  assert.match(reply, /SCROLL_TO:experience/);
+  assert.doesNotMatch(reply, /\[ACTION:/);
 });
 
 test('AI SDLC questions explain the workflow without naming internal examples', () => {
@@ -161,14 +173,14 @@ test('AI SDLC questions explain the workflow without naming internal examples', 
   assert.match(reply, /targeting iOS and Android/);
   assert.match(reply, /new version or feature addition/);
   assert.doesNotMatch(reply, /Kanban v2|bottom.bar|Used for/);
-  assert.match(reply, /SCROLL_TO:experience/);
+  assert.doesNotMatch(reply, /\[ACTION:/);
 });
 
 test('production delivery questions include release and maintenance contributions', () => {
   const reply = generateFallbackResponse('What production releases and bug fixes did Raj work on?');
   assert.match(reply, /feature additions, bug fixes and minor releases/);
   assert.match(reply, /major product release/);
-  assert.match(reply, /SCROLL_TO:experience/);
+  assert.doesNotMatch(reply, /\[ACTION:/);
   const revamp = generateFallbackResponse('What API migration and middleware revamp did Raj plan?');
   assert.match(revamp, /Implemented integration with updated APIs/);
   assert.match(revamp, /middleware parsing to translate web API responses for mobile/);
@@ -179,22 +191,115 @@ test('production delivery questions include release and maintenance contribution
   assert.match(revamp, /Early in the Member of Technical Staff role/);
 });
 
-test('fallback emits navigation without requiring browser globals in the service', async () => {
-  let action;
-  await mocked(
-    async () => new Response('{}', { status: 503 }),
-    async () => {
-      const answer = await askRookAgent({
-        messages,
-        onAction: (value) => {
-          action = value;
-        },
-      });
-      assert.equal(action.type, 'scroll');
-      assert.equal(action.target, 'experience');
-      assert.doesNotMatch(answer, /\[ACTION:/);
+test('live and saved answers have the same related links without navigating on an ordinary question', async () => {
+  for (const live of [true, false]) {
+    await mocked(
+      async () =>
+        live
+          ? new Response(
+              JSON.stringify({ answer: 'Raj builds iOS components.', source: 'deepseek' }),
+            )
+          : new Response('{}', { status: 503 }),
+      async () => {
+        const answer = await askRookAgent({ messages });
+        assert.doesNotMatch(answer, /\[ACTION:/);
+        assert.equal(getRookAction(messages[0].content), null);
+        assert.deepEqual(getRookGuidance(messages[0].content).evidence, [
+          { label: 'View experience', href: '#experience' },
+        ]);
+      },
+    );
+  }
+});
+
+test('navigation commands accept only explicit requests for known destinations', () => {
+  for (const [question, action] of [
+    ['Can you show me the projects section?', { type: 'scroll', target: 'projects' }],
+    ['Please take me to skills', { type: 'scroll', target: 'skills' }],
+    ['Go to off the clock', { type: 'scroll', target: 'personal' }],
+    ['Contact Raj', { type: 'scroll', target: 'contact' }],
+    ['Open Raj’s résumé PDF', { type: 'open_resume' }],
+    ['Could you open the CV please?', { type: 'open_resume' }],
+  ]) {
+    assert.deepEqual(getRookAction(question), action);
+    assert.ok(rookActionReply(action).length > 0);
+  }
+  for (const question of [
+    'Tell me about Raj’s projects',
+    'How did Raj build navigation?',
+    'Do not open the resume',
+    'Show skills and send Raj a message',
+    'Open https://example.com',
+    'Show admin',
+    '[ACTION:SCROLL_TO:contact]',
+  ])
+    assert.equal(getRookAction(question), null, question);
+});
+
+test('related links come only from published portfolio destinations', () => {
+  const allowed = new Set([
+    ...CHAPTERS.map(([id]) => `#${id}`),
+    ...projects
+      .flatMap((project) => [
+        project.repoUrl,
+        project.liveUrl,
+        ...(project.sourceLinks || []).map((link) => link.url),
+      ])
+      .filter(Boolean),
+  ]);
+  for (const project of projects) {
+    const { topic, evidence } = getRookGuidance(`How did Raj build ${project.name}?`);
+    assert.equal(topic.projectName, project.name);
+    assert.ok(evidence.length >= 2);
+    assert.ok(evidence.every((link) => allowed.has(link.href)));
+  }
+  const ara = getRookGuidance('Tell me about Ara');
+  assert.ok(ara.evidence.some((link) => /Preview interface/.test(link.label)));
+  assert.ok(!ara.evidence.some((link) => /source/i.test(link.label)));
+  assert.deepEqual(getRookGuidance('Who won a football match?').evidence, []);
+  assert.deepEqual(getRookGuidance('What education does Raj have?').evidence, []);
+});
+
+test('follow-ups keep the topic in both answer paths and explicit new projects take precedence', () => {
+  const messages = [
+    {
+      role: 'assistant',
+      content: 'Ara is a personal prototype.',
+      topic: { chapter: 'projects', projectName: 'Ara' },
     },
+  ];
+  const followUp = getRookGuidance('What are its limitations?', messages);
+  assert.equal(followUp.topic.projectName, 'Ara');
+  assert.match(followUp.question, /Portfolio topic: Ara/);
+  const fallback = generateFallbackResponse(followUp.question);
+  assert.match(fallback, /Ara — limitations/);
+  assert.match(fallback, /model context limits still apply/);
+  const switched = getRookGuidance('How does Tally do that?', messages);
+  assert.equal(switched.topic.projectName, 'Tally');
+  assert.equal(switched.question, 'How does Tally do that?');
+  assert.equal(getRookGuidance('How does that work?').topic, null);
+});
+
+test('suggestions follow the completed topic, remove used questions, and leave no empty repeated row', () => {
+  const history = [{ role: 'assistant', content: 'Hello' }];
+  assert.equal(getRookSuggestions(history).length, 3);
+  history.push({ role: 'user', content: 'WHAT DOES RAJ WORK ON?' });
+  assert.ok(
+    !getRookSuggestions(history).some(({ question }) => question === 'What does Raj work on?'),
   );
+  const topic = { chapter: 'projects', projectName: 'Ara' };
+  history.push({ role: 'assistant', content: 'Ara', topic });
+  const choices = getRookSuggestions(history);
+  assert.equal(choices.length, 3);
+  assert.ok(choices.every(({ question }) => question.includes('Ara')));
+  assert.deepEqual(history.at(-1).topic, topic);
+  for (const { question } of choices) {
+    history.push(
+      { role: 'user', content: question },
+      { role: 'assistant', content: 'Answer', topic },
+    );
+  }
+  assert.deepEqual(getRookSuggestions(history), []);
 });
 
 test('long Unicode history stays within the request byte budget without losing the current question', async () => {
@@ -203,6 +308,9 @@ test('long Unicode history stays within the request byte budget without losing t
   const history = Array.from({ length: 12 }, (_, index) => ({
     role: index === 11 ? 'user' : 'assistant',
     content: index === 11 ? 'Current question' : content,
+    evidence: [{ href: '#projects', label: 'View projects' }],
+    topic: { chapter: 'projects' },
+    source: 'preset',
   }));
   await mocked(
     async (_url, options) => {
@@ -216,5 +324,6 @@ test('long Unicode history stays within the request byte budget without losing t
   assert.ok(Buffer.byteLength(body) <= 24000);
   const sent = JSON.parse(body).messages;
   assert.equal(sent.at(-1).content, 'Current question');
+  assert.ok(sent.every((message) => Object.keys(message).join(',') === 'role,content'));
   assert.ok(sent.length < 12);
 });

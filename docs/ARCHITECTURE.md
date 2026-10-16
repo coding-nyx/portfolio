@@ -18,7 +18,7 @@ src/
     achievements/           Professional milestones and certifications
     personal/               Race milestones, interests and finisher celebration
     contact/                Contact view, form hook and pure form model
-    rook/                   Launcher, lazy dialog and conversation hook
+    rook/                   Launcher, lazy dialog/messages, conversation hook and guidance model
   shared/
     ui/                     Reusable actions, links, entrances, dialog styling and error boundary
     motion/                 Preference provider, hooks and lazily loaded animation features
@@ -69,10 +69,12 @@ Public data modules are safe to import in both runtimes. The server prompt and p
 
 ## State and side effects
 
-- `ThemeProvider` and `MotionProvider` own shared user preferences, including unavailable-storage fallbacks.
+- `ThemeProvider` owns the saved theme preference, including an unavailable-storage fallback. `MotionProvider` follows the system reduced-motion preference automatically; there is no separate site toggle or saved motion override.
 - Feature state remains local: project selection, contact drafts and Rook history do not live in a global store.
 - `useChapterNavigation` owns scroll/hash/selection subscriptions. `navigateToChapter` is the app-owned navigation command used by links and Rook action callbacks.
-- `rookClient` performs HTTP/fallback work and emits actions; it does not scroll or query the DOM.
+- `rookClient` performs HTTP/fallback work; it does not emit navigation, scroll or query the DOM. `rookKnowledge` shares project recognition and text normalization between the fallback and feature guidance model.
+- Rook's pure conversation model owns explicit navigation-command matching, related portfolio links and unused contextual suggestions. Its hook invokes app callbacks for requested navigation, independently of provider availability. Evidence/topic/source metadata stays in browser memory and is excluded from the HTTP history. The app closes Rook and focuses the requested chapter; résumé requests open the existing theme-appropriate PDF.
+- `useRookDialog` owns the main/loading/error dialog's focus cycle, Escape handling, launcher focus restoration and background scroll lock. It follows visual-viewport changes, including reduced available height, and releases its styles and listeners when closed. The conversation log exposes its busy state and a short waiting status.
 - `createIsland` owns loading, visibility, resize subscriptions and disposal. `buildIslandWorld` owns the existing procedural geometry, walking and animation behavior.
 - The root error boundary provides useful résumé/contact recovery; Rook has a separate boundary so a failed optional chunk does not replace the portfolio.
 
@@ -94,7 +96,7 @@ The existing Three.js engine remains approximately 664 kB minified / 171 kB gzip
 
 ## Styling
 
-Shared section/dialog primitives load before feature styles. Feature-specific rules live beside the feature; app layout/navigation and motion settings have their own styles. The existing global styled-components theme is retained. A complete token migration and CSS-class rename are separate work, not claimed as completed here.
+Shared section/dialog primitives load before feature styles. Feature-specific rules live beside the feature; app layout/navigation and shared motion effects have their own styles. The existing global styled-components theme is retained. A complete token migration and CSS-class rename are separate work, not claimed as completed here.
 
 ## Validation and delivery
 
@@ -114,3 +116,20 @@ See [API.md](API.md) for request/response details and [CODING_STANDARDS.md](CODI
 - Interactive browser verification was blocked by the browser tool. No claim of visual, swipe, WebGL or focus verification is made for this refactor.
 
 This is a snapshot of the refactor checks; rerun the gates after later changes.
+
+## Rook interaction check (2026-10-16)
+
+The in-app browser was available for this later, targeted QA pass. These checks do not imply full-site or cross-browser coverage.
+
+| Scenario                  | Observed result                                                                                                                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Desktop and phone layouts | Checked at 1280×720, 1440×900, 390×844 and 320×568; no horizontal overflow and the question input remained reachable.                                                                                         |
+| Reduced height            | At 844×390 and 320×320, compact layout kept the close/input controls within the viewport. Visual-viewport listeners handle available-height changes; a physical phone keyboard was not tested.                |
+| Keyboard                  | Initial input focus, a complete seven-control Tab cycle, reverse wrapping, Escape dismissal and launcher focus restoration worked. Tabbing to older links scrolled them into view.                            |
+| Live answers              | Public experience and Ara questions returned live answers with related portfolio links and contextual suggestions. No new console warnings/errors appeared after a clean page load.                           |
+| Fallback                  | An ignored local fixture returned HTTP 503; stopping that server also exercised a connection failure. Both produced explicitly labeled saved answers and retained related links.                              |
+| Cancellation              | Closing during a delayed request aborted it, showed a cancellation notice on reopening, and allowed another question to complete.                                                                             |
+| Suggestions and state     | Used project prompts disappeared; after all three were used, the suggestions row disappeared. Closing/reopening retained the conversation and showed the latest reply.                                        |
+| Navigation and résumé     | Evidence links and explicit commands closed Rook and focused the requested chapter; navigation also worked with the fixture server stopped. The résumé command opened `/resume-modern.pdf` in a separate tab. |
+
+This pass fixed background scrolling under Rook, increased question-input text to 16 px, added a waiting announcement, and consolidated dialog lifecycle behavior in the feature hook. The isolated fixture, screenshots and scratch verification files stay under ignored `verification/`; they are not production code or tracked tests. Physical iOS/Android keyboard behavior, screen-reader speech, broad accessibility auditing, WebGL and device CPU/memory profiling remain outside this check.

@@ -1,7 +1,7 @@
 import { ROOK_ENDPOINT, ROOK_LIMITS } from '../data/rookContract.js';
 import { generateFallbackResponse } from './rookFallback.js';
 
-export async function askRookAgent({ messages, onAction, onMode, signal }) {
+export async function askRookAgent({ messages, onMode, signal }) {
   const history = messages
     .filter(
       (m) =>
@@ -42,11 +42,6 @@ export async function askRookAgent({ messages, onAction, onMode, signal }) {
   } catch (error) {
     if (signal?.aborted) throw error;
     onMode?.({ source: 'preset', error: error.message });
-    const reply = generateFallbackResponse(history);
-    const text = reply.replace(/\[ACTION:[^\]]+\]/g, '').trim();
-    const scroll = reply.match(/\[ACTION:SCROLL_TO:([a-z-]+)\]/);
-    if (scroll) onAction?.({ type: 'scroll', target: scroll[1] });
-    if (reply.includes('[ACTION:OPEN_RESUME]')) onAction?.({ type: 'open_resume' });
-    return text;
+    return generateFallbackResponse(history);
   }
 }
