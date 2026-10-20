@@ -18,7 +18,7 @@ export default function ProjectCard({ project, compact = false, onOpen }) {
         <span className="project-image-caption">{project.imageCaption}</span>
       )}
       <span className="port-eyebrow">
-        {project.developmentStatus === 'on-hold'
+        {project.developmentStatus
           ? project.status
           : project.featured
             ? 'Featured project'

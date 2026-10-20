@@ -55,7 +55,7 @@ test('curated projects merge Hermes clients and exclude the removed showcase', a
   const { projects } = await importData();
   assert.deepEqual(
     projects.map((p) => p.name),
-    ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Ara'],
+    ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Ara → Agent OS'],
   );
 });
 
@@ -192,14 +192,17 @@ test('unapproved unavailable destinations are not published', () => {
   );
 });
 
-test('Ara distinguishes its on-hold interface preview from a working agent demo', async () => {
+test('deprecated Ara links to Agent OS in development and labels the earlier preview', async () => {
   const { projects } = await importData();
-  const ara = projects.find((p) => p.name === 'Ara');
+  const ara = projects.find((p) => p.name === 'Ara → Agent OS');
   assert.equal(ara.liveUrl, 'https://agent-agnes-ai.web.app/');
-  assert.equal(ara.linkLabel, 'Preview interface');
-  assert.match(ara.status, /on hold/i);
-  assert.match(ara.linksUnavailableReason, /currently displays the Nexus name/);
-  assert.equal(ara.repoUrl, null);
+  assert.equal(ara.linkLabel, 'Earlier Ara prototype');
+  assert.match(ara.status, /in development/i);
+  assert.equal(ara.developmentStatus, 'in-progress');
+  assert.match(ara.description, /Ara is deprecated/);
+  assert.match(ara.caseStudy.scope, /pinned Hermes runtime supplies native agent execution/);
+  assert.match(ara.linksUnavailableReason, /not an Agent OS demo/);
+  assert.equal(ara.repoUrl, 'https://github.com/coding-nyx/agent-os');
 });
 
 test('working public repositories stay linked', async () => {

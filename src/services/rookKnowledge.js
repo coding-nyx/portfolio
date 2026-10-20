@@ -15,7 +15,7 @@ const projectAliases = {
   Tally: /\btally\b/,
   'a0090-meta (hub-11 OS)':
     /\ba0090?(?:-meta)?\b|\bhub-?11\b|\brk3588\b|\blinux\b|\bkernel\b|\bembedded\b|\bdevice tree\b/,
-  Ara: /\bara\b/,
+  'Ara → Agent OS': /\bara\b|\bagent[ -]os\b/,
 };
 
 export function findRookProject(question) {
@@ -23,8 +23,10 @@ export function findRookProject(question) {
   // An explicit project name takes precedence over another project's aliases:
   // “Can Hermes upload statements through Tally?” is a Tally question.
   const named = projects.find((project) => {
-    const name = normalizeRookQuestion(project.name).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(`(?:^|\\W)${name}(?:$|\\W)`).test(text);
+    return [project.name, ...(project.aliases || [])].some((label) => {
+      const name = normalizeRookQuestion(label).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(`(?:^|\\W)${name}(?:$|\\W)`).test(text);
+    });
   });
   return named || projects.find((project) => projectAliases[project.name]?.test(text));
 }

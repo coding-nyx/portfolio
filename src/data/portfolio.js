@@ -429,50 +429,63 @@ export const projects = [
     },
   },
   {
-    name: 'Ara',
+    name: 'Ara → Agent OS',
+    aliases: ['Ara', 'Agent OS'],
     cardSummary:
-      'A personal multi-agent prototype with specialist personas, indexed memory retrieval and orchestration.',
+      'Ara is deprecated. Its successor, Agent OS, is in development: a local-first workspace for specialist agents and personal data.',
     featured: false,
-    tags: ['LLM', 'React Native', 'Firestore', 'Agent Orchestration', 'Retrieval'],
+    tags: ['Python', 'FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'MCP'],
     description:
-      'A personal multi-agent prototype with specialist personas, an orchestrator, indexed Firestore memory retrieval and context compression. Includes image analysis and web scraping.',
+      'Ara is deprecated and is being rebuilt as Agent OS. The successor is in development, bringing specialist agents, persistent personal data and coordinated workflows into a local-first workspace built on a pinned Hermes runtime.',
     resumeSummary:
-      'React Native multi-agent prototype with personally implemented specialist personas, orchestration, indexed Firestore memory retrieval and context compression, plus image analysis and web scraping.',
+      'Agent OS, the successor to the deprecated Ara prototype, is in development with a React/TypeScript dashboard, Python/FastAPI backend, PostgreSQL data library and Hermes-backed specialist-agent execution.',
     architecture: {
-      title: 'Ara agent architecture',
-      note: 'Overview of the implemented personal prototype',
+      title: 'Agent OS architecture',
+      note: 'Successor in development; the earlier Ara prototype is deprecated.',
       steps: [
-        { name: 'React Native interface' },
-        { name: 'Orchestrator', detail: 'Encapsulates the specialist agents' },
+        { name: 'React / TypeScript dashboard' },
+        { name: 'FastAPI service', detail: 'Profiles, data permissions and task coordination' },
+        { name: 'Pinned Hermes runtime', detail: 'Native agent sessions and worker execution' },
       ],
-      branchesTitle: 'Specialist agents',
-      branches: ['Psychiatrist persona', 'Trainer', 'Finance', 'Research', 'Doctor persona'],
+      branchesTitle: 'Specialist profiles',
+      branches: ['Ara', 'Scout', 'Titan', 'Ledger', 'Agnes', 'Atlas'],
       foundations: [
-        { name: 'Agent/model mappings', detail: 'Structured persona definitions ("soul")' },
-        { name: 'Firestore memory', detail: 'Indexed retrieval and context compression' },
+        {
+          name: 'PostgreSQL data library',
+          detail: 'Persistent datasets with explicit per-profile access',
+        },
+        {
+          name: 'Durable execution',
+          detail: 'Task receipts, isolated coding worktrees and node synchronization',
+        },
       ],
-      capabilities: ['Image analysis', 'Web scraping'],
+      capabilities: [
+        'MCP data access',
+        'Coordinated agent teams',
+        'Guarded computer-control integration',
+      ],
     },
     imageUrl: null,
     liveUrl: 'https://agent-agnes-ai.web.app/',
-    linkLabel: 'Preview interface',
-    repoUrl: null,
-    status: 'Prototype · on hold',
-    developmentStatus: 'on-hold',
-    scope: 'Personal prototype',
+    linkLabel: 'Earlier Ara prototype',
+    repoUrl: 'https://github.com/coding-nyx/agent-os',
+    sourceLinks: [{ label: 'Agent OS source', url: 'https://github.com/coding-nyx/agent-os' }],
+    status: 'Agent OS · in development',
+    developmentStatus: 'in-progress',
+    scope: 'Personal open-source project',
     linksUnavailableReason:
-      'Development is on hold. Source is private. The hosted interface currently displays the Nexus name. The available page loads, but sign-in and agent functionality have not been verified.',
+      'Agent OS source is public; development is in progress. The earlier Ara prototype is deprecated and its source remains private. Its hosted interface last reviewed displayed the Nexus name; sign-in and agent functionality were not verified. This earlier preview is not an Agent OS demo.',
     caseStudy: {
       problem:
-        'Maintain distinct specialist-agent personalities and access earlier information as conversations grow, while presenting one interface over the agents.',
+        'Evolve the earlier Ara multi-agent prototype into a local-first workspace where personal data persists independently of individual agents and access is granted explicitly.',
       approach:
-        'Personally implemented specialist agents with psychiatrist, trainer, finance, research and doctor personas. Designed structured agent/model mappings with persona definitions ("soul"), persisted data in Firestore, and implemented indexed retrieval and context compression. Built an orchestrator to encapsulate the agents behind a shared interface, with image-analysis and web-scraping capabilities.',
+        'Agent OS combines a React/TypeScript dashboard, Python/FastAPI backend and PostgreSQL data library with a pinned Hermes runtime. The implementation includes specialist profiles, scoped MCP data access, staged multi-agent execution with isolated coding worktrees, durable task receipts and node synchronization. Computer control uses explicit grants and operator approvals. The earlier Ara work personally implemented specialist agents, orchestration, indexed Firestore memory retrieval and context compression, plus image analysis and web scraping.',
       scope:
-        'Personal React Native prototype with an implemented agent system. The work included implementing agent behavior and personalities, memory structures, retrieval, compression and orchestration.',
+        'Personal open-source successor project in development. Agent OS supplies the workspace, data services, coordination and integration; the pinned Hermes runtime supplies native agent execution. The deprecated Ara implementation was a separate React Native/Firestore prototype.',
       evidence:
-        'Personal implementation covering specialist-agent behavior, orchestration and Firestore-backed memory. The architecture overview documents these pieces. A hosted interface preview is available; source remains private.',
+        'Public Agent OS repository with implementation, regression tests and technical verification notes. The reviewed revision passed its GitHub validation workflow. This source review did not independently run Agent OS or validate physical-device control.',
       limitations:
-        'Retrieval and compression manage what enters each prompt; model context limits still apply. No published evaluation of persona consistency, retrieval quality or image-analysis accuracy is available.',
+        'Agent OS is in development, not a completed replacement or hosted demo. Physical-device control, remote desktop routing and broad platform support remain unverified; no high-frame-rate streaming or latency benchmark is claimed. Local-first storage does not imply all model inference runs locally. For the earlier Ara prototype, model context limits still apply and no published evaluation of persona consistency, retrieval quality or image-analysis accuracy is available.',
     },
   },
 ];

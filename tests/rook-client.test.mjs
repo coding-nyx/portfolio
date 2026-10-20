@@ -100,16 +100,21 @@ test('saved project answers treat Hermes as one project with both clients', () =
   assert.ok(!collection.includes('FitPro'));
 });
 
-test('private project answers explain architecture without inventing public links or unlimited memory', () => {
+test('project answers distinguish deprecated Ara from its public successor in development', () => {
   const ara = generateFallbackResponse('How did Raj implement memory and orchestration in Ara?');
-  assert.ok(ara.startsWith('### Ara\n'));
-  assert.ok(!generateFallbackResponse('Tell me about Raj’s character').startsWith('### Ara\n'));
-  assert.match(ara, /Personally implemented specialist agents/);
+  assert.ok(ara.startsWith('### Ara → Agent OS\n'));
+  assert.ok(
+    !generateFallbackResponse('Tell me about Raj’s character').startsWith('### Ara → Agent OS\n'),
+  );
+  assert.match(ara, /personally implemented specialist agents/);
   assert.match(ara, /Firestore/);
   assert.match(ara, /model context limits still apply/);
-  assert.match(ara, /Source is private/);
-  assert.match(ara, /\[Preview interface\]\(https:\/\/agent-agnes-ai\.web\.app\/\)/);
-  assert.match(ara, /hosted interface currently displays the Nexus name/);
+  assert.match(ara, /source remains private/);
+  assert.match(ara, /\[Earlier Ara prototype\]\(https:\/\/agent-agnes-ai\.web\.app\/\)/);
+  assert.match(ara, /hosted interface last reviewed displayed the Nexus name/);
+  assert.match(ara, /Ara is deprecated/);
+  assert.match(ara, /Agent OS.*in development/);
+  assert.match(ara, /https:\/\/github.com\/coding-nyx\/agent-os/);
   const tally = generateFallbackResponse('How does Tally import statements and recover data?');
   assert.match(tally, /column mapping, date review and duplicate detection/);
   assert.match(tally, /JSON backup, restore and migration/);
@@ -254,8 +259,13 @@ test('related links come only from published portfolio destinations', () => {
     assert.ok(evidence.every((link) => allowed.has(link.href)));
   }
   const ara = getRookGuidance('Tell me about Ara');
-  assert.ok(ara.evidence.some((link) => /Preview interface/.test(link.label)));
-  assert.ok(!ara.evidence.some((link) => /source/i.test(link.label)));
+  assert.ok(ara.evidence.some((link) => /Earlier Ara prototype/.test(link.label)));
+  assert.ok(ara.evidence.some((link) => link.href === 'https://github.com/coding-nyx/agent-os'));
+  assert.equal(getRookGuidance('Tell me about Agent OS').topic.projectName, 'Ara → Agent OS');
+  assert.equal(
+    getRookGuidance('How does Agent OS use the Hermes runtime?').topic.projectName,
+    'Ara → Agent OS',
+  );
   assert.deepEqual(getRookGuidance('Who won a football match?').evidence, []);
   assert.deepEqual(getRookGuidance('What education does Raj have?').evidence, []);
 });
@@ -265,14 +275,14 @@ test('follow-ups keep the topic in both answer paths and explicit new projects t
     {
       role: 'assistant',
       content: 'Ara is a personal prototype.',
-      topic: { chapter: 'projects', projectName: 'Ara' },
+      topic: { chapter: 'projects', projectName: 'Ara → Agent OS' },
     },
   ];
   const followUp = getRookGuidance('What are its limitations?', messages);
-  assert.equal(followUp.topic.projectName, 'Ara');
+  assert.equal(followUp.topic.projectName, 'Ara → Agent OS');
   assert.match(followUp.question, /Portfolio topic: Ara/);
   const fallback = generateFallbackResponse(followUp.question);
-  assert.match(fallback, /Ara — limitations/);
+  assert.match(fallback, /Ara → Agent OS — limitations/);
   assert.match(fallback, /model context limits still apply/);
   const switched = getRookGuidance('How does Tally do that?', messages);
   assert.equal(switched.topic.projectName, 'Tally');
@@ -287,7 +297,7 @@ test('suggestions follow the completed topic, remove used questions, and leave n
   assert.ok(
     !getRookSuggestions(history).some(({ question }) => question === 'What does Raj work on?'),
   );
-  const topic = { chapter: 'projects', projectName: 'Ara' };
+  const topic = { chapter: 'projects', projectName: 'Ara → Agent OS' };
   history.push({ role: 'assistant', content: 'Ara', topic });
   const choices = getRookSuggestions(history);
   assert.equal(choices.length, 3);
