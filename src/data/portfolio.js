@@ -281,7 +281,7 @@ export const profileData = {
     'iOS product engineer at Zoho since May 2022, building reusable Kanban, spreadsheet and navigation components. Experience spans app revamps, native UI performance, API integration and developer tooling.',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/raj-kumar-s',
-    email: '9080251@gmail.com',
+    email: 'hello@iamnyx.dev',
     github: 'https://github.com/coding-nyx',
   },
 };

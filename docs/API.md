@@ -89,6 +89,10 @@ The model validates a name, reply email and message and constructs the encoded `
 
 `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` and `VITE_EMAILJS_PUBLIC_KEY` are browser-visible configuration. Without them, the UI offers an email draft and disables direct delivery. No contact message was sent as part of this refactor's checks.
 
+The public contact address is `hello@iamnyx.dev`. Cloudflare Email Routing forwards incoming mail to the verified owner inbox. The EmailJS template's recipient is also `hello@iamnyx.dev`; its sender remains the connected Gmail service, with `NYX Portfolio` as the display name and `{{email}}` as Reply-To. A forwarding address does not provide outgoing SMTP credentials. Recipient, forwarding and any allowed-origin settings are managed in the provider dashboards, not in client environment variables. Verify actual delivery separately from an EmailJS success response; Gmail may classify forwarded notifications as spam.
+
+On 2026-10-22, a dashboard test returned `200 OK` and the owner confirmed arrival in Spam. After updating the sender display name and subject, a submission through the local portfolio in Brave showed `Message sent`, and the owner confirmed Inbox delivery. This verifies that tested path at that time, not future spam classification or production-origin behavior.
+
 ## Analytics integration
 
 `App → scheduleVisitAnalytics → deferred Firebase app/analytics SDKs`.

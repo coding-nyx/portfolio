@@ -310,7 +310,7 @@ test('professional name and contact details are preserved', async () => {
 
   assert.equal(profileData.name, 'Raj Kumar S');
   assert.equal(profileData.socialLinks.linkedin, 'https://www.linkedin.com/in/raj-kumar-s');
-  assert.equal(profileData.socialLinks.email, '9080251@gmail.com');
+  assert.equal(profileData.socialLinks.email, 'hello@iamnyx.dev');
 
   const zoho = experienceData.find((e) => e.company === 'Zoho' && e.type === 'Full-time');
   assert.ok(zoho, 'Zoho full-time role must be preserved');
