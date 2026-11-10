@@ -3,6 +3,23 @@ import { awardsData, certificationsData } from '../../data/portfolio.js';
 import { publicText } from '../../utils/publicText.js';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
 import ExternalLink from '../../shared/ui/ExternalLink.jsx';
+import { splitCertifications } from './splitCertifications.js';
+
+function CertificationCard({ item }) {
+  return (
+    <article className="proof-card">
+      <h3>{item.name}</h3>
+      <p className="port-meta">
+        {item.issuer} · {item.date}
+      </p>
+      {item.credentialUrl ? (
+        <ExternalLink href={item.credentialUrl}>View credential ↗</ExternalLink>
+      ) : (
+        <span className="port-meta">Certificate</span>
+      )}
+    </article>
+  );
+}
 
 export default function AchievementsSection() {
   const milestones = [
@@ -14,6 +31,7 @@ export default function AchievementsSection() {
       description: item.description,
     })),
   ];
+  const { current, older } = splitCertifications(certificationsData);
   return (
     <div className="port-section achievements-c" data-design="Achievements C">
       <h2 id="h-achievements" tabIndex={-1}>
@@ -32,26 +50,28 @@ export default function AchievementsSection() {
           </article>
         ))}
       </div>
-      <details className="older-certs">
-        <summary>
-          Older certifications (2020) <span>{certificationsData.length} records</span>
-        </summary>
-        <div className="proof-grid">
-          {certificationsData.map((item) => (
-            <article className="proof-card" key={item.name}>
-              <h3>{item.name}</h3>
-              <p className="port-meta">
-                {item.issuer} · {item.date}
-              </p>
-              {item.credentialUrl ? (
-                <ExternalLink href={item.credentialUrl}>View credential ↗</ExternalLink>
-              ) : (
-                <span className="port-meta">Certificate</span>
-              )}
-            </article>
-          ))}
+      {current.length > 0 ? (
+        <div className="current-certs">
+          <h3>Certifications</h3>
+          <div className="proof-grid">
+            {current.map((item) => (
+              <CertificationCard key={item.name} item={item} />
+            ))}
+          </div>
         </div>
-      </details>
+      ) : null}
+      {older.length > 0 ? (
+        <details className="older-certs">
+          <summary>
+            Older certifications (2020) <span>{older.length} records</span>
+          </summary>
+          <div className="proof-grid">
+            {older.map((item) => (
+              <CertificationCard key={item.name} item={item} />
+            ))}
+          </div>
+        </details>
+      ) : null}
       <NextChapter id="resume">Resume</NextChapter>
     </div>
   );
