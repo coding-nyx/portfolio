@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { CHAPTERS } from '../../data/chapters.js';
-import { CHAPTER_SELECT_EVENT, motionIsReduced, navigateToChapter } from './chapterNavigation.js';
+import {
+  CHAPTER_SELECT_EVENT,
+  activeChapterIndex,
+  motionIsReduced,
+  navigateToChapter,
+  observeChapterLayout,
+} from './chapterNavigation.js';
 
 export default function useChapterNavigation() {
   const [collapsed, setCollapsed] = useState(false);
@@ -21,26 +27,15 @@ export default function useChapterNavigation() {
       setCollapsed(c);
       setSheetOpen(false);
     }
-    const y = 56 + 80;
-    let a = 0;
-    CHAPTERS.forEach(([id], i) => {
-      const s = document.getElementById(id);
-      if (s && s.getBoundingClientRect().top <= y) a = i;
-    });
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2)
-      a = CHAPTERS.length - 1;
-    setActive(selectedRef.current ?? a);
+    setActive(selectedRef.current ?? activeChapterIndex());
   }, []);
 
   useEffect(() => {
-    const raf = requestAnimationFrame(spy);
-    window.addEventListener('scroll', spy, { passive: true });
-    window.addEventListener('resize', spy);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('scroll', spy);
-      window.removeEventListener('resize', spy);
-    };
+    return observeChapterLayout(spy, () => {
+      selectedRef.current = null;
+      clearTimeout(selectionTimer.current);
+      setSheetOpen(false);
+    });
   }, [spy]);
 
   useEffect(() => {
