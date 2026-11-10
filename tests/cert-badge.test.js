@@ -51,10 +51,10 @@ test('current certification cards keep real certificationsData records', async (
         credentialUrl: 'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
       },
       {
-        name: 'Introduction to Model Context Protocol',
+        name: 'The AI-native SDLC playbook',
         issuer: 'Anthropic (Claude Academy)',
         date: 'Nov 2026',
-        credentialUrl: 'https://academy.claude.com/badges/791b09bc-5aba-4881-bd9c-2a6ec2f56fe0',
+        credentialUrl: undefined,
       },
       {
         name: 'AI Capabilities and Limitations',
@@ -72,7 +72,7 @@ test('current certification cards keep real certificationsData records', async (
         name: 'Play Store Listing Certificate',
         issuer: 'Google (Play Academy)',
         date: 'Nov 2026',
-        credentialUrl: undefined,
+        credentialUrl: 'https://www.credential.net/3ca83074-b7aa-45e3-b669-ece4629b6a4c',
       },
     ],
   );
@@ -102,38 +102,62 @@ test('badge styling and current-only aria-labels are scoped to current.map', () 
   assert.equal((source.match(/<CertificationCard /g) || []).length, 2);
 });
 
-test('Play Store Listing Certificate has no credential link and stays in Current', async () => {
+test('The AI-native SDLC playbook has no credential link and stays in Current', async () => {
   const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
   const { current, older } = splitCertifications(certificationsData);
-  const play = current.find((item) => item.name === 'Play Store Listing Certificate');
+  const sdlc = current.find((item) => item.name === 'The AI-native SDLC playbook');
   const source = read('src/features/achievements/AchievementsSection.jsx');
 
-  assert.ok(play, 'Play Store cert must be in Current');
-  assert.equal(play.issuer, 'Google (Play Academy)');
-  assert.equal(play.date, 'Nov 2026');
-  assert.equal(play.credentialUrl, undefined);
-  assert.equal('credentialUrl' in play, false);
+  assert.ok(sdlc, 'SDLC playbook cert must be in Current');
+  assert.equal(sdlc.issuer, 'Anthropic (Claude Academy)');
+  assert.equal(sdlc.date, 'Nov 2026');
+  assert.equal(sdlc.credentialUrl, undefined);
+  assert.equal('credentialUrl' in sdlc, false);
   assert.equal(
-    older.some((item) => item.name === 'Play Store Listing Certificate'),
+    older.some((item) => item.name === 'The AI-native SDLC playbook'),
     false,
+  );
+  assert.equal(
+    certificationsData.some((item) => item.name === 'Introduction to Model Context Protocol'),
+    false,
+    'MCP Intro must be removed entirely and must not move to Older',
   );
   assert.equal(older.length, 11);
   assert.deepEqual(
     current.map((item) => item.name),
     [
       'Model Context Protocol: Advanced topics',
-      'Introduction to Model Context Protocol',
+      'The AI-native SDLC playbook',
       'AI Capabilities and Limitations',
       'AI Fluency for builders',
       'Play Store Listing Certificate',
     ],
   );
-  assert.equal(formatCertIssuerEyebrow(play.issuer), 'Google · Play Academy');
+  assert.equal(formatCertIssuerEyebrow(sdlc.issuer), 'Anthropic · Claude Academy');
 
   // Current cards with no URL render nothing (no dummy link or Certificate fallback).
   assert.equal(source.includes('item.credentialUrl ? ('), true);
   assert.equal(source.includes(') : current ? null : ('), true);
   assert.equal(source.includes('<span className="port-meta">Certificate</span>'), true);
+});
+
+test('Play Store Listing Certificate links to credential.net and stays in Current', async () => {
+  const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
+  const { current, older } = splitCertifications(certificationsData);
+  const play = current.find((item) => item.name === 'Play Store Listing Certificate');
+
+  assert.ok(play, 'Play Store cert must be in Current');
+  assert.equal(play.issuer, 'Google (Play Academy)');
+  assert.equal(play.date, 'Nov 2026');
+  assert.equal(
+    play.credentialUrl,
+    'https://www.credential.net/3ca83074-b7aa-45e3-b669-ece4629b6a4c',
+  );
+  assert.equal(
+    older.some((item) => item.name === 'Play Store Listing Certificate'),
+    false,
+  );
+  assert.equal(formatCertIssuerEyebrow(play.issuer), 'Google · Play Academy');
 });
 
 test('Model Context Protocol: Advanced topics has a named credential link', async () => {

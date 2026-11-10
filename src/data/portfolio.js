@@ -43,10 +43,9 @@ export const certificationsData = [
     credentialUrl: 'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
   },
   {
-    name: 'Introduction to Model Context Protocol',
+    name: 'The AI-native SDLC playbook',
     issuer: 'Anthropic (Claude Academy)',
     date: 'Nov 2026',
-    credentialUrl: 'https://academy.claude.com/badges/791b09bc-5aba-4881-bd9c-2a6ec2f56fe0',
   },
   {
     name: 'AI Capabilities and Limitations',
@@ -64,6 +63,7 @@ export const certificationsData = [
     name: 'Play Store Listing Certificate',
     issuer: 'Google (Play Academy)',
     date: 'Nov 2026',
+    credentialUrl: 'https://www.credential.net/3ca83074-b7aa-45e3-b669-ece4629b6a4c',
   },
   {
     name: 'Programming for everybody (Getting started with python)',

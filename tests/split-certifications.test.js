@@ -98,7 +98,7 @@ test('live certificationsData splits Nov 2026 entries as current and 2020 entrie
     current.map((item) => item.name),
     [
       'Model Context Protocol: Advanced topics',
-      'Introduction to Model Context Protocol',
+      'The AI-native SDLC playbook',
       'AI Capabilities and Limitations',
       'AI Fluency for builders',
       'Play Store Listing Certificate',
