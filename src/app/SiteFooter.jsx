@@ -11,7 +11,8 @@ export default function SiteFooter() {
         <summary>Visitor analytics</summary>
         <p>
           This site measures document visits, sections viewed, project and résumé opens, external
-          link clicks, contact delivery outcomes and Rook opens. It uses random browser/session IDs.
+          link clicks, skill details, approximate active time, contact-form progress and delivery
+          outcomes, and Rook submissions and response outcomes. It uses random browser/session IDs.
           Footfall stores device/browser categories, browser language and time zone. It does not
           store IP addresses or geographic location.
         </p>

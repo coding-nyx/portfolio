@@ -114,7 +114,7 @@ Vite loopback development targets only the `demo-footfall` Firestore emulator on
 
 Footfall uses Firebase Authentication owner ID tokens for direct Firestore queries and computes reports in the dashboard. Date ranges use IST, cover at most thirty days, and have a 5,000-event ceiling. Manual refresh shares a sixty-second memory cache with incremental queries and overlap/deduplication; no automatic polling scans the database. Physical cleanup is an owner action, up to 400 expired events at a time. Reports exclude expired records, but storage can retain them until cleanup runs. No Functions, scheduled jobs, TTL, PITR or server secrets are required.
 
-See ANALYTICS_PLAN.md and the separate Footfall deployment guide for Spark quotas, rules tests, local owner setup and release order. Application publication and real production delivery have not been performed.
+See ANALYTICS_PLAN.md and the separate Footfall deployment guide for Spark quotas, rules tests, local owner setup and release order. Production verification must reconcile browser actions with actual stored records after each release.
 
 ## Verification boundary
 
@@ -122,4 +122,14 @@ The existing Rook tests use injected/mocked provider calls and verify validation
 
 ## Firebase Spark release boundary (2026-11-10)
 
-Footfall's separate project has billing disabled. The earlier Footfall-only GeoIP bucket, secrets and runtime account were removed from `nyx-port`, and its empty preparation database had paid recovery/TTL disabled. The existing portfolio/Rook project remains billed by the user's explicit decision. Portfolio CI gates the analytics-enabled build with `FOOTFALL_DEPLOY_ENABLED` and keeps Rook's deployment flag independent. No portfolio application release was performed during this migration.
+Footfall's separate project has billing disabled. The earlier Footfall-only GeoIP bucket, secrets and runtime account were removed from `nyx-port`, and its empty preparation database had paid recovery/TTL disabled. The existing portfolio/Rook project remains billed by the user's explicit decision. Portfolio CI gates the analytics-enabled build with `FOOTFALL_DEPLOY_ENABLED` and keeps Rook's deployment flag independent. Portfolio publication follows the main-branch Firebase workflow when explicitly authorized.
+
+## Module interaction analytics
+
+The Spark event vocabulary now includes `rook_submit` and `rook_result`, correlated by random interaction UUID with typed/suggestion entry, question/command kind, terminal result and bounded response milliseconds. Results distinguish live replies, saved fallback replies, local navigation actions, cancellation and errors. Neither questions nor replies enter analytics.
+
+Contact emits `contact_start`, `contact_resume`, `contact_submit` (valid/invalid), `contact_abandon` (section exit/page exit/clear), and delivery results correlated by a random form UUID. Starting means an edit or submission attempt, not merely viewing Contact. Unfinished exits are provisional and can be superseded by resumption or sent delivery. Pending delivery suppresses exit events; email-draft handoff is recorded separately and is not counted as abandonment. No names, emails, subject selections or message values enter Footfall.
+
+`skill_open` identifies an allowlisted skill. `module_engagement` records approximate foreground seconds for one visible section or Rook at a time, in roughly thirty-second chunks and on transitions. Hidden/unfocused time, timer suspension gaps and time after sixty seconds without interaction are excluded. Consent changes discard pending timing and journey correlation. Page exits use best-effort keepalive; a second bounded final batch can deliver lifecycle metadata while the previous batch is still in flight.
+
+The dashboard shows module use, bot outcomes, contact progress and owner-only per-browser session timelines. Timeline session/module filtering and batches of fifty displayed rows operate on the existing bounded in-memory query snapshot, without a new backend or unbounded public reads. The same 5,000-event range and thirty-day reporting/owner-triggered cleanup limits apply. Browser identifiers and event times do not prove a person's identity or exact reading time.

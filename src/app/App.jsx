@@ -22,6 +22,7 @@ import Chapter from './Chapter.jsx';
 import { navigateToChapter } from './navigation/chapterNavigation.js';
 import SiteFooter from './SiteFooter.jsx';
 import usePortfolioAnalytics from './usePortfolioAnalytics.js';
+import usePortfolioEngagement from './usePortfolioEngagement.js';
 import { trackFootfallEvent } from '../services/footfallAnalytics.js';
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
 
   useEffect(() => scheduleVisitAnalytics(), []);
   usePortfolioAnalytics();
+  usePortfolioEngagement(rookOpen);
 
   const openRook = (element) => {
     if (!rookOpen) trackFootfallEvent('rook_open', { entry_point: 'navigation' });

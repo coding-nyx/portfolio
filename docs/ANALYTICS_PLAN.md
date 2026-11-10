@@ -40,4 +40,10 @@ Reports cover thirty days. Older documents remain stored until the owner runs cl
 
 Run portfolio `npm run check` and `npm run build:functions` (Rook remains). In Footfall run `npm run firebase:preflight`, `npm run check` and Node 22 `npm run test:firebase`. Security integration tests use demo emulators only. The separate deployment guide documents prepared resources and owner access.
 
-No application changes are published by this migration or by a Footfall Git push. After a separately requested release, verify owner login, real portfolio commit acknowledgements, exact visit/action counts, opt-outs and unauthorized read/update rejection. Passing build/emulator tests does not establish production delivery.
+A Footfall Git push alone does not publish application changes. After a separately requested release, verify owner login, real portfolio commit acknowledgements, exact visit/action counts, opt-outs and unauthorized read/update rejection. Passing build/emulator tests does not establish production delivery.
+
+## Module tracking release
+
+Expanded events cover Rook question/command submissions, correlated outcomes and response times; contact starts, validation attempts, resumptions, unfinished exits and delivery outcomes; skill detail opens; and foreground module engagement. Public enums, UUIDs and integer bounds are validated by both sender and Firestore rules. Message/input contents remain excluded. Foreground timing uses thirty-second chunks, skips suspended gaps and stops after sixty seconds without interaction. Contact abandonment is an observed unfinished exit, not proof of permanent abandonment.
+
+Footfall adds module-use summaries, bot/contact outcome panels and per-browser timelines grouped by session. Owners can filter module/session and show more events, from the same thirty-day/5,000-event read snapshot. Additional telemetry consumes the existing free quota; no billed services are added. Deploy Footfall rules/dashboard before enabling/releasing the portfolio sender. The existing Rook Function must receive updated shared portfolio facts when those facts differ from its deployed source.

@@ -1,7 +1,8 @@
 import { createContactForm, validateContactForm, contactDraftUrl } from './contactModel.js';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { profileData } from '../../data/portfolio.js';
 import { trackFootfallEvent } from '../../services/footfallAnalytics.js';
+import { createContactJourney } from '../../services/footfallInteractions.js';
 import { sendEmail, EMAIL_CONFIGURED } from '../../services/contactService.js';
 
 export default function useContactForm() {
@@ -12,6 +13,33 @@ export default function useContactForm() {
   const [sending, setSending] = useState(false);
   const refs = useRef({});
   const inFlight = useRef(false);
+  const [journey] = useState(() => createContactJourney({ track: trackFootfallEvent }));
+  useEffect(() => {
+    let leaveTimer;
+    const exit = () => journey.leave('page_exit');
+    const resetTracking = () => journey.reset();
+    const draft = (event) => {
+      const link = event.target.closest?.('#contact a[href^="mailto:"]');
+      if (!event.defaultPrevented && link) journey.handoff();
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      clearTimeout(leaveTimer);
+      if (!entry.isIntersecting)
+        leaveTimer = setTimeout(() => journey.leave('section_exit'), 10000);
+    });
+    const section = document.getElementById('contact');
+    if (section) observer.observe(section);
+    window.addEventListener('pagehide', exit);
+    document.addEventListener('click', draft);
+    window.addEventListener('footfall-preference-change', resetTracking);
+    return () => {
+      clearTimeout(leaveTimer);
+      observer.disconnect();
+      window.removeEventListener('pagehide', exit);
+      document.removeEventListener('click', draft);
+      window.removeEventListener('footfall-preference-change', resetTracking);
+    };
+  }, [journey]);
   const registerField = useCallback((name, element) => {
     refs.current[name] = element;
   }, []);
@@ -25,11 +53,13 @@ export default function useContactForm() {
     }
   };
   const changed = (e) => {
+    journey.edit();
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: undefined });
     setStatus('');
   };
   const reset = () => {
+    journey.clear();
     setForm(createContactForm());
     setErrors({});
     setStatus('');
@@ -38,6 +68,7 @@ export default function useContactForm() {
     e.preventDefault();
     if (inFlight.current) return;
     const found = validateContactForm(form);
+    journey.submit(Object.keys(found).length === 0, EMAIL_CONFIGURED);
     setErrors(found);
     if (Object.keys(found).length) {
       refs.current[Object.keys(found)[0]]?.focus();
@@ -54,13 +85,14 @@ export default function useContactForm() {
           message: `Subject: ${form.subject}\n\n${form.message.trim()}`,
         });
         setStatus('sent');
-        trackFootfallEvent('contact_result', { result: 'sent' });
+        journey.result('sent');
       } else {
         setStatus('unavailable');
+        journey.result('unavailable');
       }
     } catch {
       setStatus('error');
-      trackFootfallEvent('contact_result', { result: 'error' });
+      journey.result('error');
     } finally {
       inFlight.current = false;
       setSending(false);

@@ -248,6 +248,65 @@ test('cleanup aborts an active request and releases all scheduled work', async (
   assert.equal(h.idle.size, 0);
   assert.equal(h.tracker.pending(), 1);
 });
+test('page-exit lifecycle metadata gets its own keepalive batch while the visibility batch is in flight', async () => {
+  const h = harness(
+    (_body, options) =>
+      new Promise((_resolve, reject) =>
+        options.signal.addEventListener('abort', () => reject(Error('aborted')), { once: true }),
+      ),
+  );
+  h.tracker.start();
+  h.runIdle();
+  h.doc.visibilityState = 'hidden';
+  h.doc.dispatchEvent(new Event('visibilitychange'));
+  assert.equal(h.requests.length, 1);
+  assert.deepEqual(
+    h.requests[0].body.events.map((event) => event.name),
+    ['page_view'],
+  );
+
+  // Registered after the sender, just as later module hooks can enqueue final metadata.
+  const terminalMetadata = () => {
+    h.tracker.track('contact_abandon', { form_id: randomUUID(), reason: 'page_exit' });
+    h.tracker.track('module_engagement', { module: 'contact', active_seconds: 7 });
+  };
+  h.win.addEventListener('pagehide', terminalMetadata);
+  h.win.dispatchEvent(new Event('pagehide'));
+  await Promise.resolve();
+  assert.equal(h.requests.length, 2);
+  assert.deepEqual(
+    h.requests[1].body.events.map((event) => event.name),
+    ['contact_abandon', 'module_engagement'],
+  );
+  assert.ok(h.requests.every((request) => request.options.keepalive === true));
+  const inFlightIds = h.requests.flatMap((request) =>
+    request.body.events.map((event) => event.eventId),
+  );
+  assert.equal(new Set(inFlightIds).size, 3, 'a final flush must not replay in-flight events');
+
+  h.tracker.track('resume_open', { entry_point: 'resume' });
+  h.doc.dispatchEvent(new Event('visibilitychange'));
+  assert.equal(h.requests.length, 2, 'final flushing remains bounded to two concurrent requests');
+  h.win.removeEventListener('pagehide', terminalMetadata);
+  h.tracker.stop();
+  assert.ok(h.requests.every((request) => request.options.signal.aborted));
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.timers.size, 0);
+  assert.equal(h.idle.size, 0);
+
+  // A restart can retry those same IDs: both controllers and item locks were released.
+  h.tracker.start();
+  const retry = h.tracker.flush();
+  assert.equal(h.requests.length, 3);
+  assert.deepEqual(
+    h.requests[2].body.events.slice(0, 3).map((event) => event.eventId),
+    inFlightIds,
+  );
+  h.tracker.stop();
+  await retry;
+  assert.equal(h.timers.size, 0);
+  assert.equal(h.idle.size, 0);
+});
 import { chapterIsVisible } from '../src/app/usePortfolioAnalytics.js';
 test('chapter reach uses the smaller of chapter and viewport, excluding partial glimpses and zero viewports', () => {
   assert.equal(chapterIsVisible({ top: -1000, bottom: 1000, height: 2000 }, 400), true);

@@ -3,6 +3,7 @@ import { SKILL_GROUPS, usedIn } from './skillEvidence.js';
 import { useEffect, useRef, useState } from 'react';
 import { skillsData } from '../../data/portfolio.js';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
+import { trackFootfallEvent } from '../../services/footfallAnalytics.js';
 
 export default function SkillsSection() {
   const [selected, setSelected] = useState(null);
@@ -53,6 +54,8 @@ export default function SkillsSection() {
                     aria-expanded={selected?.name === skill.name}
                     aria-controls={selected?.name === skill.name ? 'skill-detail' : undefined}
                     onClick={(event) => {
+                      if (selected?.name !== skill.name)
+                        trackFootfallEvent('skill_open', { skill_id: skill.id });
                       last.current = event.currentTarget;
                       setSelected(selected?.name === skill.name ? null : skill);
                     }}

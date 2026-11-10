@@ -506,60 +506,72 @@ export const projects = [
 
 export const skillsData = [
   {
+    id: 'swift',
     name: 'Swift',
     category: 'Mobile',
     evidence:
       'Developed reusable Kanban, spreadsheet and navigation components for Zoho iOS apps, from requirements analysis to product-team integration support.',
   },
   {
+    id: 'uikit',
     name: 'UIKit',
     category: 'Mobile',
     evidence:
       'Prototyped collection views, table views and custom compositional layouts. Used Instruments to investigate spreadsheet scrolling and cached layout attributes locally within UICollectionViewLayout.',
   },
   {
+    id: 'swiftui',
     name: 'SwiftUI',
     category: 'Mobile',
     evidence:
       'Explored List, LazyVStack, LazyHStack and hybrid UIKit/SwiftUI approaches while prototyping native product components.',
   },
   {
+    id: 'spm',
     name: 'SPM / packages',
     category: 'Mobile',
   },
   {
+    id: 'kotlin',
     name: 'Kotlin',
     category: 'Mobile',
   },
   {
+    id: 'android-compose',
     name: 'Android / Compose',
     category: 'Mobile',
   },
   {
+    id: 'typescript',
     name: 'TypeScript',
     category: 'Language',
   },
   {
+    id: 'react-next',
     name: 'React / Next.js',
     category: 'Frontend',
   },
   {
+    id: 'firebase',
     name: 'Firebase',
     category: 'Backend',
   },
   {
+    id: 'catalyst',
     name: 'Zoho Catalyst',
     category: 'Backend',
     evidence:
       'Used Zoho Catalyst for MCP hosting, internal documentation hosting and issue-tracking tooling.',
   },
   {
+    id: 'mcp',
     name: 'MCP / agent tooling',
     category: 'AI',
     evidence:
       'Developed a component integration MCP exposing APIs and documentation, currently used by a product team. Also built an AI SDLC prototype that takes a component spec through feature and test planning, platform plans, component generation and UI automation generation. The Experience section explains the workflow and versioned feature support.',
   },
   {
+    id: 'linux',
     name: 'Linux',
     category: 'OS',
   },

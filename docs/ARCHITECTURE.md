@@ -158,3 +158,9 @@ This pass fixed background scrolling under Rook, increased question-input text t
 The active Spark architecture supersedes the earlier collector/IP/GeoIP validation above. Footfall has its own unbilled project; the existing `nyx-port` Rook Function and billing remain unchanged. The portfolio writes validated event metadata directly to the Spark project's Firestore REST API. Firestore rules allow create-only telemetry and owner-only report reads/deletes. Source and UI remain independent across repositories.
 
 `build:firebase` enables direct Spark writes; the deployment workflow selects that build with `FOOTFALL_DEPLOY_ENABLED`. The Rook flag retains its independent behavior. No same-origin Footfall rewrite, Cloud Function, GeoIP bucket, server secret, TTL or paid recovery remains in the active analytics architecture. Reports are manual snapshots with a bounded incremental read cache. They cover thirty days; physical expiry requires owner-triggered cleanup. Application changes have not been published; production delivery remains a separate check.
+
+## Module engagement and visitor journeys
+
+`services/footfallInteractions.js` owns metadata-only Rook/contact lifecycles; feature hooks invoke it without passing user text. Pure engagement accounting lives in `app/engagementModel.js`, composed by `usePortfolioEngagement` with section visibility, dialog state and foreground/idle signals. Skills use stable public IDs in `portfolio.js`. Trackers release observers, timers, requests and listeners; consent resets terminate old correlation.
+
+Footfall's separate pure reporting model aggregates these events and supplies owner-only browser/session timelines. It reuses the existing Spark read cache and security boundaries. No extra Cloud Functions, Storage, scheduled jobs or billed services are introduced. See API.md for event semantics and the limits of inferred unfinished forms and foreground time.

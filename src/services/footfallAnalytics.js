@@ -80,11 +80,11 @@ export function createFootfallTracker({
     timer,
     idleHandle,
     idleCallback,
-    request,
     sequence = 0,
     running = false,
     visited = false;
   const queue = [];
+  const requests = new Set();
   const clearTimer = () => {
     if (timer !== undefined) win.clearTimeout(timer);
     timer = undefined;
@@ -99,12 +99,15 @@ export function createFootfallTracker({
   const prune = () => {
     const time = now();
     for (let i = queue.length - 1; i >= 0; i--)
-      if (time - queue[i].queuedAt > MAX_AGE || queue[i].attempts >= MAX_ATTEMPTS)
+      if (
+        !queue[i].inFlight &&
+        (time - queue[i].queuedAt > MAX_AGE || queue[i].attempts >= MAX_ATTEMPTS)
+      )
         queue.splice(i, 1);
     if (optedOut(navigator, localStorage)) queue.length = 0;
   };
   const schedule = (delay = 2000) => {
-    if (!running || timer !== undefined || request || !queue.length) return;
+    if (!running || timer !== undefined || requests.size || !queue.length) return;
     timer = win.setTimeout(() => {
       timer = undefined;
       void flush();
@@ -143,9 +146,9 @@ export function createFootfallTracker({
   async function flush(final = false) {
     clearTimer();
     prune();
-    if (!running || request || !queue.length) return;
+    if (!running || (requests.size && !final) || requests.size >= 2 || !queue.length) return;
     const batch = [];
-    for (const item of queue.slice(0, 10)) {
+    for (const item of queue.filter((entry) => !entry.inFlight).slice(0, 10)) {
       if (
         byteLength({
           version: FOOTFALL_VERSION,
@@ -156,10 +159,13 @@ export function createFootfallTracker({
       batch.push(item);
     }
     if (!batch.length) return;
-    batch.forEach((item) => item.attempts++);
+    batch.forEach((item) => {
+      item.attempts++;
+      item.inFlight = true;
+    });
     const controller = new AbortController();
     const timeout = win.setTimeout(() => controller.abort(), 10000);
-    request = controller;
+    requests.add(controller);
     let retry = true;
     try {
       const response = await send(endpoint, {
@@ -188,7 +194,10 @@ export function createFootfallTracker({
       /* Bounded retries keep the same event IDs. */
     } finally {
       win.clearTimeout(timeout);
-      if (request === controller) request = undefined;
+      requests.delete(controller);
+      batch.forEach((item) => {
+        item.inFlight = false;
+      });
       if (!retry)
         for (const item of batch) {
           const index = queue.indexOf(item);
@@ -208,12 +217,13 @@ export function createFootfallTracker({
   const pagehide = () => {
     cancelIdle();
     visit();
-    void flush(true);
+    // Other module lifecycle handlers can enqueue their final metadata first.
+    queueMicrotask(() => void flush(true));
   };
   const preferenceChanged = () => {
     if (optedOut(navigator, localStorage)) {
       queue.length = 0;
-      request?.abort();
+      requests.forEach((controller) => controller.abort());
       ids = undefined;
       clearTimer();
       cancelIdle();
@@ -259,7 +269,7 @@ export function createFootfallTracker({
       running = false;
       clearTimer();
       cancelIdle();
-      request?.abort();
+      requests.forEach((controller) => controller.abort());
       doc.removeEventListener('visibilitychange', hidden);
       win.removeEventListener('pagehide', pagehide);
       win.removeEventListener('online', online);
