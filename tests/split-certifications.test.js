@@ -96,7 +96,11 @@ test('live certificationsData splits Nov 2026 entries as current and 2020 entrie
 
   assert.deepEqual(
     current.map((item) => item.name),
-    ['AI Capabilities and Limitations', 'AI Fluency for builders'],
+    [
+      'Introduction to Model Context Protocol',
+      'AI Capabilities and Limitations',
+      'AI Fluency for builders',
+    ],
   );
   assert.equal(older.length, 11);
   assert.ok(older.every((item) => certificationYear(item.date) === 2020));
