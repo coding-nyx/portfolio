@@ -100,20 +100,21 @@ test('saved project answers treat Hermes as one project with both clients', () =
   assert.ok(!collection.includes('FitPro'));
 });
 
-test('startup and college-work answers use the shared experience without inventing employment details', () => {
-  const collegeWork = experienceData.find((item) => item.id === 'college-startup-work');
+test('freelance and earlier-work answers use shared facts without inventing employment dates', () => {
+  const freelanceWork = experienceData.find((item) => item.id === 'college-startup-work');
   for (const question of [
     'Tell me about Raj’s startup experience',
     'What Android apps did Raj work on during college?',
+    'What freelance development work has Raj done?',
     'What React web work did Raj do in college?',
     'Tell me about Raj’s earlier work',
   ]) {
     const reply = generateFallbackResponse(question);
-    assert.ok(reply.includes(collegeWork.description));
-    assert.ok(reply.includes(collegeWork.role));
-    assert.ok(reply.includes(collegeWork.dates));
-    assert.match(reply, /Following an initial internship/);
-    assert.doesNotMatch(reply, /\b(?:19|20)\d{2}\b|freelance|full-time/i);
+    assert.ok(reply.includes(freelanceWork.description));
+    assert.ok(reply.includes(freelanceWork.role));
+    assert.ok(reply.includes(freelanceWork.company));
+    assert.match(reply, /freelance projects/i);
+    assert.doesNotMatch(reply, /\b(?:19|20)\d{2}\b|full-time/i);
   }
 
   for (const question of ['Which college did Raj attend?', 'What is Raj’s degree?']) {

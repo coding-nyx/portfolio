@@ -1,0 +1,172 @@
+.after-hours .project-picker-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+  color: #d4d4d8;
+  font-size: var(--study-text-small, 14px);
+}
+
+.after-hours .project-picker-control {
+  position: relative;
+}
+
+.after-hours .project-picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--study-border, #2c2c35);
+  border-radius: var(--study-radius-card, 12px);
+  background: var(--study-surface, #15151b);
+  color: #f4f4f5;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-body, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: start;
+}
+.after-hours .project-picker-trigger > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.after-hours .project-picker-trigger > svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--study-muted, #a1a1aa);
+}
+.after-hours .project-picker-trigger[aria-expanded='true'] {
+  border-color: var(--study-accent, #ff8a3d);
+}
+.after-hours .project-picker-trigger[aria-expanded='true'] > svg {
+  transform: rotate(180deg);
+}
+
+.after-hours .project-picker-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 8px);
+  z-index: 30;
+  padding: 6px;
+  border: 1px solid #3d3d46;
+  border-radius: var(--study-radius-card, 12px);
+  background: var(--study-surface, #15151b);
+  box-shadow: 0 16px 40px #0008;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #59515a transparent;
+}
+.after-hours .project-picker-menu[data-placement='above'] {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+.after-hours .project-picker-menu:focus {
+  outline: none;
+}
+.after-hours .project-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #f4f4f5;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  line-height: 1.4;
+  text-align: start;
+}
+.after-hours .project-picker-option + .project-picker-option {
+  margin-top: 2px;
+}
+.after-hours .project-picker-option[data-active='true'] {
+  background: #24242d;
+}
+.after-hours .project-picker-option[aria-selected='true'] {
+  background: #2b211a;
+}
+.after-hours .project-picker-menu:focus-visible .project-picker-option[data-active='true'] {
+  outline: 1px solid var(--study-accent, #ff8a3d);
+  outline-offset: -2px;
+}
+.after-hours .project-picker-number {
+  flex: none;
+  width: 20px;
+  color: var(--study-muted, #a1a1aa);
+  font-size: var(--study-text-caption, 12px);
+  font-variant-numeric: tabular-nums;
+}
+.after-hours .project-picker-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.after-hours .project-picker-copy > span {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.after-hours .project-picker-copy > small {
+  color: var(--study-muted, #a1a1aa);
+  font-size: var(--study-text-caption, 12px);
+  line-height: 1.5;
+}
+.after-hours .project-picker-option > svg,
+.after-hours .project-picker-option[aria-selected='true'] .project-picker-number {
+  flex: none;
+  color: var(--study-accent, #ff8a3d);
+}
+.after-hours .project-picker-option > svg {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 900px) {
+  .after-hours .showcase-mobile-picker {
+    position: relative;
+  }
+}
+
+.after-hours .showcase-view-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 12px 0;
+}
+.after-hours .showcase-view-options > button {
+  min-height: 48px;
+  padding: 10px 8px;
+  border: 1px solid var(--study-border, #2c2c35);
+  border-radius: 8px;
+  background: transparent;
+  color: #d4d4d8;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+}
+.after-hours .showcase-view-options > button[aria-pressed='true'] {
+  border-color: var(--study-accent, #ff8a3d);
+  background: var(--study-accent, #ff8a3d);
+  color: var(--study-bg, #0b0b0f);
+  font-weight: 600;
+}
+.after-hours .showcase-view-options > button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 380px) {
+  .after-hours .showcase-view-prefix {
+    display: none;
+  }
+}

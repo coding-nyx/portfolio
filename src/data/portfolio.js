@@ -279,12 +279,12 @@ export const experienceData = [
   },
   {
     id: 'college-startup-work',
-    company: 'Startup projects',
+    company: 'Freelance · Startup projects',
     role: 'Android & React development',
-    dates: 'During college',
+    dates: '',
     timeline: false,
     description:
-      'Following an initial internship, contributed to Android applications and React web apps for startups while in college.',
+      'Built Android applications and React web apps for startups through freelance projects.',
   },
   {
     company: 'Servion Global Solutions',
@@ -307,6 +307,16 @@ export const profileData = {
   volunteeringInterest: 'Interested in volunteering opportunities.',
   name: 'Raj Kumar S',
   roleTitle: 'iOS Product Engineer',
+  bio: {
+    preferredName: 'Rajkumar',
+    primaryStack: ['Swift', 'UIKit', 'SwiftUI', 'SPM'],
+    paragraphs: [
+      'I’m a frontend developer based in Chennai. I’ve built React web apps and Android applications, and I currently work on iOS products at Zoho.',
+      'I design and redesign screens and navigation, adapt layouts for iPhone and iPad, integrate APIs and improve UI performance. I also build shared UI and integration tools for other product teams.',
+      'Outside work, my projects include a finance tracker and tools for working with AI agents. I’m also into Linux customization, retro gaming and obstacle course races.',
+    ],
+    personalLinkLabel: 'Race photos and other interests',
+  },
   heroSummary: 'iOS product delivery, reusable native components and performance.',
   deliverySummary:
     'Early in the Member of Technical Staff role, contributed to feature additions, bug fixes and minor releases. For a major product release, implemented API integration and middleware parsing, contributed to revamp planning, and led UI redesign and navigation improvements.',

@@ -1,10 +1,12 @@
 import { CONTACT_SUBJECTS } from './contactModel.js';
 import './contact.css';
+import './recipient.css';
 import useContactForm from './useContactForm.js';
 import { FiChevronDown, FiCopy, FiCheck } from 'react-icons/fi';
 import { profileData } from '../../data/portfolio.js';
 import { EMAIL_CONFIGURED } from '../../services/contactService.js';
 import SpringAction from '../../shared/ui/SpringAction.jsx';
+import MotionDetails from '../../shared/ui/MotionDetails.jsx';
 import ExternalLink from '../../shared/ui/ExternalLink.jsx';
 
 export default function ContactSection() {
@@ -26,7 +28,7 @@ export default function ContactSection() {
       <h2 id="h-contact" tabIndex={-1}>
         Contact
       </h2>
-      <details className="contact-composer" open>
+      <MotionDetails className="contact-composer" open>
         <summary>
           Write a message <FiChevronDown aria-hidden="true" />
         </summary>
@@ -41,25 +43,28 @@ export default function ContactSection() {
             <div className="mail-row mail-recipient-row">
               <span>To</span>
               <div className="mail-recipient">
-                <b>{profileData.name}</b>
-                <span className="contact-email-row">
-                  <a className="contact-address" href={`mailto:${profileData.socialLinks.email}`}>
-                    {profileData.socialLinks.email}
-                  </a>
-                  <button
-                    className="contact-copy"
-                    type="button"
-                    aria-label="Copy email address"
-                    title={copyStatus === 'Email copied.' ? 'Email copied' : 'Copy email'}
-                    onClick={copyEmail}
-                  >
-                    {copyStatus === 'Email copied.' ? (
-                      <FiCheck size={14} aria-hidden="true" />
-                    ) : (
-                      <FiCopy size={14} aria-hidden="true" />
-                    )}
-                  </button>
-                </span>
+                <span className="contact-recipient-label">{profileData.name}</span>
+                <a
+                  className="contact-recipient-link"
+                  href={`mailto:${profileData.socialLinks.email}`}
+                  aria-label={`Email ${profileData.name} at ${profileData.socialLinks.email}`}
+                >
+                  <span className="contact-recipient-compact-name">{profileData.name}</span>
+                  <span className="contact-recipient-email">{profileData.socialLinks.email}</span>
+                </a>
+                <button
+                  className="contact-copy"
+                  type="button"
+                  aria-label="Copy email address"
+                  title={copyStatus === 'Email copied.' ? 'Email copied' : 'Copy email'}
+                  onClick={copyEmail}
+                >
+                  {copyStatus === 'Email copied.' ? (
+                    <FiCheck size={14} aria-hidden="true" />
+                  ) : (
+                    <FiCopy size={14} aria-hidden="true" />
+                  )}
+                </button>
                 <span className="sr-only" role="status">
                   {copyStatus}
                 </span>
@@ -174,7 +179,7 @@ export default function ContactSection() {
             )}
           </form>
         </div>
-      </details>
+      </MotionDetails>
       <div className="social-row">
         <ExternalLink href={profileData.socialLinks.linkedin}>LinkedIn ↗</ExternalLink>
         <ExternalLink href={profileData.socialLinks.github}>GitHub ↗</ExternalLink>

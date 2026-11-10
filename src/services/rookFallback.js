@@ -81,12 +81,12 @@ export function generateFallbackResponse(messagesInput) {
     return certificationsData.map((c) => `• ${c.name} — ${c.issuer}, ${c.date}`).join('\n');
   }
   if (
-    /startups?|earl(?:y|ier) (?:work|experience)|college.*(?:work|apps?|react|android)|(?:work|apps?|react|android).*college/.test(
+    /startups?|freelanc(?:e|ing)|earl(?:y|ier) (?:work|experience)|college.*(?:work|apps?|react|android)|(?:work|apps?|react|android).*college/.test(
       query,
     )
   ) {
     const work = experienceData.find((item) => item.id === 'college-startup-work');
-    return `**${work.role} · ${work.dates}**\n\n${publicText(work.description)}`;
+    return `**${work.role} · ${work.company}**\n\n${publicText(work.description)}`;
   }
   if (/education|college|school|degree|qualification|sairam|dav/.test(query)) {
     return 'Education details are not listed in this portfolio. Please ask Raj for confirmation.';

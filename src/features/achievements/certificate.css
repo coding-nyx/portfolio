@@ -1,0 +1,133 @@
+.after-hours .current-certs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.after-hours .current-certs > h3 {
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-card, 26px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.after-hours .current-certs .proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding-top: 0;
+}
+
+.after-hours .current-certs .proof-card--current {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 248px;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--study-border, #2c2c35);
+  border-radius: 10px;
+  background: var(--study-surface, #15151b);
+  box-shadow: none;
+  transform: none;
+  transition: border-color 160ms ease;
+}
+
+.after-hours .current-certs .proof-card--current:hover,
+.after-hours .current-certs .proof-card--current:focus-within {
+  border-color: #805332;
+}
+
+.after-hours .current-certs .cert-badge-seal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  flex: none;
+  color: var(--study-accent, #ff8a3d);
+  pointer-events: none;
+}
+
+.after-hours .current-certs .cert-badge-eyebrow {
+  max-width: calc(100% - 46px);
+  min-height: 34px;
+  color: var(--study-accent, #ff8a3d);
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-caption, 12px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.after-hours .current-certs .proof-card--current h4 {
+  margin: 0;
+  color: #f4f4f5;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.after-hours .current-certs .proof-card--current .port-meta {
+  color: #b0b3be;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.after-hours .current-certs .proof-card--current a {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: auto;
+  color: var(--study-accent, #ff8a3d);
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.after-hours .current-certs .proof-card--current a:focus-visible {
+  outline: 2px solid var(--study-accent, #ff8a3d);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1050px) {
+  .after-hours .current-certs .proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .after-hours .current-certs {
+    gap: 20px;
+  }
+
+  .after-hours .current-certs .proof-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .after-hours .current-certs .proof-card--current {
+    padding: 20px;
+    min-height: 224px;
+  }
+
+  .after-hours .current-certs .cert-badge-seal {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .after-hours .current-certs .proof-card--current {
+    transition: none;
+  }
+}

@@ -7,7 +7,7 @@
   gap: 20px;
   background: #0b0b0f;
   color: #f4f4f5;
-  font-family: system-ui, sans-serif;
+  font-family: var(--study-font-body);
 }
 .app-error h1,
 .app-error p {

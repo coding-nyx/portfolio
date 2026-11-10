@@ -1,0 +1,186 @@
+/* A contained archive reads as an object to open, not a chapter separator. */
+.after-hours .older-certs.cert-archive {
+  min-width: 0;
+  padding: 0;
+  border: 1px solid #39404c;
+  border-radius: 12px;
+  background: #11141b;
+  overflow: hidden;
+}
+
+.after-hours .cert-archive > .cert-archive-summary {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  min-height: 96px;
+  margin: 0;
+  padding: 20px 24px;
+  border: 0;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  color: #f4f4f5;
+  list-style: none;
+  cursor: pointer;
+}
+
+.after-hours .cert-archive > .cert-archive-summary::-webkit-details-marker {
+  display: none;
+}
+
+.after-hours .cert-archive > .cert-archive-summary::marker {
+  content: '';
+}
+
+.after-hours .cert-archive > .cert-archive-summary:hover {
+  background: #171b24;
+}
+
+.after-hours .cert-archive > .cert-archive-summary:focus-visible {
+  outline: 2px solid var(--study-accent, #ff8a3d);
+  outline-offset: -4px;
+  border-radius: 10px;
+}
+
+.after-hours .cert-archive .cert-archive-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #4d3828;
+  border-radius: 9px;
+  background: #211c18;
+  color: var(--study-accent, #ff8a3d);
+}
+
+.after-hours .cert-archive .cert-archive-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.after-hours .cert-archive .cert-archive-title {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  color: #f4f4f5;
+}
+
+.after-hours .cert-archive .cert-archive-title > strong {
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-body, 16px);
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.after-hours .cert-archive .cert-archive-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  color: #b0b3be;
+  font-size: var(--study-text-small, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.after-hours .cert-archive .cert-archive-meta > span {
+  color: inherit;
+  font: inherit;
+}
+
+.after-hours .cert-archive .cert-archive-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--study-accent, #ff8a3d);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.after-hours .cert-archive .cert-archive-action > span {
+  color: inherit;
+  font: inherit;
+}
+
+.after-hours .cert-archive .cert-archive-action > svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.after-hours .cert-archive .cert-archive-hide,
+.after-hours .cert-archive .cert-archive-open-icon {
+  display: none;
+}
+
+.after-hours .cert-archive[open] .cert-archive-show,
+.after-hours .cert-archive[open] .cert-archive-closed-icon {
+  display: none;
+}
+
+.after-hours .cert-archive[open] .cert-archive-hide,
+.after-hours .cert-archive[open] .cert-archive-open-icon {
+  display: block;
+}
+
+.after-hours .cert-archive[open] .cert-archive-action > svg {
+  transform: rotate(180deg);
+}
+
+.after-hours .cert-archive .cert-archive-content {
+  padding: 8px 24px 28px;
+  border: 0;
+}
+
+.after-hours .cert-archive .proof-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 32px;
+  padding: 0;
+  border: 0;
+}
+
+.after-hours .cert-archive .proof-card {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.after-hours .cert-archive .proof-card h3 {
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-body, 16px);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .after-hours .cert-archive .proof-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .after-hours .cert-archive > .cert-archive-summary {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px 14px;
+    padding: 18px 16px;
+  }
+
+  .after-hours .cert-archive .cert-archive-icon {
+    grid-row: 1 / 3;
+    align-self: start;
+    margin-top: 3px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .after-hours .cert-archive .cert-archive-action {
+    grid-column: 2;
+  }
+
+  .after-hours .cert-archive .cert-archive-content {
+    padding: 8px 16px 24px;
+  }
+}

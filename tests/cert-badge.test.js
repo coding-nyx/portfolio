@@ -78,9 +78,10 @@ test('current certification cards keep real certificationsData records', async (
   );
 });
 
-test('badge styling and current-only aria-labels are scoped to current.map', () => {
+test('current certificate styling and named credential links stay scoped to current cards', () => {
   const source = read('src/features/achievements/AchievementsSection.jsx');
-  assert.match(source, /import '\.\/badge\.css';/);
+  assert.match(source, /import '\.\/certificate\.css';/);
+  assert.match(source, /import '\.\/archive\.css';/);
   assert.match(
     source,
     /current\.map\(\(item\) => \(\s*<CertificationCard key=\{item\.name\} item=\{item\} current \/>/s,

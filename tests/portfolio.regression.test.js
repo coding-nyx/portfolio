@@ -170,21 +170,23 @@ test('employment wording stays anchored to the confirmed start date', async () =
   assert.match(profileData.summary, /since May 2022/i);
 });
 
-test('college startup work stays undated while confirmed employment keeps valid timeline ranges', async () => {
+test('freelance startup work stays undated while confirmed employment keeps valid timeline ranges', async () => {
   const { experienceData } = await importData();
   const { careerRange } = await import('../src/features/experience/careerTimeline.js');
-  const collegeWork = experienceData.find((item) => item.id === 'college-startup-work');
-  assert.ok(collegeWork);
-  assert.equal(collegeWork.dates, 'During college');
-  assert.equal(collegeWork.startDate, undefined);
-  assert.equal(collegeWork.type, undefined);
-  assert.equal(careerRange(collegeWork), null);
+  const freelanceWork = experienceData.find((item) => item.id === 'college-startup-work');
+  assert.ok(freelanceWork);
+  assert.equal(freelanceWork.dates, '');
+  assert.equal(freelanceWork.company, 'Freelance · Startup projects');
+  assert.doesNotMatch(freelanceWork.description, /college/i);
+  assert.equal(freelanceWork.startDate, undefined);
+  assert.equal(freelanceWork.type, undefined);
+  assert.equal(careerRange(freelanceWork), null);
   const firstInternship = experienceData.find(
     (item) => item.company === 'Servion Global Solutions',
   );
-  assert.ok(experienceData.indexOf(collegeWork) < experienceData.indexOf(firstInternship));
+  assert.ok(experienceData.indexOf(freelanceWork) < experienceData.indexOf(firstInternship));
 
-  for (const role of experienceData.filter((item) => item !== collegeWork)) {
+  for (const role of experienceData.filter((item) => item !== freelanceWork)) {
     const range = careerRange(role);
     assert.ok(Number.isFinite(Number.parseFloat(range.left)), `${role.role}: invalid start`);
     assert.ok(Number.isFinite(Number.parseFloat(range.width)), `${role.role}: invalid duration`);

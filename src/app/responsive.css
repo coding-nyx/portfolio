@@ -1,0 +1,223 @@
+@media (max-width: 900px) {
+  .after-hours .showcase-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+  }
+  .after-hours .showcase-heading .port-eyebrow {
+    display: none;
+  }
+  .after-hours .showcase-heading > div {
+    min-width: 0;
+  }
+  .after-hours .showcase-mobile-view[open] {
+    grid-column: 1 / -1;
+  }
+}
+/* Phone layouts prioritize the work and the next action rather than desktop controls. */
+@media (max-width: 800px) {
+  .after-hours {
+    --study-text-section: 32px;
+    --study-text-display: 48px;
+    --study-text-card: 24px;
+  }
+  .study-entry,
+  .study-chapter,
+  .study-project-chapter {
+    scroll-margin-top: var(--navh);
+  }
+  .study-chapter {
+    padding-block: 44px 48px;
+  }
+  .study-section-label {
+    margin-bottom: 20px;
+  }
+  .study-project-banner {
+    height: 248px;
+  }
+  .study-banner-copy {
+    padding-block: 32px;
+  }
+  .study-banner-copy h2 {
+    max-width: none;
+    margin-bottom: 16px;
+  }
+  .study-banner-copy > p:last-child {
+    font-size: var(--study-text-body);
+    line-height: 1.5;
+    max-width: 24ch;
+  }
+  .banner-break {
+    display: none;
+  }
+  .after-hours .study-bio-copy {
+    gap: 24px;
+  }
+  .after-hours .study-bio-copy h2 {
+    max-width: 20ch;
+  }
+  .after-hours .study-bio-summary {
+    line-height: var(--study-leading-body);
+  }
+  .after-hours .study-bio-facts {
+    gap: 0 20px;
+  }
+  .after-hours .study-bio-facts > div {
+    padding-block: 14px;
+  }
+  .after-hours .study-bio-personal {
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .after-hours .skill-cluster {
+    gap: 20px;
+    padding-top: 24px;
+  }
+  .after-hours .skill-chip {
+    font-size: var(--study-text-body);
+    padding: 10px 14px;
+  }
+  .after-hours .resume-overview h3 {
+    font-size: var(--study-text-card);
+  }
+  .after-hours .resume-download {
+    width: 100%;
+    padding: 20px;
+  }
+  .after-hours .resume-download-button {
+    min-height: 76px;
+  }
+  .after-hours .race-photo {
+    aspect-ratio: 4 / 3;
+  }
+  .after-hours .personal-races {
+    gap: 32px;
+  }
+  .after-hours .personal-interests {
+    display: block;
+  }
+  .after-hours .personal-interests h3 {
+    margin-bottom: 12px;
+  }
+  .after-hours .personal-interests ul {
+    gap: 8px 20px;
+  }
+  .after-hours .mail-row {
+    min-height: 64px;
+  }
+  .after-hours .mail-body textarea {
+    min-height: 144px;
+  }
+  .after-hours .mail-submit .port-button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .study-footer {
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 700px) {
+  .study-nav-inner {
+    padding-inline: 20px;
+  }
+  .study-entry .entry-d2 .hero {
+    padding: 28px 22px 56px;
+    gap: 24px;
+    min-height: auto;
+  }
+  .study-entry .entry-d2 .role {
+    font-size: var(--study-text-caption);
+    line-height: 1.5;
+    letter-spacing: 0.07em;
+  }
+  .study-entry .entry-d2 .line {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .study-entry .entry-d2 .acts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .study-entry .entry-d2 .acts .primary {
+    grid-column: 1 / -1;
+  }
+  .study-entry .entry-d2 .acts .btn {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .study-entry .entry-d2 .stage {
+    height: 340px;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .study-entry .entry-d2 .ph {
+    transform: scale(0.62);
+  }
+  .study-entry .entry-d2 .fw {
+    top: 130px;
+    gap: 8px;
+  }
+  .study-entry .entry-d2 .n1 {
+    width: 196px;
+  }
+  .study-entry .entry-d2 .n2 {
+    width: 160px;
+  }
+  .study-entry .entry-d2 .cue {
+    bottom: 0;
+  }
+  .after-hours .study-chapter .port-section {
+    gap: 24px;
+  }
+  .after-hours .study-bio-grid {
+    gap: 28px;
+  }
+  .after-hours .study-portrait {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 20px;
+  }
+  .after-hours .study-portrait img {
+    border-radius: 4px;
+  }
+  .after-hours .study-bio-facts dd {
+    font-size: var(--study-text-small);
+  }
+  .after-hours .port-section .chapter-next {
+    margin-top: 12px;
+    font-size: var(--study-text-small);
+  }
+  .study-project-content {
+    padding-top: 28px;
+  }
+  .after-hours .contact-composer > summary {
+    min-height: 48px;
+  }
+  .after-hours .mail-row > span {
+    width: 44px;
+    font-size: var(--study-text-small);
+  }
+  .after-hours .mail-subject label {
+    min-height: 44px;
+    font-size: var(--study-text-small);
+  }
+}
+@media (max-width: 360px) {
+  .study-nav-inner {
+    padding-inline: 16px;
+  }
+  .study-entry .entry-d2 .hero {
+    padding-inline: 18px;
+  }
+  .study-project-banner {
+    height: 260px;
+  }
+  .study-banner-copy {
+    padding-inline: 18px;
+  }
+  .after-hours .study-bio-facts {
+    grid-template-columns: 1fr;
+  }
+}

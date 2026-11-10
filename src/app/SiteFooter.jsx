@@ -1,12 +1,20 @@
 import { useState } from 'react';
+import { FiArrowUp } from 'react-icons/fi';
+import { profileData } from '../data/portfolio.js';
+import './footer.css';
 import { analyticsOptedOut, setAnalyticsOptOut } from '../services/analyticsPreference.js';
 
 export default function SiteFooter() {
   const [optedOut, setOptedOut] = useState(() => analyticsOptedOut());
   const systemOptOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1';
   return (
-    <footer className="site-footer">
-      <span>© {new Date().getFullYear()} RAJ KUMAR S</span>
+    <footer className="study-footer site-footer">
+      <small>
+        © {new Date().getFullYear()} {profileData.name}
+      </small>
+      <a className="footer-top" href="#entry">
+        Back to top <FiArrowUp aria-hidden="true" />
+      </a>
       <details className="tracking-disclosure">
         <summary>Visitor analytics</summary>
         <p>

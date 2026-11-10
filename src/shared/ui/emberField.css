@@ -1,0 +1,30 @@
+.after-hours {
+  position: relative;
+  isolation: isolate;
+}
+.ember-field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+.after-hours #projects,
+.after-hours .entry-d2 {
+  background: transparent;
+}
+.study-bio-personal svg {
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.study-bio-personal:hover svg {
+  transform: translate(3px, -3px);
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .ember-field {
+    display: none;
+  }
+}
+body[data-motion='off'] .ember-field {
+  display: none;
+}

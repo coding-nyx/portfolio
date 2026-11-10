@@ -1,0 +1,86 @@
+/* Project UI shares the site's charcoal surfaces; the night palette belongs to the artwork. */
+.after-hours #projects {
+  --project-image-bed: #0e0f13;
+  --project-paper-back: #302c28;
+  --project-paper-front: #494139;
+  --project-paper-edge: #70604f;
+  background: var(--study-bg);
+  border-color: var(--study-border);
+}
+.after-hours #projects .showcase-card,
+.after-hours #projects .island-list-card,
+.after-hours #projects .pc-window,
+.after-hours #projects .pc-surface {
+  background: var(--study-surface);
+  border-color: var(--study-border);
+  border-radius: var(--study-radius-card, 12px);
+}
+.after-hours #projects .showcase-preview img,
+.after-hours #projects .showcase-overview,
+.after-hours #projects .pc-image,
+.after-hours #projects .pc-image img,
+.after-hours #projects .pc-blueprint,
+.after-hours #projects .pc-blueprint-linux {
+  background: var(--project-image-bed);
+  border-color: var(--study-border);
+}
+.after-hours #projects .showcase-mobile-view,
+.after-hours #projects .pc-selectors button,
+.after-hours #projects .pc-arrow {
+  background: var(--study-surface);
+  color: #d4d4d8;
+  border-color: var(--study-border);
+}
+.after-hours #projects .pc-selectors button[aria-pressed='true'] {
+  background: #271e18;
+  border-color: var(--study-accent);
+  color: #f4f4f5;
+}
+.after-hours #projects .pc-selectors button[aria-pressed='true'] > span,
+.after-hours #projects .pc-status {
+  color: var(--study-accent);
+}
+.after-hours #projects .project-paper,
+.after-hours #projects .pc-paper {
+  border-color: var(--project-paper-edge);
+}
+.after-hours #projects .project-paper-back,
+.after-hours #projects .pc-paper-back {
+  background: var(--project-paper-back);
+}
+.after-hours #projects .project-paper-middle,
+.after-hours #projects .pc-paper-middle {
+  background: var(--project-paper-front);
+  border-color: var(--project-paper-edge);
+}
+.after-hours #projects .pc-copy > p,
+.after-hours #projects .pc-actions > a,
+.after-hours #projects .pc-blueprint,
+.after-hours #projects .pc-blueprint-linux {
+  color: #d4d4d8;
+}
+.after-hours #projects .pc-tags li,
+.after-hours #projects .pc-blueprint li,
+.after-hours #projects .pc-blueprint-linux li {
+  color: #d4d4d8;
+  background: var(--study-surface);
+  border-color: var(--study-border);
+}
+.after-hours #projects .pc-copy .pc-private,
+.after-hours #projects .pc-controls,
+.after-hours #projects .pc-controls > p,
+.after-hours #projects .pc-hint,
+.after-hours #projects .pc-image > span,
+.after-hours #projects .pc-blueprint li + li::before,
+.after-hours #projects .pc-blueprint-linux li + li::before {
+  color: var(--study-muted);
+}
+.after-hours #projects .pc-actions .pc-details {
+  background: var(--study-accent);
+  border-color: var(--study-accent);
+  color: var(--study-bg);
+}
+.after-hours #projects .pc-arrow:hover {
+  background: #24242d;
+  border-color: #6c4b33;
+}

@@ -49,7 +49,7 @@ export default function useContactForm() {
       await navigator.clipboard.writeText(profileData.socialLinks.email);
       setCopyStatus('Email copied.');
     } catch {
-      setCopyStatus('Select the email address to copy it.');
+      setCopyStatus(`Copy unavailable. Email address: ${profileData.socialLinks.email}.`);
     }
   };
   const changed = (e) => {

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, m as Motion, useIsPresent } from 'framer-motion';
 import { TbArrowLeft, TbArrowRight, TbArrowUpRight, TbCpu, TbRobot } from 'react-icons/tb';
 import { projects } from '../../data/portfolio.js';
@@ -26,9 +26,9 @@ function ProjectVisual({ project }) {
       </div>
     );
   const linux = project.tags.includes('Linux Kernel');
-  const nodes = linux
-    ? ['RK3588 board', 'Device tree + kernel', 'FIT boot image']
-    : ['React Native interface', 'Orchestrator', 'Specialist agents + memory'];
+  const nodes = project.architecture
+    ? project.architecture.steps.map((step) => step.name)
+    : ['RK3588 board', 'Device tree + kernel', 'FIT boot image'];
   return (
     <div
       className={`pc-blueprint ${linux ? 'pc-blueprint-linux' : ''}`}
@@ -39,7 +39,7 @@ function ProjectVisual({ project }) {
       ) : (
         <TbRobot size={38} strokeWidth={1.25} aria-hidden="true" />
       )}
-      <span className="pc-blueprint-label">{linux ? 'BUILD OVERVIEW' : 'ARCHITECTURE SKETCH'}</span>
+      <span className="pc-blueprint-label">{project.architecture?.title || 'BUILD OVERVIEW'}</span>
       <ol>
         {nodes.map((node) => (
           <li key={node}>{node}</li>
@@ -82,7 +82,8 @@ function ProjectSlide({ project, index, slideId, direction, enabled, onOpenDetai
           <Motion.button
             type="button"
             className="pc-details"
-            whileTap={enabled ? { scale: 0.96 } : undefined}
+            whileTap={enabled ? { scale: 0.985 } : undefined}
+            transition={{ type: 'tween', duration: enabled ? 0.16 : 0, ease: [0.2, 0.8, 0.2, 1] }}
             onClick={(event) => onOpenDetails(project, event)}
           >
             Details <TbArrowUpRight size={16} aria-hidden="true" />
@@ -102,6 +103,15 @@ export default function ProjectCarousel({ enabled, onOpenDetails }) {
   const selectors = useRef([]),
     gesture = useRef(null);
   const project = projects[index];
+  useLayoutEffect(() => {
+    const button = selectors.current[index];
+    const strip = button?.parentElement;
+    if (!strip || strip.scrollWidth <= strip.clientWidth) return;
+    const bounds = strip.getBoundingClientRect();
+    const item = button.getBoundingClientRect();
+    if (item.left < bounds.left) strip.scrollLeft += item.left - bounds.left;
+    else if (item.right > bounds.right) strip.scrollLeft += item.right - bounds.right;
+  }, [index]);
   const carouselId = 'project-view';
   const headingId = 'h-projects';
   const slideId = `${carouselId}-slide`;

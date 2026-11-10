@@ -26,10 +26,9 @@
   border: 1px solid #3a3a46;
   border-radius: 20px;
   box-shadow: 0 24px 80px #0009;
-  font:
-    14px/1.5 'Space Grotesk',
-    system-ui,
-    sans-serif;
+  font-family: var(--study-font-body);
+  font-size: 14px;
+  line-height: 1.5;
   letter-spacing: normal;
   text-transform: none;
 }
@@ -60,7 +59,10 @@
   height: 44px;
   border: 1px solid #3a3a46;
   border-radius: 50%;
-  font: 24px/1 system-ui;
+  font-family: var(--study-font-body);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
   background: #1d1d25;
   color: #f4f4f5;
   cursor: pointer;
@@ -136,7 +138,7 @@
   gap: 12px;
 }
 .rook-chips button {
-  font: 12px/1.4 inherit;
+  font-family: var(--study-font-body);
   min-height: 44px;
   padding: 8px 12px;
   border: 1px solid #3a3a46;
@@ -159,9 +161,9 @@
   background: #0b0b0f;
   color: #f4f4f5;
   border-radius: 8px;
-  font:
-    16px 'Space Grotesk',
-    system-ui;
+  font-family: var(--study-font-body);
+  font-size: 16px;
+  line-height: normal;
 }
 .rook-input button {
   flex: none;

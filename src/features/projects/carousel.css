@@ -1,4 +1,5 @@
 .project-carousel {
+  font-family: var(--study-font-body);
   padding: 36px 0 52px;
   scroll-margin-top: 24px;
   min-width: 0;
@@ -9,7 +10,7 @@
 }
 .project-carousel button,
 .project-carousel a {
-  font-family: inherit;
+  font-family: var(--study-font-body);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -352,13 +353,20 @@
     font-size: 13px;
   }
   .pc-selectors {
+    flex-wrap: nowrap;
+    max-width: 100%;
     gap: 7px;
+    padding-block: 4px 6px;
     margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: thin;
   }
   .pc-selectors button {
+    flex: none;
     font-size: 10px;
     padding: 7px 9px;
-    min-height: 38px;
+    min-height: 44px;
+    white-space: nowrap;
   }
   .pc-viewport {
     padding: 18px 6px 0;
@@ -441,4 +449,45 @@
   .project-carousel .pc-copy h3 {
     font-size: 25px;
   }
+}
+
+/* View names describe actual layouts at every viewport width. */
+.after-hours .after-hours-projects #project-display[data-view='grid'] .project-desktop-grid {
+  display: flex;
+}
+.after-hours .after-hours-projects #project-display[data-view='carousel'] > .project-carousel {
+  display: block;
+  width: 100%;
+}
+.after-hours .showcase-mobile-view .showcase-view-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Carousel uses the same semantic typography as the selected project cards. */
+.after-hours .project-carousel .pc-copy h3 {
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-card, 26px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.after-hours .project-carousel .pc-copy > p {
+  font-size: var(--study-text-body, 16px);
+  line-height: var(--study-leading-body, 1.65);
+}
+.after-hours .project-carousel .pc-selectors button,
+.after-hours .project-carousel .pc-actions .pc-details,
+.after-hours .project-carousel .pc-actions > a {
+  font-size: var(--study-text-small, 14px);
+  min-height: 44px;
+}
+.after-hours .project-carousel .pc-selectors button > span,
+.after-hours .project-carousel .pc-tags li,
+.after-hours .project-carousel .pc-status,
+.after-hours .project-carousel .pc-controls > p,
+.after-hours .project-carousel .pc-controls p > span,
+.after-hours .project-carousel .pc-hint,
+.after-hours .project-carousel .pc-image > span,
+.after-hours .project-carousel .pc-blueprint-label {
+  font-size: var(--study-text-caption, 12px);
 }

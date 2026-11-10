@@ -1,0 +1,112 @@
+/* Semantic type roles shared by every chapter; the approved Settings artwork stays scoped. */
+.after-hours
+  :is(.study-bio-copy h2, .port-section > h2, .showcase-heading h2, .personal-heading h2) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-section);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.after-hours .study-banner-copy h2 {
+  font-family: var(--study-font-display);
+  font-size: var(--study-text-display);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+.after-hours
+  :is(
+    .career-panel > h3,
+    .showcase-copy h3,
+    .resume-overview h3,
+    .race-card figcaption h3,
+    .achievement-card strong
+  ) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-card);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.after-hours
+  :is(.skill-cluster h3, .ui-work-example h4, .component-workflow h4, .personal-interests h3) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-group);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.after-hours
+  :is(
+    .study-bio-summary,
+    .career-summary,
+    .career-panel > p:not(.port-eyebrow):not(.port-meta),
+    .career-panel li p,
+    .showcase-copy > p,
+    .resume-overview > p:not(.port-eyebrow):not(.port-meta),
+    .skills-section > p,
+    .achievement-card > p,
+    .race-card figcaption p
+  ) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-body);
+  font-weight: 400;
+  line-height: var(--study-leading-body);
+  letter-spacing: normal;
+}
+.after-hours
+  :is(
+    .study-section-label,
+    .study-eyebrow,
+    .port-eyebrow,
+    .showcase-heading .port-eyebrow,
+    .showcase-eyebrow,
+    .showcase-directory-label
+  ) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-caption);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+.after-hours
+  :is(
+    .port-meta,
+    .study-bio-facts dt,
+    .study-portrait figcaption span,
+    .career-label small,
+    .showcase-directory-copy small,
+    .showcase-directory-note,
+    .mail-delivery-note
+  ) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-small);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+.after-hours
+  :is(
+    .study-bio-facts dd,
+    .study-portrait figcaption,
+    .mail-row,
+    .contact-composer > summary,
+    .social-row
+  ) {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-body);
+  line-height: 1.5;
+}
+.after-hours .study-desktop-links a,
+.after-hours .study-resume,
+.after-hours .study-footer-links a {
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-small);
+  line-height: 1.4;
+}
+.after-hours .personal-heading .port-eyebrow {
+  display: none;
+}
+.after-hours .study-footer {
+  font-family: var(--study-font-body);
+}

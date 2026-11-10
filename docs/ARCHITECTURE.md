@@ -35,9 +35,13 @@ server/
 functions/index.mjs         Firebase runtime adapter
 ```
 
+The approved After Hours interface uses the same feature graph. App-owned chapter labels, centered scroll navigation and theme styles compose the portfolio; the Settings hero JSX is unchanged. Carousel is the default Projects display at every width, with Featured, Grid and the deferred Island available as explicit alternatives. The Featured picker owns its keyboard/focus/viewport behavior in a feature hook. The Bio has one About me narrative and a separate facts card. Public copy stays in portfolio.js.
+
+The shared Ember field is the selected decorative background. Its canvas stays behind content, reacts only to a fine pointer, settles without an ongoing animation loop and follows the system reduced-motion preference. Shared disclosure animation retains semantic details/summary behavior. The analytics observers, contact delivery, Rook HTTP/fallback behavior and footer opt-out remain connected to the production app; isolated study entry points and alternate motion modes are not shipped.
+
 The app eagerly composes all professional/personal sections. Each feature owns its view, local state and styles. Contact and Rook keep substantial stateful behavior in hooks; skills and career timelines use pure model modules. Projects owns one details dialog shared by its grid, carousel and island.
 
-Experience records with unconfirmed dates, such as college startup work, use the same role selector and detail panel but omit timeline bars rather than imply a date range.
+Experience records with unconfirmed dates, such as freelance startup work, use the same role selector and detail panel but omit timeline bars rather than imply a date range.
 
 The original hero is retained. Component names now describe responsibilities instead of design-study variants such as `BioB` and `ProjectsG3v2`. Some CSS class names remain from the approved design to preserve its appearance.
 
@@ -164,3 +168,9 @@ The active Spark architecture supersedes the earlier collector/IP/GeoIP validati
 `services/footfallInteractions.js` owns metadata-only Rook/contact lifecycles; feature hooks invoke it without passing user text. Pure engagement accounting lives in `app/engagementModel.js`, composed by `usePortfolioEngagement` with section visibility, dialog state and foreground/idle signals. Skills use stable public IDs in `portfolio.js`. Trackers release observers, timers, requests and listeners; consent resets terminate old correlation.
 
 Footfall's separate pure reporting model aggregates these events and supplies owner-only browser/session timelines. It reuses the existing Spark read cache and security boundaries. No extra Cloud Functions, Storage, scheduled jobs or billed services are introduced. See API.md for event semantics and the limits of inferred unfinished forms and foreground time.
+
+## After Hours integration validation (2026-11-10)
+
+The selected After Hours design is integrated into the production feature tree with Ember field and Carousel as the default at desktop and mobile widths. The Settings hero source is unchanged. The main certification update at002bc97 is retained; Bio and undated freelance wording follow the user's reviewed copy. Contact delivery, Rook HTTP/fallback paths, analytics vocabulary and the footer opt-out retain their production owners.
+
+Local validation passed lint/formatting,40 portfolio regressions,29 Rook tests,21 analytics tests, the public-content/startup audits and Firebase Functions packaging. Startup JavaScript including motion is approximately436.5kB minified/142.4kB gzip, within the450/150kB limits. The existing deferred Three.js warning remains. Browser review of the built app covered all chapters at desktop width,320px reflow, Carousel/Featured selection and detail-focus return, mobile navigation and career keyboard selection, certification archive, recipient/copy behavior, Rook's local navigation handoff, and the retained analytics opt-out. No contact message was sent; live provider availability, physical touch hardware, screen-reader speech and measured device performance are not implied by these checks.

@@ -1,0 +1,157 @@
+/* A portrait and a landscape share one photographic baseline and a light caption system. */
+.personal-section .personal-races.personal-photo-journal {
+  --race-caption-title: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: start;
+  width: 100%;
+  max-width: 1050px;
+  gap: 32px;
+  margin: 0 auto;
+}
+
+.personal-section .personal-photo-journal .race-card {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.personal-section .personal-photo-journal .race-card-wild-warrior,
+.personal-section .personal-photo-journal .race-card-devils-circuit {
+  max-width: none;
+  justify-self: stretch;
+}
+
+.personal-section .personal-photo-journal .race-photo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  border-radius: 8px;
+  background: none;
+  overflow: hidden;
+}
+.personal-section .personal-photo-journal .race-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff1c;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.personal-section .personal-photo-journal .race-photo img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
+.personal-section .personal-photo-journal .race-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 16px 0 0;
+}
+
+.personal-section .personal-photo-journal .race-caption-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.personal-section .personal-photo-journal .race-caption-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0 12px;
+  min-height: 44px;
+}
+
+.personal-section .personal-photo-journal .race-year {
+  flex: none;
+  color: #b0b3be;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.personal-section .personal-photo-journal .race-status {
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #b0b3be;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.personal-section .personal-photo-journal .race-status:hover {
+  color: var(--study-accent, #ff8a3d);
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.personal-section .personal-photo-journal .race-status:focus-visible {
+  outline: 2px solid var(--study-accent, #ff8a3d);
+  outline-offset: 4px;
+}
+
+.personal-section .personal-photo-journal .race-status svg {
+  color: var(--study-accent, #ff8a3d);
+}
+
+.personal-section .personal-photo-journal .race-card figcaption h3 {
+  margin: 0;
+  color: #f4f4f5;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--race-caption-title);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.personal-section .personal-photo-journal .race-card figcaption p {
+  margin: 0;
+  color: #b0b3be;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .personal-section .personal-races.personal-photo-journal {
+    --race-caption-title: 22px;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 40px;
+  }
+
+  .personal-section .personal-photo-journal .race-card-wild-warrior,
+  .personal-section .personal-photo-journal .race-card-devils-circuit {
+    justify-self: center;
+  }
+  .personal-section .personal-photo-journal .race-card-wild-warrior {
+    max-width: 360px;
+  }
+  .personal-section .personal-photo-journal .race-card-devils-circuit {
+    max-width: 720px;
+  }
+}

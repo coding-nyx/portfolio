@@ -1,6 +1,5 @@
 import '../shared/ui/sections.css';
 import '../shared/ui/dialog.css';
-import './app.css';
 import { useEffect, useRef, useState } from 'react';
 import { GlobalStyle } from '../shared/theme/GlobalStyle.js';
 import { useTheme } from '../shared/theme/useTheme.js';
@@ -12,6 +11,7 @@ import BioSection from '../features/profile/BioSection.jsx';
 import ResumeSection from '../features/profile/ResumeSection.jsx';
 import ExperienceSection from '../features/experience/ExperienceSection.jsx';
 import ProjectsSection from '../features/projects/ProjectsSection.jsx';
+import ProjectBanner from '../features/projects/ProjectBanner.jsx';
 import SkillsSection from '../features/skills/SkillsSection.jsx';
 import AchievementsSection from '../features/achievements/AchievementsSection.jsx';
 import PersonalSection from '../features/personal/PersonalSection.jsx';
@@ -24,6 +24,12 @@ import SiteFooter from './SiteFooter.jsx';
 import usePortfolioAnalytics from './usePortfolioAnalytics.js';
 import usePortfolioEngagement from './usePortfolioEngagement.js';
 import { trackFootfallEvent } from '../services/footfallAnalytics.js';
+import './afterHours.css';
+import './sectionTheme.css';
+import './typography.css';
+import './responsive.css';
+import '../features/projects/projectPalette.css';
+import EmberField from '../shared/ui/EmberField.jsx';
 
 export default function App() {
   const [rookOpen, setRookOpen] = useState(false);
@@ -46,36 +52,40 @@ export default function App() {
   return (
     <>
       <GlobalStyle />
-      <div className="portfolio-app">
+      <div className="after-hours">
+        <EmberField />
         <SkipLink />
         <CyberpunkOverlay />
         <SiteNavigation resumeUrl={resumeUrl} askOpen={rookOpen} onAsk={openRook} />
-        <main className="portfolio-chapters" id="main-content" tabIndex={-1}>
+        <main id="main-content" tabIndex={-1}>
           <Chapter id="entry" full>
             <HeroSection resumeUrl={resumeUrl} />
           </Chapter>
-          <Chapter id="bio">
+          <Chapter id="bio" number="02" label="The person behind the work">
             <BioSection />
           </Chapter>
-          <Chapter id="experience">
+          <Chapter id="experience" number="03" label="Professional work">
             <ExperienceSection />
           </Chapter>
-          <Chapter id="projects">
-            <ProjectsSection />
+          <Chapter id="projects" className="study-project-chapter">
+            <ProjectBanner />
+            <div className="study-project-content">
+              <ProjectsSection />
+            </div>
           </Chapter>
-          <Chapter id="skills">
+          <Chapter id="skills" number="05" label="The working toolkit">
             <SkillsSection />
           </Chapter>
-          <Chapter id="achievements">
+          <Chapter id="achievements" number="06" label="Learning along the way">
             <AchievementsSection />
           </Chapter>
-          <Chapter id="resume">
+          <Chapter id="resume" number="07" label="The concise version">
             <ResumeSection resumeUrl={resumeUrl} />
           </Chapter>
-          <Chapter id="personal">
+          <Chapter id="personal" number="08" label="Away from the keyboard">
             <PersonalSection />
           </Chapter>
-          <Chapter id="contact">
+          <Chapter id="contact" number="09" label="Start a conversation">
             <ContactSection />
           </Chapter>
         </main>

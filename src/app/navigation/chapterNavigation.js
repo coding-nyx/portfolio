@@ -23,7 +23,8 @@ export function navigateToChapter(id) {
 // Read after responsive layout has settled; scroll anchoring and content changes
 // can move chapters after the window's resize event has already fired.
 export function activeChapterIndex({ document: page = document, window: viewport = window } = {}) {
-  const activationLine = 136;
+  const navBottom = page.querySelector?.('.study-nav')?.getBoundingClientRect().bottom || 80;
+  const activationLine = Math.max(136, navBottom + 36);
   let active = 0;
   CHAPTERS.forEach(([id], index) => {
     const section = page.getElementById(id);

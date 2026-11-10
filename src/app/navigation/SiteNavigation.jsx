@@ -1,116 +1,145 @@
-import useChapterNavigation from './useChapterNavigation.js';
-import { AnimatePresence, m as Motion } from 'framer-motion';
-import { useSiteMotion } from '../../shared/motion/useSiteMotion.js';
+import { useEffect, useRef, useState } from 'react';
+import { FiArrowUpRight, FiChevronDown, FiMenu, FiX } from 'react-icons/fi';
 import RookLauncher from '../../features/rook/RookLauncher.jsx';
-import SpringAction from '../../shared/ui/SpringAction.jsx';
-import './navigation.css';
+import useChapterNavigation from './useChapterNavigation.js';
 import { CHAPTERS, chapterNum } from '../../data/chapters.js';
+import './navigation.css';
 
-function Cur({ i }) {
-  const { enabled } = useSiteMotion();
-  return (
-    <span className="cur-slot">
-      <AnimatePresence initial={false} mode="wait">
-        <Motion.span
-          className="cur"
-          key={i}
-          initial={enabled ? { opacity: 0, y: 5 } : false}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: enabled ? -5 : 0 }}
-          transition={{ duration: enabled ? 0.12 : 0 }}
-        >
-          <small>{chapterNum(i)}</small>
-          <span>{CHAPTERS[i][1]}</span>
-        </Motion.span>
-      </AnimatePresence>
-    </span>
-  );
+function chapterLabel(label) {
+  return label === 'Achievements' ? 'Milestones' : label;
 }
 
-// navA: solid top bar that collapses into an opaque floating pill (current chapter + Resume + Ask).
-const SiteNavigation = ({ resumeUrl, onAsk, askOpen }) => {
-  const { collapsed, wide, active, sheetOpen, setSheetOpen, opener, sheetRef } =
-    useChapterNavigation();
+export default function SiteNavigation({ onAsk, askOpen, resumeUrl = '/resume-modern.pdf' }) {
+  const { active, sheetOpen, setSheetOpen, opener, sheetRef } = useChapterNavigation();
+  const [compact, setCompact] = useState(() => window.scrollY > 180);
+  const navigation = useRef(null);
+  const current = CHAPTERS[active];
+  const currentLabel = chapterLabel(current[1]);
+  const links = CHAPTERS.filter(([id]) => !['entry', 'resume'].includes(id));
 
-  const picker = (label) => (
+  useEffect(() => {
+    let frame;
+    const sync = () => {
+      frame = undefined;
+      setCompact(window.scrollY > 180);
+    };
+    const queue = () => {
+      if (frame === undefined) frame = requestAnimationFrame(sync);
+    };
+    queue();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue, { passive: true });
+    return () => {
+      if (frame !== undefined) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', queue);
+      window.removeEventListener('resize', queue);
+    };
+  }, []);
+
+  useEffect(() => {
+    setSheetOpen(false);
+    // Preserve a keyboard user's place if the same chapter control changes form.
+    if (document.activeElement?.matches('[data-picker]')) {
+      const selector = compact
+        ? '.study-centered-pill [data-picker]'
+        : '.study-open-header [data-picker]';
+      const next = navigation.current?.querySelector(selector);
+      if (next?.checkVisibility()) next.focus({ preventScroll: true });
+    }
+  }, [compact, setSheetOpen]);
+
+  const picker = (opening = false) => (
     <button
-      className="pk"
       type="button"
+      className={`study-current-picker${opening ? ' study-sections-picker' : ''}`}
       data-picker
+      aria-label={
+        opening
+          ? `${sheetOpen ? 'Close' : 'Open'} navigation`
+          : `Chapters, current: ${chapterNum(active)} ${currentLabel}`
+      }
       aria-expanded={sheetOpen}
-      aria-controls="chs"
-      aria-label={`${label}, current: ${chapterNum(active)} ${CHAPTERS[active][1]}`}
-      onClick={(e) => {
-        opener.current = e.currentTarget;
-        setSheetOpen((o) => !o);
+      aria-controls="study-chapter-menu"
+      onClick={(event) => {
+        event.stopPropagation();
+        opener.current = event.currentTarget;
+        setSheetOpen((open) => !open);
       }}
     >
-      <Cur i={active} />
-      <span className="chev" aria-hidden="true">
-        ▾
-      </span>
+      {opening ? (
+        sheetOpen ? (
+          <FiX aria-hidden="true" />
+        ) : (
+          <FiMenu aria-hidden="true" />
+        )
+      ) : (
+        <>
+          <span className="study-current-number">{chapterNum(active)}</span>
+          <span className="study-current-label">{currentLabel}</span>
+          <FiChevronDown className="study-picker-chevron" aria-hidden="true" />
+        </>
+      )}
     </button>
   );
-  const ask = <RookLauncher open={askOpen} onAsk={onAsk} />;
+  const resume = () => (
+    <a className="study-resume" href={resumeUrl} download>
+      Resume <FiArrowUpRight aria-hidden="true" />
+    </a>
+  );
+  const renderLink = ([id, label], index, numbered = false) => (
+    <a
+      key={id}
+      href={`#${id}`}
+      data-sec={id}
+      aria-current={current[0] === id ? 'location' : undefined}
+    >
+      {numbered && <span className="study-menu-number">{chapterNum(index)}</span>}
+      <span>{chapterLabel(label)}</span>
+    </a>
+  );
 
   return (
-    <div className={`na${collapsed ? ' collapsed' : ''}`} data-wide={wide}>
-      <header className="na-bar" aria-label="Site" aria-hidden={collapsed || undefined}>
-        <nav aria-label="Chapters">
-          <ol>
-            {CHAPTERS.map(([id, n], i) =>
-              id === 'resume' ? null : (
-                <li key={id}>
-                  <a
-                    href={`#${id}`}
-                    data-sec={id}
-                    aria-current={i === active ? 'location' : undefined}
-                  >
-                    <small>{chapterNum(i)}</small>
-                    <span>{n}</span>
-                  </a>
-                </li>
-              ),
-            )}
-          </ol>
-        </nav>
-        {picker('Chapters')}
-        <SpringAction as="a" className="btn-res" href={resumeUrl} download>
-          Resume
-        </SpringAction>
-        {ask}
+    <div ref={navigation} className={`study-nav study-navigation${compact ? ' is-compact' : ''}`}>
+      <header className="study-open-header" aria-label="Site" inert={compact || undefined}>
+        <div className="study-nav-inner">
+          <a className="study-brand" href="#entry" aria-label="NYX, back to entry">
+            NYX<span> / </span>
+            <small>Raj Kumar S</small>
+          </a>
+          <nav className="study-desktop-links" aria-label="Chapters">
+            {links.map((chapter, index) => renderLink(chapter, index))}
+          </nav>
+          <div className="study-opening-picker">{picker(true)}</div>
+          <div className="study-nav-actions">
+            {resume()}
+            <RookLauncher open={askOpen} onAsk={onAsk} />
+          </div>
+        </div>
       </header>
       <div
-        className="na-pill"
+        className="study-centered-pill"
         role="navigation"
-        aria-label="Chapters (compact)"
-        aria-hidden={!collapsed || undefined}
+        aria-label="Current chapter and quick actions"
+        inert={!compact || undefined}
       >
-        {picker('Chapters')}
-        <SpringAction as="a" className="btn-res" href={resumeUrl} download>
-          Resume
-        </SpringAction>
-        {ask}
+        {picker()}
+        {resume()}
+        <RookLauncher open={askOpen} onAsk={onAsk} />
       </div>
       {sheetOpen && (
-        <div className="sheet" id="chs" role="region" aria-label="Chapters" ref={sheetRef}>
+        <nav
+          className="study-mobile-links study-chapter-menu"
+          id="study-chapter-menu"
+          aria-label="Choose a chapter"
+          ref={sheetRef}
+        >
           <ol>
-            {CHAPTERS.map(([id, n], i) => (
-              <li key={id}>
-                <a
-                  href={`#${id}`}
-                  data-sec={id}
-                  aria-current={i === active ? 'location' : undefined}
-                >
-                  <small>{chapterNum(i)}</small>
-                  <span>{n}</span>
-                </a>
-              </li>
+            {CHAPTERS.map((chapter, index) => (
+              <li key={chapter[0]}>{renderLink(chapter, index, true)}</li>
             ))}
           </ol>
-        </div>
+        </nav>
       )}
     </div>
   );
-};
-export default SiteNavigation;
+}

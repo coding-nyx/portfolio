@@ -1,13 +1,16 @@
 import './experience.css';
+import './mobile-experience.css';
 import { careerRange } from './careerTimeline.js';
 import { useRef, useState } from 'react';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { experienceData } from '../../data/portfolio.js';
 import { publicText } from '../../utils/publicText.js';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
+import MotionDetails from '../../shared/ui/MotionDetails.jsx';
 
 export default function ExperienceSection() {
   const [selected, setSelected] = useState(0);
+  const roleButtons = useRef([]);
   const uiDialog = useRef(null),
     uiOpener = useRef(null);
   const role = experienceData[selected];
@@ -26,7 +29,7 @@ export default function ExperienceSection() {
       </h2>
       <p className="career-summary">Zoho · Full-time iOS engineering since May 2022</p>
       <div className="career-grid">
-        <div className="career-tracks">
+        <div className="career-tracks" role="group" aria-label="Career timeline">
           <div className="career-axis" aria-hidden="true">
             <span>2019</span>
             <span>2021</span>
@@ -38,18 +41,35 @@ export default function ExperienceSection() {
             return (
               <button
                 key={item.id || item.company + item.dates}
+                ref={(element) => {
+                  roleButtons.current[index] = element;
+                }}
                 type="button"
                 className="career-bar"
                 data-undated={!range || undefined}
                 aria-pressed={selected === index}
                 aria-controls="career-detail"
                 onClick={() => setSelected(index)}
+                onKeyDown={(event) => {
+                  if (event.altKey || event.ctrlKey || event.metaKey) return;
+                  let next;
+                  if (event.key === 'ArrowDown') next = (index + 1) % experienceData.length;
+                  else if (event.key === 'ArrowUp')
+                    next = (index - 1 + experienceData.length) % experienceData.length;
+                  else if (event.key === 'Home') next = 0;
+                  else if (event.key === 'End') next = experienceData.length - 1;
+                  else return;
+                  event.preventDefault();
+                  setSelected(next);
+                  roleButtons.current[next]?.focus({ preventScroll: true });
+                }}
               >
                 <span className="career-label">
                   <b>{item.role}</b>
                   <small>{item.company}</small>
-                  <small className="career-dates">{item.dates}</small>
+                  {item.dates && <small className="career-dates">{item.dates}</small>}
                 </span>
+                {item.dates && <span className="career-mobile-date">{item.dates}</span>}
                 {range ? (
                   <span className="career-track" aria-hidden="true">
                     <span style={range} />
@@ -62,47 +82,13 @@ export default function ExperienceSection() {
           })}
         </div>
         <div className="career-panel" id="career-detail" aria-live="polite">
-          <p className="port-eyebrow">{role.dates}</p>
+          {role.dates && <p className="port-eyebrow">{role.dates}</p>}
           <h3>{role.role}</h3>
           <p className="port-meta">
             {role.company}
             {role.type && ` · ${role.type}`}
           </p>
           <p>{publicText(role.description)}</p>
-          {role.projects && (
-            <ul>
-              {role.projects
-                .filter((item) => !notes.includes(item))
-                .map((item) => (
-                  <li key={item.name}>
-                    <b>{item.name}</b>
-                    <p>{publicText(item.desc)}</p>
-                    {item.details && (
-                      <details className="career-work-details">
-                        <summary>
-                          How it works <FiChevronDown aria-hidden="true" />
-                        </summary>
-                        <div className="career-work-explanation">
-                          <p>{publicText(item.details.intro)}</p>
-                          <ol className="component-workflow">
-                            {item.details.steps.map((step) => (
-                              <li key={step.title}>
-                                <h4>{step.title}</h4>
-                                <p>{publicText(step.body)}</p>
-                              </li>
-                            ))}
-                          </ol>
-                          <section>
-                            <h4>Adding features and new versions</h4>
-                            <p>{publicText(item.details.updates)}</p>
-                          </section>
-                        </div>
-                      </details>
-                    )}
-                  </li>
-                ))}
-            </ul>
-          )}
           {role.uiWork && (
             <button
               className="ui-work-card"
@@ -123,6 +109,40 @@ export default function ExperienceSection() {
                 ↗
               </span>
             </button>
+          )}
+          {role.projects && (
+            <ul>
+              {role.projects
+                .filter((item) => !notes.includes(item))
+                .map((item) => (
+                  <li key={item.name}>
+                    <b>{item.name}</b>
+                    <p>{publicText(item.desc)}</p>
+                    {item.details && (
+                      <MotionDetails className="career-work-details">
+                        <summary>
+                          How it works <FiChevronDown aria-hidden="true" />
+                        </summary>
+                        <div className="career-work-explanation">
+                          <p>{publicText(item.details.intro)}</p>
+                          <ol className="component-workflow">
+                            {item.details.steps.map((step) => (
+                              <li key={step.title}>
+                                <h4>{step.title}</h4>
+                                <p>{publicText(step.body)}</p>
+                              </li>
+                            ))}
+                          </ol>
+                          <section>
+                            <h4>Adding features and new versions</h4>
+                            <p>{publicText(item.details.updates)}</p>
+                          </section>
+                        </div>
+                      </MotionDetails>
+                    )}
+                  </li>
+                ))}
+            </ul>
           )}
         </div>
       </div>

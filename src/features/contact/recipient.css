@@ -1,0 +1,110 @@
+.after-hours .contact-d .mail-recipient-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.after-hours .contact-d .mail-recipient-row > span {
+  width: 64px;
+  padding: 0;
+}
+
+.after-hours .contact-d .mail-recipient {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex: 1 1 0%;
+  min-width: 0;
+  gap: 12px;
+  font-size: var(--study-text-body, 16px);
+  container-name: contact-recipient;
+  container-type: inline-size;
+}
+
+.after-hours .contact-d .contact-recipient-link {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 12px;
+  min-width: 0;
+  min-height: 44px;
+  font-family: var(--study-font-body, 'Space Grotesk', sans-serif);
+  font-size: var(--study-text-body, 16px);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.after-hours .contact-d .contact-recipient-label,
+.after-hours .contact-d .contact-recipient-compact-name,
+.after-hours .contact-d .contact-recipient-email {
+  flex: none;
+}
+
+.after-hours .contact-d .contact-recipient-label {
+  color: #f4f4f5;
+  font-weight: 600;
+}
+
+.after-hours .contact-d .contact-recipient-compact-name {
+  display: none;
+  color: var(--study-accent, #ff8a3d);
+}
+
+.after-hours .contact-d .contact-recipient-email {
+  color: var(--study-accent, #ff8a3d);
+  font-size: var(--study-text-small, 14px);
+  font-weight: 400;
+}
+
+.after-hours .contact-d .contact-recipient-email:hover {
+  text-decoration: underline;
+}
+
+@container contact-recipient (max-width: 19em) {
+  .after-hours .contact-d .contact-recipient-email,
+  .after-hours .contact-d .contact-recipient-label {
+    display: none;
+  }
+  .after-hours .contact-d .contact-recipient-compact-name {
+    display: inline;
+  }
+  .after-hours .contact-d .contact-recipient-link:hover .contact-recipient-compact-name {
+    text-decoration: underline;
+  }
+}
+
+.after-hours .contact-d .mail-recipient .contact-copy {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--study-muted, #a1a1aa);
+}
+
+.after-hours .contact-d .mail-recipient .contact-copy:hover {
+  background: #1d1d25;
+  color: #f4f4f5;
+}
+
+.after-hours .contact-d .mail-delivery-note a {
+  display: inline;
+  margin-inline: 0.15em;
+}
+
+@media (max-width: 700px) {
+  .after-hours .contact-d .mail-recipient-row {
+    gap: 12px;
+  }
+
+  .after-hours .contact-d .mail-recipient-row > span {
+    width: 42px;
+  }
+}

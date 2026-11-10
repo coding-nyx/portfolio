@@ -1,46 +1,68 @@
 import './profile.css';
-import { createElement } from 'react';
-import { FiMapPin, FiBriefcase, FiCalendar, FiLayers } from 'react-icons/fi';
+import { FiArrowUpRight, FiMapPin, FiBriefcase, FiCalendar, FiLayers } from 'react-icons/fi';
 import { profileData, experienceData } from '../../data/portfolio.js';
-import { publicText } from '../../utils/publicText.js';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
+import './bio-study.css';
 
 export default function BioSection() {
-  const rows = [
-    [FiMapPin, 'Location', profileData.location],
-    [FiBriefcase, 'Role', experienceData[0].role],
-    [FiCalendar, 'Experience', 'Since May 2022'],
-    [FiLayers, 'Stack', 'Swift · UIKit · SwiftUI · SPM'],
+  const work = experienceData.find((item) => item.type === 'Full-time') || experienceData[0];
+  const since = new Intl.DateTimeFormat('en', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${work.startDate}-01T00:00:00Z`));
+  const facts = [
+    { label: 'Location', Icon: FiMapPin, value: profileData.location },
+    { label: 'Role', Icon: FiBriefcase, value: work.role, detail: work.company },
+    { label: 'Full-time', Icon: FiCalendar, value: `Since ${since}` },
+    { label: 'Primary stack', Icon: FiLayers, value: profileData.bio.primaryStack.join(' · ') },
   ];
+
   return (
-    <div className="port-section bio-b" data-design="Bio B">
-      <div className="bio-card">
-        <div className="bio-top">
-          <img
-            className="bio-avatar"
-            src={profileData.profileImage}
-            alt="Raj Kumar S"
-            width="96"
-            height="96"
-          />
-          <h2 id="h-bio" tabIndex={-1}>
-            {profileData.name}
-          </h2>
-          <p>{profileData.roleTitle}</p>
+    <div className="port-section study-bio bio-natural">
+      <div className="bio-natural-layout">
+        <h2 id="h-bio" className="bio-natural-title" tabIndex={-1}>
+          Hi, I’m {profileData.bio.preferredName}.
+        </h2>
+        <div className="bio-natural-profile">
+          <figure className="bio-natural-portrait" data-whimsy-surface="portrait">
+            <img
+              src={profileData.profileImage}
+              alt={profileData.name}
+              width="960"
+              height="896"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>{profileData.bio.preferredName}</figcaption>
+          </figure>
+          <dl className="bio-natural-facts" aria-label="Profile at a glance">
+            {facts.map(({ label, Icon, value, detail }) => (
+              <div className="bio-natural-fact" key={label}>
+                <dt>
+                  <Icon size={15} aria-hidden="true" />
+                  <span>{label}</span>
+                </dt>
+                <dd>
+                  {value}
+                  {detail && <span>{detail}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        <p className="bio-intro">{publicText(profileData.summary)}</p>
-        <div className="bio-group">
-          {rows.map(([icon, label, value]) => (
-            <div className="bio-row" key={label}>
-              <i aria-hidden="true">{createElement(icon, { size: 20, focusable: false })}</i>
-              <b>{label}</b>
-              <span>{value}</span>
-            </div>
-          ))}
+        <div className="study-bio-copy bio-natural-copy">
+          <section className="bio-natural-story" aria-labelledby="bio-about-me">
+            <h3 id="bio-about-me">About me</h3>
+            {profileData.bio.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <a className="study-bio-personal bio-natural-personal" href="#personal">
+              {profileData.bio.personalLinkLabel}
+              <FiArrowUpRight aria-hidden="true" />
+            </a>
+          </section>
         </div>
-        <a className="bio-personal-link" href="#personal">
-          Outside work: obstacle courses & other interests ↗
-        </a>
       </div>
       <NextChapter id="experience">Experience</NextChapter>
     </div>
