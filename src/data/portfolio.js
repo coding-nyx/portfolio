@@ -249,6 +249,15 @@ export const experienceData = [
       'Initial exposure to professional iOS development workflows and Swift programming.',
   },
   {
+    id: 'college-startup-work',
+    company: 'Startup projects',
+    role: 'Android & React development',
+    dates: 'During college',
+    timeline: false,
+    description:
+      'Following an initial internship, contributed to Android applications and React web apps for startups while in college.',
+  },
+  {
     company: 'Servion Global Solutions',
     role: 'Intern',
     dates: 'Nov 2019 - Dec 2019',
@@ -288,6 +297,7 @@ export const profileData = {
 
 export const projects = [
   {
+    id: 'worktracker',
     name: 'WorkTracker',
     cardSummary:
       'A shared Kanban workspace for coordinating AI agents, with live updates and REST/MCP access.',
@@ -303,6 +313,7 @@ export const projects = [
     status: 'Active',
   },
   {
+    id: 'hermes-companion',
     name: 'Hermes Companion',
     cardSummary:
       'Android and web clients for a self-hosted agent fleet, with pairing, chat, device control and notification forwarding.',
@@ -346,6 +357,7 @@ export const projects = [
     ],
   },
   {
+    id: 'tally',
     name: 'Tally',
     cardSummary:
       'A personal finance tracker with multiple accounts, statement imports, budgets and MCP tools.',
@@ -403,6 +415,7 @@ export const projects = [
     },
   },
   {
+    id: 'a0090-meta',
     name: 'a0090-meta (hub-11 OS)',
     cardSummary:
       'A reproducible Linux distribution for an RK3588 NVR demo board, with a custom device tree and boot image.',
@@ -429,6 +442,7 @@ export const projects = [
     },
   },
   {
+    id: 'agent-os',
     name: 'Ara → Agent OS',
     aliases: ['Ara', 'Agent OS'],
     cardSummary:

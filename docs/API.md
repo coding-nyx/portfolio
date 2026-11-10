@@ -1,6 +1,6 @@
 # API and integration structure
 
-The portfolio has **one application HTTP endpoint: `POST /api/rook`**. Portfolio content comes from local data modules. Contact delivery uses the EmailJS browser SDK directly when configured; there is no `/api/contact` route. Analytics is optional and separate from application behavior.
+The portfolio Firebase backend exposes **`POST /api/rook`**. First-party visitor collection uses the separate Footfall collector described below. Portfolio content comes from local data modules. Contact delivery uses the EmailJS browser SDK directly when configured; there is no `/api/contact` route. Analytics is optional and separate from application behavior.
 
 ## Rook request path
 
@@ -97,8 +97,47 @@ On 2026-10-22, a dashboard test returned `200 OK` and the owner confirmed arriva
 
 `App → scheduleVisitAnalytics → deferred Firebase app/analytics SDKs`.
 
-Analytics requires the Firebase web app identifiers and measurement ID, skips localhost, schedules work during idle time and records the existing visit event once. It is fail-soft and exposes no application HTTP route. There is no client-side Firestore application flow in this portfolio.
+The Google integration requires Firebase web app identifiers and a measurement ID, skips localhost, runs during idle time and records `portfolio_visit` once per document load. The former `login` event was misleading and has been renamed. Automatic Google page views remain separate; no duplicate manual page-view event was added. There is no client-side Firestore application flow.
+
+The same app effect starts independent Footfall collection through `services/footfallAnalytics.js`. The app observes section reach and known link activations; project, contact and Rook boundaries report their actions. Events are `page_view`, `section_view`, `project_open`, `resume_open`, `outbound_click`, `contact_result`, `contact_draft_open` and `rook_open`. The public vocabulary is in `data/footfallContract.js`. Contact/Rook contents are excluded. The footer provides disclosure and a saved opt-out; DNT/GPC skip both integrations.
+
+```http
+POST /api/footfall/events?property=portfolio
+Content-Type: application/json
+```
+
+```json
+{
+  "version": 1,
+  "events": [
+    {
+      "eventId": "UUID",
+      "name": "project_open",
+      "visitorId": "UUID",
+      "sessionId": "UUID",
+      "occurredAt": 1794210000000,
+      "path": "/",
+      "referrer": null,
+      "context": { "project_id": "worktracker", "entry_point": "grid" }
+    }
+  ]
+}
+```
+
+Successful ingestion returns `200 {"accepted":["UUID"]}` after an atomic transaction. Event IDs deduplicate per property. Invalid schema/context returns 400, unregistered origin/property 403, excess body size 413, wrong content type 415 and rate limits 429. The body ceiling is 16,384 bytes and ten events. The existing `POST /api/footfall/collect` remains compatible with legacy visit senders; it is not additionally called by the new sender.
+
+The browser queues at most 100 events/60,000 encoded bytes for five minutes, sends batches of at most ten/16,000 bytes, and retries network/acknowledgement/408/429/5xx failures up to five attempts. Other HTTP errors drop the rejected batch. Ten-second request timeouts, a short batch timer and best-effort hidden-document flush never gate navigation. There is no durable offline replay. Browser IDs persist locally; per-tab sessions renew after 30 minutes without tracked activity. Storage failures use document-local IDs. Neither IPs nor location are browser payload fields; the collector derives them from requests.
+
+Vite development proxies `/api/footfall` to the loopback collector on port 5175. Production collection is disabled unless `VITE_FOOTFALL_COLLECTOR_URL` is configured; `VITE_FOOTFALL_PROPERTY_ID` defaults to `portfolio`. An existing collector URL ending in `/collect` is adapted to `/events`. Production also needs CSP and origin/proxy configuration. No Firebase rewrite or collector deployment was added.
+
+The separate project implements owner sign-in/out at `/api/footfall/session`, an owner-authenticated visit ledger at `GET /api/footfall/report`, and event aggregates at `GET /api/footfall/analytics?property=all|ID&start=YYYY-MM-DD&end=YYYY-MM-DD`. Aggregate dates use IST, allow up to 30 days, and omit raw IPs. Reports poll every thirty seconds. Raw IPs expire after seven days, events/visits after thirty. The portfolio Firebase service still owns only Rook. See ANALYTICS_PLAN.md and `/Users/nyx/Projects/portfolio-analytics/docs/VISITOR_COLLECTION.md` for full semantics and limitations.
 
 ## Verification boundary
 
 The existing Rook tests use injected/mocked provider calls and verify validation, timeout, cancellation, sanitized errors, limits, fallback metadata and Firebase request adaptation. They do not prove the production provider credential, deployed backend availability or actual email delivery. Those require separate environment-specific checks.
+
+## Firebase Footfall release preparation (2026-11-10)
+
+The separate Footfall repository now provides the Functions v2/Firestore collector and Hosting target. This portfolio adds a same-origin `/api/footfall/**` rewrite to that Function, plus `npm run build:firebase` to build with the event endpoint configured. The existing CSP already allows that same-origin request. CI enables the build/rewrite only when `FOOTFALL_DEPLOY_ENABLED=true`; publish the collector first and preserve the existing Rook flag. No portfolio deployment has been performed here.
+
+Production owner sessions use the Hosting-compatible `__session` cookie and `private, no-store` responses. Events, owner sessions and rate limits use private Firestore storage; SQLite remains local-only. The new database has restricted point-in-time recovery, which can retain deleted records for up to seven additional days beyond live retention. See the sibling Footfall deployment guide for prepared resources, release order and the still-pending real production IP/event verification.

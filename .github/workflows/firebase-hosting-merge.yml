@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ROOK_DEPLOY_ENABLED: ${{ vars.ROOK_DEPLOY_ENABLED }}
+      FOOTFALL_DEPLOY_ENABLED: ${{ vars.FOOTFALL_DEPLOY_ENABLED }}
       VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
       VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
       VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
@@ -30,8 +31,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run lint && npm run format:check && npm test && npm run test:rook
-      - run: npm run build && npm run audit:bundle
+      - run: npm run lint && npm run format:check && npm test && npm run test:rook && npm run test:analytics
+      - name: Build portfolio with the selected analytics connection
+        run: |
+          if [ "$FOOTFALL_DEPLOY_ENABLED" = "true" ]; then npm run build:firebase; else npm run build; fi
+          npm run audit:bundle
       - run: npm ci --prefix functions && npm run build:functions
       - name: Configure Firebase authentication
         env:

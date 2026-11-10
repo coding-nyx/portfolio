@@ -6,6 +6,7 @@ import SpringAction from '../../shared/ui/SpringAction.jsx';
 import ProjectDetailsDialog from './ProjectDetailsDialog.jsx';
 import { useSiteMotion } from '../../shared/motion/useSiteMotion.js';
 import './projects.css';
+import { trackFootfallEvent } from '../../services/footfallAnalytics.js';
 
 export default function ProjectsSection() {
   const stage = useRef(null),
@@ -30,6 +31,11 @@ export default function ProjectsSection() {
         disposeScene = createIsland(stage.current, projects, {
           onSelect: setCurrent,
           onOpen: (index) => {
+            if (dialog.current?.open) return;
+            trackFootfallEvent('project_open', {
+              project_id: projects[index].id,
+              entry_point: 'island',
+            });
             openRef.current = stage.current;
             setDetail(index);
             dialog.current?.showModal();
@@ -46,7 +52,9 @@ export default function ProjectsSection() {
     };
   }, [islandView]);
 
-  const open = (index, event) => {
+  const open = (index, event, entryPoint = 'island') => {
+    if (dialog.current?.open) return;
+    trackFootfallEvent('project_open', { project_id: projects[index].id, entry_point: entryPoint });
     openRef.current = event.currentTarget;
     setDetail(index);
     dialog.current.showModal();
@@ -136,12 +144,14 @@ export default function ProjectsSection() {
           <>
             <ProjectGrid
               projects={projects}
-              onOpen={(project, event) => open(projects.indexOf(project), event)}
+              onOpen={(project, event) => open(projects.indexOf(project), event, 'grid')}
             />
             <div className="project-mobile-carousel">
               <ProjectCarousel
                 enabled={motionEnabled}
-                onOpenDetails={(project, event) => open(projects.indexOf(project), event)}
+                onOpenDetails={(project, event) =>
+                  open(projects.indexOf(project), event, 'carousel')
+                }
               />
             </div>
           </>

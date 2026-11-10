@@ -37,6 +37,8 @@ functions/index.mjs         Firebase runtime adapter
 
 The app eagerly composes all professional/personal sections. Each feature owns its view, local state and styles. Contact and Rook keep substantial stateful behavior in hooks; skills and career timelines use pure model modules. Projects owns one details dialog shared by its grid, carousel and island.
 
+Experience records with unconfirmed dates, such as college startup work, use the same role selector and detail panel but omit timeline bars rather than imply a date range.
+
 The original hero is retained. Component names now describe responsibilities instead of design-study variants such as `BioB` and `ProjectsG3v2`. Some CSS class names remain from the approved design to preserve its appearance.
 
 ## Dependency direction
@@ -94,6 +96,14 @@ The build emits a Vite manifest. `npm run audit:bundle` follows the static depen
 
 The existing Three.js engine remains approximately 664 kB minified / 171 kB gzip and still triggers Vite's unchanged 500 kB per-chunk warning. It is an optional deferred cost. This refactor does not hide the warning by raising the threshold or split one engine into arbitrary files.
 
+## First-party visitor collection
+
+`App → scheduleVisitAnalytics → scheduleFootfallVisit` starts a bounded first-party event sender. `app/usePortfolioAnalytics.js` observes chapter visibility and allowlisted link activations; project details, contact delivery and Rook callbacks emit their own events. No sibling-feature imports or navigation behavior are introduced by tracking. Project identifiers are explicit public data. `data/footfallContract.js` defines the versioned vocabulary, mirrored by the separate collector contract.
+
+The queue batches up to ten events, requires explicit event-ID acknowledgements, retries transient errors with fixed limits and attempts a hidden-document flush. IDs and sessions have storage-unavailable fallbacks; idle startup, cleanup, DNT/GPC and the footer opt-out are respected. Scroll/hash navigation is not a new document visit. `services/analyticsPreference.js` owns the saved opt-out for Footfall and optional Google Analytics.
+
+The separate Footfall project owns validated ingestion, IP derivation, offline GeoIP, SQLite persistence, owner authentication and aggregate reports. No dashboard UI, owner credentials or visitor database enters the portfolio bundle. Local Vite forwards its API to port 5175. Production requires an explicitly configured collector URL/CSP and separately hosted service. See API.md and ANALYTICS_PLAN.md for delivery bounds, event semantics and remaining deployment limitations.
+
 ## Styling
 
 Shared section/dialog primitives load before feature styles. Feature-specific rules live beside the feature; app layout/navigation and shared motion effects have their own styles. The existing global styled-components theme is retained. A complete token migration and CSS-class rename are separate work, not claimed as completed here.
@@ -133,3 +143,16 @@ The in-app browser was available for this later, targeted QA pass. These checks 
 | Navigation and résumé     | Evidence links and explicit commands closed Rook and focused the requested chapter; navigation also worked with the fixture server stopped. The résumé command opened `/resume-modern.pdf` in a separate tab. |
 
 This pass fixed background scrolling under Rook, increased question-input text to 16 px, added a waiting announcement, and consolidated dialog lifecycle behavior in the feature hook. The isolated fixture, screenshots and scratch verification files stay under ignored `verification/`; they are not production code or tracked tests. Physical iOS/Android keyboard behavior, screen-reader speech, broad accessibility auditing, WebGL and device CPU/memory profiling remain outside this check.
+
+## Portfolio event collection validation (2026-11-09)
+
+- `npm run check` passed: lint/formatting, 23 portfolio regressions, 29 Rook tests, 9 sender/visibility tests, production build and startup budgets. `npm run build:functions` passed. UI startup JavaScript including motion is approximately 403.8 kB / 132.6 kB gzip; the existing deferred Three.js chunk warning remains.
+- Separate Footfall checks passed: 13 model/collector tests, TypeScript/build and changed-file formatting. Sender and collector event vocabularies matched.
+- Browser actions reached the actual local event ledger and Footfall reports: grid/carousel project opens, résumé intent, Rook opens, outbound source clicks and chapter visibility. The ordered portfolio funnel reconciled with the exercised visit/project/résumé sequence.
+- Opting out and opening another project left the received event count unchanged. Owner sign-out locked the report, and sign-in restored it. Footfall reflow was checked at 320 CSS pixels without whole-page horizontal overflow. The portfolio disclosure was inspected at that width and its copyright/text wrapping repaired.
+- Unauthenticated aggregate/visitor report requests returned 401; Vite denied private password/database paths with 403. The owner password was absent from the built dashboard JavaScript.
+- Contact result handling was validated through event-schema/aggregate tests; no real contact message was sent. Browser offline retries, the island's 3D interaction path, custom date-picker interaction, physical device behavior, screen-reader speech, 200% zoom, production forwarding and real public visitor geolocation were not verified in this pass. Queue failures/cleanup and date validation have automated coverage. Collection remains best effort and local; no publication was performed.
+
+## Firebase Footfall integration (2026-11-10)
+
+The portfolio is still a frontend plus its separate Rook backend. The Footfall Functions codebase and Firestore persistence live entirely in the sibling analytics project. A same-origin Hosting rewrite forwards only `/api/footfall/**` to its collector, while `/api/rook` retains its existing owner/configuration. `build:firebase` configures the first-party event URL; the existing deployment workflow gates that build/rewrite with `FOOTFALL_DEPLOY_ENABLED`, independently of `ROOK_DEPLOY_ENABLED`. Source files and portfolio behavior are not coupled to Footfall dashboard UI or server secrets. Production publication and network attribution verification remain separate from passing builds/emulator checks.

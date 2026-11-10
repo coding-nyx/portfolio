@@ -1,4 +1,7 @@
 // Analytics is optional. Neither its SDK nor a network request is needed to render the portfolio.
+import { analyticsOptedOut } from './analyticsPreference.js';
+import { scheduleFootfallVisit } from './footfallAnalytics.js';
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -24,7 +27,7 @@ async function getAnalyticsClient() {
   return initialization;
 }
 
-export function scheduleVisitAnalytics() {
+function scheduleGoogleAnalytics() {
   const local = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
   const configured =
     firebaseConfig.apiKey &&
@@ -35,7 +38,7 @@ export function scheduleVisitAnalytics() {
   let cancelled = false;
   const logVisit = async () => {
     const client = await getAnalyticsClient();
-    if (cancelled || visitLogged || !client) return;
+    if (cancelled || visitLogged || !client || analyticsOptedOut()) return;
     visitLogged = true;
     const deviceType = /Mobi|Android/i.test(navigator.userAgent)
       ? 'Mobile'
@@ -43,7 +46,7 @@ export function scheduleVisitAnalytics() {
         ? 'Tablet'
         : 'Desktop';
     try {
-      client.logEvent(client.instance, 'login', { device_type: deviceType });
+      client.logEvent(client.instance, 'portfolio_visit', { device_type: deviceType });
     } catch {
       /* Analytics failure must never interrupt the page. */
     }
@@ -56,5 +59,23 @@ export function scheduleVisitAnalytics() {
     cancelled = true;
     if (idle) window.cancelIdleCallback(handle);
     else window.clearTimeout(handle);
+  };
+}
+
+export function scheduleVisitAnalytics() {
+  let stopGoogle, stopFootfall;
+  const restart = () => {
+    stopGoogle?.();
+    stopFootfall?.();
+    if (analyticsOptedOut()) return;
+    stopGoogle = scheduleGoogleAnalytics();
+    stopFootfall = scheduleFootfallVisit();
+  };
+  restart();
+  window.addEventListener('footfall-preference-change', restart);
+  return () => {
+    window.removeEventListener('footfall-preference-change', restart);
+    stopGoogle?.();
+    stopFootfall?.();
   };
 }

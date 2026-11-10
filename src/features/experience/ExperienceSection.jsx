@@ -1,7 +1,7 @@
 import './experience.css';
 import { careerRange } from './careerTimeline.js';
 import { useRef, useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import { experienceData } from '../../data/portfolio.js';
 import { publicText } from '../../utils/publicText.js';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
@@ -33,30 +33,40 @@ export default function ExperienceSection() {
             <span>2023</span>
             <span>{new Date().getFullYear()}</span>
           </div>
-          {experienceData.map((item, index) => (
-            <button
-              key={item.company + item.dates}
-              className="career-bar"
-              aria-pressed={selected === index}
-              aria-controls="career-detail"
-              onClick={() => setSelected(index)}
-            >
-              <span className="career-label">
-                <b>{item.role}</b>
-                <small>{item.company}</small>
-                <small className="career-dates">{item.dates}</small>
-              </span>
-              <span className="career-track" aria-hidden="true">
-                <span style={careerRange(item)} />
-              </span>
-            </button>
-          ))}
+          {experienceData.map((item, index) => {
+            const range = careerRange(item);
+            return (
+              <button
+                key={item.id || item.company + item.dates}
+                type="button"
+                className="career-bar"
+                data-undated={!range || undefined}
+                aria-pressed={selected === index}
+                aria-controls="career-detail"
+                onClick={() => setSelected(index)}
+              >
+                <span className="career-label">
+                  <b>{item.role}</b>
+                  <small>{item.company}</small>
+                  <small className="career-dates">{item.dates}</small>
+                </span>
+                {range ? (
+                  <span className="career-track" aria-hidden="true">
+                    <span style={range} />
+                  </span>
+                ) : (
+                  <FiChevronRight className="career-select-icon" aria-hidden="true" />
+                )}
+              </button>
+            );
+          })}
         </div>
         <div className="career-panel" id="career-detail" aria-live="polite">
           <p className="port-eyebrow">{role.dates}</p>
           <h3>{role.role}</h3>
           <p className="port-meta">
-            {role.company} · {role.type}
+            {role.company}
+            {role.type && ` · ${role.type}`}
           </p>
           <p>{publicText(role.description)}</p>
           {role.projects && (

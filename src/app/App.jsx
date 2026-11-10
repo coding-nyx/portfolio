@@ -21,6 +21,8 @@ import SiteNavigation from './navigation/SiteNavigation.jsx';
 import Chapter from './Chapter.jsx';
 import { navigateToChapter } from './navigation/chapterNavigation.js';
 import SiteFooter from './SiteFooter.jsx';
+import usePortfolioAnalytics from './usePortfolioAnalytics.js';
+import { trackFootfallEvent } from '../services/footfallAnalytics.js';
 
 export default function App() {
   const [rookOpen, setRookOpen] = useState(false);
@@ -30,8 +32,10 @@ export default function App() {
   const resumeUrl = theme === 'cyberpunk' ? '/resume-cyberpunk.pdf' : '/resume-modern.pdf';
 
   useEffect(() => scheduleVisitAnalytics(), []);
+  usePortfolioAnalytics();
 
   const openRook = (element) => {
+    if (!rookOpen) trackFootfallEvent('rook_open', { entry_point: 'navigation' });
     askOpener.current = element;
     setRookRequested(true);
     setRookOpen(true);
@@ -82,7 +86,10 @@ export default function App() {
             setRookOpen(false);
             navigateToChapter(id);
           }}
-          onOpenResume={() => window.open(resumeUrl, '_blank')}
+          onOpenResume={() => {
+            trackFootfallEvent('resume_open', { entry_point: 'rook' });
+            window.open(resumeUrl, '_blank');
+          }}
         />
         <SiteFooter />
       </div>

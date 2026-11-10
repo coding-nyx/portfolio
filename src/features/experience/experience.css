@@ -45,6 +45,19 @@
 .career-bar[aria-pressed='true'] {
   background: #15151b;
 }
+.career-bar:hover {
+  background: #15151b;
+}
+.career-bar[data-undated] {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.career-select-icon {
+  color: #a1a1aa;
+  font-size: 18px;
+}
+.career-bar[aria-pressed='true'] .career-select-icon {
+  color: #ff8a3d;
+}
 .career-label {
   display: flex;
   flex-direction: column;

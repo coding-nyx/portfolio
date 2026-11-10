@@ -14,7 +14,9 @@
     "build:functions": "node scripts/build-functions.mjs",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"server/**/*.mjs\" \"config/**/*.js\" eslint.config.js vite.config.js \"tests/**/*.{js,mjs}\" \"scripts/**/*.mjs\" functions/index.mjs AGENTS.md docs/ARCHITECTURE.md docs/API.md docs/CODING_STANDARDS.md",
     "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"server/**/*.mjs\" \"config/**/*.js\" eslint.config.js vite.config.js \"tests/**/*.{js,mjs}\" \"scripts/**/*.mjs\" functions/index.mjs AGENTS.md docs/ARCHITECTURE.md docs/API.md docs/CODING_STANDARDS.md",
-    "check": "npm run lint && npm run format:check && npm test && npm run test:rook && npm run build && npm run audit:bundle"
+    "check": "npm run lint && npm run format:check && npm test && npm run test:rook && npm run test:analytics && npm run build && npm run audit:bundle",
+    "test:analytics": "node --test tests/footfall-client.test.mjs",
+    "build:firebase": "node scripts/build-firebase.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

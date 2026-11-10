@@ -27,6 +27,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
+    server: {
+      proxy: { '/api/footfall': { target: 'http://127.0.0.1:5175', changeOrigin: false } },
+    },
     build: { manifest: true },
   };
 });

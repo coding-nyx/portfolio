@@ -1,5 +1,6 @@
 // Dates already supplied by portfolio.js determine the career bars; no invented tenure counts.
 export const careerRange = (item) => {
+  if (item.timeline === false) return null;
   const [from, to] = item.dates.split(' - ');
   const end = to === 'Present' ? new Date() : new Date(to);
   const start = new Date(from);

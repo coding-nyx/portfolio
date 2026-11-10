@@ -1,6 +1,7 @@
 import { createContactForm, validateContactForm, contactDraftUrl } from './contactModel.js';
 import { useCallback, useRef, useState } from 'react';
 import { profileData } from '../../data/portfolio.js';
+import { trackFootfallEvent } from '../../services/footfallAnalytics.js';
 import { sendEmail, EMAIL_CONFIGURED } from '../../services/contactService.js';
 
 export default function useContactForm() {
@@ -53,11 +54,13 @@ export default function useContactForm() {
           message: `Subject: ${form.subject}\n\n${form.message.trim()}`,
         });
         setStatus('sent');
+        trackFootfallEvent('contact_result', { result: 'sent' });
       } else {
         setStatus('unavailable');
       }
     } catch {
       setStatus('error');
+      trackFootfallEvent('contact_result', { result: 'error' });
     } finally {
       inFlight.current = false;
       setSending(false);
