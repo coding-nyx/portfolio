@@ -14,6 +14,7 @@ const formatCertIssuerEyebrow = (issuer) =>
 
 test('current-cert eyebrow is derived from issuer and not hardcoded to Anthropic', () => {
   assert.equal(formatCertIssuerEyebrow('Anthropic (Claude Academy)'), 'Anthropic · Claude Academy');
+  assert.equal(formatCertIssuerEyebrow('Google (Play Academy)'), 'Google · Play Academy');
   assert.equal(formatCertIssuerEyebrow('Coursera'), 'Coursera');
   assert.equal(
     formatCertIssuerEyebrow('GUVI Geek Networks, IITM Research Park'),
@@ -33,7 +34,7 @@ test('current certification cards keep real certificationsData records', async (
   const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
   const { current, older } = splitCertifications(certificationsData);
 
-  assert.equal(current.length, 3);
+  assert.equal(current.length, 4);
   assert.equal(older.length, 11);
   assert.deepEqual(
     current.map((item) => ({
@@ -61,6 +62,12 @@ test('current certification cards keep real certificationsData records', async (
         date: 'Nov 2026',
         credentialUrl: 'https://academy.claude.com/badges/baaaec90-f909-4f9f-ad94-e3f04b4b176a',
       },
+      {
+        name: 'Play Store Listing Certificate',
+        issuer: 'Google (Play Academy)',
+        date: 'Nov 2026',
+        credentialUrl: undefined,
+      },
     ],
   );
 });
@@ -87,4 +94,37 @@ test('badge styling and current-only aria-labels are scoped to current.map', () 
   assert.equal(source.includes('<h4>{item.name}</h4>'), true);
   assert.equal(source.includes('<h3>{item.name}</h3>'), true);
   assert.equal((source.match(/<CertificationCard /g) || []).length, 2);
+});
+
+test('Play Store Listing Certificate has no credential link and stays in Current', async () => {
+  const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
+  const { current, older } = splitCertifications(certificationsData);
+  const play = current.find((item) => item.name === 'Play Store Listing Certificate');
+  const source = read('src/features/achievements/AchievementsSection.jsx');
+
+  assert.ok(play, 'Play Store cert must be in Current');
+  assert.equal(play.issuer, 'Google (Play Academy)');
+  assert.equal(play.date, 'Nov 2026');
+  assert.equal(play.credentialUrl, undefined);
+  assert.equal('credentialUrl' in play, false);
+  assert.equal(
+    older.some((item) => item.name === 'Play Store Listing Certificate'),
+    false,
+  );
+  assert.equal(older.length, 11);
+  assert.deepEqual(
+    current.map((item) => item.name),
+    [
+      'Introduction to Model Context Protocol',
+      'AI Capabilities and Limitations',
+      'AI Fluency for builders',
+      'Play Store Listing Certificate',
+    ],
+  );
+  assert.equal(formatCertIssuerEyebrow(play.issuer), 'Google · Play Academy');
+
+  // Current cards with no URL render nothing (no dummy link or Certificate fallback).
+  assert.equal(source.includes('item.credentialUrl ? ('), true);
+  assert.equal(source.includes(') : current ? null : ('), true);
+  assert.equal(source.includes('<span className="port-meta">Certificate</span>'), true);
 });

@@ -51,7 +51,7 @@ function CertificationCard({ item, current = false }) {
         >
           View credential ↗
         </ExternalLink>
-      ) : (
+      ) : current ? null : (
         <span className="port-meta">Certificate</span>
       )}
     </article>

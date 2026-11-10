@@ -55,6 +55,11 @@ export const certificationsData = [
     credentialUrl: 'https://academy.claude.com/badges/baaaec90-f909-4f9f-ad94-e3f04b4b176a',
   },
   {
+    name: 'Play Store Listing Certificate',
+    issuer: 'Google (Play Academy)',
+    date: 'Nov 2026',
+  },
+  {
     name: 'Programming for everybody (Getting started with python)',
     issuer: 'Coursera',
     date: 'Jul 2020',

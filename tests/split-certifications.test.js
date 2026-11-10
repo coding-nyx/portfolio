@@ -100,6 +100,7 @@ test('live certificationsData splits Nov 2026 entries as current and 2020 entrie
       'Introduction to Model Context Protocol',
       'AI Capabilities and Limitations',
       'AI Fluency for builders',
+      'Play Store Listing Certificate',
     ],
   );
   assert.equal(older.length, 11);
