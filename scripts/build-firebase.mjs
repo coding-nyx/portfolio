@@ -1,5 +1,5 @@
 import { build } from 'vite';
-// First-party ingestion uses the portfolio site's explicit Hosting rewrite.
-process.env.VITE_FOOTFALL_COLLECTOR_URL = '/api/footfall/events';
+// Footfall writes directly to its separate Spark project's Firestore rules.
+process.env.VITE_FOOTFALL_ENABLED = 'true';
 process.env.VITE_FOOTFALL_PROPERTY_ID = 'portfolio';
 await build();

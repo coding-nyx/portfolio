@@ -91,6 +91,7 @@ test('sender emits one document visit across restarts, batches valid actions and
     'eventId',
     'name',
     'occurredAt',
+    'order',
     'path',
     'referrer',
     'sessionId',

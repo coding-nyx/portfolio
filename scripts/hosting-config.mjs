@@ -4,10 +4,6 @@ if (process.env.ROOK_DEPLOY_ENABLED !== 'true')
   config.hosting.rewrites = config.hosting.rewrites.filter(
     (r) => r.function?.functionId !== 'rook',
   );
-if (process.env.FOOTFALL_DEPLOY_ENABLED !== 'true')
-  config.hosting.rewrites = config.hosting.rewrites.filter(
-    (r) => r.function?.functionId !== 'footfall',
-  );
 writeFileSync(
   'firebase.hosting.json',
   JSON.stringify(

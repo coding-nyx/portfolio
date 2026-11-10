@@ -12,14 +12,13 @@ export default function SiteFooter() {
         <p>
           This site measures document visits, sections viewed, project and résumé opens, external
           link clicks, contact delivery outcomes and Rook opens. It uses random browser/session IDs.
-          The collector records IP addresses and approximate country, region and city, plus
-          device/browser categories.
+          Footfall stores device/browser categories, browser language and time zone. It does not
+          store IP addresses or geographic location.
         </p>
         <p>
-          Contact fields and Rook conversations are excluded from analytics. Raw IPs expire after 7
-          days; event and visit records after 30 days. Restricted recovery backups can retain
-          deleted records for up to 7 additional days. Reports require owner access. Location comes
-          from the network address, without a GPS request.
+          Contact fields and Rook conversations are excluded from analytics. Reports cover 30 days;
+          older Footfall records remain stored until the owner runs cleanup. Reports require owner
+          access. Independently configured Google Analytics follows the same opt-out choice.
         </p>
         <label>
           <input

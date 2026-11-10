@@ -1,72 +1,43 @@
-> Firebase preparation updated 10 November 2026: the separate Footfall project now provides Functions/Firestore persistence, shared sessions/limits, `__session` cookies, pinned private GeoIP assets and Hosting configuration. The portfolio has a gated same-origin rewrite/release build. Restricted recovery backups can retain deleted data for seven extra days. The apps have not been published; live IP attribution and production delivery remain pending. See the sibling project's docs/FIREBASE_DEPLOYMENT.md.
+# Portfolio analytics → Footfall on Spark
 
-# Portfolio tracking and delivery
+Updated 10 November 2026. This replaces the prior custom collector/IP/GeoIP plan. The user selected a separate Firebase Spark project for Footfall and retained the existing billed Rook project.
 
-Implemented locally on 9 November 2026. Footfall is a separate multi-property application; the portfolio is one tracked property. Production publication has not been performed.
+## Data flow
 
-## Collection flow
+Portfolio action → bounded in-memory queue → create-only Firestore REST commit in `nyx-footfall-analytics` → Firestore schema rules → immutable event document → owner Firebase Authentication → dashboard queries and pure report calculations.
 
-```text
-Portfolio document / action
-  → App and feature-owned instrumentation
-  → services/footfallAnalytics.js
-  → bounded in-memory event queue
-  → POST /api/footfall/events?property=portfolio
-  → validated, deduplicated collector transaction
-  → private SQLite events; document visits also populate the IP/geo visit ledger
-  → authenticated Footfall reports, polled every 30 seconds
-```
+The portfolio and dashboard remain separate Git projects. Shared public event vocabulary and transport semantics are mirrored, without runtime imports across repositories. The portfolio never receives owner report tokens, credentials or visitor records. Production collection is off in ordinary builds; `build:firebase` or `VITE_FOOTFALL_ENABLED=true` enables it. Development uses only `demo-footfall` on local emulators. Rook and optional GA4 keep their existing independent integration.
 
-Development Vite proxies forward `/api/footfall` to the separate loopback service on port 5175. Production requires a configured HTTPS collector or same-origin proxy and matching CSP/origin settings. The portfolio bundles no dashboard UI, owner password or visitor database. Firebase/GA4 remains an independent optional integration; Footfall does not query or combine its totals.
+## Collected fields and events
 
-## Implemented events
+Random event/browser/session UUIDs, property, client timestamp/order, server receipt timestamp, path without query/hash, referring origin, allowlisted event context, declared page origin, coarse browser/device category, browser language and time zone. No IP/hash, IP-derived geography, GPS, raw user agent, contact fields, message contents or Rook conversation contents are stored by Footfall. Time zone is a browser setting, not a verified location.
 
-| Event                | Trigger                                                                                                                               | Context                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `page_view`          | Once per document load; before the first action if it precedes idle collection                                                        | Query/hash-free path, referrer origin            |
-| `section_view`       | Half the chapter or half the viewport, whichever is smaller, visible continuously for one second; once per chapter per document visit | `chapter_id`                                     |
-| `project_open`       | Details dialog opens from grid, carousel or island                                                                                    | Stable `project_id`, `entry_point`               |
-| `resume_open`        | Résumé link activation, including Rook's résumé action                                                                                | `entry_point`: hero, navigation, resume or rook  |
-| `outbound_click`     | Known project/source/social link activation, including middle clicks                                                                  | Allowlisted `destination`, optional `project_id` |
-| `contact_result`     | Configured contact delivery resolves                                                                                                  | `result`: sent or error                          |
-| `contact_draft_open` | Email address/draft link activation within Contact                                                                                    | None                                             |
-| `rook_open`          | Rook changes from closed to open                                                                                                      | `entry_point`: navigation                        |
+- `page_view`: one visit per document; chapter/hash navigation does not add visits.
+- `section_view`: known chapter at least half the smaller chapter/viewport for one second, once per document.
+- `project_open`, `resume_open`, `outbound_click`: known IDs/destinations and entry points.
+- `contact_result`: sent/error status only; drafts do not count as sent.
+- `contact_draft_open`, `rook_open`: action metadata only.
 
-Reloading adds a document visit; scrolling and hash navigation do not. Résumé clicks measure intent, not completed downloads or reading. Email drafts and contact errors never count as sent messages. Opening Rook records no chat content.
+Browser UUIDs persist in local storage. Sessions are per tab, renewed after thirty minutes of inactivity. Storage failures keep in-memory identifiers. DNT/GPC and the footer opt-out disable both integrations; opting out drops pending work/clears IDs where storage permits. It does not recall already received records.
 
-The app hook owns chapter/link observation; the project details owner, contact hook and app Rook callbacks own their action boundaries. Features do not import one another. The transport service does not import UI or navigate. Public project IDs live in `src/data/portfolio.js`; `src/data/footfallContract.js` defines the wire vocabulary, mirrored by Footfall's `shared/footfallContract.mjs`.
+## Delivery and security
 
-## Identity, payload and location
+The queue is bounded to 100 events/60,000 bytes/five minutes. At most ten events/16,000 bytes form a group; the Spark transport writes each immutable document once. A create precondition and acknowledgement of HTTP 409 make retries idempotent. Transient/network/acknowledgement failures retry the same UUIDs at most five times. Other HTTP errors drop the batch. Requests time out after ten seconds; hidden/page-exit keepalive is best effort. There is no durable offline replay.
 
-Every event has a unique UUID, event name, random browser ID, session ID, client timestamp, pathname, sanitized referrer and an allowlisted context object. Collection requests suppress the HTTP Referer header so a page query is not forwarded there either. Batches carry schema version 1. Browser IDs use local storage; sessions use per-tab session storage and renew after 30 minutes without an accepted instrumentation call. Storage-unavailable IDs remain stable in memory for the current document. Client timestamps preserve sequence; server receipt timestamps determine reporting dates and retention.
+Firestore rules validate exact fields, UUIDs, context, declared origins and timestamp/size bounds, rejecting IP/location or arbitrary payload fields. Public clients cannot read, update or delete. Only owner UID `footfall-owner` can read/delete. The dashboard uses Firebase Authentication, not a custom owner cookie/session service. Arbitrary clients can forge permitted browser telemetry and consume quotas; there is no backend rate limiter, origin attestation or verified-person count.
 
-The browser sends no IP or location fields. The collector derives the network address using the socket or an explicitly trusted proxy chain, performs offline DB-IP City Lite lookup and derives coarse device/browser categories from the request user agent. No browser GPS, message contents, contact names/emails, Rook conversation contents or arbitrary query parameters enter analytics.
+## Reports, quotas and retention
 
-The footer explains collection and offers an opt-out. DNT, Global Privacy Control and the saved local choice disable collection. Opting out cancels pending work, discards queued events and clears Footfall IDs when storage permits. Already received records follow retention. Requests already received cannot be recalled. Re-enabling resumes collection; browser privacy signals continue to take precedence.
+Overview, visitors, properties, sources, pages/chapters/projects, events, browser audience, conversions and ordered funnels use recorded events. Portfolio outcomes/funnel are portfolio-specific; configurable product goals remain sample demonstrations. Sample design mode is labeled and separate.
 
-## Delivery bounds
+Reports use IST dates and manual refresh. A sixty-second memory cache is shared across views/property filters; later refreshes query from five minutes before the latest timestamp and deduplicate UUIDs. Each range is capped at 5,000 events; Realtime reads a thirty-minute window. First loads/range changes/reloads consume reads. No background Functions or aggregation jobs run.
 
-- Queue: at most 100 events and 60,000 encoded bytes; memory only, maximum age five minutes. New events are dropped when full.
-- Batch: at most 10 events and 16,000 encoded bytes, below the collector's 16,384-byte body ceiling.
-- Flush: after idle initialization, approximately every two seconds while pending, online recovery, and best-effort `keepalive` delivery on document hiding/page exit. Active delivery can delay a second flush. Background browsers can throttle timers.
-- Requests time out after ten seconds. Network errors, invalid acknowledgements, HTTP 408/429 and 5xx responses retry with capped exponential backoff; at most five attempts per event. Other HTTP errors drop the rejected batch.
-- Success requires an acknowledgement containing every batch event ID. Retries reuse IDs; server uniqueness on property/event ID prevents duplicate records.
-- Cleanup cancels timers/listeners and aborts requests. A lifecycle restart retains unacknowledged events and prevents another document view. Opt-out discards that retained queue.
+The separate Spark project has no billing account. Current Firestore free quotas include 20,000 writes and 50,000 reads per day and 1 GiB storage. Quota exhaustion interrupts service. [Firebase pricing](https://firebase.google.com/pricing/) is the source for current limits. Rook's existing project remains independently billed.
 
-Delivery is best effort, not guaranteed or a durable offline log. Closed tabs, blockers, offline sessions and queue limits can lose events. Events never block portfolio rendering or navigation.
+Reports cover thirty days. Older documents remain stored until the owner runs cleanup from Data connections, up to 400 per action. There is no scheduled cleanup, TTL, paid recovery or promised physical deletion after exactly thirty days.
 
-## Live reports
+## Verification and release
 
-Footfall defaults to Collected data. Overview, registered properties, realtime, acquisition, content, events, audience, conversions and funnels query authenticated collector aggregates. Sample design mode is separate and explicitly labeled. The Visitors report keeps its owner-only visit/IP/location ledger; it counts document visits, while aggregate activity can include action-only sessions.
+Run portfolio `npm run check` and `npm run build:functions` (Rook remains). In Footfall run `npm run firebase:preflight`, `npm run check` and Node 22 `npm run test:firebase`. Security integration tests use demo emulators only. The separate deployment guide documents prepared resources and owner access.
 
-Date filters use Asia/Kolkata and spans of up to 30 days. Realtime means activity received in the last 30 minutes, not an exact online count. Portfolio conversions are résumé intent and successful contact delivery. The portfolio funnel requires an ordered document view, then project open, then résumé open in the same property/session and selected date range. Other registered properties contribute general traffic reports; custom application event schemas/goals/funnels are a separate extension, not implemented by registering an origin.
-
-Raw IPs expire after seven days. All event/visit records, browser IDs, IP digests and locations expire after thirty days on collection/report access. SQLite and credentials have restricted filesystem permissions; this is not database-at-rest encryption. Visitors represent browser IDs, sessions are per tab, IPs can be shared, and origin checks do not prove a visitor is human.
-
-## Operation and validation
-
-Run the portfolio with `npm run dev -- --host 127.0.0.1 --port 5173`, and run `npm run dev` plus `npm run dev:collector` in `/Users/nyx/Projects/portfolio-analytics`. Footfall uses port 5174. Its generated owner password is in the private ignored `.footfall/owner-password` file, never client configuration.
-
-Tests cover sender batching, acknowledgements, retry limits, queue expiry, opt-outs, session renewal, ephemeral IDs, collector schema rejection, duplicate IDs, property scopes, retention and ordered funnel/conversion semantics. Browser checks verify actual portfolio actions arriving in Footfall. No real email is sent as part of analytics validation.
-
-Production still needs hosting, durable storage/backups, secure owner cookies, a verified proxy chain, configured origins/CSP, and environment-specific collection/consent choices. The code is ready for local review; no deployment is implied. See the separate project's `docs/VISITOR_COLLECTION.md` for operation and deployment configuration.
+No application changes are published by this migration or by a Footfall Git push. After a separately requested release, verify owner login, real portfolio commit acknowledgements, exact visit/action counts, opt-outs and unauthorized read/update rejection. Passing build/emulator tests does not establish production delivery.

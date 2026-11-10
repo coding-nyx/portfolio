@@ -1,5 +1,7 @@
 import { analyticsOptedOut } from './analyticsPreference.js';
 import { FOOTFALL_VERSION, validFootfallContext } from '../data/footfallContract.js';
+import { footfallFirebase } from '../data/footfallFirebase.js';
+import { browserContext, createFirestoreSender } from './footfallFirestore.js';
 
 const environment = import.meta.env || {};
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -79,6 +81,7 @@ export function createFootfallTracker({
     idleHandle,
     idleCallback,
     request,
+    sequence = 0,
     running = false,
     visited = false;
   const queue = [];
@@ -120,6 +123,7 @@ export function createFootfallTracker({
       visitorId: ids.visitorId,
       sessionId: ids.session.id,
       occurredAt: time,
+      order: sequence++,
       path: win.location.pathname.slice(0, 300),
       referrer: name === 'page_view' ? referrerOrigin(doc.referrer) : null,
       context: { ...context },
@@ -265,23 +269,29 @@ export function createFootfallTracker({
 }
 let tracker;
 export function scheduleFootfallVisit() {
-  const configured =
-    environment.VITE_FOOTFALL_COLLECTOR_URL || (environment.DEV ? '/api/footfall/events' : '');
-  if (!configured || optedOut(navigator)) return undefined;
+  if ((!environment.DEV && environment.VITE_FOOTFALL_ENABLED !== 'true') || optedOut(navigator))
+    return undefined;
   try {
-    const endpoint = new URL(configured, window.location.origin);
-    if (endpoint.origin !== window.location.origin && endpoint.protocol !== 'https:')
-      return undefined;
-    // Existing visit endpoint configuration remains compatible with the batch sender.
-    endpoint.pathname = endpoint.pathname.replace(/\/collect$/, '/events');
+    const local = environment.DEV && ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const projectId = local ? 'demo-footfall' : footfallFirebase.projectId;
+    const host = local ? 'http://127.0.0.1:8085' : 'https://firestore.googleapis.com';
+    const endpoint = new URL(
+      `${host}/v1/projects/${projectId}/databases/(default)/documents:commit`,
+    );
+    endpoint.searchParams.set('key', footfallFirebase.apiKey);
     const property = environment.VITE_FOOTFALL_PROPERTY_ID || 'portfolio';
-    endpoint.searchParams.set('property', property);
     tracker ||= createFootfallTracker({
       endpoint: endpoint.href,
       win: window,
       doc: document,
       navigator,
-      fetch: window.fetch.bind(window),
+      fetch: createFirestoreSender({
+        projectId,
+        property,
+        origin: window.location.origin,
+        client: browserContext(navigator),
+        fetch: window.fetch.bind(window),
+      }),
     });
     tracker.start();
     return () => tracker.stop();

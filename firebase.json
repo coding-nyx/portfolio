@@ -9,13 +9,6 @@
     ],
     "rewrites": [
       {
-        "source": "/api/footfall/**",
-        "function": {
-          "functionId": "footfall",
-          "region": "us-central1"
-        }
-      },
-      {
         "source": "/api/rook",
         "function": {
           "functionId": "rook",
