@@ -1,0 +1,169 @@
+/* Current certificates only. Import AFTER achievements.css. */
+.current-certs {
+  --cert-badge-surface: #15151b;
+  --cert-badge-edge: #ff8a3db3;
+  --cert-badge-edge-soft: #ff8a3d33;
+  --cert-badge-neutral: #2a2a33;
+  --cert-badge-tint: #ff8a3d14;
+  --cert-badge-glow: #ff8a3d40;
+  --cert-badge-halo: #ff8a3d1a;
+  --cert-badge-accent: #ff8a3d;
+  --cert-badge-title: #f4f4f5;
+  --cert-badge-meta: #a1a1aa;
+  --cert-badge-radius: 12px;
+  --cert-badge-seal-size: 30px;
+  --cert-shine-dur: 700ms;
+  --cert-shine-alpha: 0.08;
+}
+
+.current-certs .proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.current-certs .proof-card--current {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid transparent;
+  border-radius: var(--cert-badge-radius);
+  background:
+    radial-gradient(120% 80% at 0% 0%, var(--cert-badge-tint), transparent 60%) padding-box,
+    linear-gradient(var(--cert-badge-surface), var(--cert-badge-surface)) padding-box,
+    linear-gradient(
+        135deg,
+        var(--cert-badge-edge),
+        var(--cert-badge-edge-soft) 45%,
+        var(--cert-badge-neutral)
+      )
+      border-box;
+  box-shadow:
+    0 0 0 1px var(--cert-badge-halo),
+    0 8px 24px -12px var(--cert-badge-glow);
+  color: var(--cert-badge-title);
+}
+
+.current-certs .proof-card--current > * {
+  position: relative;
+  z-index: 1;
+}
+
+.current-certs .proof-card--current .cert-badge-seal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: var(--cert-badge-seal-size);
+  height: var(--cert-badge-seal-size);
+  color: var(--cert-badge-accent);
+  pointer-events: none;
+}
+
+.current-certs .cert-badge-eyebrow {
+  max-width: calc(100% - 46px);
+  color: var(--cert-badge-accent);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.current-certs .proof-card--current h4 {
+  margin: 0;
+  padding-right: 42px;
+  color: var(--cert-badge-title);
+  font-size: 15px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.current-certs .proof-card--current .port-meta {
+  color: var(--cert-badge-meta);
+}
+
+.current-certs .proof-card--current a {
+  align-self: flex-start;
+  margin-top: auto;
+  color: var(--cert-badge-accent);
+}
+
+.current-certs .proof-card--current a:focus-visible {
+  outline: 3px solid var(--cert-badge-accent);
+  outline-offset: 3px;
+}
+
+.current-certs .proof-card--current::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgb(255 255 255 / var(--cert-shine-alpha)) 50%,
+    transparent 75%
+  );
+  transform: translateX(-135%);
+}
+
+.current-certs .proof-card--current:focus-within {
+  --cert-badge-edge: #ff8a3d;
+  --cert-badge-edge-soft: #ff8a3d66;
+}
+
+.current-certs .proof-card--current:focus-within::after {
+  animation: cert-badge-shine var(--cert-shine-dur) ease-out 1 both;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .current-certs .proof-card--current:hover {
+    --cert-badge-edge: #ff8a3d;
+    --cert-badge-edge-soft: #ff8a3d66;
+  }
+
+  .current-certs .proof-card--current:hover::after {
+    animation: cert-badge-shine var(--cert-shine-dur) ease-out 1 both;
+  }
+}
+
+@keyframes cert-badge-shine {
+  from {
+    transform: translateX(-135%);
+  }
+  to {
+    transform: translateX(135%);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1099px) {
+  .current-certs .proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .current-certs .proof-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current-certs .proof-card--current,
+  .current-certs .proof-card--current * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .current-certs .proof-card--current::after {
+    display: none;
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
