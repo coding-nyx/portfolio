@@ -37,6 +37,35 @@ export const awardsData = [
 
 export const certificationsData = [
   {
+    name: 'Model Context Protocol: Advanced topics',
+    issuer: 'Anthropic (Claude Academy)',
+    date: 'Nov 2026',
+    credentialUrl: 'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
+  },
+  {
+    name: 'Introduction to Model Context Protocol',
+    issuer: 'Anthropic (Claude Academy)',
+    date: 'Nov 2026',
+    credentialUrl: 'https://academy.claude.com/badges/791b09bc-5aba-4881-bd9c-2a6ec2f56fe0',
+  },
+  {
+    name: 'AI Capabilities and Limitations',
+    issuer: 'Anthropic (Claude Academy)',
+    date: 'Nov 2026',
+    credentialUrl: 'https://academy.claude.com/badges/2520b8e1-c4ef-40ff-b5c1-f48a42569734',
+  },
+  {
+    name: 'AI Fluency for builders',
+    issuer: 'Anthropic (Claude Academy)',
+    date: 'Nov 2026',
+    credentialUrl: 'https://academy.claude.com/badges/baaaec90-f909-4f9f-ad94-e3f04b4b176a',
+  },
+  {
+    name: 'Play Store Listing Certificate',
+    issuer: 'Google (Play Academy)',
+    date: 'Nov 2026',
+  },
+  {
     name: 'Programming for everybody (Getting started with python)',
     issuer: 'Coursera',
     date: 'Jul 2020',

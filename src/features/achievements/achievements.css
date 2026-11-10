@@ -24,6 +24,14 @@
 .achievement-card[aria-expanded='true'] {
   outline: 1px solid #f4f4f5;
 }
+.current-certs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.current-certs .proof-grid {
+  padding-top: 0;
+}
 .older-certs {
   border: 1px solid #2c2c35;
   border-radius: 16px;
