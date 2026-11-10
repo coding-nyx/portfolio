@@ -34,7 +34,7 @@ test('current certification cards keep real certificationsData records', async (
   const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
   const { current, older } = splitCertifications(certificationsData);
 
-  assert.equal(current.length, 4);
+  assert.equal(current.length, 5);
   assert.equal(older.length, 11);
   assert.deepEqual(
     current.map((item) => ({
@@ -44,6 +44,12 @@ test('current certification cards keep real certificationsData records', async (
       credentialUrl: item.credentialUrl,
     })),
     [
+      {
+        name: 'Model Context Protocol: Advanced topics',
+        issuer: 'Anthropic (Claude Academy)',
+        date: 'Nov 2026',
+        credentialUrl: 'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
+      },
       {
         name: 'Introduction to Model Context Protocol',
         issuer: 'Anthropic (Claude Academy)',
@@ -115,6 +121,7 @@ test('Play Store Listing Certificate has no credential link and stays in Current
   assert.deepEqual(
     current.map((item) => item.name),
     [
+      'Model Context Protocol: Advanced topics',
       'Introduction to Model Context Protocol',
       'AI Capabilities and Limitations',
       'AI Fluency for builders',
@@ -127,4 +134,27 @@ test('Play Store Listing Certificate has no credential link and stays in Current
   assert.equal(source.includes('item.credentialUrl ? ('), true);
   assert.equal(source.includes(') : current ? null : ('), true);
   assert.equal(source.includes('<span className="port-meta">Certificate</span>'), true);
+});
+
+test('Model Context Protocol: Advanced topics has a named credential link', async () => {
+  const { certificationsData } = await import(join(ROOT, 'src/data/portfolio.js'));
+  const { current } = splitCertifications(certificationsData);
+  const advanced = current[0];
+  const source = read('src/features/achievements/AchievementsSection.jsx');
+
+  assert.equal(advanced.name, 'Model Context Protocol: Advanced topics');
+  assert.equal(advanced.issuer, 'Anthropic (Claude Academy)');
+  assert.equal(advanced.date, 'Nov 2026');
+  assert.equal(
+    advanced.credentialUrl,
+    'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
+  );
+  assert.equal(
+    `View credential: ${advanced.name} (opens in a new tab)`,
+    'View credential: Model Context Protocol: Advanced topics (opens in a new tab)',
+  );
+  assert.match(
+    source,
+    /aria-label=\{current \? `View credential: \$\{item\.name\} \(opens in a new tab\)` : undefined\}/,
+  );
 });

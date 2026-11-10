@@ -37,6 +37,12 @@ export const awardsData = [
 
 export const certificationsData = [
   {
+    name: 'Model Context Protocol: Advanced topics',
+    issuer: 'Anthropic (Claude Academy)',
+    date: 'Nov 2026',
+    credentialUrl: 'https://academy.claude.com/badges/4c2f2e63-48ea-41d9-aad9-738291465959',
+  },
+  {
     name: 'Introduction to Model Context Protocol',
     issuer: 'Anthropic (Claude Academy)',
     date: 'Nov 2026',

@@ -97,6 +97,7 @@ test('live certificationsData splits Nov 2026 entries as current and 2020 entrie
   assert.deepEqual(
     current.map((item) => item.name),
     [
+      'Model Context Protocol: Advanced topics',
       'Introduction to Model Context Protocol',
       'AI Capabilities and Limitations',
       'AI Fluency for builders',
