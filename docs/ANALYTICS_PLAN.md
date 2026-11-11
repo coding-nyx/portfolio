@@ -1,12 +1,12 @@
 # Portfolio analytics → Footfall on Spark
 
-Updated 10 November 2026. This replaces the prior custom collector/IP/GeoIP plan. The user selected a separate Firebase Spark project for Footfall and retained the existing billed Rook project.
+Updated 11 November 2026. This replaces the prior custom collector/IP/GeoIP plan. The user selected a separate Firebase Spark project for Footfall and retained the existing billed Rook project.
 
 ## Data flow
 
 Portfolio action → bounded in-memory queue → create-only Firestore REST commit in `nyx-footfall-analytics` → Firestore schema rules → immutable event document → owner Firebase Authentication → dashboard queries and pure report calculations.
 
-The portfolio and dashboard remain separate Git projects. Shared public event vocabulary and transport semantics are mirrored, without runtime imports across repositories. The portfolio never receives owner report tokens, credentials or visitor records. Production collection is off in ordinary builds; `build:firebase` or `VITE_FOOTFALL_ENABLED=true` enables it. Development uses only `demo-footfall` on local emulators. Rook and optional GA4 keep their existing independent integration.
+The portfolio and dashboard remain separate Git projects. Shared public event vocabulary and transport semantics are mirrored, without runtime imports across repositories. The portfolio never receives owner report tokens, credentials or visitor records. Production collection is off in ordinary builds; `build:firebase` or `VITE_FOOTFALL_ENABLED=true` enables it. Development uses only `demo-footfall` on local emulators. Rook keeps its independent backend. Standard GA4 uses the selected public web-stream measurement ID and supplies a separate aggregate geography report.
 
 ## Collected fields and events
 
@@ -28,7 +28,7 @@ Firestore rules validate exact fields, UUIDs, context, declared origins and time
 
 ## Reports, quotas and retention
 
-Overview, visitors, properties, sources, pages/chapters/projects, events, browser audience, conversions and ordered funnels use recorded events. Portfolio outcomes/funnel are portfolio-specific; configurable product goals remain sample demonstrations. Sample design mode is labeled and separate.
+Overview, visitors, properties, sources, pages/chapters/projects, events, browser audience, conversions and ordered funnels use recorded events. Portfolio outcomes/funnel are portfolio-specific. The production workspace has no sample mode or temporary property/goal forms; configurable product goals remain outside the implemented scope.
 
 Reports use IST dates and manual refresh. A sixty-second memory cache is shared across views/property filters; later refreshes query from five minutes before the latest timestamp and deduplicate UUIDs. Each range is capped at 5,000 events; Realtime reads a thirty-minute window. First loads/range changes/reloads consume reads. No background Functions or aggregation jobs run.
 
@@ -47,3 +47,11 @@ A Footfall Git push alone does not publish application changes. After a separate
 Expanded events cover Rook question/command submissions, correlated outcomes and response times; contact starts, validation attempts, resumptions, unfinished exits and delivery outcomes; skill detail opens; and foreground module engagement. Public enums, UUIDs and integer bounds are validated by both sender and Firestore rules. Message/input contents remain excluded. Foreground timing uses thirty-second chunks, skips suspended gaps and stops after sixty seconds without interaction. Contact abandonment is an observed unfinished exit, not proof of permanent abandonment.
 
 Footfall adds module-use summaries, bot/contact outcome panels and per-browser timelines grouped by session. Owners can filter module/session and show more events, from the same thirty-day/5,000-event read snapshot. Additional telemetry consumes the existing free quota; no billed services are added. Deploy Footfall rules/dashboard before enabling/releasing the portfolio sender. The existing Rook Function must receive updated shared portfolio facts when those facts differ from its deployed source.
+
+## GA4 country and city reports
+
+The public portfolio loads the standard Google tag during idle time, after checking DNT/GPC and its existing opt-out. Its public measurement ID lives in src/data/googleAnalytics.js, with the prior measurement-ID environment variable as a validated fallback. The loader configures one automatic page view and one portfolio_visit per document, does not add visits on chapter/hash changes, and cancels pending work during cleanup or consent changes. Page location and referrer parameters omit query/hash values. Google signals and advertising personalization are disabled.
+
+GA4 derives approximate country/city at collection time; there is no device-location prompt, third-party IP-lookup vendor or new IP/geography field in Footfall's first-party event ledger. The footer explains the two sources and their shared opt-out. Standard Analytics is available without a Blaze upgrade.
+
+Footfall's separate geography view requests bounded GA4 country and city reports through the Analytics Data API, using an owner-authorized read-only OAuth connection. The public client/property/stream identifiers are not access credentials; access tokens and report caches remain in memory. Scope each portfolio report to its configured web stream and hostnames. Keep country and city query totals separate, identify GA4's reporting timezone and delayed/thresholded/empty states, and do not present those aggregates as individual Footfall visitor locations. Live collection/report authorization must be verified separately from mocked tests and production builds.

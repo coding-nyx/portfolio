@@ -21,13 +21,16 @@ export default function SiteFooter() {
           This site measures document visits, sections viewed, project and résumé opens, external
           link clicks, skill details, approximate active time, contact-form progress and delivery
           outcomes, and Rook submissions and response outcomes. It uses random browser/session IDs.
-          Footfall stores device/browser categories, browser language and time zone. It does not
-          store IP addresses or geographic location.
+          Footfall's visitor log stores device/browser categories, browser language and time zone.
+          It does not store IP addresses or device coordinates.
         </p>
         <p>
           Contact fields and Rook conversations are excluded from analytics. Reports cover 30 days;
           older Footfall records remain stored until the owner runs cleanup. Reports require owner
-          access. Independently configured Google Analytics follows the same opt-out choice.
+          access. Google Analytics uses its own analytics cookies and derives approximate country
+          and city from network information for aggregate geography reports. These estimates are not
+          attached to Footfall's individual browser timelines. Both integrations follow the same
+          opt-out choice; no device-location permission is requested.
         </p>
         <label>
           <input

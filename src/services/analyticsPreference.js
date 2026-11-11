@@ -1,3 +1,5 @@
+import { googleAnalyticsMeasurementId } from '../data/googleAnalytics.js';
+
 let memoryOptOut = false;
 export function analyticsOptedOut(navigator = globalThis.navigator, storage) {
   if (memoryOptOut || navigator?.globalPrivacyControl === true || navigator?.doNotTrack === '1')
@@ -19,7 +21,7 @@ export function setAnalyticsOptOut(value) {
   } catch {
     /* The current tab still honors the in-memory choice. */
   }
-  const measurement = import.meta.env?.VITE_FIREBASE_MEASUREMENT_ID;
-  if (measurement) window[`ga-disable-${measurement}`] = value;
+  const measurement = googleAnalyticsMeasurementId();
+  if (measurement) window[`ga-disable-${measurement}`] = analyticsOptedOut();
   window.dispatchEvent(new Event('footfall-preference-change'));
 }

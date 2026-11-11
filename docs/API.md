@@ -95,7 +95,7 @@ On 2026-10-22, a dashboard test returned `200 OK` and the owner confirmed arriva
 
 ## Analytics integration
 
-`App → scheduleVisitAnalytics` independently schedules optional Google Analytics and Footfall. Both honor DNT/GPC and the footer opt-out. Google SDKs remain deferred; localhost skips Google collection. `portfolio_visit` is separate from Google's automatic page views.
+`App → scheduleVisitAnalytics` independently schedules optional Google Analytics and Footfall. Both honor DNT/GPC and the footer opt-out. The standard Google tag remains deferred; loopback development skips Google collection. `portfolio_visit` is separate from Google's automatic page views.
 
 Footfall now uses the separate Firebase Spark project `nyx-footfall-analytics`. The portfolio has no Footfall HTTP collector API. `services/footfallAnalytics.js` owns queue/identity/retry behavior; `services/footfallFirestore.js` translates batches into create-only Firestore REST commits. Public project identifiers live in `data/footfallFirebase.js`; the API key identifies the project and is not an owner credential. Firestore security rules enforce the event schema and private report access.
 
@@ -115,6 +115,14 @@ Vite loopback development targets only the `demo-footfall` Firestore emulator on
 Footfall uses Firebase Authentication owner ID tokens for direct Firestore queries and computes reports in the dashboard. Date ranges use IST, cover at most thirty days, and have a 5,000-event ceiling. Manual refresh shares a sixty-second memory cache with incremental queries and overlap/deduplication; no automatic polling scans the database. Physical cleanup is an owner action, up to 400 expired events at a time. Reports exclude expired records, but storage can retain them until cleanup runs. No Functions, scheduled jobs, TTL, PITR or server secrets are required.
 
 See ANALYTICS_PLAN.md and the separate Footfall deployment guide for Spark quotas, rules tests, local owner setup and release order. Production verification must reconcile browser actions with actual stored records after each release.
+
+## GA4 aggregate geography
+
+The portfolio's public GA4 destination is `data/googleAnalytics.js`. A valid `VITE_FIREBASE_MEASUREMENT_ID` is accepted when no valid public destination is configured. The standard Google tag is requested only during idle time for a non-loopback document that permits analytics. It configures one automatic page view and sends one `portfolio_visit`; chapter/hash changes and effect/consent restarts do not create duplicate visits. Google initialization or network failure remains optional. The loader and footer use the same effective measurement ID for Google's collection-disable flag.
+
+Google receives the standard collection request and derives approximate country/city from network information. The portfolio supplies only a query/hash-free page location, referring origin and coarse device category for its visit event, with Google signals and ad personalization disabled. The first-party Firestore schema remains unchanged: no IP, GPS or geographic location is added to its event records. Contact values, Rook text and Footfall browser IDs are not forwarded to GA4.
+
+Footfall's geography view uses Google's Analytics Data API with the selected numeric property/web-stream IDs and hostname scope. It requires the owner to authorize read-only Analytics access; the Firebase owner ID token is not a Google Analytics reporting credential. The public OAuth client ID is configuration, while access tokens stay in browser memory. Country and city reports are distinct aggregate queries; their user totals must not be joined to individual Footfall browsers or summed as a deduplicated workspace total. GA4 processing delay, timezone and report limits apply independently of the first-party thirty-day event log. This browser collection/reporting route requires no Firebase Function or Blaze upgrade.
 
 ## Verification boundary
 

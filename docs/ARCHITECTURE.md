@@ -94,7 +94,7 @@ Public data modules are safe to import in both runtimes. The server prompt and p
 | Island lifecycle/world                                      | Island selection                                                                      |
 | Three.js                                                    | Selected island becomes visible                                                       |
 | EmailJS SDK                                                 | Valid, configured contact submission                                                  |
-| Firebase Analytics SDK                                      | Configured non-local visit, during idle time; optional failure cannot break rendering |
+| Google Analytics tag                                        | Configured non-local visit, during idle time; optional failure cannot break rendering |
 
 The build emits a Vite manifest. `npm run audit:bundle` follows the static dependency graph and includes the immediately requested motion features in its UI startup budget: **450 kB minified / 150 kB gzip**. It also asserts that Rook and the island remain dynamic entries. Idle analytics and user-triggered features are outside that critical UI budget; they still have download costs when requested.
 
@@ -106,7 +106,13 @@ The existing Three.js engine remains approximately 664 kB minified / 171 kB gzip
 
 The queue batches up to ten events, requires explicit event-ID acknowledgements, retries transient errors with fixed limits and attempts a hidden-document flush. IDs and sessions have storage-unavailable fallbacks; idle startup, cleanup, DNT/GPC and the footer opt-out are respected. Scroll/hash navigation is not a new document visit. `services/analyticsPreference.js` owns the saved opt-out for Footfall and optional Google Analytics.
 
-The separate Firebase Spark project `nyx-footfall-analytics` owns Firestore event storage and owner Authentication. `services/footfallFirestore.js` adapts queue batches to create-only REST commits, with immutable server receipt timestamps and per-document ordering. The portfolio stores no IP/hash or IP-derived geography and imports no dashboard UI, Auth credential or database contents. Local development targets only the demo Firestore emulator on port 8085. Production collection is explicitly enabled by `VITE_FOOTFALL_ENABLED=true` or `build:firebase`; no collector API/Hosting rewrite is used. Rook and optional Google Analytics keep their independent existing project. See API.md and ANALYTICS_PLAN.md for quota, delivery and retention limits.
+The separate Firebase Spark project `nyx-footfall-analytics` owns Firestore event storage and owner Authentication. `services/footfallFirestore.js` adapts queue batches to create-only REST commits, with immutable server receipt timestamps and per-document ordering. The portfolio stores no IP/hash or IP-derived geography and imports no dashboard UI, Auth credential or database contents. Local development targets only the demo Firestore emulator on port 8085. Production collection is explicitly enabled by `VITE_FOOTFALL_ENABLED=true` or `build:firebase`; no collector API/Hosting rewrite is used. Rook keeps its existing backend project. Standard GA4 collection uses a separately configured public web-stream measurement ID, independent of the Rook Firebase app. See API.md and ANALYTICS_PLAN.md for quota, delivery and retention limits.
+
+## Google Analytics geography
+
+`services/analytics.js` schedules the standard Google tag during idle time on configured, non-loopback visits. `data/googleAnalytics.js` holds the selected public measurement ID, with the existing measurement-ID environment variable as a validated fallback. The loader survives React effect restarts without duplicating the document's automatic `page_view` or `portfolio_visit`; pending idle work, script handlers and load timers are released on cleanup. DNT/GPC and the shared opt-out suppress loading/logging and set Google's collection-disable flag. Location/referrer parameters omit query strings and hash fragments, and advertising signals/personalization are disabled.
+
+GA4 derives approximate country/city on Google's side. The independent Footfall geography report reads GA4 aggregates with a separate owner-authorized, read-only Google connection; it does not enrich or join the first-party browser timeline. No GPS, external IP lookup vendor, new Firestore field or Function is introduced by this integration. OAuth access and report authorization belong to Footfall, not the public portfolio. Configured collection and successful builds do not prove live Google reporting; the release must verify the web stream and actual API/report state separately.
 
 ## Styling
 
