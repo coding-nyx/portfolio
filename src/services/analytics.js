@@ -2,12 +2,8 @@
 import { analyticsOptedOut } from './analyticsPreference.js';
 import { scheduleFootfallVisit } from './footfallAnalytics.js';
 import { googleAnalyticsMeasurementId } from '../data/googleAnalytics.js';
+import { isProductionAnalyticsOrigin } from './analyticsEnvironment.js';
 
-const localHostname = (hostname) =>
-  hostname === 'localhost' ||
-  hostname.endsWith('.localhost') ||
-  /^127(?:\.\d{1,3}){3}$/.test(hostname) ||
-  ['::1', '[::1]'].includes(hostname);
 const referringOrigin = (referrer) => {
   try {
     const url = new URL(referrer);
@@ -23,6 +19,7 @@ export function createGoogleAnalyticsTracker({
   doc,
   navigator,
   measurementId,
+  development = (import.meta.env || {}).DEV === true,
   optedOut = () => analyticsOptedOut(navigator),
 }) {
   let running = false,
@@ -130,7 +127,13 @@ export function createGoogleAnalyticsTracker({
   };
   return {
     start() {
-      if (running || !measurementId || localHostname(win.location.hostname) || optedOut())
+      if (
+        running ||
+        !measurementId ||
+        development ||
+        !isProductionAnalyticsOrigin(win.location) ||
+        optedOut()
+      )
         return stop;
       running = true;
       win[disabledKey] = false;

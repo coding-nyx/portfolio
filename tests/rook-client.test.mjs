@@ -215,7 +215,7 @@ test('production delivery questions include release and maintenance contribution
     revamp,
     /Contributed to revamp planning and led UI redesign and navigation improvements/,
   );
-  assert.match(revamp, /Early in the Member of Technical Staff role/);
+  assert.match(revamp, /Early in the Software Engineer role/);
 });
 
 test('live and saved answers have the same related links without navigating on an ordinary question', async () => {

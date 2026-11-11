@@ -8,7 +8,13 @@ import {
 } from '../src/data/googleAnalytics.js';
 
 const MEASUREMENT_ID = 'G-TEST123456';
-function harness({ hostname = 'iamnyx.dev', idle = true, privacy = {} } = {}) {
+function harness({
+  hostname = 'iamnyx.dev',
+  origin = `https://${hostname}`,
+  development = false,
+  idle = true,
+  privacy = {},
+} = {}) {
   let next = 0,
     optedOut = false;
   const timers = new Map(),
@@ -17,7 +23,7 @@ function harness({ hostname = 'iamnyx.dev', idle = true, privacy = {} } = {}) {
   const win = {
     location: {
       hostname,
-      origin: `https://${hostname}`,
+      origin,
       pathname: '/',
       search: '?email=private@example.test',
       hash: '#contact',
@@ -58,6 +64,7 @@ function harness({ hostname = 'iamnyx.dev', idle = true, privacy = {} } = {}) {
     doc,
     navigator: browserNavigator,
     measurementId: MEASUREMENT_ID,
+    development,
     optedOut: () => optedOut || analyticsOptedOut(browserNavigator),
   });
   return {
@@ -164,6 +171,26 @@ test('loopback visits and initial opt-outs cause no Google script or event reque
   h.runIdle();
   assert.equal(h.scripts.length, 0);
   h.tracker.stop();
+});
+
+test('development and unapproved production origins never load a Google tag or issue commands', () => {
+  for (const options of [
+    { development: true },
+    { hostname: '192.168.1.10', origin: 'http://192.168.1.10:5173' },
+    { hostname: 'preview.example' },
+    { hostname: 'iamnyx.dev', origin: 'http://iamnyx.dev' },
+    { hostname: 'iamnyx.dev', origin: 'https://iamnyx.dev:8443' },
+    { hostname: 'preview--iamnyx.web.app' },
+  ]) {
+    const h = harness(options);
+    h.tracker.start();
+    h.runIdle();
+    assert.equal(h.scripts.length, 0, JSON.stringify(options));
+    assert.deepEqual(h.commands(), []);
+    assert.equal(h.timers.size, 0);
+    assert.equal(h.idleCallbacks.size, 0);
+    h.tracker.stop();
+  }
 });
 
 test('consent changes before idle or tag completion discard pending work and stale callbacks', () => {

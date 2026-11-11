@@ -12,5 +12,6 @@ Read `docs/ARCHITECTURE.md`, `docs/API.md`, and `docs/CODING_STANDARDS.md` befor
 - Cancel requests and release observers, event listeners, timers and WebGL resources. Respect the system reduced-motion preference; there is no separate site motion toggle.
 - Run `npm run check` and `npm run build:functions` for structural changes. Update existing regression tests to follow active code; do not retain dead implementations to satisfy obsolete tests.
 - Keep scratch verification files and design prototypes out of Git. The ignored local studies are not part of the production app. Use npm and the single `package-lock.json`; do not introduce another package-manager lockfile.
+- Exclude QA and owner visits from analytics before testing. Start every production browser review with `?analytics=off` and verify the footer opt-out is checked before interacting. The marker persists the existing opt-out; never enable collection merely to test UI. Local development uses the emulator only, and production previews must not send analytics.
 - Report the architecture, API changes, validation evidence and remaining limitations honestly. Passing lint/build is not proof of browser behavior or performance.
 - Follow the user's current commit/push/publication instructions; do not infer deployment from a request for a local prototype or refactor.

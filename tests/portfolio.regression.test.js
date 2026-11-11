@@ -337,7 +337,7 @@ test('professional name and contact details are preserved', async () => {
 
   const zoho = experienceData.find((e) => e.company === 'Zoho' && e.type === 'Full-time');
   assert.ok(zoho, 'Zoho full-time role must be preserved');
-  assert.equal(zoho.role, 'Member of Technical Staff');
+  assert.equal(zoho.role, 'Software Engineer');
   assert.equal(zoho.dates, 'May 2022 - Present');
 });
 

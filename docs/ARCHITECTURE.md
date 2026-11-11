@@ -86,15 +86,15 @@ Public data modules are safe to import in both runtimes. The server prompt and p
 
 ## Loading policy
 
-| Code                                                        | Loading trigger                                                                       |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Portfolio sections, navigation, preferences                 | Immediate; no boot-animation gate                                                     |
-| Motion `domAnimation` features                              | Asynchronous at app startup; included in the UI startup budget                        |
-| Rook dialog, Markdown parser, HTTP client and saved answers | First Rook opening; retained after closing to preserve conversation state             |
-| Island lifecycle/world                                      | Island selection                                                                      |
-| Three.js                                                    | Selected island becomes visible                                                       |
-| EmailJS SDK                                                 | Valid, configured contact submission                                                  |
-| Google Analytics tag                                        | Configured non-local visit, during idle time; optional failure cannot break rendering |
+| Code                                                        | Loading trigger                                                                               |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Portfolio sections, navigation, preferences                 | Immediate; no boot-animation gate                                                             |
+| Motion `domAnimation` features                              | Asynchronous at app startup; included in the UI startup budget                                |
+| Rook dialog, Markdown parser, HTTP client and saved answers | First Rook opening; retained after closing to preserve conversation state                     |
+| Island lifecycle/world                                      | Island selection                                                                              |
+| Three.js                                                    | Selected island becomes visible                                                               |
+| EmailJS SDK                                                 | Valid, configured contact submission                                                          |
+| Google Analytics tag                                        | Configured public portfolio origin, during idle time; optional failure cannot break rendering |
 
 The build emits a Vite manifest. `npm run audit:bundle` follows the static dependency graph and includes the immediately requested motion features in its UI startup budget: **450 kB minified / 150 kB gzip**. It also asserts that Rook and the island remain dynamic entries. Idle analytics and user-triggered features are outside that critical UI budget; they still have download costs when requested.
 
@@ -105,6 +105,10 @@ The existing Three.js engine remains approximately 664 kB minified / 171 kB gzip
 `App → scheduleVisitAnalytics → scheduleFootfallVisit` starts a bounded first-party event sender. `app/usePortfolioAnalytics.js` observes chapter visibility and allowlisted link activations; project details, contact delivery and Rook callbacks emit their own events. No sibling-feature imports or navigation behavior are introduced by tracking. Project identifiers are explicit public data. `data/footfallContract.js` defines the versioned vocabulary, mirrored by the separate Footfall contract.
 
 The queue batches up to ten events, requires explicit event-ID acknowledgements, retries transient errors with fixed limits and attempts a hidden-document flush. IDs and sessions have storage-unavailable fallbacks; idle startup, cleanup, DNT/GPC and the footer opt-out are respected. Scroll/hash navigation is not a new document visit. `services/analyticsPreference.js` owns the saved opt-out for Footfall and optional Google Analytics.
+
+Before rendering, `main.jsx` applies an explicit `?analytics=off` link through the existing opt-out. QA and owner reviews use that entry URL so neither integration starts collecting the first document. The preference persists where storage is available, and remains effective in memory if storage is unavailable. An ordinary URL never opts the browser back in. The footer provides the existing explicit opt-in control. This does not remove previously received events or identify historical QA visits.
+
+`services/analyticsEnvironment.js` limits production collection to the four public portfolio origins. Vite development uses only the demo Firestore emulator on loopback; non-loopback development and production previews skip collection. Google collection is disabled for development and preview origins. These client guards prevent accidental QA traffic, not forged public telemetry or authenticated origin attacks.
 
 The separate Firebase Spark project `nyx-footfall-analytics` owns Firestore event storage and owner Authentication. `services/footfallFirestore.js` adapts queue batches to create-only REST commits, with immutable server receipt timestamps and per-document ordering. The portfolio stores no IP/hash or IP-derived geography and imports no dashboard UI, Auth credential or database contents. Local development targets only the demo Firestore emulator on port 8085. Production collection is explicitly enabled by `VITE_FOOTFALL_ENABLED=true` or `build:firebase`; no collector API/Hosting rewrite is used. Rook keeps its existing backend project. Standard GA4 collection uses a separately configured public web-stream measurement ID, independent of the Rook Firebase app. See API.md and ANALYTICS_PLAN.md for quota, delivery and retention limits.
 

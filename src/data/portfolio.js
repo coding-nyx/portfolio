@@ -136,7 +136,7 @@ export const certificationsData = [
 export const experienceData = [
   {
     company: 'Zoho',
-    role: 'Member of Technical Staff',
+    role: 'Software Engineer',
     startDate: '2022-05',
     dates: 'May 2022 - Present',
     type: 'Full-time',
@@ -319,7 +319,7 @@ export const profileData = {
   },
   heroSummary: 'iOS product delivery, reusable native components and performance.',
   deliverySummary:
-    'Early in the Member of Technical Staff role, contributed to feature additions, bug fixes and minor releases. For a major product release, implemented API integration and middleware parsing, contributed to revamp planning, and led UI redesign and navigation improvements.',
+    'Early in the Software Engineer role, contributed to feature additions, bug fixes and minor releases. For a major product release, implemented API integration and middleware parsing, contributed to revamp planning, and led UI redesign and navigation improvements.',
   headline: 'iOS Product Engineer at Zoho | Native UI Components | Swift, UIKit & SwiftUI',
   location: 'Chennai, India',
   profileImage: '/profile.jpg',

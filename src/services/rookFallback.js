@@ -153,7 +153,7 @@ export function generateFallbackResponse(messagesInput) {
     const detail = specificWork
       ? `\n\n**${specificWork.name}**\n${publicText(specificWork.desc)}`
       : '';
-    return `**Raj is a Member of Technical Staff at Zoho. Since May 2022.**\n\n${publicText(role.description)}${detail}`;
+    return `**Raj is a ${role.role} at Zoho. Since May 2022.**\n\n${publicText(role.description)}${detail}`;
   }
   if (/skill|stack|swift|ios|technolog|proficiency/.test(query)) {
     return skillsData.map((s) => `• ${s.name}`).join('\n');

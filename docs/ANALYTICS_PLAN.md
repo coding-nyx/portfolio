@@ -20,6 +20,12 @@ Random event/browser/session UUIDs, property, client timestamp/order, server rec
 
 Browser UUIDs persist in local storage. Sessions are per tab, renewed after thirty minutes of inactivity. Storage failures keep in-memory identifiers. DNT/GPC and the footer opt-out disable both integrations; opting out drops pending work/clears IDs where storage permits. It does not recall already received records.
 
+## QA and owner traffic
+
+Start public-site reviews at `https://iamnyx.web.app/?analytics=off` and verify the footer opt-out before interacting. The marker applies the existing opt-out before rendering, so neither Footfall nor Google records the first visit or subsequent actions. The choice persists across ordinary navigation where storage works; the current document remains excluded if storage is unavailable. Continue to use the marker when opening new QA documents. Removing it does not opt the browser back in; re-enabling is an explicit footer action.
+
+Production collection is limited to the four public HTTPS portfolio origins. Loopback Vite development targets only the demo emulator. Other development hosts, LAN previews and loopback production previews do not send production analytics; Google also skips development and preview origins. Unit tests use mocked transports. Historical unmarked QA traffic is not automatically distinguishable from ordinary visits, and this change does not delete stored events.
+
 ## Delivery and security
 
 The queue is bounded to 100 events/60,000 bytes/five minutes. At most ten events/16,000 bytes form a group; the Spark transport writes each immutable document once. A create precondition and acknowledgement of HTTP 409 make retries idempotent. Transient/network/acknowledgement failures retry the same UUIDs at most five times. Other HTTP errors drop the batch. Requests time out after ten seconds; hidden/page-exit keepalive is best effort. There is no durable offline replay.

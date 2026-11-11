@@ -2,6 +2,7 @@ import { analyticsOptedOut } from './analyticsPreference.js';
 import { FOOTFALL_VERSION, validFootfallContext } from '../data/footfallContract.js';
 import { footfallFirebase } from '../data/footfallFirebase.js';
 import { browserContext, createFirestoreSender } from './footfallFirestore.js';
+import { resolveFootfallDestination } from './analyticsEnvironment.js';
 
 const environment = import.meta.env || {};
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -279,10 +280,15 @@ export function createFootfallTracker({
 }
 let tracker;
 export function scheduleFootfallVisit() {
-  if ((!environment.DEV && environment.VITE_FOOTFALL_ENABLED !== 'true') || optedOut(navigator))
-    return undefined;
+  if (optedOut(navigator)) return undefined;
   try {
-    const local = environment.DEV && ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const destination = resolveFootfallDestination({
+      development: environment.DEV === true,
+      enabled: environment.VITE_FOOTFALL_ENABLED === 'true',
+      location: window.location,
+    });
+    if (!destination) return undefined;
+    const local = destination === 'emulator';
     const projectId = local ? 'demo-footfall' : footfallFirebase.projectId;
     const host = local ? 'http://127.0.0.1:8085' : 'https://firestore.googleapis.com';
     const endpoint = new URL(

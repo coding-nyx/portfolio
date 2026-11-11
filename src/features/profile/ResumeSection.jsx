@@ -1,6 +1,6 @@
 import './profile.css';
 import { useState } from 'react';
-import { profileData } from '../../data/portfolio.js';
+import { profileData, experienceData } from '../../data/portfolio.js';
 import SpringAction from '../../shared/ui/SpringAction.jsx';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
 
@@ -19,7 +19,7 @@ export default function ResumeSection({ resumeUrl }) {
             A concise overview of my component engineering, performance work, integration tooling
             and selected projects.
           </p>
-          <p className="port-meta">Member of Technical Staff at Zoho · Since May 2022</p>
+          <p className="port-meta">{experienceData[0].role} at Zoho · Since May 2022</p>
         </div>
         <aside className="resume-download">
           <SpringAction as="a" className="resume-download-button" href={resumeUrl} download>

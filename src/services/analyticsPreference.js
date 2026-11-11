@@ -1,6 +1,13 @@
 import { googleAnalyticsMeasurementId } from '../data/googleAnalytics.js';
 
 let memoryOptOut = false;
+
+export function applyAnalyticsOptOutLink(search = globalThis.window?.location?.search) {
+  if (!new URLSearchParams(search).getAll('analytics').includes('off')) return false;
+  setAnalyticsOptOut(true);
+  return true;
+}
+
 export function analyticsOptedOut(navigator = globalThis.navigator, storage) {
   if (memoryOptOut || navigator?.globalPrivacyControl === true || navigator?.doNotTrack === '1')
     return true;
