@@ -311,9 +311,9 @@ export const profileData = {
     preferredName: 'Rajkumar',
     primaryStack: ['Swift', 'UIKit', 'SwiftUI', 'SPM'],
     paragraphs: [
-      'I’m a frontend developer based in Chennai. I’ve built React web apps and Android applications, and I currently work on iOS products at Zoho.',
-      'I design and redesign screens and navigation, adapt layouts for iPhone and iPad, integrate APIs and improve UI performance. I also build shared UI and integration tools for other product teams.',
-      'Outside work, my projects include a finance tracker and tools for working with AI agents. I’m also into Linux customization, retro gaming and obstacle course races.',
+      'I’m a frontend developer based in Chennai, currently working on iOS products at Zoho. My experience also includes React web apps and Android applications.',
+      'At Zoho, I work on app interfaces, navigation and layouts for iPhone and iPad, alongside API integration and UI performance. I also build shared UI components and tools that help other product teams use them.',
+      'My personal projects include a finance tracker and tools for working with AI agents. Beyond software, I’m into Linux customization, retro gaming and obstacle course races.',
     ],
     personalLinkLabel: 'Race photos and other interests',
   },
