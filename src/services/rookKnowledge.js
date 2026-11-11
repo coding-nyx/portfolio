@@ -13,7 +13,7 @@ const projectAliases = {
   WorkTracker: /\bwork\s?tracker\b/,
   'Hermes Companion': /\bhermes\b|\bcompanion\b|\btailscale\b/,
   Tally: /\btally\b/,
-  'a0090-meta (hub-11 OS)':
+  'RK3588 Linux Distribution':
     /\ba0090?(?:-meta)?\b|\bhub-?11\b|\brk3588\b|\blinux\b|\bkernel\b|\bembedded\b|\bdevice tree\b/,
   'Ara → Agent OS': /\bara\b|\bagent[ -]os\b/,
 };

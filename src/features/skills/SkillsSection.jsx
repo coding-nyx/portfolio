@@ -102,7 +102,7 @@ export default function SkillsSection() {
           </section>
         ))}
       </div>
-      <NextChapter id="achievements">Achievements</NextChapter>
+      <NextChapter id="achievements">Milestones</NextChapter>
     </div>
   );
 }

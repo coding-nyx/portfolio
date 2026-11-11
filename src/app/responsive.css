@@ -1,18 +1,6 @@
 @media (max-width: 900px) {
-  .after-hours .showcase-heading {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 16px;
-  }
-  .after-hours .showcase-heading .port-eyebrow {
+  .after-hours .projects-heading .port-eyebrow {
     display: none;
-  }
-  .after-hours .showcase-heading > div {
-    min-width: 0;
-  }
-  .after-hours .showcase-mobile-view[open] {
-    grid-column: 1 / -1;
   }
 }
 /* Phone layouts prioritize the work and the next action rather than desktop controls. */

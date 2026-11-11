@@ -10,10 +10,6 @@
   max-width: 640px;
 }
 
-.personal-heading .port-eyebrow {
-  color: var(--neon-cyan, #ff8a3d);
-}
-
 .race-status {
   display: inline-flex;
   align-items: center;

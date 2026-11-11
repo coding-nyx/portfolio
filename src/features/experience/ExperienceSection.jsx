@@ -69,7 +69,16 @@ export default function ExperienceSection() {
                   <small>{item.company}</small>
                   {item.dates && <small className="career-dates">{item.dates}</small>}
                 </span>
-                {item.dates && <span className="career-mobile-date">{item.dates}</span>}
+                {item.dates && (
+                  <span className="career-mobile-date">
+                    {item.dates.split(' - ').map((date, dateIndex) => (
+                      <span key={date}>
+                        {dateIndex > 0 && ' - '}
+                        {date}
+                      </span>
+                    ))}
+                  </span>
+                )}
                 {range ? (
                   <span className="career-track" aria-hidden="true">
                     <span style={range} />

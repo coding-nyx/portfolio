@@ -53,7 +53,7 @@ export default function AchievementsSection() {
   return (
     <div className="port-section achievements-c" data-design="Achievements C">
       <h2 id="h-achievements" tabIndex={-1}>
-        Professional milestones
+        Milestones
       </h2>
       <p className="port-meta">Hackathon participation and continued learning.</p>
       <div className="achievement-featured">

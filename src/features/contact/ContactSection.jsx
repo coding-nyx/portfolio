@@ -49,7 +49,6 @@ export default function ContactSection() {
                   href={`mailto:${profileData.socialLinks.email}`}
                   aria-label={`Email ${profileData.name} at ${profileData.socialLinks.email}`}
                 >
-                  <span className="contact-recipient-compact-name">{profileData.name}</span>
                   <span className="contact-recipient-email">{profileData.socialLinks.email}</span>
                 </a>
                 <button

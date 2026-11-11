@@ -5,7 +5,7 @@ export const CHAPTERS = [
   ['experience', 'Experience'],
   ['projects', 'Projects'],
   ['skills', 'Skills'],
-  ['achievements', 'Achievements'],
+  ['achievements', 'Milestones'],
   ['resume', 'Resume'],
   ['personal', 'Off the clock'],
   ['contact', 'Contact'],

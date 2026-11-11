@@ -7,7 +7,6 @@
   background: var(--study-bg);
   border-color: var(--study-border);
 }
-.after-hours #projects .showcase-card,
 .after-hours #projects .island-list-card,
 .after-hours #projects .pc-window,
 .after-hours #projects .pc-surface {
@@ -15,8 +14,6 @@
   border-color: var(--study-border);
   border-radius: var(--study-radius-card, 12px);
 }
-.after-hours #projects .showcase-preview img,
-.after-hours #projects .showcase-overview,
 .after-hours #projects .pc-image,
 .after-hours #projects .pc-image img,
 .after-hours #projects .pc-blueprint,
@@ -24,7 +21,6 @@
   background: var(--project-image-bed);
   border-color: var(--study-border);
 }
-.after-hours #projects .showcase-mobile-view,
 .after-hours #projects .pc-selectors button,
 .after-hours #projects .pc-arrow {
   background: var(--study-surface);

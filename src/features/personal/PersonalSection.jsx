@@ -11,9 +11,8 @@ export default function PersonalSection() {
   return (
     <div className="port-section personal-section">
       <header className="personal-heading">
-        <p className="port-eyebrow">Off the clock</p>
         <h2 id="h-personal" tabIndex={-1}>
-          A few things I’m into
+          Off the clock
         </h2>
       </header>
       <div className="personal-races personal-photo-journal">

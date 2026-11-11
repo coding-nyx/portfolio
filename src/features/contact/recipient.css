@@ -38,7 +38,6 @@
 }
 
 .after-hours .contact-d .contact-recipient-label,
-.after-hours .contact-d .contact-recipient-compact-name,
 .after-hours .contact-d .contact-recipient-email {
   flex: none;
 }
@@ -46,11 +45,6 @@
 .after-hours .contact-d .contact-recipient-label {
   color: #f4f4f5;
   font-weight: 600;
-}
-
-.after-hours .contact-d .contact-recipient-compact-name {
-  display: none;
-  color: var(--study-accent, #ff8a3d);
 }
 
 .after-hours .contact-d .contact-recipient-email {
@@ -64,15 +58,8 @@
 }
 
 @container contact-recipient (max-width: 19em) {
-  .after-hours .contact-d .contact-recipient-email,
   .after-hours .contact-d .contact-recipient-label {
     display: none;
-  }
-  .after-hours .contact-d .contact-recipient-compact-name {
-    display: inline;
-  }
-  .after-hours .contact-d .contact-recipient-link:hover .contact-recipient-compact-name {
-    text-decoration: underline;
   }
 }
 

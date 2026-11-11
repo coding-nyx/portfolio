@@ -2,7 +2,7 @@
 
 Read `docs/ARCHITECTURE.md`, `docs/API.md`, and `docs/CODING_STANDARDS.md` before changing application structure.
 
-- Keep the user-approved Settings hero and existing portfolio behavior unless the task explicitly changes them. The selected visual direction is After Hours with Ember field, Space Grotesk throughout and Instrument Serif only on the project banner. Projects defaults to Carousel on desktop and mobile; keep Featured, Grid and Island as alternatives. Bio uses one About me narrative with separate profile facts.
+- Keep the user-approved Settings hero and existing portfolio behavior unless the task explicitly changes them. The selected visual direction is After Hours with Ember field, Space Grotesk throughout and Instrument Serif only on the project banner. Projects defaults to Grid on desktop and mobile, with Carousel as the alternate layout. Keep Island as a separate Explore the island action rather than a main view; do not restore the overlapping Featured view. Bio uses one About me narrative with separate profile facts.
 - Use `src/app` for composition/navigation, `src/features/<feature>` for feature UI and hooks, and `src/shared` for reusable UI, theme and motion code.
 - Features may depend on shared code, services, data and utilities. They must not import another feature directly. Compose features in the app layer. Shared code must not import app/features/services/data. Services must not import UI or manipulate page navigation.
 - Keep public content in `src/data/portfolio.js`; both the site and server consume those facts. Keep API limits in `src/data/rookContract.js`. Server secrets never enter client data or `VITE_` variables.

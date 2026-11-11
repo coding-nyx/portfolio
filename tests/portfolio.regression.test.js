@@ -55,7 +55,7 @@ test('curated projects merge Hermes clients and exclude the removed showcase', a
   const { projects } = await importData();
   assert.deepEqual(
     projects.map((p) => p.name),
-    ['WorkTracker', 'Hermes Companion', 'Tally', 'a0090-meta (hub-11 OS)', 'Ara → Agent OS'],
+    ['WorkTracker', 'Hermes Companion', 'Tally', 'RK3588 Linux Distribution', 'Ara → Agent OS'],
   );
 });
 

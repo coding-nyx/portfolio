@@ -11,7 +11,7 @@ const chapterTopics = [
   ['contact', /\bcontact\b|\bhire\b|\binterview\b|\bemail\b|\bget in touch\b/],
   [
     'achievements',
-    /\bawards?\b|\bhackathon\b|\bcertifications?\b|\bcertificates?\b|\bachievements?\b/,
+    /\bawards?\b|\bhackathon\b|\bcertifications?\b|\bcertificates?\b|\bachievements?\b|\bmilestones?\b/,
   ],
   ['projects', /\bprojects?\b|\brepositories\b|\brepos?\b|\bgithub\b|\bopen source\b/],
   [
@@ -42,7 +42,7 @@ const chapterSuggestions = {
   ],
   skills: [
     { label: 'iOS work examples', question: 'What iOS component work has Raj done?' },
-    { label: 'Linux project', question: 'How did Raj build a0090-meta?' },
+    { label: 'Linux project', question: 'How did Raj build the RK3588 Linux Distribution?' },
     { label: 'Agent tooling', question: 'What is Raj’s component integration MCP?' },
   ],
   projects: projects.map((project) => ({
@@ -82,7 +82,8 @@ export function getRookAction(question) {
   );
   if (!command) return null;
   const aliases = { cv: 'resume', 'off the clock': 'personal', 'about raj': 'bio' };
-  const target = aliases[command[2]] || command[2];
+  const chapterId = CHAPTERS.find(([, label]) => normalizeRookQuestion(label) === command[2])?.[0];
+  const target = aliases[command[2]] || chapterId || command[2];
   if (!CHAPTERS.some(([id]) => id === target)) return null;
   return target === 'resume' ? { type: 'open_resume' } : { type: 'scroll', target };
 }

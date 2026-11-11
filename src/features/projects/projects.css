@@ -322,28 +322,8 @@
 .project-view-switch button {
   min-height: 44px;
 }
-.projects-small-label {
-  display: none;
-}
 .project-desktop-grid {
   display: flex;
-}
-.project-mobile-carousel {
-  display: none;
-}
-@media (max-width: 900px) {
-  .projects-large-label {
-    display: none;
-  }
-  .projects-small-label {
-    display: inline;
-  }
-  .project-desktop-grid {
-    display: none;
-  }
-  .project-mobile-carousel {
-    display: block;
-  }
 }
 .island-top {
   scroll-margin-top: 88px;
@@ -442,5 +422,89 @@
   }
   .architecture-foundations {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Two project layouts stay directly available; island exploration is secondary. */
+.after-hours .after-hours-projects {
+  width: min(100%, 1160px);
+  max-width: 1160px;
+  padding: 64px 0 56px;
+  gap: 40px;
+}
+.after-hours .projects-heading {
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.after-hours .projects-heading .port-eyebrow {
+  font-size: var(--study-text-caption, 12px);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.after-hours .projects-heading h2 {
+  margin: 0;
+}
+.after-hours .project-view-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+.after-hours .project-view-controls .project-view-switch {
+  flex: none;
+  background: var(--study-surface, #15151b);
+  border-color: var(--study-border, #2c2c35);
+}
+.after-hours .project-view-controls .project-view-switch button {
+  min-width: 64px;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: var(--study-text-small, 14px);
+}
+.after-hours .project-island-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--study-muted, #a1a1aa);
+  font-family: var(--study-font-body);
+  font-size: var(--study-text-small, 14px);
+  line-height: 1.4;
+}
+.after-hours .project-island-action:hover:not(:disabled) {
+  color: var(--study-accent, #ff8a3d);
+}
+.after-hours .project-island-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.after-hours .project-island-action svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 900px) {
+  .after-hours .after-hours-projects {
+    padding: 32px 0 40px;
+    gap: 24px;
+  }
+  .after-hours .projects-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .after-hours .projects-heading .port-eyebrow {
+    margin-bottom: 8px;
+  }
+  .after-hours .project-view-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px 16px;
   }
 }

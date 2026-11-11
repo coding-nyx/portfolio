@@ -1,8 +1,9 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, m as Motion, useIsPresent } from 'framer-motion';
 import { TbArrowLeft, TbArrowRight, TbArrowUpRight, TbCpu, TbRobot } from 'react-icons/tb';
 import { projects } from '../../data/portfolio.js';
 import { ProjectSourceLinks } from './ProjectDetailsDialog.jsx';
+import useCarouselStrip from './useCarouselStrip.js';
 import './carousel.css';
 
 const slideMotion = {
@@ -103,15 +104,7 @@ export default function ProjectCarousel({ enabled, onOpenDetails }) {
   const selectors = useRef([]),
     gesture = useRef(null);
   const project = projects[index];
-  useLayoutEffect(() => {
-    const button = selectors.current[index];
-    const strip = button?.parentElement;
-    if (!strip || strip.scrollWidth <= strip.clientWidth) return;
-    const bounds = strip.getBoundingClientRect();
-    const item = button.getBoundingClientRect();
-    if (item.left < bounds.left) strip.scrollLeft += item.left - bounds.left;
-    else if (item.right > bounds.right) strip.scrollLeft += item.right - bounds.right;
-  }, [index]);
+  const { stripRef, wrapperRef } = useCarouselStrip({ selectedIndex: index, selectors });
   const carouselId = 'project-view';
   const headingId = 'h-projects';
   const slideId = `${carouselId}-slide`;
@@ -162,24 +155,26 @@ export default function ProjectCarousel({ enabled, onOpenDetails }) {
       aria-labelledby={headingId}
       onKeyDown={keyboard}
     >
-      <div className="pc-selectors" role="group" aria-label="Choose a project">
-        {projects.map((item, position) => (
-          <button
-            ref={(element) => {
-              selectors.current[position] = element;
-            }}
-            key={item.name}
-            type="button"
-            data-project-select
-            aria-label={`Show ${item.name}`}
-            aria-pressed={position === index}
-            aria-controls={slideId}
-            onClick={() => choose(position)}
-          >
-            <span aria-hidden="true">0{position + 1}</span>
-            {item.name}
-          </button>
-        ))}
+      <div className="pc-selector-strip" ref={wrapperRef}>
+        <div className="pc-selectors" ref={stripRef} role="group" aria-label="Choose a project">
+          {projects.map((item, position) => (
+            <button
+              ref={(element) => {
+                selectors.current[position] = element;
+              }}
+              key={item.name}
+              type="button"
+              data-project-select
+              aria-label={`Show ${item.name}`}
+              aria-pressed={position === index}
+              aria-controls={slideId}
+              onClick={() => choose(position)}
+            >
+              <span aria-hidden="true">0{position + 1}</span>
+              {item.name}
+            </button>
+          ))}
+        </div>
       </div>
       <div
         className="pc-viewport"

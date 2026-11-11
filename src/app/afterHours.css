@@ -247,7 +247,7 @@ img {
 .after-hours .study-chapter .port-section > h2,
 .after-hours .study-chapter .personal-heading h2,
 .after-hours .study-bio-copy h2,
-.after-hours .showcase-heading h2 {
+.after-hours .projects-heading h2 {
   font-family: var(--study-font-body);
   font-weight: 600;
   font-size: var(--study-text-section);
@@ -457,7 +457,7 @@ img {
   .after-hours .study-chapter .port-section > h2,
   .after-hours .study-chapter .personal-heading h2,
   .after-hours .study-bio-copy h2,
-  .after-hours .showcase-heading h2 {
+  .after-hours .projects-heading h2 {
     font-size: var(--study-text-section);
     line-height: 1.15;
   }

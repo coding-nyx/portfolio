@@ -455,7 +455,8 @@ export const projects = [
   },
   {
     id: 'a0090-meta',
-    name: 'a0090-meta (hub-11 OS)',
+    name: 'RK3588 Linux Distribution',
+    aliases: ['a0090-meta', 'a0090-meta (hub-11 OS)', 'hub-11 OS'],
     cardSummary:
       'A reproducible Linux distribution for an RK3588 NVR demo board, with a custom device tree and boot image.',
     featured: false,

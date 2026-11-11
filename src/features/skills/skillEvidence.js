@@ -18,7 +18,10 @@ export function usedIn(skill) {
   if (/Swift|UIKit|SPM/.test(skill.name))
     return [{ label: 'Zoho · native component work', href: '#experience' }];
   if (/Kotlin|Android/.test(skill.name)) return [{ label: 'Hermes Companion', href: '#projects' }];
-  if (/Linux/.test(skill.name)) return [{ label: 'a0090-meta (hub-11 OS)', href: '#projects' }];
+  if (/Linux/.test(skill.name))
+    return projects
+      .filter((project) => project.id === 'a0090-meta')
+      .map((project) => ({ label: project.name, href: '#projects' }));
   if (/MCP/.test(skill.name))
     return [
       { label: 'Zoho · component integration tooling', href: '#experience' },

@@ -46,6 +46,19 @@
 .project-carousel .pc-hint {
   margin-top: 18px;
 }
+.pc-selector-strip {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  margin-bottom: 28px;
+}
+.pc-selector-strip::before,
+.pc-selector-strip::after {
+  display: none;
+}
+.pc-selector-strip > .pc-selectors {
+  margin-bottom: 0;
+}
 .pc-selectors {
   display: flex;
   flex-wrap: wrap;
@@ -352,11 +365,37 @@
   .project-carousel .pc-copy > p {
     font-size: 13px;
   }
+  .pc-selector-strip {
+    margin-bottom: 24px;
+  }
+  .pc-selector-strip::before,
+  .pc-selector-strip::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    z-index: 1;
+    display: block;
+    width: 24px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pc-selector-strip::before {
+    left: 0;
+    background: linear-gradient(to right, var(--study-bg, #0b0b0f), transparent);
+  }
+  .pc-selector-strip::after {
+    right: 0;
+    background: linear-gradient(to left, var(--study-bg, #0b0b0f), transparent);
+  }
+  .pc-selector-strip[data-overflow-left='true']::before,
+  .pc-selector-strip[data-overflow-right='true']::after {
+    opacity: 1;
+  }
   .pc-selectors {
     flex-wrap: nowrap;
     max-width: 100%;
     gap: 7px;
-    padding-block: 4px 6px;
+    padding-block: 6px;
     margin-bottom: 24px;
     overflow-x: auto;
     scrollbar-width: thin;
@@ -452,15 +491,9 @@
 }
 
 /* View names describe actual layouts at every viewport width. */
-.after-hours .after-hours-projects #project-display[data-view='grid'] .project-desktop-grid {
-  display: flex;
-}
 .after-hours .after-hours-projects #project-display[data-view='carousel'] > .project-carousel {
   display: block;
   width: 100%;
-}
-.after-hours .showcase-mobile-view .showcase-view-options {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* Carousel uses the same semantic typography as the selected project cards. */

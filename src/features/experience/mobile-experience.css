@@ -60,6 +60,10 @@
     cursor: pointer;
   }
 
+  .after-hours .experience-d .career-tracks .career-bar[data-undated] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .after-hours .experience-d .career-tracks .career-bar::before {
     content: '';
     position: absolute;
@@ -110,7 +114,9 @@
     font-size: var(--study-text-small, 14px);
     font-weight: 500;
     line-height: 1.35;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: pretty;
   }
 
   .after-hours .experience-d .career-tracks .career-label small {
@@ -130,6 +136,11 @@
     line-height: 1.5;
     text-align: right;
     font-variant-numeric: tabular-nums;
+  }
+
+  .after-hours .experience-d .career-tracks .career-mobile-date > span {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   .after-hours .experience-d .career-tracks .career-bar[aria-pressed='true'] .career-mobile-date {

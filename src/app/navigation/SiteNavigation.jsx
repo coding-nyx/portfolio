@@ -5,16 +5,12 @@ import useChapterNavigation from './useChapterNavigation.js';
 import { CHAPTERS, chapterNum } from '../../data/chapters.js';
 import './navigation.css';
 
-function chapterLabel(label) {
-  return label === 'Achievements' ? 'Milestones' : label;
-}
-
 export default function SiteNavigation({ onAsk, askOpen, resumeUrl = '/resume-modern.pdf' }) {
   const { active, sheetOpen, setSheetOpen, opener, sheetRef } = useChapterNavigation();
   const [compact, setCompact] = useState(() => window.scrollY > 180);
   const navigation = useRef(null);
   const current = CHAPTERS[active];
-  const currentLabel = chapterLabel(current[1]);
+  const currentLabel = current[1];
   const links = CHAPTERS.filter(([id]) => !['entry', 'resume'].includes(id));
 
   useEffect(() => {
@@ -94,7 +90,7 @@ export default function SiteNavigation({ onAsk, askOpen, resumeUrl = '/resume-mo
       aria-current={current[0] === id ? 'location' : undefined}
     >
       {numbered && <span className="study-menu-number">{chapterNum(index)}</span>}
-      <span>{chapterLabel(label)}</span>
+      <span>{label}</span>
     </a>
   );
 

@@ -12,7 +12,7 @@ src/
   features/
     profile/                Original hero, bio and résumé
     experience/             Career view and timeline calculation
-    projects/               Desktop grid, mobile carousel, shared details owner
+    projects/               Grid, carousel, shared details owner
       island/               Optional WebGL lifecycle and procedural world builder
     skills/                 Skill selection and evidence mapping
     achievements/           Professional milestones and certifications
@@ -35,7 +35,7 @@ server/
 functions/index.mjs         Firebase runtime adapter
 ```
 
-The approved After Hours interface uses the same feature graph. App-owned chapter labels, centered scroll navigation and theme styles compose the portfolio; the Settings hero JSX is unchanged. Carousel is the default Projects display at every width, with Featured, Grid and the deferred Island available as explicit alternatives. The Featured picker owns its keyboard/focus/viewport behavior in a feature hook. The Bio has one About me narrative and a separate facts card. Public copy stays in portfolio.js.
+The approved After Hours interface uses the same feature graph. App-owned chapter labels, centered scroll navigation and theme styles compose the portfolio; the Settings hero JSX is unchanged. Grid is the default Projects display at every width, with Carousel as the alternate layout and the deferred Island behind a separate exploration action. The carousel strip owns its overflow cues and selected/focused-chip reveal in a feature hook. Chapter display labels use Milestones and Off the clock while preserving their existing anchor IDs. The Bio has one About me narrative and a separate facts card. Public copy stays in portfolio.js.
 
 The shared Ember field is the selected decorative background. Its canvas stays behind content, reacts only to a fine pointer, settles without an ongoing animation loop and follows the system reduced-motion preference. Shared disclosure animation retains semantic details/summary behavior. The analytics observers, contact delivery, Rook HTTP/fallback behavior and footer opt-out remain connected to the production app; isolated study entry points and alternate motion modes are not shipped.
 
