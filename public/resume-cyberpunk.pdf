@@ -1,690 +1,130 @@
-%PDF-1.3
-%âãÏÓ
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
 <<
-/PageMode /UseNone
-/Pages 2 0 R
-/Type /Catalog
+/F1 2 0 R /F2 3 0 R
 >>
 endobj
 2 0 obj
 <<
-/Count 1
-/Kids [ 3 0 R ]
-/Type /Pages
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
 >>
 endobj
 3 0 obj
 <<
-/Annots [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R ]
-/Contents 10 0 R
-/MediaBox [ 0 0 595.2756 841.8898 ]
-/Parent 2 0 R
-/Resources <<
-/Font 11 0 R
-/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->>
-/Rotate 0
-/Trans <<
->>
-/Type /Page
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
 >>
 endobj
 4 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (mailto\072hello\100iamnyx\056dev)
->>
-/Border [ 0 0 0 ]
-/Rect [ 293.4978 742.0898 367.1538 752.8898 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (mailto:hello@iamnyx.dev)
+>> /Border [ 0 0 0 ] /Rect [ 293.4978 742.0898 367.1538 752.8898 ] /Subtype /Link /Type /Annot
 >>
 endobj
 5 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (https\072\057\057iamnyx\056web\056app)
->>
-/Border [ 0 0 0 ]
-/Rect [ 159.0063 729.0898 224.0313 739.8898 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (https://iamnyx.dev)
+>> /Border [ 0 0 0 ] /Rect [ 168.7623 729.0898 214.2753 739.8898 ] /Subtype /Link /Type /Annot
 >>
 endobj
 6 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (https\072\057\057www\056linkedin\056com\057in\057raj\055kumar\055s)
->>
-/Border [ 0 0 0 ]
-/Rect [ 231.3753 729.0898 338.8893 739.8898 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (https://www.linkedin.com/in/raj-kumar-s)
+>> /Border [ 0 0 0 ] /Rect [ 221.6193 729.0898 329.1333 739.8898 ] /Subtype /Link /Type /Annot
 >>
 endobj
 7 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (https\072\057\057github\056com\057coding\055nyx)
->>
-/Border [ 0 0 0 ]
-/Rect [ 346.2333 729.0898 436.2693 739.8898 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (https://github.com/coding-nyx)
+>> /Border [ 0 0 0 ] /Rect [ 336.4773 729.0898 426.5133 739.8898 ] /Subtype /Link /Type /Annot
 >>
 endobj
 8 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (https\072\057\057github\056com\057coding\055nyx\057hermes\055companion\055app)
->>
-/Border [ 0 0 0 ]
-/Rect [ 46 240.7773 137.6262 254.2773 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (https://github.com/coding-nyx/hermes-companion-app)
+>> /Border [ 0 0 0 ] /Rect [ 46 234.0773 137.6262 247.5773 ] /Subtype /Link /Type /Annot
 >>
 endobj
 9 0 obj
 <<
 /A <<
-/S /URI
-/Type /Action
-/URI (https\072\057\057github\056com\057coding\055nyx\057tally)
->>
-/Border [ 0 0 0 ]
-/Rect [ 46 149.7773 68.1063 163.2773 ]
-/Subtype /Link
-/Type /Annot
+/S /URI /Type /Action /URI (https://github.com/coding-nyx/agent-os)
+>> /Border [ 0 0 0 ] /Rect [ 46 188.5773 114.4529 202.0773 ] /Subtype /Link /Type /Annot
 >>
 endobj
 10 0 obj
 <<
-/Length 7420
+/A <<
+/S /URI /Type /Action /URI (https://github.com/coding-nyx/tally)
+>> /Border [ 0 0 0 ] /Rect [ 46 143.0773 68.1063 156.5773 ] /Subtype /Link /Type /Annot
 >>
-stream
-1 0 0 1 0 0 cm
-BT
-/F1 12 Tf
-14.4 TL
-ET
-q
-0.603922 0.266667 0.05098 RG
-1 w
-n
-40 24 m
-555.2756 24 l
-S
-BT
-/F1 8 Tf
-9.6 TL
-ET
-0.278431 0.333333 0.411765 rg
-BT
-1 0 0 1 40 13 Tm
-(iamnyx\056web\056app) Tj
-T*
-ET
-BT
-1 0 0 1 550.8276 13 Tm
-(1) Tj
-T*
-ET
-Q
-q
-1 0 0 1 46 774.8898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 4 Tm
-/F2 25 Tf
-29 TL
-177.3128 0 Td
-(Raj Kumar S) Tj
-T*
--177.3128 0 Td
-ET
-Q
-Q
-q
-1 0 0 1 46 758.8898 cm
-q
-0.603922 0.266667 0.05098 rg
-BT
-1 0 0 1 0 4.5 Tm
-/F2 11.5 Tf
-16 TL
-126.0578 0 Td
-(iOS Product Engineer \174 Native UI Components) Tj
-T*
--126.0578 0 Td
-ET
-Q
-Q
-q
-1 0 0 1 46 739.8898 cm
-q
-BT
-1 0 0 1 0 4 Tm
-182.1218 0 Td
-13 TL
-/F1 9 Tf
-0.278431 0.333333 0.411765 rg
-(Chennai\054 India \174 ) Tj
-(hello\100iamnyx\056dev) Tj
-T*
--176.3663 0 Td
-ET
-Q
-Q
-q
-1 0 0 1 46 726.8898 cm
-q
-BT
-1 0 0 1 0 4 Tm
-113.0063 0 Td
-13 TL
-/F1 9 Tf
-0.278431 0.333333 0.411765 rg
-(iamnyx\056web\056app) Tj
-( \174 ) Tj
-(linkedin\056com\057in\057raj\055kumar\055s) Tj
-( \174 ) Tj
-(github\056com\057coding\055nyx) Tj
-T*
--113.0063 0 Td
-ET
-Q
-Q
-q
-1 0 0 1 46 702.8898 cm
-q
-0.603922 0.266667 0.05098 rg
-BT
-1 0 0 1 0 4 Tm
-/F2 10 Tf
-14 TL
-(PROFILE) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 671.4898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 16.9 Tm
-/F1 9.5 Tf
-13.2 TL
-(iOS product engineer at Zoho since May 2022\054 building reusable Kanban\054 spreadsheet and navigation components\056) Tj
-T*
-(Experience spans app revamps\054 native UI performance\054 API integration and developer tooling\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 647.4898 cm
-q
-0.603922 0.266667 0.05098 rg
-BT
-1 0 0 1 0 4 Tm
-/F2 10 Tf
-14 TL
-(TECHNICAL SKILLS) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 589.6898 cm
-q
-BT
-1 0 0 1 0 43.3 Tm
-13.2 TL
-/F2 9.5 Tf
-0.090196 0.12549 0.2 rg
-(Native\072) Tj
-/F1 9.5 Tf
-( Swift\054 UIKit\054 SwiftUI\054 UICollectionView\054 UITableView\054 collection\055view layouts\054 SPM\056) Tj
-T*
-/F2 9.5 Tf
-(Performance \046 tooling\072) Tj
-/F1 9.5 Tf
-( Xcode Instruments\054 layout\055attribute caching\054 Git\054 MCP\054 component integration APIs and) Tj
-T*
-(documentation\056) Tj
-T*
-/F2 9.5 Tf
-(Supporting\072) Tj
-/F1 9.5 Tf
-( Kotlin\054 Jetpack Compose\054 TypeScript\054 React\054 Firebase\054 Zoho Catalyst\054 Linux\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 565.6898 cm
-q
-0.603922 0.266667 0.05098 rg
-BT
-1 0 0 1 0 4 Tm
-/F2 10 Tf
-14 TL
-(EXPERIENCE) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 547.1898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 3.8 Tm
-/F2 9.7 Tf
-13.5 TL
-(Member of Technical Staff \174 Zoho \174 May 2022 \055 Present) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 504.7898 cm
-q
-BT
-1 0 0 1 10 29.1 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(Production App Revamp\072) Tj
-/F1 9.3 Tf
-( Implemented web\055aligned API integration and middleware parsing for a major app revamp\073) Tj
-T*
-8 0 Td
-(contributed to planning and led UI redesign and navigation improvements\056 Also contributed to features\054 bug fixes and) Tj
-T*
-(minor releases\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 462.3898 cm
-q
-BT
-1 0 0 1 10 29.1 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(Reusable Product UI\072) Tj
-/F1 9.3 Tf
-( Developed Kanban\054 spreadsheet and navigation components\073 prototyped UIKit\054 SwiftUI and) Tj
-T*
-8 0 Td
-(hybrid approaches with collection\057table views\054 lazy stacks and compositional layouts\056 Helped product teams integrate) Tj
-T*
-(the components\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 419.9898 cm
-q
-BT
-1 0 0 1 10 29.1 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(Adaptive navigation layout\072) Tj
-/F1 9.3 Tf
-( Implemented a reusable three\055panel split view for phone\054 landscape and iPad\054 with) Tj
-T*
-8 0 Td
-(size\057trait\055based rail and tab\055bar switching\056 Modules declared actions\073 the parent layout supplied navigation items and) Tj
-T*
-(callbacks\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 390.3898 cm
-q
-BT
-1 0 0 1 10 16.3 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(Spreadsheet scrolling\072) Tj
-/F1 9.3 Tf
-( Used Xcode Instruments to investigate spreadsheet scrolling stutter and repeated layout\055item) Tj
-T*
-8 0 Td
-(creation\056 Cached layout attributes in UICollectionViewLayout to avoid repeated reindexing as columns increased\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 360.7898 cm
-q
-BT
-1 0 0 1 10 16.3 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(Component Integration MCP\072) Tj
-/F1 9.3 Tf
-( Developed an MCP exposing component APIs and documentation to make integration) Tj
-T*
-8 0 Td
-(easier\056 A product team currently uses it\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 331.1898 cm
-q
-BT
-1 0 0 1 10 16.3 Tm
--8 0 Td
-12.8 TL
-/F1 9.3 Tf
-0.090196 0.12549 0.2 rg
-(\055 ) Tj
-/F2 9.3 Tf
-(AI SDLC for UI components\072) Tj
-/F1 9.3 Tf
-( Built a spec\055driven prototype that plans features and tests before generating component) Tj
-T*
-8 0 Td
-(code and UI automation\054 with platform\055specific plans and support for versioned feature updates\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 324.1898 cm
-Q
-q
-1 0 0 1 46 311.6898 cm
-q
-BT
-1 0 0 1 0 3.5 Tm
-12.5 TL
-/F2 9 Tf
-0.278431 0.333333 0.411765 rg
-(Project Trainee \174 Zoho) Tj
-/F1 9 Tf
-( \174 Sep 2021 \055 May 2022) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 296.1898 cm
-q
-BT
-1 0 0 1 0 3.5 Tm
-12.5 TL
-/F2 9 Tf
-0.278431 0.333333 0.411765 rg
-(Intern \174 Zoho) Tj
-/F1 9 Tf
-( \174 Apr 2021 \055 Jun 2021) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 280.6898 cm
-q
-BT
-1 0 0 1 0 3.5 Tm
-12.5 TL
-/F2 9 Tf
-0.278431 0.333333 0.411765 rg
-(Intern \174 Servion Global Solutions) Tj
-/F1 9 Tf
-( \174 Nov 2019 \055 Dec 2019) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 256.6898 cm
-q
-0.603922 0.266667 0.05098 rg
-BT
-1 0 0 1 0 4 Tm
-/F2 10 Tf
-14 TL
-(SELECTED PROJECTS) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 238.1898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 3.8 Tm
-/F2 9.7 Tf
-13.5 TL
-(Hermes Companion) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 209.1898 cm
-q
-0.278431 0.333333 0.411765 rg
-BT
-1 0 0 1 0 16 Tm
-/F1 9 Tf
-12.5 TL
-(Android app and TypeScript web client for the same self\055hosted Hermes agent fleet\072 pair\054 chat\054 control devices and forward) Tj
-T*
-(notifications\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 192.6898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 3.8 Tm
-/F2 9.7 Tf
-13.5 TL
-(Ara) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 163.6898 cm
-q
-0.278431 0.333333 0.411765 rg
-BT
-1 0 0 1 0 16 Tm
-/F1 9 Tf
-12.5 TL
-(React Native multi\055agent prototype with personally implemented specialist personas\054 orchestration\054 indexed Firestore memory) Tj
-T*
-(retrieval and context compression\054 plus image analysis and web scraping\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 147.1898 cm
-q
-0.090196 0.12549 0.2 rg
-BT
-1 0 0 1 0 3.8 Tm
-/F2 9.7 Tf
-13.5 TL
-(Tally) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 118.1898 cm
-q
-0.278431 0.333333 0.411765 rg
-BT
-1 0 0 1 0 16 Tm
-/F1 9 Tf
-12.5 TL
-(Open\055source React\057TypeScript finance tracker for multiple accounts\054 credit cards\054 loans and budgets\054 with statement imports\054) Tj
-T*
-(recovery and REST\057stdio MCP tools\056) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 94.18976 cm
-q
-BT
-1 0 0 1 0 4 Tm
-14 TL
-/F2 10 Tf
-0.603922 0.266667 0.05098 rg
-(EDUCATION \046 PARTICIPATION) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 51.68976 cm
-q
-BT
-1 0 0 1 0 28.5 Tm
-12.5 TL
-/F2 9 Tf
-0.278431 0.333333 0.411765 rg
-(Bachelor of Engineering \174 2018 \055 2022) Tj
-/F1 9 Tf
-T*
-(Electrical\054 Electronics\054 and Communications Engineering) Tj
-T*
-(Sri Sairam Engineering College\054 Chennai) Tj
-T*
-ET
-Q
-Q
-q
-1 0 0 1 46 36.18976 cm
-q
-0.278431 0.333333 0.411765 rg
-BT
-1 0 0 1 0 3.5 Tm
-/F1 9 Tf
-12.5 TL
-(Smart India Hackathon \174 Participant \174 August 2020) Tj
-T*
-ET
-Q
-Q
-
-endstream
 endobj
 11 0 obj
 <<
-/F1 12 0 R
-/F2 13 0 R
+/Annots [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R ] /Contents 15 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
 >>
 endobj
 12 0 obj
 <<
-/BaseFont /Helvetica
-/Encoding /WinAnsiEncoding
-/Name /F1
-/Subtype /Type1
-/Type /Font
+/PageMode /UseNone /Pages 14 0 R /Type /Catalog
 >>
 endobj
 13 0 obj
 <<
-/BaseFont /Helvetica-Bold
-/Encoding /WinAnsiEncoding
-/Name /F2
-/Subtype /Type1
-/Type /Font
+/Author (Raj Kumar S) /CreationDate (D:20000101000000+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (\(unspecified\)) /Title (Raj Kumar S - iOS Product Engineer) /Trapped /False
 >>
 endobj
 14 0 obj
 <<
-/Author (Raj Kumar S)
-/CreationDate (D\07220261016120218\05305\04700\047)
-/Creator (\050unspecified\051)
-/Keywords ()
-/ModDate (D\07220261016120218\05305\04700\047)
-/Producer (ReportLab PDF Library \055 \050opensource\051)
-/Subject (\050unspecified\051)
-/Title (Raj Kumar S \055 iOS Product Engineer)
-/Trapped /False
+/Count 1 /Kids [ 11 0 R ] /Type /Pages
 >>
 endobj
+15 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2835
+>>
+stream
+GauHMgN)%.&q0LUoM\Ag-.*oZhn4mlb8J9VXbcPtbgsEl,V1+tD#mJA[drtC%:2HG1/f6,S5_qA#bW-7%o.<n2RN"XD>s2pJ.F.i^U1h#@!)]tfBU4f%b&t]J'Y3F]/+IIYadoV)1^9*[7<SdIQXsqr[`Y=)k8O6d-L?UB@,tn[fG3i00%S/X`XFo(j)n=&1;cI/_V8Rm84rVgZ`iN\2MFQ)>[a-DP7.U]&\Cj,F=o43FiX)<l]B<pjV<lA')I%<>mV!mOtg@$EJYBlgYPA_3ZO@oS-@A:2fTX4'&P(aL3\\P2/&L3IRDQ-sRBD/hCQ"Vk/WWZk3o5'#)7@dpgAVFp=-i9]Cju=rgjs[)>P&4/7\V:N<[q%O,WM/(bk_N5@S!5;=Y*DT;s^A,_#/[I$8pLKfGOABUa(M'gFj?SHTO37Z[P+GbL^/<'95QHsa[=!&;@kpgSJelBbq#(<E@@TSW'Bp?mI,5T<-&QrE[Sr;f;ZELBK`/9jA)S$H+S$(!q0?+m!(9UaG6e/N,HYY]mK/k5rg=b/R*B+bWS'0K4=r9J8XZs%lmL)dKh7#kA/OVCmBEuS?3ML)JdukNSA/bF\DduTfni2#/HZ7]!dtDin!^[,;:DI(=L::L2>@<R(8\jt(/40]]=u%P:Z=*NjE.#OAMJY4M_BPM3,e2EcKo'P2<#u2_9hR11d"Lpu"sVKC,Op1%)']u6*lL#HF<"eX2c_M:h*DdZf0j7/Sc!XoRuHOg?HqVR\'Af.33rD,&ADXs%-R49OI\KhVnrb"9IBaUbZ2O4!;BgTkpD"*-1Jg"]:I@D8K7lg,K,$Ir18@?;8fan?MUn7_]L"/q`*+C"*a8qK9A,mnZ&iRKEU-HW1WSB%m3&r771dWL.$o2^3GQM/]Bd$*'EA#EHW!ZP0]aJMroRYO$\i"2l%p+j2[`oe\"*5W1,,*/G3`GY%!B>2rPG%$1klBR]DN\X*qij:Po8q>&rcaa/+lFc01ua$PTC?YZLU//u&!3Q>jNdY7gY4&T7Hc@_/((Y:$`8cpNQB02R=^2(YhgX?eHE4_)iun+8c,]UGW)!8gEmJ/2`PXtU?n51p%=GDcC.;'a'Z<frahE[]OdHM-&RBL*\=V\n%,PH*RLb/r)Q8N$4p0]Zb6/FGlopu_1>Y=jmA(p=)m)K#tOW&TGY:8E#'HXQX9.t2)6ocE?9j^^!S=laiKP6=>e9r2D'["FN2NtL-'9u^u]U?M$T3?]/s!u4nh`:F.VSEU`YBu6Eci44ai1/7rlH)YO-fGtI'd2San/2BLggYC(L@"4=)[1?=i=u/9l.Zp7sC<O.O`hnnq;MA'#H]17J;U8L%3-[2Zb5?8g4U+TnVei5?]h]()<E1l![emHHIN`t/&7RZPGln=HAQWKfH''tD\!Is=9(!lcc_F-l/!I-0/Puk_$ortg,KQ/W!jU]2Z)WIuDqdBDEIsBNiIp&,(Od/-XhHI`#`2)3C+*9$33D]oceH!(0!g/p?1r8HQJ`:BbD6>?qLFq/Xl(8D0)4r!bn[0N[Hll3%'@>b`+//?`)Ioq:1el6Jc,g)M3,Q/MF_Y3k:NcQG`^6,Tb*,6En\;P(<g]/HWT3Vr*2lAFGj%V&,6u@1L@%1ClKYb.%Fn4VZi^_]EK,VT6gV'2)?/,#=*2^9)&c@;h?kL2H6MCo.X[@a+@]YBs@RRF@N#tDY`I'G:SQDn;mmq'h45Y/`H>tbTP"Ad>f_OqrEh1V-FIo::6r#(O%NX_G(felP%.s(j6E+0r5)OIrAPOKsI"AB_4m$29uK#7r0!"MC$A5jRWV?)X.)%Bc,5)A-R6X+,9dY:"!b/L/p`uMR6PiB4_F@F=a>'H\ZpMbcd(B2Zb@;hfuQa3sHc]&R8dg//o;G!8s]:\/job4!8kBU=$d]q(;0qGR!TTHt(CtUSatZ1JiV8Q7l*MU-mMKj,<:@Pn9ss!=XEJ2Pg/;UBM,UiLE`F6N)SMF@9dhV7opLTg:\?St\qpOV?_LGe$BaT8Tu-bDo6DIgg=Z!4(VK#Fa%[9%8o/3UKEpG#Xb#ZAX77'K,CZW;4K>j"$]`=J9bE[@.o4#L#!B^Os]CWa0JC?&LJHFp%."C"iJJ0Bjn,kZR)gM(G1oPXaf?c8c+KbF](!3:\B;e@VgR.@P$5X6A:aVR+(FI0cQZ;Psh`PsAEY:(B>b#_F[q3tdX96+k4#_F5%oH1*2^fC9?EZq#r;"o$5NXi&tp;S9#DF/SWoA2V&N`U`.)51NsQ31ZDlk1'$@^Mt-c>*+EDW1p4<c*j1Cfk7!C^.Kk.P)SKbKI)EQC1Jpiq,)qGf.TTr%W/Z=]f`Aj.!Lm%AA0uo(3slNg;]"*-H[gm&.rK2<GBM^ojU7V)[$\jZE.FQaBX9a24[\dA:6nJ8_p\JK6FK,om_'jA.O#e-G1ZLA'*XK`b#T;[5>+7rMn8s`ZqtF1tA6k4c_*.drh)S_<4oAH);o3&'O%_"CWdKWWX0S=f)YkPlUYSD:^MZH,+p7f3%.+?S\JBerFK<*au1_^gM%*GJD@AQ=bE/P4]VogfnBlDc3<;JP`qC`LT5400S+a49o3%rNjer$B*nlXY&<,M$N2jiDE6V1Q/no!qDh;N:LG5JETOF:;Sj7Jsn^^H#[ROfW]bqKuS.>qK1O/(O:D!qAW03Z<dV`0@P;G)i!T_*TDfYLb[:i!Ei1Re[a,BLeUH2=+0b`IV<V##Q:97gN@Kt)6[X2f<p%"8^2t&8#p*Sq!ur*JP,e>ToJN`9.qcr^/N/k@eM4.Kee#[[4.C='"'$!6M;Bh_BT@S'N+VA1s1MB<S&g@/K:i,i1cBC;-UGDRY_KF`VfaDNj+&?rr][rJ'7~>endstream
+endobj
 xref
-0 15
+0 16
 0000000000 65535 f 
-0000000015 00000 n 
-0000000083 00000 n 
-0000000142 00000 n 
-0000000391 00000 n 
-0000000575 00000 n 
-0000000764 00000 n 
-0000000982 00000 n 
-0000001181 00000 n 
-0000001404 00000 n 
-0000001605 00000 n 
-0000009078 00000 n 
-0000009122 00000 n 
-0000009230 00000 n 
-0000009343 00000 n 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000496 00000 n 
+0000000666 00000 n 
+0000000857 00000 n 
+0000001038 00000 n 
+0000001234 00000 n 
+0000001418 00000 n 
+0000001599 00000 n 
+0000001860 00000 n 
+0000001930 00000 n 
+0000002230 00000 n 
+0000002291 00000 n 
 trailer
 <<
-/Size 15
-/Root 1 0 R
-/Info 14 0 R
-/ID [ (\332\247KQc\001\221\256\025\327B\0247\375\362\316) (\332\247KQc\001\221\256\025\327B\0247\375\362\316) ]
+/ID 
+[<0fccce067008c5861654d21912f467af><0fccce067008c5861654d21912f467af>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 13 0 R
+/Root 12 0 R
+/Size 16
 >>
 startxref
-9682
+5218
 %%EOF

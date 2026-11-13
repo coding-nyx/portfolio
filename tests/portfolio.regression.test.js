@@ -298,6 +298,15 @@ test('résumé PDFs remain reachable from the app and the no-JS fallback', () =>
   assert.ok(html.includes('/resume-cyberpunk.pdf'), 'cyberpunk résumé must stay linked');
   assert.ok(existsSync(join(ROOT, 'public/resume-modern.pdf')));
   assert.ok(existsSync(join(ROOT, 'public/resume-cyberpunk.pdf')));
+  const resume = read('src/features/profile/ResumeSection.jsx');
+  assert.ok(resume.includes('Same content and layout, two accent colors'));
+  assert.ok(resume.includes('href="/resume-modern.pdf"'));
+  assert.ok(resume.includes('href="/resume-cyberpunk.pdf"'));
+  assert.ok(resume.includes('preview shows Modern'));
+  const builder = read('scripts/build-resume.py');
+  assert.ok(builder.includes('item["id"] == project_id'));
+  assert.ok(builder.includes('https://iamnyx.dev'));
+  assert.doesNotMatch(builder, /canvas.drawString|canvas.drawRightString/);
 });
 
 /* ------------------------------------------------------------------ *
@@ -321,7 +330,21 @@ test('page has description, canonical and Open Graph metadata', () => {
 
   // The share preview must use the current site, not the older résumé host.
   assert.ok(!html.includes('pac-dbe.web.app'), 'do not propagate the old résumé website');
-  assert.ok(html.includes('https://iamnyx.web.app/'));
+  assert.ok(html.includes('rel="canonical" href="https://iamnyx.dev/"'));
+  assert.ok(html.includes('property="og:url" content="https://iamnyx.dev/"'));
+  assert.ok(html.includes('property="og:image" content="https://iamnyx.dev/social-share.png"'));
+  assert.ok(html.includes('name="twitter:image" content="https://iamnyx.dev/social-share.png"'));
+  assert.ok(!html.includes('iamnyx.web.app'));
+  assert.ok(html.includes('name="twitter:card" content="summary_large_image"'));
+  for (const marker of ['og:image:alt', 'twitter:image:alt', 'og:image:type']) {
+    assert.ok(html.includes(marker), marker + ' is required');
+  }
+  assert.ok(html.includes('property="og:image:width" content="1200"'));
+  assert.ok(html.includes('property="og:image:height" content="630"'));
+  const image = readFileSync(join(ROOT, 'public/social-share.png'));
+  assert.equal(image.subarray(1, 4).toString(), 'PNG');
+  assert.equal(image.readUInt32BE(16), 1200);
+  assert.equal(image.readUInt32BE(20), 630);
 });
 
 /* ------------------------------------------------------------------ *
@@ -438,4 +461,24 @@ test('architecture lint rejects reversed layers, sibling features and unresolved
       `${filePath} must reject ${dependency}`,
     );
   }
+});
+
+test('plain-language API and Hermes context stay in shared public facts', async () => {
+  const { experienceData, profileData, projects } = await importData();
+  for (const copy of [
+    profileData.summary,
+    profileData.deliverySummary,
+    experienceData[0].projects[0].desc,
+  ]) {
+    assert.doesNotMatch(copy, /middleware parsing|web-aligned/);
+    assert.match(copy, /translated their responses for the mobile app/);
+  }
+  const hermes = projects.find((project) => project.id === 'hermes-companion');
+  assert.match(hermes.description, /Hermes, the self-hosted AI agent runtime/);
+  assert.match(hermes.resumeSummary, /self-hosted AI agent runtime/);
+  assert.match(read('src/features/projects/ProjectsSection.jsx'), /PERSONAL PROJECTS/);
+  assert.match(
+    read('src/features/projects/ProjectBanner.jsx'),
+    /Personal tools, experiments and systems/,
+  );
 });

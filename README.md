@@ -6,7 +6,7 @@
 
 A responsive personal portfolio built with React 19, Vite and styled-components. It presents curated projects, case studies, experience and résumé downloads, with an optional Rook portfolio assistant.
 
-[Live portfolio](https://iamnyx.web.app) · [Setup](#setup) · [Configuration](#configuration) · [Deploy](#deployment) · [Checks](#checks)
+[Live portfolio](https://iamnyx.dev) · [Setup](#setup) · [Configuration](#configuration) · [Deploy](#deployment) · [Checks](#checks)
 
 ## What is here
 
@@ -80,10 +80,18 @@ Read [the architecture](docs/ARCHITECTURE.md), [API contract](docs/API.md) and [
 python3 scripts/build-resume.py --output-dir public
 ```
 
-The generator uses portfolio facts and requires Node plus Python `reportlab`, `pypdf` and `pypdfium2`. Selected projects include Hermes Companion, Ara and Tally. Review the generated preview and both PDFs before publishing; keep claims and links tied to confirmed facts.
+The generator uses portfolio facts and requires Node plus Python `reportlab`, `pypdf` and `pypdfium2`. Selected projects include Hermes Companion, Ara → Agent OS and Tally. Review the generated preview and both PDFs before publishing; keep claims and links tied to confirmed facts.
 
 ## Checks
 
 `npm test` covers portfolio regressions; `npm run test:rook` covers the Rook handler/UI contract; `npm run audit:bundle` checks the built output. Generated browser screenshots and local verification scripts are excluded from Git. Interactive browser checks are separate from these automated gates.
 
 No top-level license file is present in the current tree. The README does not introduce a new license grant.
+
+## Canonical domain and résumé PDFs
+
+The canonical public URL is `https://iamnyx.dev/`. Sharing metadata and both résumé variants use that domain. The PDFs have identical content and layout, with Modern (blue) and Cyberpunk (ember) accent colors; neither has a verified ATS-compatibility claim. Rebuild them with `python3 scripts/build-resume.py --output-dir public` after installing the Python dependencies listed in that script. The builder checks single-page output, contact details and project source links, and regenerates the Modern preview.
+
+The 1200×630 share image is `public/social-share.png`, built from the existing After Hours artwork and Space Grotesk font. Regenerate it with `python3 scripts/build-social-card.py` (requires Pillow). Static Open Graph/Twitter metadata includes dimensions and equivalent image descriptions; the text description and no-JS résumé/contact fallback do not depend on the image.
+
+A server-side redirect from `iamnyx.web.app` is **not configured** here. The current Firebase Hosting site (`iamnyx`) serves the portfolio, and Hosting redirect rules match URL paths, not hostnames. A catch-all redirect to `.dev` on that same site would also redirect `.dev` if it is attached to the site, causing a loop. Confirm the live custom-domain mapping before changing hosting. A safe migration can move `.dev` to a separate content Hosting site and leave the old site redirect-only, preserving paths and queries and checking `/api/rook`, PDF and asset behavior. This requires an owner-approved hosting migration and deployment, not just a local `firebase.json` edit. See [Firebase redirect configuration](https://firebase.google.com/docs/hosting/full-config#redirects).

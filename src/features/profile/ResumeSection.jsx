@@ -26,9 +26,20 @@ export default function ResumeSection({ resumeUrl }) {
             <span aria-hidden="true">↓</span>
             <span>
               <b>Download resume</b>
-              <small>PDF · Updated October 2026</small>
+              <small>PDF · Updated November 2026</small>
             </span>
           </SpringAction>
+          <p className="port-meta">
+            Same content and layout, two accent colors:{' '}
+            <a href="/resume-modern.pdf" download>
+              Modern (blue)
+            </a>{' '}
+            ·{' '}
+            <a href="/resume-cyberpunk.pdf" download>
+              Cyberpunk (ember)
+            </a>
+            . The download above follows the site theme; the preview shows Modern.
+          </p>
           <SpringAction
             className="port-button secondary"
             aria-expanded={preview}
@@ -43,7 +54,7 @@ export default function ResumeSection({ resumeUrl }) {
               src="/resume-preview.png"
               width="595"
               height="842"
-              alt="First page of Raj’s resume"
+              alt="First page of Raj’s Modern resume (blue accent)"
             />
           )}
           <a href={resumeUrl} target="_blank" rel="noreferrer">

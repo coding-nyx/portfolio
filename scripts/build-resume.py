@@ -33,7 +33,7 @@ profile, roles, projects = data["profileData"], data["experienceData"], data["pr
 
 
 def text(value):
-    return escape(value.replace("—", "-").replace("–", "-").replace("’", "'").replace("·", "|"))
+    return escape(value.replace("→", "/").replace("—", "-").replace("–", "-").replace("’", "'").replace("·", "|"))
 
 
 def build(filename, accent):
@@ -50,7 +50,7 @@ def build(filename, accent):
         "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=9.3, leading=12.8, leftIndent=10, firstLineIndent=-8, textColor=ink, spaceAfter=4),
         "small": ParagraphStyle("small", fontName="Helvetica", fontSize=9, leading=12.5, textColor=muted, spaceAfter=3),
     }
-    doc = SimpleDocTemplate(str(out / filename), pagesize=A4, leftMargin=40, rightMargin=40, topMargin=32, bottomMargin=30,
+    doc = SimpleDocTemplate(str(out / filename), pagesize=A4, leftMargin=40, rightMargin=40, topMargin=32, bottomMargin=30, invariant=1,
                             title=profile["name"] + " - iOS Product Engineer", author=profile["name"])
     story = []
     def para(value, style="body"):
@@ -62,7 +62,7 @@ def build(filename, accent):
         para(text(profile["name"]), "name"),
         para("iOS Product Engineer | Native UI Components", "role"),
         para(text(profile["location"]) + ' | <link href="mailto:' + profile["socialLinks"]["email"] + '">' + text(profile["socialLinks"]["email"]) + "</link>", "contact"),
-        para('<link href="https://iamnyx.web.app">iamnyx.web.app</link> | <link href="' + profile["socialLinks"]["linkedin"] + '">linkedin.com/in/raj-kumar-s</link> | <link href="' + profile["socialLinks"]["github"] + '">github.com/coding-nyx</link>', "contact"),
+        para('<link href="https://iamnyx.dev">iamnyx.dev</link> | <link href="' + profile["socialLinks"]["linkedin"] + '">linkedin.com/in/raj-kumar-s</link> | <link href="' + profile["socialLinks"]["github"] + '">github.com/coding-nyx</link>', "contact"),
     ])
     section("Profile")
     story.append(para(text(profile.get("resumeSummary", profile["summary"]))))
@@ -77,39 +77,47 @@ def build(filename, accent):
         story.append(para("- <b>" + text(item["name"]) + ":</b> " + text(item.get("resumeSummary", item["desc"])), "bullet"))
     story.append(Spacer(1, 3))
     for role in roles[1:]:
-        story.append(para("<b>" + text(role["role"]) + " | " + text(role["company"]) + "</b> | " + text(role["dates"]), "small"))
+        dates = " | " + text(role["dates"]) if role["dates"] else ""
+        story.append(para("<b>" + text(role["role"]) + " | " + text(role["company"]) + "</b>" + dates, "small"))
     section("Selected projects")
-    for name in ["Hermes Companion", "Ara", "Tally"]:
-        project = next(item for item in projects if item["name"] == name)
-        label = text(name)
+    for project_id in ["hermes-companion", "agent-os", "tally"]:
+        project = next(item for item in projects if item["id"] == project_id)
+        label = text(project["name"])
         if project["repoUrl"]:
             label = '<link href="' + project["repoUrl"] + '">' + label + "</link>"
         story.append(KeepTogether([para(label, "job"), para(text(project.get("resumeSummary", project["description"])), "small")]))
-    section("Education & participation")
+    section("Education")
     # Education carried forward unchanged in substance from the prior published resume.
     story.append(para("<b>Bachelor of Engineering | 2018 - 2022</b><br/>Electrical, Electronics, and Communications Engineering<br/>Sri Sairam Engineering College, Chennai", "small"))
-    story.append(para("Smart India Hackathon | Participant | August 2020", "small"))
 
     def footer(canvas, document):
         canvas.saveState()
         canvas.setStrokeColor(accent)
         canvas.setLineWidth(1)
         canvas.line(40, 24, A4[0] - 40, 24)
-        canvas.setFont("Helvetica", 8)
-        canvas.setFillColor(muted)
-        canvas.drawString(40, 13, "iamnyx.web.app")
-        canvas.drawRightString(A4[0] - 40, 13, str(document.page))
         canvas.restoreState()
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     reader = PdfReader(out / filename)
     if len(reader.pages) != 1:
         raise RuntimeError(filename + " must remain one page; adjust the source layout.")
     extracted = "\n".join(page.extract_text() for page in reader.pages)
-    for forbidden in ["raju9112000", "pac-dbe", "30%", "20%", "3+ years"]:
+    for forbidden in ["raju9112000", "pac-dbe", "30%", "20%", "3+ years", "iamnyx.web.app", "personally"]:
         if forbidden in extracted:
             raise RuntimeError("Retired resume content remains: " + forbidden)
     if profile["socialLinks"]["email"] not in extracted or "layout attributes" not in extracted:
         raise RuntimeError("Updated contact or performance evidence is missing.")
+    if extracted.count("iamnyx.dev") != 2:  # Email and website; no footer artifact.
+        raise RuntimeError("Canonical website is missing or repeated in the footer.")
+    link_targets = {
+        str(annotation.get_object().get("/A", {}).get("/URI", ""))
+        for page in reader.pages for annotation in page.get("/Annots", [])
+    }
+    expected_links = {"https://iamnyx.dev"} | {
+        project["repoUrl"] for project in projects
+        if project["id"] in {"hermes-companion", "agent-os", "tally"}
+    }
+    if not expected_links.issubset(link_targets):
+        raise RuntimeError("Resume website or project source links are missing.")
     return out / filename
 
 

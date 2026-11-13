@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { askRookAgent } from '../src/services/rookClient.js';
 import { generateFallbackResponse } from '../src/services/rookFallback.js';
-import { experienceData, projects } from '../src/data/portfolio.js';
+import { experienceData, profileData, projects } from '../src/data/portfolio.js';
 import { CHAPTERS } from '../src/data/chapters.js';
+import { systemPrompt } from '../server/rook/context.mjs';
 import {
   getRookAction,
   getRookGuidance,
@@ -122,13 +123,57 @@ test('freelance and earlier-work answers use shared facts without inventing empl
   }
 });
 
+test('current freelance enquiries use shared availability and Contact without replacing work evidence', () => {
+  const availability = profileData.freelanceAvailability;
+  const historicalWork = experienceData.find((item) => item.id === 'college-startup-work');
+  for (const question of [
+    'Is Raj available for freelance?',
+    'Are you taking freelance projects?',
+    'What freelance services does Raj offer?',
+    'Can they take on freelance work involving native libraries?',
+    'Does Raj offer consulting?',
+  ]) {
+    const reply = generateFallbackResponse(question);
+    assert.ok(reply.includes(availability.headline), question);
+    assert.ok(reply.includes(availability.description), question);
+    assert.ok(!reply.includes(historicalWork.description), question);
+    assert.doesNotMatch(reply, /\b\d+\s*(?:hours?|days?)\b|per hour|hourly rate|full-time/i);
+    assert.match(reply, /Contact chapter/);
+    assert.deepEqual(getRookGuidance(question).evidence, [
+      { label: 'View contact', href: '#contact' },
+    ]);
+  }
+  const previousProject = [
+    { role: 'assistant', topic: { chapter: 'projects', projectName: 'Tally' } },
+  ];
+  assert.equal(
+    getRookGuidance('Can they take on freelance work?', previousProject).topic.chapter,
+    'contact',
+  );
+  assert.match(
+    generateFallbackResponse('What freelance work has Raj done in college?'),
+    /Android & React development/,
+  );
+  assert.match(
+    generateFallbackResponse('How do native platform libraries use BYOK in freelance projects?'),
+    /^\*\*iOS Platform Libraries/,
+  );
+  assert.match(generateFallbackResponse('What Swift skills does Raj have?'), /• Swift/);
+  assert.equal(
+    getRookGuidance('Tell me about Hermes Companion freelance work').topic.projectName,
+    'Hermes Companion',
+  );
+  const facts = JSON.parse(systemPrompt.split('AUTHORITATIVE FACTS:\n')[1]);
+  assert.deepEqual(facts.profile.freelanceAvailability, availability);
+});
+
 test('project answers distinguish deprecated Ara from its public successor in development', () => {
   const ara = generateFallbackResponse('How did Raj implement memory and orchestration in Ara?');
   assert.ok(ara.startsWith('### Ara → Agent OS\n'));
   assert.ok(
     !generateFallbackResponse('Tell me about Raj’s character').startsWith('### Ara → Agent OS\n'),
   );
-  assert.match(ara, /personally implemented specialist agents/);
+  assert.match(ara, /included implementing specialist agents/);
   assert.match(ara, /Firestore/);
   assert.match(ara, /model context limits still apply/);
   assert.match(ara, /source remains private/);
@@ -158,7 +203,7 @@ test('project answers distinguish deprecated Ara from its public successor in de
 
 test('iOS component questions return work evidence rather than a generic skill list', () => {
   const reply = generateFallbackResponse('Tell me about Raj’s iOS spreadsheet work');
-  assert.match(reply, /Kanban, spreadsheet and navigation/);
+  assert.ok(reply.includes(experienceData[0].description));
   assert.match(reply, /requirements analysis/);
   assert.match(reply, /UICollectionViewLayout/);
   assert.match(reply, /layout attributes/);
@@ -193,6 +238,125 @@ test('component integration questions describe the MCP and anonymous adoption', 
   assert.doesNotMatch(reply, /\[ACTION:/);
 });
 
+test('platform capability and feature-pipeline questions use the ongoing library experience', () => {
+  const work = experienceData[0].projects.find(
+    (item) => item.id === 'platform-library-integration',
+  );
+  for (const question of [
+    'What iOS platform libraries is Raj developing?',
+    'How does Raj wrap Apple frameworks?',
+    'How do feature pipelines combine native capabilities with custom models?',
+    'How does the contact integration work?',
+    'How does the contact framework work?',
+    'What contact access libraries is Raj developing?',
+    'How does the contact library work?',
+    'What contacts work is Raj developing?',
+    'How is Apple Intelligence integrated?',
+    'What is Raj’s SpeechAnalyzer work?',
+    'What speech analysis work is Raj doing?',
+    'How is Continuity integrated?',
+    'How is Vision used in native features?',
+    'What does inbuilt mean in Raj’s libraries?',
+    'What is the bring-your-own-key support?',
+    'How do the feature libraries use BYOK?',
+  ]) {
+    const reply = generateFallbackResponse(question);
+    assert.ok(reply.startsWith(`**${work.name}**`), question);
+    assert.ok(reply.includes(work.desc), question);
+    assert.match(reply, /ongoing/i);
+    assert.match(reply, /separate from the component integration MCP and the AI SDLC prototype/);
+    assert.doesNotMatch(reply, /four teams|four apps|currently uses it|\[ACTION:/i);
+    assert.deepEqual(getRookGuidance(question).evidence, [
+      { label: 'View experience', href: '#experience' },
+    ]);
+  }
+  assert.match(generateFallbackResponse('What does inbuilt mean?'), /Zoho R&D libraries/);
+});
+
+test('platform routing preserves personal contact, named projects and existing component workflows', () => {
+  for (const question of [
+    'How do I contact Raj about Apple Intelligence?',
+    'What is Raj’s email for discussing platform libraries?',
+    'How can I contact you about Apple Intelligence?',
+    'Can I email him about native libraries?',
+    'How can I contact them about Continuity?',
+    'Where can I email questions about platform libraries?',
+    'Can I send a message about Apple Intelligence?',
+    'How can I reach out about native libraries?',
+    'How do I get in touch about platform libraries?',
+    'Who should I contact about the contact framework?',
+    'What phone number can I use to discuss Apple Intelligence?',
+  ]) {
+    assert.match(generateFallbackResponse(question), /Contact chapter/);
+    assert.deepEqual(getRookGuidance(question).evidence, [
+      { label: 'View contact', href: '#contact' },
+    ]);
+  }
+  const namedProject = 'Does Tally use Apple Intelligence?';
+  assert.match(generateFallbackResponse(namedProject), /^### Tally\n/);
+  assert.equal(getRookGuidance(namedProject).topic.projectName, 'Tally');
+
+  const mcp = generateFallbackResponse('What does the component integration MCP expose?');
+  assert.match(mcp, /APIs and documentation/);
+  assert.doesNotMatch(mcp, /platform-library|iOS Platform Libraries/);
+  const sdlc = generateFallbackResponse(
+    'How does the AI SDLC feature pipeline generate components?',
+  );
+  assert.match(sdlc, /AI SDLC for UI components/);
+  assert.match(sdlc, /development tasks, test cases and accessibility identifiers/);
+  assert.doesNotMatch(sdlc, /iOS Platform Libraries/);
+
+  for (const [question, workId] of [
+    ['Does the AI SDLC prototype use Apple Intelligence?', 'ai-sdlc-prototype'],
+    ['Does the component integration MCP expose native libraries?', 'component-integration-mcp'],
+  ]) {
+    const work = experienceData[0].projects.find((item) => item.id === workId);
+    const reply = generateFallbackResponse(question);
+    assert.ok(reply.includes(`**${work.name}**`), question);
+    assert.ok(reply.includes(work.desc), question);
+    assert.doesNotMatch(reply, /^\*\*iOS Platform Libraries/);
+    assert.deepEqual(getRookGuidance(question).evidence, [
+      { label: 'View experience', href: '#experience' },
+    ]);
+  }
+});
+
+test('explicit contact follow-ups replace the previous project topic', () => {
+  const messages = [{ role: 'assistant', topic: { chapter: 'projects', projectName: 'Tally' } }];
+  for (const question of [
+    'Can I email him about it?',
+    'How can I send a message about these platform libraries?',
+    'How can I contact the team about this contact integration?',
+  ]) {
+    const guidance = getRookGuidance(question, messages);
+    assert.deepEqual(guidance.topic, { chapter: 'contact' }, question);
+    assert.deepEqual(guidance.evidence, [{ label: 'View contact', href: '#contact' }]);
+    assert.equal(guidance.question, question);
+    assert.match(generateFallbackResponse(guidance.question), /Contact chapter/);
+  }
+});
+
+test('live Rook receives the same platform-library facts as saved replies', () => {
+  const work = experienceData[0].projects.find(
+    (item) => item.id === 'platform-library-integration',
+  );
+  const facts = JSON.parse(systemPrompt.split('AUTHORITATIVE FACTS:\n')[1]);
+  const liveWork = facts.experience[0].work.find((item) => item.name === work.name);
+  assert.equal(liveWork.description, work.desc);
+  assert.match(liveWork.description, /Developing/);
+  for (const capability of [
+    'contacts',
+    'Apple Intelligence',
+    'speech analysis',
+    'Continuity',
+    'Vision',
+  ])
+    assert.ok(liveWork.description.includes(capability));
+  assert.match(liveWork.description, /Zoho R&D libraries/);
+  assert.match(liveWork.description, /custom models and external libraries or APIs/);
+  assert.match(liveWork.description, /bring-your-own-key support where applicable/);
+});
+
 test('AI SDLC questions explain the workflow without naming internal examples', () => {
   const reply = generateFallbackResponse('How does the AI SDLC framework generate components?');
   assert.match(reply, /AI SDLC for UI components/);
@@ -209,8 +373,10 @@ test('production delivery questions include release and maintenance contribution
   assert.match(reply, /major product release/);
   assert.doesNotMatch(reply, /\[ACTION:/);
   const revamp = generateFallbackResponse('What API migration and middleware revamp did Raj plan?');
-  assert.match(revamp, /Implemented integration with updated APIs/);
-  assert.match(revamp, /middleware parsing to translate web API responses for mobile/);
+  assert.match(
+    revamp,
+    /Integrated updated web APIs and translated their responses for the mobile app/,
+  );
   assert.match(
     revamp,
     /Contributed to revamp planning and led UI redesign and navigation improvements/,

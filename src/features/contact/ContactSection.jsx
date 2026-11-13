@@ -28,6 +28,12 @@ export default function ContactSection() {
       <h2 id="h-contact" tabIndex={-1}>
         Contact
       </h2>
+      <div className="contact-availability">
+        <p>
+          <strong>{profileData.freelanceAvailability.headline}</strong>
+        </p>
+        <p>{profileData.freelanceAvailability.description}</p>
+      </div>
       <MotionDetails className="contact-composer" open>
         <summary>
           Write a message <FiChevronDown aria-hidden="true" />

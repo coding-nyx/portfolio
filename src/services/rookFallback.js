@@ -10,7 +10,13 @@ import {
   interestsData,
 } from '../data/portfolio.js';
 import { publicText } from '../utils/publicText.js';
-import { findRookProject, normalizeRookQuestion } from './rookKnowledge.js';
+import {
+  findRookProject,
+  isRookContactQuestion,
+  isRookFreelanceAvailabilityQuestion,
+  isRookPlatformQuestion,
+  normalizeRookQuestion,
+} from './rookKnowledge.js';
 
 export function generateFallbackResponse(messagesInput) {
   const msgs = Array.isArray(messagesInput)
@@ -51,11 +57,22 @@ export function generateFallbackResponse(messagesInput) {
   const project = findRookProject(query);
   if (project) return projectReply(project);
 
-  if (
-    /\b(?:contact|hire|interview|touch|reach|message|email)\b|phone\s*(?:number|contact)|^phone\??$|@/.test(
-      query,
-    )
-  ) {
+  if (isRookFreelanceAvailabilityQuestion(query)) {
+    const availability = profileData.freelanceAvailability;
+    return `**${publicText(availability.headline)}**\n\n${publicText(availability.description)}\n\nUse the Contact chapter to discuss a project with Raj.`;
+  }
+
+  if (isRookPlatformQuestion(query)) {
+    const work = experienceData[0].projects.find(
+      (item) => item.id === 'platform-library-integration',
+    );
+    const clarification = /\binbuilt\b/.test(query)
+      ? '\n\nHere, “inbuilt” refers to Zoho R&D libraries.'
+      : '';
+    return `**${work.name}**\n\n${publicText(work.desc)}${clarification}\n\nThis is ongoing platform-library and feature-integration work, separate from the component integration MCP and the AI SDLC prototype.`;
+  }
+
+  if (isRookContactQuestion(query)) {
     return 'Use the Contact chapter to compose a message to Raj. Rook does not send messages.';
   }
 

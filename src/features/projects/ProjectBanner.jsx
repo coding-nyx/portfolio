@@ -20,10 +20,10 @@ export default function ProjectBanner() {
         style={{ x, y }}
       />
       <div className="study-banner-copy">
-        <p className="study-eyebrow">04 / Selected projects</p>
+        <p className="study-eyebrow">04 / Personal projects</p>
         <h2>Built after hours.</h2>
         <p>
-          Tools, experiments and systems
+          Personal tools, experiments and systems
           <br className="banner-break" /> I build outside work.
         </p>
       </div>

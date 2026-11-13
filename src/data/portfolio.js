@@ -141,7 +141,7 @@ export const experienceData = [
     dates: 'May 2022 - Present',
     type: 'Full-time',
     description:
-      'Develops reusable Kanban, spreadsheet and navigation components, covering requirements analysis, feasibility, native UI performance and product-team integration.',
+      'Develops reusable iOS UI components and platform libraries, covering requirements analysis, feasibility, native UI performance and product-team integration.',
     uiWork: {
       title: 'UI layout and performance',
       summary: 'Worked on application navigation, component layouts and scrolling performance.',
@@ -190,22 +190,29 @@ export const experienceData = [
       {
         id: 'production-app-revamp',
         name: 'Production App Revamp',
-        desc: 'Implemented integration with updated APIs aligned with the web app and middleware parsing to translate web API responses for mobile. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases.',
+        desc: 'Integrated updated web APIs and translated their responses for the mobile app. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases.',
         resumeSummary:
-          'Implemented web-aligned API integration and middleware parsing for a major app revamp; contributed to planning and led UI redesign and navigation improvements. Also contributed to features, bug fixes and minor releases.',
+          'Integrated updated web APIs and mobile response mapping for a major revamp; contributed to planning and led UI and navigation improvements. Also contributed to features, fixes and minor releases.',
       },
       {
         name: 'Reusable Product UI',
         desc: 'Developed Kanban, spreadsheet and navigation components. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
         resumeSummary:
-          'Developed Kanban, spreadsheet and navigation components; prototyped UIKit, SwiftUI and hybrid approaches with collection/table views, lazy stacks and compositional layouts. Helped product teams integrate the components.',
+          'Developed Kanban, spreadsheet and navigation components used by four teams across four apps; prototyped UIKit, SwiftUI and hybrid layouts.',
+      },
+      {
+        id: 'platform-library-integration',
+        name: 'iOS Platform Libraries and Feature Integration',
+        desc: 'Developing reusable iOS platform libraries that help product teams adopt capabilities such as contacts, Apple Intelligence, speech analysis, Continuity and Vision through consistent interfaces. The work includes wrapping Apple frameworks and designing feature pipelines that combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
+        resumeSummary:
+          'Developing libraries for contacts, Apple Intelligence, speech, Continuity and Vision; feature pipelines combine native, Zoho R&D and external implementations with BYOK support.',
       },
       {
         id: 'adaptive-navigation-layout',
         name: 'Adaptive navigation layout',
         desc: 'Implemented a reusable three-panel split view for phone, landscape and iPad, switching between rail navigation and a tab bar based on size and traitCollection. Modules declared actions such as Add, Filter and Search; the parent layout supplied navigation items and callbacks.',
         resumeSummary:
-          'Implemented a reusable three-panel split view for phone, landscape and iPad, with size/trait-based rail and tab-bar switching. Modules declared actions; the parent layout supplied navigation items and callbacks.',
+          'Built a reusable three-panel layout for iPhone and iPad, with size/trait-based rail and tab-bar switching. Modules declare actions; the parent supplies navigation items and callbacks.',
       },
       {
         id: 'spreadsheet-layout-performance',
@@ -305,28 +312,33 @@ export const interestsData = [
 
 export const profileData = {
   volunteeringInterest: 'Interested in volunteering opportunities.',
+  freelanceAvailability: {
+    headline: 'Available for freelance projects and consulting',
+    description: 'Reusable iOS components, native feature integrations and developer tooling.',
+  },
   name: 'Raj Kumar S',
   roleTitle: 'iOS Product Engineer',
   bio: {
     preferredName: 'Rajkumar',
     primaryStack: ['Swift', 'UIKit', 'SwiftUI', 'SPM'],
     paragraphs: [
-      'I’m a frontend developer based in Chennai, currently working on iOS products at Zoho. My experience also includes React web apps and Android applications.',
-      'At Zoho, I work on app interfaces, navigation and layouts for iPhone and iPad, alongside API integration and UI performance. I also build shared UI components and tools that help other product teams use them.',
-      'My personal projects include a finance tracker and tools for working with AI agents. Beyond software, I’m into Linux customization, retro gaming and obstacle course races.',
+      'I’m an iOS product engineer based in Chennai, working on Zoho apps. My experience spans implementing product features, fixing bugs and contributing to app release cycles.',
+      'My work spans app functionality, API integration and major product revamps, along with navigation, layouts and performance on iPhone and iPad. I also build reusable UI components, platform libraries and developer tools that help other product teams bring native capabilities into their apps.',
+      'Outside work, I enjoy exploring new ideas through side projects, from tools and AI experiments to Linux customizations. I’m also into retro gaming and obstacle course races.',
     ],
     personalLinkLabel: 'Race photos and other interests',
   },
-  heroSummary: 'iOS product delivery, reusable native components and performance.',
+  heroSummary:
+    'I build reusable iOS components and tools that help product teams deliver consistent native experiences.',
   deliverySummary:
-    'Early in the Software Engineer role, contributed to feature additions, bug fixes and minor releases. For a major product release, implemented API integration and middleware parsing, contributed to revamp planning, and led UI redesign and navigation improvements.',
+    'Early in the Software Engineer role, contributed to feature additions, bug fixes and minor releases. For a major product release, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
   headline: 'iOS Product Engineer at Zoho | Native UI Components | Swift, UIKit & SwiftUI',
   location: 'Chennai, India',
   profileImage: '/profile.jpg',
   summary:
-    'iOS engineer at Zoho since May 2022, developing reusable Kanban, spreadsheet and navigation components. For a major app revamp, implemented API integration and middleware parsing, contributed to planning, and led UI redesign and navigation improvements. Current work includes native UI performance and component integration tooling.',
+    'iOS engineer at Zoho since May 2022, developing reusable Kanban, spreadsheet and navigation components. For a major app revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to planning, and led UI redesign and navigation improvements. Current work includes native UI performance, reusable platform libraries and component integration tooling.',
   resumeSummary:
-    'iOS product engineer at Zoho since May 2022, building reusable Kanban, spreadsheet and navigation components. Experience spans app revamps, native UI performance, API integration and developer tooling.',
+    'iOS product engineer at Zoho since May 2022, building reusable UI components and platform libraries. Experience spans app revamps, native UI performance, API integration and developer tooling.',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/raj-kumar-s',
     email: 'hello@iamnyx.dev',
@@ -349,27 +361,29 @@ export const projects = [
     linksUnavailableReason:
       'The published deployment is currently unavailable. The public source repository remains available.',
     repoUrl: 'https://github.com/coding-nyx/worktracker',
-    status: 'Active',
+    status: 'Deployment unavailable',
   },
   {
     id: 'hermes-companion',
     name: 'Hermes Companion',
     cardSummary:
-      'Android and web clients for a self-hosted agent fleet, with pairing, chat, device control and notification forwarding.',
+      'Android and web clients for self-hosted AI agents, with pairing, chat, device control and notification forwarding.',
     featured: true,
     tags: ['Android', 'Kotlin', 'Jetpack Compose', 'Tailscale', 'TypeScript', 'Web'],
     description:
-      'Android app and TypeScript web client for the same self-hosted Hermes agent fleet: pair, chat, control devices and forward notifications.',
+      'Android app and TypeScript web client for Hermes, the self-hosted AI agent runtime. Both clients connect to the same agent fleet for pairing, chat, device control and notification forwarding.',
+    resumeSummary:
+      'Android (Kotlin/Jetpack Compose) and TypeScript web clients for Hermes, a self-hosted AI agent runtime, with pairing, chat, device control and notification forwarding.',
     imageUrl: '/projects/hermes-companion-chat.webp',
     liveUrl: 'https://github.com/coding-nyx/hermes-companion-app/releases',
     repoUrl: 'https://github.com/coding-nyx/hermes-companion-app',
-    status: 'Active project',
+    status: 'Android releases available',
     scope: 'Personal project',
     linkLabel: 'Releases / Download APK',
     availability: 'live',
     caseStudy: {
       problem:
-        'The same self-hosted agent fleet needs a connected mobile and web experience for pairing, chat and device control.',
+        'Hermes is the self-hosted AI agent runtime; Companion provides Android and web clients for connecting to its agent fleet. The clients need a shared experience for pairing, chat and device control.',
       approach:
         'Built a Kotlin/Jetpack Compose Android app with Tailscale pairing, accessibility automation and connection recovery, alongside a TypeScript web client for pairing, chat, device control and notification forwarding.',
       scope: 'One personal project with Android and web clients.',
@@ -466,7 +480,7 @@ export const projects = [
     imageUrl: null,
     liveUrl: null,
     repoUrl: 'https://github.com/coding-nyx/a0090-meta',
-    status: 'Active project',
+    status: 'Source-only project',
     scope: 'Personal / open-source project',
     linksUnavailableReason: 'No hosted demo deployment; source repository only.',
     caseStudy: {
@@ -533,7 +547,7 @@ export const projects = [
       problem:
         'Evolve the earlier Ara multi-agent prototype into a local-first workspace where personal data persists independently of individual agents and access is granted explicitly.',
       approach:
-        'Agent OS combines a React/TypeScript dashboard, Python/FastAPI backend and PostgreSQL data library with a pinned Hermes runtime. The implementation includes specialist profiles, scoped MCP data access, staged multi-agent execution with isolated coding worktrees, durable task receipts and node synchronization. Computer control uses explicit grants and operator approvals. The earlier Ara work personally implemented specialist agents, orchestration, indexed Firestore memory retrieval and context compression, plus image analysis and web scraping.',
+        'Agent OS combines a React/TypeScript dashboard, Python/FastAPI backend and PostgreSQL data library with a pinned Hermes runtime. The implementation includes specialist profiles, scoped MCP data access, staged multi-agent execution with isolated coding worktrees, durable task receipts and node synchronization. Computer control uses explicit grants and operator approvals. The earlier Ara work included implementing specialist agents, orchestration, indexed Firestore memory retrieval and context compression, plus image analysis and web scraping.',
       scope:
         'Personal open-source successor project in development. Agent OS supplies the workspace, data services, coordination and integration; the pinned Hermes runtime supplies native agent execution. The deprecated Ara implementation was a separate React Native/Firestore prototype.',
       evidence:

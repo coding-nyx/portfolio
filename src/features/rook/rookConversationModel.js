@@ -1,6 +1,12 @@
 import { CHAPTERS } from '../../data/chapters.js';
 import { projects } from '../../data/portfolio.js';
-import { findRookProject, normalizeRookQuestion } from '../../services/rookKnowledge.js';
+import {
+  findRookProject,
+  isRookContactQuestion,
+  isRookFreelanceAvailabilityQuestion,
+  isRookPlatformQuestion,
+  normalizeRookQuestion,
+} from '../../services/rookKnowledge.js';
 
 const chapterTopics = [
   ['resume', /\bresume\b|\bcv\b/],
@@ -8,7 +14,6 @@ const chapterTopics = [
     'personal',
     /\bvolunteer\w*\b|\binterests?\b|\bhobbies\b|off the clock|outside work|\braces?\b|obstacle|devils? circuit|wild\s?warrior/,
   ],
-  ['contact', /\bcontact\b|\bhire\b|\binterview\b|\bemail\b|\bget in touch\b/],
   [
     'achievements',
     /\bawards?\b|\bhackathon\b|\bcertifications?\b|\bcertificates?\b|\bachievements?\b|\bmilestones?\b/,
@@ -122,17 +127,24 @@ export function getRookGuidance(question, messages = []) {
     /^(?:(?:and\s+)?(?:how|why|what|which|is|was|does|did|can|could)\b.*\b(?:it|its|that|this|these|those|they|their)\b|tell me more\b|go deeper\b|technical details\b|what about (?:the )?(?:limitations|trade.?offs|architecture)\b)/.test(
       text,
     );
-  const chapter = chapterTopics.find(([, pattern]) => pattern.test(text))?.[0];
+  const contactQuestion = isRookFreelanceAvailabilityQuestion(text) || isRookContactQuestion(text);
+  const chapter = contactQuestion
+    ? 'contact'
+    : isRookPlatformQuestion(text)
+      ? 'experience'
+      : chapterTopics.find(([, pattern]) => pattern.test(text))?.[0];
   const topic = project
     ? { chapter: 'projects', projectName: project.name }
-    : followUp
-      ? previous || null
-      : chapter
-        ? { chapter }
-        : null;
+    : contactQuestion
+      ? { chapter: 'contact' }
+      : followUp
+        ? previous || null
+        : chapter
+          ? { chapter }
+          : null;
   // Qualify short follow-ups for both the live prompt and the saved-answer path.
   const contextualQuestion =
-    followUp && !project && topic
+    followUp && !project && !contactQuestion && topic
       ? `${question}\n\nPortfolio topic: ${topic.projectName || topic.chapter}.`
       : question;
   return { topic, evidence: relatedLinks(topic), question: contextualQuestion };

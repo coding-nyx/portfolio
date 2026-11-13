@@ -12,6 +12,16 @@
 .contact-d {
   max-width: 688px;
 }
+.contact-availability {
+  display: grid;
+  gap: 8px;
+}
+.contact-availability p {
+  font-size: var(--study-text-body, 16px);
+}
+.contact-availability p + p {
+  color: var(--study-muted, #a1a1aa);
+}
 .mail-sheet {
   background: #15151b;
   border: 1px solid #3a3a46;

@@ -17,15 +17,7 @@ export default function ProjectCard({ project, compact = false, onOpen }) {
       {project.imageCaption && (
         <span className="project-image-caption">{project.imageCaption}</span>
       )}
-      <span className="port-eyebrow">
-        {project.developmentStatus
-          ? project.status
-          : project.featured
-            ? 'Featured project'
-            : project.tags.includes('Linux Kernel')
-              ? 'Embedded Linux'
-              : 'Personal project'}
-      </span>
+      <span className="port-eyebrow">{project.status}</span>
       <h3>{project.name}</h3>
       <p className="port-meta">{project.tags.join(' · ')}</p>
       <p>{project.cardSummary || project.description}</p>

@@ -72,7 +72,7 @@ export default function ProjectsSection() {
     <div className="port-section projects-g3 after-hours-projects">
       <div className="island-top projects-heading">
         <div>
-          <p className="port-eyebrow">SELECTED WORK / PERSONAL PROJECTS</p>
+          <p className="port-eyebrow">PERSONAL PROJECTS</p>
           <h2 id="h-projects" tabIndex={-1}>
             Projects
           </h2>

@@ -9,6 +9,48 @@ export function normalizeRookQuestion(text) {
     .trim();
 }
 
+export function isRookFreelanceAvailabilityQuestion(question) {
+  const text = normalizeRookQuestion(question);
+  if (!/\bfreelanc(?:e|ing)\b|\bconsult(?:ing|ancy)\b/.test(text)) return false;
+  if (
+    /\b(?:college|startups?|earlier|past|previous|historical|history|was|were|did|had)\b|\b(?:has|have)\b.*\b(?:done|built|developed|worked)\b/.test(
+      text,
+    )
+  )
+    return false;
+
+  return /\b(?:availab(?:le|ility)|taking|accepting|offers?|offering|services?|rates?|pricing|charge|cost|hours?|hire|engagements?|consulting|consultancy)\b|\b(?:take on|open to|open for)\b|^(?:freelance|freelancing)\??$/.test(
+    text,
+  );
+}
+
+export function isRookContactQuestion(question) {
+  const text = normalizeRookQuestion(question);
+  // "Contact integration" names technical work; "contact me about it" is an enquiry.
+  return /\b(?:hire|interview|touch|reach|message|email)\b|\bcontact\b(?![ -]+(?:framework|access|integration|librar(?:y|ies))\b)|\bphone\s*(?:number|contact)\b|^phone\??$|@/.test(
+    text,
+  );
+}
+
+export function isRookPlatformQuestion(question) {
+  const text = normalizeRookQuestion(question);
+  if (isRookContactQuestion(text)) return false;
+
+  if (/\bsdlc\b|\bcomponent[ -]+integration[ -]+mcp\b/.test(text)) return false;
+
+  if (
+    /\bapple intelligence\b|\bspeech[ -]?analy[sz](?:er|is)\b|\bspeech[ -]+(?:recognition|transcription)\b|\bcontinuity\b|\bvision(?:kit)?\b|\bcontacts\b|\bcontact[ -]+(?:framework|access|integration|librar(?:y|ies))\b|\b(?:ios|apple|native|platform)[ -]+(?:(?:platform|feature)[ -]+)?(?:librar(?:y|ies)|frameworks?|wrappers?|capabilit(?:y|ies)|apis?)\b|\bbyok\b|\bbring[ -]your[ -]own[ -](?:api[ -])?key\b|\binbuilt\b|\bzoho(?:'s)?\s+r\s*(?:&|and)\s*d\b/.test(
+      text,
+    )
+  )
+    return true;
+
+  return (
+    /\b(?:feature|functionality)[ -]+(?:integration(?:[ -]+pipelines?)?|pipelines?)\b/.test(text) &&
+    !/\bsdlc\b|\bcomponent[ -]+(?:generation|integration)\b|\bspec[ -]driven\b/.test(text)
+  );
+}
+
 const projectAliases = {
   WorkTracker: /\bwork\s?tracker\b/,
   'Hermes Companion': /\bhermes\b|\bcompanion\b|\btailscale\b/,
