@@ -314,6 +314,16 @@
 .project-screenshot span {
   font-size: 12px;
 }
+.island-list-card > img[data-image-layout='portrait'],
+.pc-image img[data-image-layout='portrait'],
+.project-screenshot img[data-image-layout='portrait'] {
+  object-fit: cover;
+  object-position: center 33%;
+}
+.project-screenshot img[data-image-layout='portrait'] {
+  aspect-ratio: 16 / 9;
+  object-position: center 37%;
+}
 .project-image-caption {
   font-size: 12px;
   color: #a1a1aa;

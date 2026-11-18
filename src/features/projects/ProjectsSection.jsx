@@ -66,6 +66,7 @@ export default function ProjectsSection() {
   };
   const nearby = current == null ? null : projects[current];
   const selected = detail == null ? null : projects[detail];
+  const related = projects.find((project) => project.id === selected?.relatedProjectId);
   const activeView = islandView ? 'island' : view === 'island' ? previousView : view;
 
   return (
@@ -179,6 +180,8 @@ export default function ProjectsSection() {
       <ProjectDetailsDialog
         dialogRef={dialog}
         project={selected}
+        relatedProject={related}
+        onOpenRelated={() => setDetail(projects.indexOf(related))}
         motionEnabled={motionEnabled}
         onClose={() => {
           setDetail(null);

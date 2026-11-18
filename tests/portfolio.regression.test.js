@@ -51,12 +51,25 @@ test('every case study separates problem, approach, scope and limitations', asyn
   }
 });
 
-test('curated projects merge Hermes clients and exclude the removed showcase', async () => {
+test('curated projects merge Hermes clients and include Hands separately', async () => {
   const { projects } = await importData();
   assert.deepEqual(
     projects.map((p) => p.name),
-    ['WorkTracker', 'Hermes Companion', 'Tally', 'RK3588 Linux Distribution', 'Ara → Agent OS'],
+    [
+      'Hermes Companion',
+      'Tally',
+      'Hands',
+      'WorkTracker',
+      'Ara → Agent OS',
+      'RK3588 Linux Distribution',
+    ],
   );
+  const hands = projects.find(({ id }) => id === 'hands');
+  const companion = projects.find(({ id }) => id === 'hermes-companion');
+  assert.equal(hands.relatedProjectId, companion.id);
+  assert.equal(companion.relatedProjectId, hands.id);
+  assert.match(hands.caseStudy.evidence, /Galaxy S22/);
+  assert.ok(existsSync(join(ROOT, 'public', hands.imageUrl)));
 });
 
 /* ------------------------------------------------------------------ *
@@ -465,12 +478,31 @@ test('architecture lint rejects reversed layers, sibling features and unresolved
   }
 });
 
+test('measured sheet performance and release work stay tied to their evidence', async () => {
+  const { experienceData } = await importData();
+  const zoho = experienceData.find((e) => e.company === 'Zoho' && e.type === 'Full-time');
+  const sheet = zoho.projects.find((p) => p.id === 'spreadsheet-layout-performance');
+  for (const figure of [/1,000 × 200/, /16\.67 ms/, /78 ms/, /607 ms/, /200,000-cell/]) {
+    assert.match(sheet.desc + sheet.resumeSummary, figure);
+  }
+  assert.doesNotMatch(
+    sheet.desc + sheet.resumeSummary,
+    /AXSheetView|\d+%/,
+    'No internal component name or improvement percentage may be published',
+  );
+  const release = zoho.projects.find((p) => p.id === 'release-and-quality');
+  assert.match(release.desc, /App Store and TestFlight/);
+  assert.match(release.desc, /reviews code for the iOS teams/i);
+  assert.match(release.desc, /two interns/);
+  assert.doesNotMatch(release.desc, /mentor/i);
+});
+
 test('plain-language API and Hermes context stay in shared public facts', async () => {
   const { experienceData, profileData, projects } = await importData();
   for (const copy of [
     profileData.summary,
     profileData.deliverySummary,
-    experienceData[0].projects[0].desc,
+    experienceData[0].projects.find((work) => work.id === 'production-app-revamp').desc,
   ]) {
     assert.doesNotMatch(copy, /middleware parsing|web-aligned/);
     assert.match(copy, /translated their responses for the mobile app/);

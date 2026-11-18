@@ -13,7 +13,7 @@ import { publicText } from '../utils/publicText.js';
 import {
   findRookProject,
   isRookContactQuestion,
-  isRookFreelanceAvailabilityQuestion,
+  isRookAvailabilityQuestion,
   isRookPlatformQuestion,
   normalizeRookQuestion,
 } from './rookKnowledge.js';
@@ -57,9 +57,9 @@ export function generateFallbackResponse(messagesInput) {
   const project = findRookProject(query);
   if (project) return projectReply(project);
 
-  if (isRookFreelanceAvailabilityQuestion(query)) {
-    const availability = profileData.freelanceAvailability;
-    return `**${publicText(availability.headline)}**\n\n${publicText(availability.description)}\n\nUse the Contact chapter to discuss a project with Raj.`;
+  if (isRookAvailabilityQuestion(query)) {
+    const availability = profileData.availability;
+    return `**${publicText(availability.headline)}**\n\n${publicText(availability.description)}\n\nUse the Contact chapter to reach Raj about a role or project.`;
   }
 
   if (isRookPlatformQuestion(query)) {

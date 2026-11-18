@@ -9,6 +9,7 @@ export default function ProjectCard({ project, compact = false, onOpen }) {
         <img
           src={project.imageUrl}
           alt={project.imageAlt || `${project.name} screenshot`}
+          data-image-layout={project.imageLayout}
           loading="lazy"
           width="640"
           height="400"

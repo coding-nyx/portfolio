@@ -97,8 +97,34 @@ test('saved project answers treat Hermes as one project with both clients', () =
   assert.ok(reply.includes('hermes-companion-app'));
   assert.ok(!reply.includes('hermes-companion-web'));
   const collection = generateFallbackResponse('List the projects');
-  assert.equal((collection.match(/• /g) || []).length, 5);
+  assert.equal((collection.match(/• /g) || []).length, 6);
   assert.ok(!collection.includes('FitPro'));
+  const hands = generateFallbackResponse('What is Hermes Hands?');
+  assert.match(hands, /^### Hands\n/);
+  assert.match(hands, /without ADB or root/);
+  assert.doesNotMatch(
+    generateFallbackResponse('What hands-on work has Raj done with Swift?'),
+    /^### Hands\n/,
+  );
+});
+
+test('the Hands project only matches when the question is about device control', () => {
+  for (const question of [
+    'Does Raj have hands on experience with SwiftUI?',
+    'Show me hands-free features',
+    'What hands‑on iOS work has Raj done?',
+  ]) {
+    assert.ok(!generateFallbackResponse(question).startsWith('### Hands'), question);
+  }
+  for (const question of [
+    'Tell me about Hands',
+    'How does Hands control my phone screen?',
+    'What uses Shizuku on Android?',
+    'Does Hermes Hands need a virtual display?',
+  ]) {
+    const reply = generateFallbackResponse(question);
+    assert.ok(reply.startsWith('### Hands'), question + ' → ' + reply.slice(0, 40));
+  }
 });
 
 test('freelance and earlier-work answers use shared facts without inventing employment dates', () => {
@@ -124,7 +150,7 @@ test('freelance and earlier-work answers use shared facts without inventing empl
 });
 
 test('current freelance enquiries use shared availability and Contact without replacing work evidence', () => {
-  const availability = profileData.freelanceAvailability;
+  const availability = profileData.availability;
   const historicalWork = experienceData.find((item) => item.id === 'college-startup-work');
   for (const question of [
     'Is Raj available for freelance?',
@@ -137,7 +163,7 @@ test('current freelance enquiries use shared availability and Contact without re
     assert.ok(reply.includes(availability.headline), question);
     assert.ok(reply.includes(availability.description), question);
     assert.ok(!reply.includes(historicalWork.description), question);
-    assert.doesNotMatch(reply, /\b\d+\s*(?:hours?|days?)\b|per hour|hourly rate|full-time/i);
+    assert.doesNotMatch(reply, /\b\d+\s*(?:hours?|days?)\b|per hour|hourly rate/i);
     assert.match(reply, /Contact chapter/);
     assert.deepEqual(getRookGuidance(question).evidence, [
       { label: 'View contact', href: '#contact' },
@@ -164,7 +190,29 @@ test('current freelance enquiries use shared availability and Contact without re
     'Hermes Companion',
   );
   const facts = JSON.parse(systemPrompt.split('AUTHORITATIVE FACTS:\n')[1]);
-  assert.deepEqual(facts.profile.freelanceAvailability, availability);
+  assert.deepEqual(facts.profile.availability, availability);
+});
+
+test('employment availability questions use shared availability without catching role history', () => {
+  const { headline } = profileData.availability;
+  for (const question of [
+    'Is Raj open to full-time roles?',
+    'Is he looking for a new job?',
+    'Is Raj available for work?',
+    'Are you open to new opportunities?',
+  ]) {
+    const reply = generateFallbackResponse(question);
+    assert.ok(reply.includes(headline), question);
+    assert.match(reply, /Contact chapter/, question);
+    assert.equal(getRookGuidance(question).topic.chapter, 'contact', question);
+  }
+  for (const question of [
+    'What is Raj’s current role?',
+    'Is Raj interested in volunteering work?',
+    'Tell me about the Zoho Sprints revamp',
+  ]) {
+    assert.ok(!generateFallbackResponse(question).includes(headline), question);
+  }
 });
 
 test('project answers distinguish deprecated Ara from its public successor in development', () => {
@@ -364,7 +412,7 @@ test('AI SDLC questions explain the workflow without naming internal examples', 
 test('production delivery questions include release and maintenance contributions', () => {
   const reply = generateFallbackResponse('What production releases and bug fixes did Raj work on?');
   assert.match(reply, /feature additions, bug fixes and minor releases/);
-  assert.match(reply, /major product release/);
+  assert.match(reply, /Zoho Sprints revamp/);
   assert.doesNotMatch(reply, /\[ACTION:/);
   const revamp = generateFallbackResponse('What API migration and middleware revamp did Raj plan?');
   assert.match(
@@ -439,7 +487,9 @@ test('related links come only from published portfolio destinations', () => {
   for (const project of projects) {
     const { topic, evidence } = getRookGuidance(`How did Raj build ${project.name}?`);
     assert.equal(topic.projectName, project.name);
-    assert.ok(evidence.length >= 2);
+    assert.ok(evidence.some((link) => link.href === '#projects'));
+    const sourceCount = project.sourceLinks?.length ?? Number(Boolean(project.repoUrl));
+    assert.equal(evidence.length, 1 + sourceCount + Number(Boolean(project.liveUrl)));
     assert.ok(evidence.every((link) => allowed.has(link.href)));
   }
   const ara = getRookGuidance('Tell me about Ara');

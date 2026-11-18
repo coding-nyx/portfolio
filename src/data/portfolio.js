@@ -143,7 +143,7 @@ export const experienceData = [
     dates: 'May 2022 - Present',
     type: 'Full-time',
     description:
-      'Builds features for Zoho’s iOS apps, contributes to releases and app revamps, and develops shared iOS libraries and components. His work covers requirements analysis, feasibility, native UI performance and product-team integration.',
+      'Builds reusable iOS components and platform libraries for Zoho’s app ecosystem, used by other product teams, reviews code for the iOS teams and onboarded two interns. Previously on Zoho Sprints and Zoho Projects, including leading UI and navigation for the Zoho Sprints revamp and shipping its App Store and TestFlight releases. Covers requirements analysis, feasibility, native UI performance and product-team integration.',
     uiWork: {
       title: 'UI layout and performance',
       summary: 'Worked on application navigation, component layouts and scrolling performance.',
@@ -153,7 +153,7 @@ export const experienceData = [
           title: 'Adaptive product navigation',
           contextLabel: 'Scope',
           context:
-            'App-wide UI redesign and navigation improvements as part of a major iOS product revamp.',
+            'App-wide UI redesign and navigation improvements as part of the Zoho Sprints iOS revamp.',
           analysisLabel: 'Adaptive layout',
           analysis:
             'Implemented a reusable three-panel split view for phone, landscape and iPad layouts. Switched between rail navigation and a tab bar based on available size and traitCollection.',
@@ -171,7 +171,7 @@ export const experienceData = [
           analysis:
             'Used Xcode Instruments to investigate the scrolling path. Collection-view layout-item creation accounted for the largest share of the profile, with repeated work in the layout.',
           change:
-            'Cached layout attributes locally within UICollectionViewLayout to avoid repeatedly reindexing all cells.',
+            'Cached layout attributes locally within UICollectionViewLayout to avoid repeatedly reindexing all cells. Measuring the sheet at 1,000 × 200 cells on two physical iPads put the median frame time at 16.67 ms, the 60 fps budget, on both; p99 frames measured 78 ms on the newer iPad and 607 ms on the older one during large column jumps.',
           reasoning:
             'Reuse layout information rather than recreate it on each pass. The cache stayed within the layout, where that information was needed.',
         },
@@ -190,25 +190,32 @@ export const experienceData = [
     },
     projects: [
       {
-        id: 'production-app-revamp',
-        name: 'Production App Revamp',
-        desc: 'Integrated updated web APIs and translated their responses for the mobile app. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases.',
-        resumeSummary:
-          'Led UI and navigation redesign for a major iOS app revamp, integrating updated web APIs and building an adaptive 3-panel layout for iPhone and iPad.',
-      },
-      {
         id: 'reusable-product-ui',
         name: 'Reusable Product UI',
-        desc: 'Developed Kanban, spreadsheet and navigation components used by four teams across four apps. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
+        desc: 'Developed Kanban, spreadsheet and navigation components used by four teams across four apps. A component a team would otherwise spend an estimated one to two months designing, building and integrating can be integrated in about a day. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
         resumeSummary:
-          'Built reusable Kanban, spreadsheet and navigation components adopted by 4 teams across 4 apps.',
+          'Built reusable Kanban, spreadsheet and navigation components adopted by 4 teams across 4 apps; integration takes about a day, under an hour with the MCP, versus an estimated 1-2 months in-house.',
       },
       {
         id: 'platform-library-integration',
         name: 'iOS Platform Libraries and Feature Integration',
         desc: 'Developing reusable iOS libraries that give product teams consistent interfaces for Contacts, Speech, Vision and Continuity features. The work includes wrapping Apple frameworks and designing feature pipelines that combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
         resumeSummary:
-          'Building shared interfaces for Contacts, Speech, Vision and Continuity, with feature pipelines that combine Apple APIs, internal models and external providers.',
+          'Building shared interfaces for Contacts, Speech, Vision and Continuity, combining Apple APIs, internal models and external providers.',
+      },
+      {
+        id: 'release-and-quality',
+        name: 'Releases, code review and onboarding',
+        desc: 'Shipped Zoho Sprints releases through the App Store and TestFlight. Reviews code for the iOS teams and onboarded two interns.',
+        resumeSummary:
+          'Shipped Zoho Sprints releases through App Store and TestFlight; reviews iOS code and onboarded two interns.',
+      },
+      {
+        id: 'production-app-revamp',
+        name: 'Zoho Sprints Revamp',
+        desc: 'Integrated updated web APIs and translated their responses for the mobile app in the Zoho Sprints iOS revamp. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases across Zoho Sprints and Zoho Projects.',
+        resumeSummary:
+          'Earlier: integrated updated web APIs and led the UI and navigation redesign for the Zoho Sprints iOS revamp, with an adaptive 3-panel layout for iPhone and iPad.',
       },
       {
         id: 'adaptive-navigation-layout',
@@ -218,9 +225,9 @@ export const experienceData = [
       {
         id: 'spreadsheet-layout-performance',
         name: 'Spreadsheet scrolling',
-        desc: 'Used Xcode Instruments to investigate spreadsheet scrolling stutter and repeated layout-item creation. Cached layout attributes in UICollectionViewLayout to avoid repeated reindexing as columns increased.',
+        desc: 'Used Xcode Instruments to investigate spreadsheet scrolling stutter and repeated layout-item creation, then cached layout attributes in UICollectionViewLayout to avoid repeated reindexing as columns increased. Measured the sheet at 1,000 × 200 cells on two physical iPads: median frame time held at 16.67 ms, the 60 fps budget, on both, while p99 frames measured 78 ms on the newer iPad and 607 ms on the older one during large column jumps.',
         resumeSummary:
-          'Traced spreadsheet stutter in Instruments to repeated layout-item creation. Cached UICollectionViewLayout attributes to avoid reindexing every cell on each scroll pass.',
+          'Traced spreadsheet stutter in Instruments to repeated layout-item creation; cached UICollectionViewLayout attributes. Measured a 200,000-cell sheet on two iPads at a 16.67 ms median frame time (p99: 78 ms newer iPad, 607 ms older).',
       },
       {
         id: 'kanban-column-layout',
@@ -234,7 +241,7 @@ export const experienceData = [
       {
         id: 'component-integration-mcp',
         name: 'Component Integration MCP',
-        desc: 'Developed an MCP exposing component APIs and documentation to make integration easier. A product team currently uses it.',
+        desc: 'Developed an MCP exposing component APIs and documentation, cutting a component integration from about a day to under an hour. A product team currently uses it.',
       },
       {
         id: 'ai-sdlc-prototype',
@@ -311,9 +318,10 @@ export const interestsData = [
 
 export const profileData = {
   volunteeringInterest: 'Interested in volunteering opportunities.',
-  freelanceAvailability: {
-    headline: 'Available for freelance projects and consulting',
-    description: 'Reusable iOS components, native feature integrations and developer tooling.',
+  availability: {
+    headline: 'Open to full-time roles and freelance projects',
+    description:
+      'Full-time iOS and product engineering roles, plus freelance work and consulting on reusable iOS components, native feature integrations and developer tooling.',
   },
   name: 'Raj Kumar S',
   roleTitle: 'iOS Product Engineer',
@@ -321,23 +329,24 @@ export const profileData = {
     preferredName: 'Rajkumar',
     primaryStack: ['Swift', 'UIKit', 'SwiftUI', 'SPM'],
     paragraphs: [
-      'I’m an iOS product engineer based in Chennai, working on Zoho apps. My experience spans implementing product features, fixing bugs and contributing to app release cycles.',
-      'My work spans app functionality, API integration and major product revamps, along with navigation, layouts and performance on iPhone and iPad. I also build reusable UI components, platform libraries and developer tools that help other product teams bring native capabilities into their apps.',
-      'Outside work, I enjoy exploring new ideas through side projects, from tools and AI experiments to Linux customizations. I’m also into retro gaming and obstacle course races.',
+      'I’m an iOS product engineer in Chennai. At Zoho, I build reusable components and platform libraries for the iOS app ecosystem: Kanban, spreadsheet and navigation components that four teams use across four apps, and shared libraries for Contacts, Speech, Vision and Continuity.',
+      'A component that would take a team an estimated one to two months to build can be integrated in about a day, and in under an hour with the integration MCP I built. Before moving to components, I worked on Zoho Sprints and Zoho Projects, and led the UI and navigation redesign for the Zoho Sprints revamp, including an adaptive three-panel layout for phone, landscape and iPad.',
+      'Outside work, I build AI agent and automation tools: Android clients, a finance tracker with MCP tools, and a Linux distribution for an RK3588 board. I’m also into retro gaming and obstacle course races.',
     ],
     personalLinkLabel: 'Race photos and other interests',
   },
   heroSummary:
-    'I build reusable iOS components and tools that help product teams deliver consistent native experiences.',
+    'I build reusable iOS components and platform libraries for Zoho’s app ecosystem, which teams integrate in a day instead of months.',
   deliverySummary:
-    'Early in the iOS role at Zoho, contributed to feature additions, bug fixes and minor releases. For a major product release, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
-  headline: 'iOS Product Engineer at Zoho | Native UI Components | Swift, UIKit & SwiftUI',
+    'Early in the iOS role at Zoho, contributed to feature additions, bug fixes and minor releases for Zoho Sprints and Zoho Projects. For the Zoho Sprints revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
+  headline:
+    'iOS Product Engineer at Zoho | Reusable Components & Platform Libraries | Swift, UIKit & SwiftUI',
   location: 'Chennai, India',
   profileImage: '/profile.jpg',
   summary:
-    'iOS engineer at Zoho since May 2022, developing reusable Kanban, spreadsheet and navigation components. For a major app revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to planning, and led UI redesign and navigation improvements. Current work includes native UI performance, reusable platform libraries and component integration tooling.',
+    'iOS engineer at Zoho since May 2022, now building reusable Kanban, spreadsheet and navigation components, platform libraries and component integration tooling for Zoho’s iOS app ecosystem. Earlier, on Zoho Sprints and Zoho Projects, integrated updated web APIs and translated their responses for the mobile app in the Zoho Sprints revamp, contributed to planning, and led UI redesign and navigation improvements.',
   resumeSummary:
-    'I build features for Zoho’s iOS apps. My work spans production releases, app redesign, scrolling performance, and shared iOS libraries and components.',
+    'iOS engineer building reusable components, platform libraries and MCP tooling for Zoho’s iOS app ecosystem, which teams integrate in a day instead of months. Previously led the UI and navigation redesign for the Zoho Sprints revamp.',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/raj-kumar-s',
     email: 'hello@iamnyx.dev',
@@ -346,22 +355,6 @@ export const profileData = {
 };
 
 export const projects = [
-  {
-    id: 'worktracker',
-    name: 'WorkTracker',
-    cardSummary:
-      'A shared Kanban workspace for coordinating AI agents, with live updates and REST/MCP access.',
-    featured: true,
-    tags: ['TypeScript', 'Firebase', 'Next.js', 'MCP', 'Kanban'],
-    description:
-      'A shared task board for coordinating AI agents, with multiple Kanban boards, live updates, REST and MCP access, a command queue, and connector plugins.',
-    imageUrl: '/projects/worktracker-kanban.webp',
-    liveUrl: null,
-    linksUnavailableReason:
-      'The published deployment is currently unavailable. The public source repository remains available.',
-    repoUrl: 'https://github.com/coding-nyx/worktracker',
-    status: 'Deployment unavailable',
-  },
   {
     id: 'hermes-companion',
     name: 'Hermes Companion',
@@ -378,6 +371,7 @@ export const projects = [
     repoUrl: 'https://github.com/coding-nyx/hermes-companion-app',
     status: 'Android releases available',
     scope: 'Personal project',
+    relatedProjectId: 'hands',
     linkLabel: 'Releases / Download APK',
     availability: 'live',
     caseStudy: {
@@ -413,7 +407,7 @@ export const projects = [
     name: 'Tally',
     cardSummary:
       'A personal finance tracker with multiple accounts, statement imports, budgets and MCP tools.',
-    featured: false,
+    featured: true,
     tags: ['React', 'TypeScript', 'Local Storage', 'CSV / PDF', 'MCP'],
     description:
       'A personal finance tracker for multiple accounts, credit cards, loans and monthly budgets, with statement import and review, separate INR/USD ledgers and backup recovery. Includes MCP access for compatible AI clients through a stdio bridge and shared-ledger service.',
@@ -448,7 +442,7 @@ export const projects = [
     liveUrl: null,
     repoUrl: 'https://github.com/coding-nyx/tally',
     sourceLinks: [{ label: 'Source', url: 'https://github.com/coding-nyx/tally' }],
-    status: 'Deployed personal project',
+    status: 'Deployed · open source',
     scope: 'Personal web application',
     linksUnavailableReason: null,
     caseStudy: {
@@ -467,39 +461,57 @@ export const projects = [
     },
   },
   {
-    id: 'a0090-meta',
-    name: 'RK3588 Linux Distribution',
-    aliases: ['a0090-meta', 'a0090-meta (hub-11 OS)', 'hub-11 OS'],
+    id: 'hands',
+    name: 'Hands',
+    aliases: ['Hermes Hands'],
     cardSummary:
-      'A reproducible Linux distribution for an RK3588 NVR demo board, with a custom device tree and boot image.',
+      'Agent-agnostic Android control for the phone screen or a separate virtual display.',
     featured: false,
-    tags: ['Linux Kernel', 'RK3588', 'Device Tree', 'C'],
+    tags: ['Android', 'Kotlin', 'Accessibility', 'Shizuku', 'MCP'],
     description:
-      'Linux OS distribution for an RK3588 NVR demo board, with a custom device-tree source and reproducible build steps.',
-    imageUrl: null,
-    liveUrl: null,
-    repoUrl: 'https://github.com/coding-nyx/a0090-meta',
-    status: 'Source-only project',
-    scope: 'Personal / open-source project',
-    linksUnavailableReason: 'No hosted demo deployment; source repository only.',
+      'I built Hands to let authorized agents control my Android phone through an authenticated HTTPS API or an optional MCP adapter. Android Accessibility handles the phone screen without ADB or root. On compatible Android 14+ devices, Shizuku adds a separate virtual display and can be started through wireless debugging, ADB or root.',
+    imageUrl: '/projects/hands-galaxy-s22.webp',
+    imageAlt: 'Hands on Galaxy S22 showing the available work screens and control engines',
+    imageCaption: 'Galaxy S22 demo · Hands control screen',
+    imageLayout: 'portrait',
+    status: 'Personal Android project',
+    scope: 'Standalone Android automation engine',
+    relatedProjectId: 'hermes-companion',
     caseStudy: {
-      problem:
-        'An unsupported RK3588 NVR demo board needed a bootable, maintainable Linux distribution rather than a vendor image that could not be reproduced.',
-      approach:
-        'Produced a board device-tree source, assembled a FIT boot image, integrated kernel drivers against mainline Linux 6.18, and documented the build, flash and verification steps so the result is reproducible.',
-      scope: 'Personal and open-source board enablement.',
       evidence:
-        'Public repository containing a substantial board DTS plus kernel, config, patch, FIT, rootfs and recovery layout, with documented build and flash verification steps. The README also documents an unresolved Wi-Fi/AP limitation.',
+        'On a Galaxy S22, I launched Android Settings and captured it on the agent’s virtual display while the physical screen was asleep. The screenshot shows the Hands controls used to select a work screen and control engine.',
+      problem:
+        'I wanted to let agents operate Android apps on my own phone without tying device control to a single agent runtime or occupying the physical screen during every task.',
+      approach:
+        'Built an Android service with two control paths. The user enables Android Accessibility for phone-screen interaction. On supported devices, Shizuku can run apps on a separate virtual display. An authenticated API gives clients a common interface, with an optional MCP adapter.',
+      scope:
+        'I built the Android app and service, the control backends and the MCP adapter. A client can connect independently of Hermes Companion.',
       limitations:
-        'Wi-Fi/AP support is an open limitation documented in the repository. No upstream merge is claimed.',
+        'The separate virtual display requires Shizuku and a compatible Android 14+ device. The Galaxy S22 demo covers Android Settings, and support varies by device and app.',
     },
+  },
+  {
+    id: 'worktracker',
+    name: 'WorkTracker',
+    cardSummary:
+      'A shared Kanban workspace for coordinating AI agents, with live updates and REST/MCP access.',
+    featured: false,
+    tags: ['TypeScript', 'Firebase', 'Next.js', 'MCP', 'Kanban'],
+    description:
+      'A shared task board for coordinating AI agents, with multiple Kanban boards, live updates, REST and MCP access, a command queue, and connector plugins.',
+    imageUrl: '/projects/worktracker-kanban.webp',
+    liveUrl: null,
+    linksUnavailableReason:
+      'The published deployment is currently unavailable. The public source repository remains available.',
+    repoUrl: 'https://github.com/coding-nyx/worktracker',
+    status: 'Open source',
   },
   {
     id: 'agent-os',
     name: 'Ara → Agent OS',
     aliases: ['Ara', 'Agent OS'],
     cardSummary:
-      'Ara is deprecated. Its successor, Agent OS, is in development: a local-first workspace for specialist agents and personal data.',
+      'A local-first workspace for specialist AI agents and personal data, built on a pinned Hermes runtime. Successor to the earlier Ara prototype.',
     featured: false,
     tags: ['Python', 'FastAPI', 'React', 'TypeScript', 'PostgreSQL', 'MCP'],
     description:
@@ -537,7 +549,7 @@ export const projects = [
     linkLabel: 'Earlier Ara prototype',
     repoUrl: 'https://github.com/coding-nyx/agent-os',
     sourceLinks: [{ label: 'Agent OS source', url: 'https://github.com/coding-nyx/agent-os' }],
-    status: 'Agent OS · in development',
+    status: 'In development · open source',
     developmentStatus: 'in-progress',
     scope: 'Personal open-source project',
     linksUnavailableReason:
@@ -553,6 +565,34 @@ export const projects = [
         'Public Agent OS repository with implementation, regression tests and technical verification notes. The reviewed revision passed its GitHub validation workflow. This source review did not independently run Agent OS or validate physical-device control.',
       limitations:
         'Agent OS is in development, not a completed replacement or hosted demo. Physical-device control, remote desktop routing and broad platform support remain unverified; no high-frame-rate streaming or latency benchmark is claimed. Local-first storage does not imply all model inference runs locally. For the earlier Ara prototype, model context limits still apply and no published evaluation of persona consistency, retrieval quality or image-analysis accuracy is available.',
+    },
+  },
+  {
+    id: 'a0090-meta',
+    name: 'RK3588 Linux Distribution',
+    aliases: ['a0090-meta', 'a0090-meta (hub-11 OS)', 'hub-11 OS'],
+    cardSummary:
+      'A reproducible Linux distribution for an RK3588 NVR demo board, with a custom device tree and boot image.',
+    featured: false,
+    tags: ['Linux Kernel', 'RK3588', 'Device Tree', 'C'],
+    description:
+      'Linux OS distribution for an RK3588 NVR demo board, with a custom device-tree source and reproducible build steps.',
+    imageUrl: null,
+    liveUrl: null,
+    repoUrl: 'https://github.com/coding-nyx/a0090-meta',
+    status: 'Open source · board bring-up',
+    scope: 'Personal / open-source project',
+    linksUnavailableReason: 'No hosted demo deployment; source repository only.',
+    caseStudy: {
+      problem:
+        'An unsupported RK3588 NVR demo board needed a bootable, maintainable Linux distribution rather than a vendor image that could not be reproduced.',
+      approach:
+        'Produced a board device-tree source, assembled a FIT boot image, integrated kernel drivers against mainline Linux 6.18, and documented the build, flash and verification steps so the result is reproducible.',
+      scope: 'Personal and open-source board enablement.',
+      evidence:
+        'Public repository containing a substantial board DTS plus kernel, config, patch, FIT, rootfs and recovery layout, with documented build and flash verification steps. The README also documents an unresolved Wi-Fi/AP limitation.',
+      limitations:
+        'Wi-Fi/AP support is an open limitation documented in the repository. No upstream merge is claimed.',
     },
   },
 ];

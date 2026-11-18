@@ -46,10 +46,10 @@ def build():
         "name": ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=25, leading=29, textColor=ink, alignment=TA_CENTER),
         "role": ParagraphStyle("role", fontName="Helvetica-Bold", fontSize=11.5, leading=16, textColor=accent, alignment=TA_CENTER, spaceAfter=6),
         "contact": ParagraphStyle("contact", fontName="Helvetica", fontSize=9, leading=13, alignment=TA_CENTER, textColor=muted),
-        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10.5, leading=15, textColor=accent, spaceBefore=13, spaceAfter=5, keepWithNext=True),
+        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10.5, leading=15, textColor=accent, spaceBefore=11, spaceAfter=4, keepWithNext=True),
         "body": ParagraphStyle("body", fontName="Helvetica", fontSize=10.3, leading=14.5, textColor=ink, spaceAfter=4),
         "job": ParagraphStyle("job", fontName="Helvetica-Bold", fontSize=10.3, leading=14.5, textColor=ink, spaceBefore=3, spaceAfter=4, keepWithNext=True),
-        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10.1, leading=14.2, leftIndent=10, firstLineIndent=-8, textColor=ink, spaceAfter=5),
+        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10.1, leading=14.2, leftIndent=10, firstLineIndent=-8, textColor=ink, spaceAfter=4),
         "small": ParagraphStyle("small", fontName="Helvetica", fontSize=9.8, leading=13.5, textColor=muted, spaceAfter=4),
     }
     doc = SimpleDocTemplate(str(out / filename), pagesize=A4, leftMargin=40, rightMargin=40, topMargin=32, bottomMargin=30, invariant=1,
@@ -74,10 +74,11 @@ def build():
     story.append(para(text(role["company"]) + " | " + text(role["role"]) + " | " + text(role["dates"]), "job"))
     work_by_id = {item["id"]: item for item in role["projects"] if "resumeSummary" in item}
     for work_id in (
-        "production-app-revamp",
-        "spreadsheet-layout-performance",
         "reusable-product-ui",
+        "spreadsheet-layout-performance",
         "platform-library-integration",
+        "release-and-quality",
+        "production-app-revamp",
     ):
         story.append(para("- " + text(work_by_id[work_id]["resumeSummary"]), "bullet"))
     story.append(Spacer(1, 3))

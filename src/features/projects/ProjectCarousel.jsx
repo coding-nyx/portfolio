@@ -19,6 +19,7 @@ function ProjectVisual({ project }) {
         <img
           src={project.imageUrl}
           alt={project.imageAlt || `${project.name} screenshot`}
+          data-image-layout={project.imageLayout}
           width="640"
           height="400"
           loading="lazy"

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react';
 import SpringAction from '../../shared/ui/SpringAction.jsx';
 
 export function ProjectSourceLinks({ project }) {
@@ -57,10 +58,22 @@ function ProjectArchitecture({ architecture }) {
 export default function ProjectDetailsDialog({
   dialogRef,
   project,
+  relatedProject,
+  onOpenRelated,
   onClose,
   titleId = 'project-detail-title',
   motionEnabled,
 }) {
+  const heading = useRef(null);
+
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current;
+    if (project && dialog?.open) {
+      dialog.scrollTop = 0;
+      heading.current?.focus({ preventScroll: true });
+    }
+  }, [dialogRef, project]);
+
   return (
     <dialog
       className="portfolio-dialog"
@@ -81,7 +94,9 @@ export default function ProjectDetailsDialog({
       {project && (
         <div className="portfolio-dialog-content">
           <p className="port-eyebrow">{project.status}</p>
-          <h3 id={titleId}>{project.name}</h3>
+          <h3 ref={heading} id={titleId} tabIndex={-1}>
+            {project.name}
+          </h3>
           <p className="port-meta">{project.tags.join(' · ')}</p>
           {project.imageUrl && (
             <a
@@ -93,6 +108,7 @@ export default function ProjectDetailsDialog({
               <img
                 src={project.imageUrl}
                 alt={project.imageAlt || `${project.name} screenshot`}
+                data-image-layout={project.imageLayout}
                 width="640"
                 height="400"
               />
@@ -112,6 +128,17 @@ export default function ProjectDetailsDialog({
                 </div>
               ))}
             </dl>
+          )}
+          {relatedProject && (
+            <div className="project-card-actions">
+              <SpringAction
+                className="port-button secondary"
+                onClick={onOpenRelated}
+                motionEnabled={motionEnabled}
+              >
+                Related project · {relatedProject.name}
+              </SpringAction>
+            </div>
           )}
           {project.caseStudy && (
             <dl className="project-case-study">

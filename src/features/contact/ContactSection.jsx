@@ -30,9 +30,9 @@ export default function ContactSection() {
       </h2>
       <div className="contact-availability">
         <p>
-          <strong>{profileData.freelanceAvailability.headline}</strong>
+          <strong>{profileData.availability.headline}</strong>
         </p>
-        <p>{profileData.freelanceAvailability.description}</p>
+        <p>{profileData.availability.description}</p>
       </div>
       <MotionDetails className="contact-composer" open>
         <summary>

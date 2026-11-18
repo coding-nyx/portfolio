@@ -3,7 +3,7 @@ import { projects } from '../../data/portfolio.js';
 import {
   findRookProject,
   isRookContactQuestion,
-  isRookFreelanceAvailabilityQuestion,
+  isRookAvailabilityQuestion,
   isRookPlatformQuestion,
   normalizeRookQuestion,
 } from '../../services/rookKnowledge.js';
@@ -127,7 +127,7 @@ export function getRookGuidance(question, messages = []) {
     /^(?:(?:and\s+)?(?:how|why|what|which|is|was|does|did|can|could)\b.*\b(?:it|its|that|this|these|those|they|their)\b|tell me more\b|go deeper\b|technical details\b|what about (?:the )?(?:limitations|trade.?offs|architecture)\b)/.test(
       text,
     );
-  const contactQuestion = isRookFreelanceAvailabilityQuestion(text) || isRookContactQuestion(text);
+  const contactQuestion = isRookAvailabilityQuestion(text) || isRookContactQuestion(text);
   const chapter = contactQuestion
     ? 'contact'
     : isRookPlatformQuestion(text)
