@@ -88,9 +88,9 @@ The generator uses portfolio facts and requires Node plus Python `reportlab`, `p
 
 No top-level license file is present in the current tree. The README does not introduce a new license grant.
 
-## Canonical domain and résumé PDFs
+## Canonical domain and résumé PDF
 
-The canonical public URL is `https://iamnyx.dev/`. Sharing metadata and both résumé variants use that domain. The PDFs have identical content and layout, with Modern (blue) and Cyberpunk (ember) accent colors; neither has a verified ATS-compatibility claim. Rebuild them with `python3 scripts/build-resume.py --output-dir public` after installing the Python dependencies listed in that script. The builder checks single-page output, contact details and project source links, and regenerates the Modern preview.
+The canonical public URL is `https://iamnyx.dev/`. Sharing metadata and the résumé use that domain. Rebuild the résumé and preview with `python3 scripts/build-resume.py --output-dir public` after installing the Python dependencies listed in that script. The builder checks the page count, contact details and project source links.
 
 The 1200×630 share image is `public/social-share.png`, built from the existing After Hours artwork and Space Grotesk font. Regenerate it with `python3 scripts/build-social-card.py` (requires Pillow). Static Open Graph/Twitter metadata includes dimensions and equivalent image descriptions; the text description and no-JS résumé/contact fallback do not depend on the image.
 

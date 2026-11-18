@@ -1,4 +1,6 @@
 // Authoritative public facts shared by the approved chapters and Rook.
+export const RESUME_URL = '/resume-modern.pdf';
+
 export const achievementsData = [
   {
     id: 'devils-circuit',
@@ -136,12 +138,12 @@ export const certificationsData = [
 export const experienceData = [
   {
     company: 'Zoho',
-    role: 'Software Engineer',
+    role: 'iOS Product Engineer',
     startDate: '2022-05',
     dates: 'May 2022 - Present',
     type: 'Full-time',
     description:
-      'Develops reusable iOS UI components and platform libraries, covering requirements analysis, feasibility, native UI performance and product-team integration.',
+      'Builds features for Zoho’s iOS apps, contributes to releases and app revamps, and develops shared iOS libraries and components. His work covers requirements analysis, feasibility, native UI performance and product-team integration.',
     uiWork: {
       title: 'UI layout and performance',
       summary: 'Worked on application navigation, component layouts and scrolling performance.',
@@ -192,43 +194,42 @@ export const experienceData = [
         name: 'Production App Revamp',
         desc: 'Integrated updated web APIs and translated their responses for the mobile app. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases.',
         resumeSummary:
-          'Integrated updated web APIs and mobile response mapping for a major revamp; contributed to planning and led UI and navigation improvements. Also contributed to features, fixes and minor releases.',
+          'Led UI and navigation redesign for a major iOS app revamp, integrating updated web APIs and building an adaptive 3-panel layout for iPhone and iPad.',
       },
       {
+        id: 'reusable-product-ui',
         name: 'Reusable Product UI',
-        desc: 'Developed Kanban, spreadsheet and navigation components. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
+        desc: 'Developed Kanban, spreadsheet and navigation components used by four teams across four apps. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
         resumeSummary:
-          'Developed Kanban, spreadsheet and navigation components used by four teams across four apps; prototyped UIKit, SwiftUI and hybrid layouts.',
+          'Built reusable Kanban, spreadsheet and navigation components adopted by 4 teams across 4 apps.',
       },
       {
         id: 'platform-library-integration',
         name: 'iOS Platform Libraries and Feature Integration',
-        desc: 'Developing reusable iOS platform libraries that help product teams adopt capabilities such as contacts, Apple Intelligence, speech analysis, Continuity and Vision through consistent interfaces. The work includes wrapping Apple frameworks and designing feature pipelines that combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
+        desc: 'Developing reusable iOS libraries that give product teams consistent interfaces for Contacts, Speech, Vision and Continuity features. The work includes wrapping Apple frameworks and designing feature pipelines that combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
         resumeSummary:
-          'Developing libraries for contacts, Apple Intelligence, speech, Continuity and Vision; feature pipelines combine native, Zoho R&D and external implementations with BYOK support.',
+          'Building shared interfaces for Contacts, Speech, Vision and Continuity, with feature pipelines that combine Apple APIs, internal models and external providers.',
       },
       {
         id: 'adaptive-navigation-layout',
         name: 'Adaptive navigation layout',
         desc: 'Implemented a reusable three-panel split view for phone, landscape and iPad, switching between rail navigation and a tab bar based on size and traitCollection. Modules declared actions such as Add, Filter and Search; the parent layout supplied navigation items and callbacks.',
-        resumeSummary:
-          'Built a reusable three-panel layout for iPhone and iPad, with size/trait-based rail and tab-bar switching. Modules declare actions; the parent supplies navigation items and callbacks.',
       },
       {
         id: 'spreadsheet-layout-performance',
         name: 'Spreadsheet scrolling',
         desc: 'Used Xcode Instruments to investigate spreadsheet scrolling stutter and repeated layout-item creation. Cached layout attributes in UICollectionViewLayout to avoid repeated reindexing as columns increased.',
+        resumeSummary:
+          'Traced spreadsheet stutter in Instruments to repeated layout-item creation. Cached UICollectionViewLayout attributes to avoid reindexing every cell on each scroll pass.',
       },
       {
         id: 'kanban-column-layout',
         name: 'Kanban backgrounds',
         desc: 'Used cell and refresh-control backgrounds to handle Kanban columns with variable card counts and heights, avoiding separate measurement of the full column.',
-        resumeOmit: true,
       },
       {
         name: 'Component Integration Support',
         desc: 'Shared components with product teams and helped them integrate the components into their apps.',
-        resumeOmit: true,
       },
       {
         id: 'component-integration-mcp',
@@ -239,8 +240,6 @@ export const experienceData = [
         id: 'ai-sdlc-prototype',
         name: 'AI SDLC for UI components',
         desc: 'Implemented a prototype that plans component features and tests from a written spec, then generates component code and UI automation. Supports versioned updates and feature additions.',
-        resumeSummary:
-          'Built a spec-driven prototype that plans features and tests before generating component code and UI automation, with platform-specific plans and support for versioned feature updates.',
         details: {
           intro:
             'The component spec carries the feature requirements and implementation decisions through planning, code generation and UI testing. The aim is to keep the implementation and its test expectations tied to the same requirements.',
@@ -331,14 +330,14 @@ export const profileData = {
   heroSummary:
     'I build reusable iOS components and tools that help product teams deliver consistent native experiences.',
   deliverySummary:
-    'Early in the Software Engineer role, contributed to feature additions, bug fixes and minor releases. For a major product release, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
+    'Early in the iOS role at Zoho, contributed to feature additions, bug fixes and minor releases. For a major product release, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
   headline: 'iOS Product Engineer at Zoho | Native UI Components | Swift, UIKit & SwiftUI',
   location: 'Chennai, India',
   profileImage: '/profile.jpg',
   summary:
     'iOS engineer at Zoho since May 2022, developing reusable Kanban, spreadsheet and navigation components. For a major app revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to planning, and led UI redesign and navigation improvements. Current work includes native UI performance, reusable platform libraries and component integration tooling.',
   resumeSummary:
-    'iOS product engineer at Zoho since May 2022, building reusable UI components and platform libraries. Experience spans app revamps, native UI performance, API integration and developer tooling.',
+    'I build features for Zoho’s iOS apps. My work spans production releases, app redesign, scrolling performance, and shared iOS libraries and components.',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/raj-kumar-s',
     email: 'hello@iamnyx.dev',

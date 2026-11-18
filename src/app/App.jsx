@@ -2,8 +2,8 @@ import '../shared/ui/sections.css';
 import '../shared/ui/dialog.css';
 import { useEffect, useRef, useState } from 'react';
 import { GlobalStyle } from '../shared/theme/GlobalStyle.js';
-import { useTheme } from '../shared/theme/useTheme.js';
 import CyberpunkOverlay from '../shared/theme/CyberpunkOverlay.jsx';
+import { RESUME_URL } from '../data/portfolio.js';
 import SkipLink from '../shared/ui/SkipLink.jsx';
 import { scheduleVisitAnalytics } from '../services/analytics.js';
 import HeroSection from '../features/profile/HeroSection.jsx';
@@ -35,8 +35,6 @@ export default function App() {
   const [rookOpen, setRookOpen] = useState(false);
   const [rookRequested, setRookRequested] = useState(false);
   const askOpener = useRef(null);
-  const { theme } = useTheme();
-  const resumeUrl = theme === 'cyberpunk' ? '/resume-cyberpunk.pdf' : '/resume-modern.pdf';
 
   useEffect(() => scheduleVisitAnalytics(), []);
   usePortfolioAnalytics();
@@ -56,10 +54,10 @@ export default function App() {
         <EmberField />
         <SkipLink />
         <CyberpunkOverlay />
-        <SiteNavigation resumeUrl={resumeUrl} askOpen={rookOpen} onAsk={openRook} />
+        <SiteNavigation resumeUrl={RESUME_URL} askOpen={rookOpen} onAsk={openRook} />
         <main id="main-content" tabIndex={-1}>
           <Chapter id="entry" full>
-            <HeroSection resumeUrl={resumeUrl} />
+            <HeroSection resumeUrl={RESUME_URL} />
           </Chapter>
           <Chapter id="bio" number="02" label="The person behind the work">
             <BioSection />
@@ -80,7 +78,7 @@ export default function App() {
             <AchievementsSection />
           </Chapter>
           <Chapter id="resume" number="07" label="The concise version">
-            <ResumeSection resumeUrl={resumeUrl} />
+            <ResumeSection resumeUrl={RESUME_URL} />
           </Chapter>
           <Chapter id="personal" number="08" label="Away from the keyboard">
             <PersonalSection />
@@ -100,7 +98,7 @@ export default function App() {
           }}
           onOpenResume={() => {
             trackFootfallEvent('resume_open', { entry_point: 'rook' });
-            window.open(resumeUrl, '_blank');
+            window.open(RESUME_URL, '_blank');
           }}
         />
         <SiteFooter />

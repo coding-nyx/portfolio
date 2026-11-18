@@ -1,4 +1,4 @@
-import { profileData } from '../data/portfolio.js';
+import { profileData, RESUME_URL } from '../data/portfolio.js';
 
 export default function ApplicationError() {
   return (
@@ -9,7 +9,7 @@ export default function ApplicationError() {
         <button type="button" onClick={() => window.location.reload()}>
           Reload portfolio
         </button>
-        <a href="/resume-modern.pdf">Download résumé</a>
+        <a href={RESUME_URL}>Download résumé</a>
         <a href={`mailto:${profileData.socialLinks.email}`}>Email Raj</a>
       </div>
     </main>

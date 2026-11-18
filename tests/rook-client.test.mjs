@@ -51,7 +51,7 @@ test('provider/server failure produces an explicitly marked local fallback', asy
       async () => new Response(JSON.stringify({ error: 'unavailable' }), { status }),
       async () => {
         const answer = await askRookAgent({ messages, onMode: (m) => (mode = m) });
-        assert.ok(answer.includes('Since May 2022'));
+        assert.match(answer, /since May 2022/i);
       },
     );
     assert.equal(mode.source, 'preset');
@@ -344,13 +344,7 @@ test('live Rook receives the same platform-library facts as saved replies', () =
   const liveWork = facts.experience[0].work.find((item) => item.name === work.name);
   assert.equal(liveWork.description, work.desc);
   assert.match(liveWork.description, /Developing/);
-  for (const capability of [
-    'contacts',
-    'Apple Intelligence',
-    'speech analysis',
-    'Continuity',
-    'Vision',
-  ])
+  for (const capability of ['Contacts', 'Speech', 'Vision', 'Continuity'])
     assert.ok(liveWork.description.includes(capability));
   assert.match(liveWork.description, /Zoho R&D libraries/);
   assert.match(liveWork.description, /custom models and external libraries or APIs/);
@@ -381,7 +375,7 @@ test('production delivery questions include release and maintenance contribution
     revamp,
     /Contributed to revamp planning and led UI redesign and navigation improvements/,
   );
-  assert.match(revamp, /Early in the Software Engineer role/);
+  assert.match(revamp, /Early in the iOS role at Zoho/);
 });
 
 test('live and saved answers have the same related links without navigating on an ordinary question', async () => {

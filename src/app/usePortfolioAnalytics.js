@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { CHAPTERS } from '../data/chapters.js';
-import { projects, profileData } from '../data/portfolio.js';
+import { projects, profileData, RESUME_URL } from '../data/portfolio.js';
 import { trackFootfallEvent } from '../services/footfallAnalytics.js';
 
 export function chapterIsVisible(rect, viewportHeight) {
@@ -64,10 +64,7 @@ export default function usePortfolioAnalytics() {
       const link = event.target.closest?.('a[href]');
       if (!link) return;
       const url = new URL(link.href, window.location.origin);
-      if (
-        url.origin === window.location.origin &&
-        ['/resume-modern.pdf', '/resume-cyberpunk.pdf'].includes(url.pathname)
-      ) {
+      if (url.origin === window.location.origin && url.pathname === RESUME_URL) {
         const entry = link.closest('#entry')
           ? 'hero'
           : link.closest('#resume')

@@ -1,11 +1,12 @@
 import './profile.css';
 import { useState } from 'react';
-import { profileData, experienceData } from '../../data/portfolio.js';
+import { experienceData, profileData } from '../../data/portfolio.js';
 import SpringAction from '../../shared/ui/SpringAction.jsx';
 import NextChapter from '../../shared/ui/NextChapter.jsx';
 
 export default function ResumeSection({ resumeUrl }) {
   const [preview, setPreview] = useState(false);
+  const role = experienceData[0];
   return (
     <div className="port-section resume-c" data-design="Resume C">
       <h2 id="h-resume" tabIndex={-1}>
@@ -14,12 +15,9 @@ export default function ResumeSection({ resumeUrl }) {
       <div className="resume-grid">
         <div className="resume-overview">
           <p className="port-eyebrow">Native UI · Product engineering</p>
-          <h3>{profileData.roleTitle}</h3>
-          <p>
-            A concise overview of my component engineering, performance work, integration tooling
-            and selected projects.
-          </p>
-          <p className="port-meta">{experienceData[0].role} at Zoho · Since May 2022</p>
+          <h3>{role.role}</h3>
+          <p>{profileData.resumeSummary}</p>
+          <p className="port-meta">{role.company} · Since May 2022</p>
         </div>
         <aside className="resume-download">
           <SpringAction as="a" className="resume-download-button" href={resumeUrl} download>
@@ -29,17 +27,6 @@ export default function ResumeSection({ resumeUrl }) {
               <small>PDF · Updated November 2026</small>
             </span>
           </SpringAction>
-          <p className="port-meta">
-            Same content and layout, two accent colors:{' '}
-            <a href="/resume-modern.pdf" download>
-              Modern (blue)
-            </a>{' '}
-            ·{' '}
-            <a href="/resume-cyberpunk.pdf" download>
-              Cyberpunk (ember)
-            </a>
-            . The download above follows the site theme; the preview shows Modern.
-          </p>
           <SpringAction
             className="port-button secondary"
             aria-expanded={preview}
@@ -54,7 +41,7 @@ export default function ResumeSection({ resumeUrl }) {
               src="/resume-preview.png"
               width="595"
               height="842"
-              alt="First page of Raj’s Modern resume (blue accent)"
+              alt="Preview of Raj’s one-page résumé"
             />
           )}
           <a href={resumeUrl} target="_blank" rel="noreferrer">

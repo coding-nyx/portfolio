@@ -292,17 +292,19 @@ test('the removed Testimonials component is not referenced', () => {
   );
 });
 
-test('résumé PDFs remain reachable from the app and the no-JS fallback', () => {
+test('the app and no-JS fallback use a single résumé PDF', async () => {
+  const { RESUME_URL } = await importData();
   const html = read('index.html');
-  assert.ok(html.includes('/resume-modern.pdf'), 'modern résumé must stay linked');
-  assert.ok(html.includes('/resume-cyberpunk.pdf'), 'cyberpunk résumé must stay linked');
-  assert.ok(existsSync(join(ROOT, 'public/resume-modern.pdf')));
-  assert.ok(existsSync(join(ROOT, 'public/resume-cyberpunk.pdf')));
+  assert.ok(html.includes(`href="${RESUME_URL}"`));
+  assert.ok(existsSync(join(ROOT, 'public', RESUME_URL)));
+  assert.doesNotMatch(html, /resume-cyberpunk/);
+  assert.ok(!existsSync(join(ROOT, 'public/resume-cyberpunk.pdf')));
+  const app = read('src/app/App.jsx');
+  assert.match(app, /<ResumeSection resumeUrl=\{RESUME_URL\}/);
+  assert.match(app, /window\.open\(RESUME_URL, '_blank'\)/);
   const resume = read('src/features/profile/ResumeSection.jsx');
-  assert.ok(resume.includes('Same content and layout, two accent colors'));
-  assert.ok(resume.includes('href="/resume-modern.pdf"'));
-  assert.ok(resume.includes('href="/resume-cyberpunk.pdf"'));
-  assert.ok(resume.includes('preview shows Modern'));
+  assert.match(resume, /href=\{resumeUrl\}/);
+  assert.match(resume, /src="\/resume-preview\.png"/);
   const builder = read('scripts/build-resume.py');
   assert.ok(builder.includes('item["id"] == project_id'));
   assert.ok(builder.includes('https://iamnyx.dev'));
@@ -360,7 +362,7 @@ test('professional name and contact details are preserved', async () => {
 
   const zoho = experienceData.find((e) => e.company === 'Zoho' && e.type === 'Full-time');
   assert.ok(zoho, 'Zoho full-time role must be preserved');
-  assert.equal(zoho.role, 'Software Engineer');
+  assert.equal(zoho.role, 'iOS Product Engineer');
   assert.equal(zoho.dates, 'May 2022 - Present');
 });
 

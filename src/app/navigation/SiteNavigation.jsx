@@ -5,7 +5,7 @@ import useChapterNavigation from './useChapterNavigation.js';
 import { CHAPTERS, chapterNum } from '../../data/chapters.js';
 import './navigation.css';
 
-export default function SiteNavigation({ onAsk, askOpen, resumeUrl = '/resume-modern.pdf' }) {
+export default function SiteNavigation({ onAsk, askOpen, resumeUrl }) {
   const { active, sheetOpen, setSheetOpen, opener, sheetRef } = useChapterNavigation();
   const [compact, setCompact] = useState(() => window.scrollY > 180);
   const navigation = useRef(null);

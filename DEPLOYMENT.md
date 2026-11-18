@@ -12,13 +12,13 @@ This guide describes the existing portfolio release workflow. Publishing follows
 | Automatic trigger       | Push to `main`                                                               |
 | Runtime                 | Node.js 22; npm with `package-lock.json`                                     |
 
-The workflow also supports manual dispatch. The canonical URL does not configure a redirect from the Firebase-hosted URL; see the domain-migration notes in [README.md](README.md#canonical-domain-and-résumé-pdfs).
+The workflow also supports manual dispatch. The canonical URL does not configure a redirect from the Firebase-hosted URL; see the domain-migration notes in [README.md](README.md#canonical-domain-and-résumé-pdf).
 
 ## Release requirements
 
 - Keep the existing GitHub Actions configuration and secrets in place. The workflow still reads the legacy-named `FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_PAC` secret, while its explicit deployment target is `nyx-port`. Do not rename the secret or generate a replacement key as part of an ordinary content release.
 - Never commit private service-account JSON or provider credentials. Rook's `DEEPSEEK_API_KEY` is a server-only Firebase secret, not a `VITE_` variable. Credential provisioning and rotation are separate operations.
-- Run `npm run check` and `npm run build:functions` for the required local validation. Review generated résumé PDFs, their preview and the social-share image when their source content changes; the deployment workflow does not regenerate those public files.
+- Run `npm run check` and `npm run build:functions` for the required local validation. Review the generated résumé PDF, its preview and the social-share image when their source content changes; the deployment workflow does not regenerate those public files.
 - Keep generated `dist`, `functions/lib` and `firebase.hosting.json` out of Git. The workflow recreates these release outputs.
 
 ## Deployment flags
