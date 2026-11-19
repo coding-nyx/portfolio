@@ -276,7 +276,7 @@ test('hero exposes recruiter actions with unambiguous labels', () => {
   const hero = read('src/features/profile/HeroSection.jsx');
   assert.match(
     hero,
-    /href="#experience"[^>]*>\s*View iOS work\s*</,
+    /href="#experience"[^>]*>\s*View my work\s*</,
     'native work needs a direct hiring path',
   );
   assert.match(
@@ -475,6 +475,20 @@ test('architecture lint rejects reversed layers, sibling features and unresolved
       result.messages.some((message) => message.ruleId === 'architecture/module-boundaries'),
       `${filePath} must reject ${dependency}`,
     );
+  }
+});
+
+test('earlier Zoho apps stay unnamed in public content and Rook guidance', async () => {
+  const data = JSON.stringify(await importData());
+  const rook = read('server', 'rook', 'context.mjs');
+  for (const name of [
+    /Zoho Sprints/,
+    /Zoho Projects/,
+    /\bSprints\b/,
+    /\btwo (?:Zoho )?(?:iOS )?apps\b/i,
+  ]) {
+    assert.doesNotMatch(data, name);
+    assert.doesNotMatch(rook, name);
   }
 });
 

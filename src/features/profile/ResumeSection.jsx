@@ -14,7 +14,7 @@ export default function ResumeSection({ resumeUrl }) {
       </h2>
       <div className="resume-grid">
         <div className="resume-overview">
-          <p className="port-eyebrow">Native UI · Product engineering</p>
+          <p className="port-eyebrow">Mobile · Web · Product engineering</p>
           <h3>{role.role}</h3>
           <p>{profileData.resumeSummary}</p>
           <p className="port-meta">{role.company} · Since May 2022</p>

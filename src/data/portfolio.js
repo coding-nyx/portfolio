@@ -143,7 +143,7 @@ export const experienceData = [
     dates: 'May 2022 - Present',
     type: 'Full-time',
     description:
-      'Builds reusable iOS components and platform libraries for Zoho’s app ecosystem, used by other product teams, reviews code for the iOS teams and onboarded two interns. Previously on Zoho Sprints and Zoho Projects, including leading UI and navigation for the Zoho Sprints revamp and shipping its App Store and TestFlight releases. Covers requirements analysis, feasibility, native UI performance and product-team integration.',
+      'Builds the reusable iOS components and platform libraries that Zoho’s product teams build on, from requirements analysis and feasibility through to helping teams integrate them. Before that, built features for Zoho’s iOS apps and led UI and navigation for a major app revamp.',
     uiWork: {
       title: 'UI layout and performance',
       summary: 'Worked on application navigation, component layouts and scrolling performance.',
@@ -153,7 +153,7 @@ export const experienceData = [
           title: 'Adaptive product navigation',
           contextLabel: 'Scope',
           context:
-            'App-wide UI redesign and navigation improvements as part of the Zoho Sprints iOS revamp.',
+            'App-wide UI redesign and navigation improvements as part of a major iOS app revamp.',
           analysisLabel: 'Adaptive layout',
           analysis:
             'Implemented a reusable three-panel split view for phone, landscape and iPad layouts. Switched between rail navigation and a tab bar based on available size and traitCollection.',
@@ -192,30 +192,30 @@ export const experienceData = [
       {
         id: 'reusable-product-ui',
         name: 'Reusable Product UI',
-        desc: 'Developed Kanban, spreadsheet and navigation components used by four teams across four apps. A component a team would otherwise spend an estimated one to two months designing, building and integrating can be integrated in about a day. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
+        desc: 'Developed reusable UI and data-visualization components, including Kanban boards, spreadsheets and navigation, used by multiple product teams. Teams integrate one in about a day, instead of an estimated one to two months building it themselves. Prototyped UIKit, SwiftUI and hybrid approaches using collection views, table views, List, lazy stacks and custom compositional layouts.',
         resumeSummary:
-          'Built reusable Kanban, spreadsheet and navigation components adopted by 4 teams across 4 apps; integration takes about a day, under an hour with the MCP, versus an estimated 1-2 months in-house.',
+          'Built reusable UI and data-visualization components (Kanban, spreadsheets, navigation) used by multiple product teams; integration takes about a day, under an hour with the MCP, versus an estimated 1-2 months in-house.',
       },
       {
         id: 'platform-library-integration',
         name: 'iOS Platform Libraries and Feature Integration',
-        desc: 'Developing reusable iOS libraries that give product teams consistent interfaces for Contacts, Speech, Vision and Continuity features. The work includes wrapping Apple frameworks and designing feature pipelines that combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
+        desc: 'Building iOS libraries that make features like Contacts, Speech, Vision and Continuity easy for product teams to add, through one consistent interface instead of each team integrating the Apple frameworks itself. The feature pipelines behind them combine native capabilities, Zoho R&D libraries, custom models and external libraries or APIs, with bring-your-own-key support where applicable.',
         resumeSummary:
-          'Building shared interfaces for Contacts, Speech, Vision and Continuity, combining Apple APIs, internal models and external providers.',
+          'Building shared iOS libraries that make Contacts, Speech, Vision and Continuity easy for product teams to add.',
       },
       {
         id: 'release-and-quality',
         name: 'Releases, code review and onboarding',
-        desc: 'Shipped Zoho Sprints releases through the App Store and TestFlight. Reviews code for the iOS teams and onboarded two interns.',
+        desc: 'Shipped iOS app releases through the App Store and TestFlight. Reviews code for the iOS teams and onboarded two interns.',
         resumeSummary:
-          'Shipped Zoho Sprints releases through App Store and TestFlight; reviews iOS code and onboarded two interns.',
+          'Shipped iOS app releases through App Store and TestFlight; reviews iOS code and onboarded two interns.',
       },
       {
         id: 'production-app-revamp',
-        name: 'Zoho Sprints Revamp',
-        desc: 'Integrated updated web APIs and translated their responses for the mobile app in the Zoho Sprints iOS revamp. Contributed to revamp planning and led UI redesign and navigation improvements. Also contributed to feature additions, bug fixes and minor releases across Zoho Sprints and Zoho Projects.',
+        name: 'iOS App Revamp',
+        desc: 'Contributed to revamp planning and led UI redesign and navigation improvements. Integrated updated web APIs and translated their responses for the mobile app. Also worked on feature additions, bug fixes, minor releases and minor backend API changes.',
         resumeSummary:
-          'Earlier: integrated updated web APIs and led the UI and navigation redesign for the Zoho Sprints iOS revamp, with an adaptive 3-panel layout for iPhone and iPad.',
+          'Earlier: led the UI and navigation redesign for a major iOS app revamp, with an adaptive 3-panel layout for iPhone and iPad; integrated updated web APIs and made minor backend API changes.',
       },
       {
         id: 'adaptive-navigation-layout',
@@ -329,24 +329,24 @@ export const profileData = {
     preferredName: 'Rajkumar',
     primaryStack: ['Swift', 'UIKit', 'SwiftUI', 'SPM'],
     paragraphs: [
-      'I’m an iOS product engineer in Chennai. At Zoho, I build reusable components and platform libraries for the iOS app ecosystem: Kanban, spreadsheet and navigation components that four teams use across four apps, and shared libraries for Contacts, Speech, Vision and Continuity.',
-      'A component that would take a team an estimated one to two months to build can be integrated in about a day, and in under an hour with the integration MCP I built. Before moving to components, I worked on Zoho Sprints and Zoho Projects, and led the UI and navigation redesign for the Zoho Sprints revamp, including an adaptive three-panel layout for phone, landscape and iPad.',
-      'Outside work, I build AI agent and automation tools: Android clients, a finance tracker with MCP tools, and a Linux distribution for an RK3588 board. I’m also into retro gaming and obstacle course races.',
+      'I’m an iOS engineer in Chennai. I care about the parts of an app people feel but rarely notice: a layout that adapts cleanly from iPhone to iPad, a spreadsheet that still scrolls smoothly at two hundred columns, a component another team can pick up in a day instead of rebuilding it.',
+      'These days most of my work is shared components and platform libraries that other teams build on. It’s a different kind of problem from shipping one app: you design for the developers using your code as much as for the person tapping the screen.',
+      'I love building for iOS, and I love full-stack web work just as much: designing the API, the database and the interface that sits on top of them. Most of my side projects start there, like a finance tracker for my own accounts and budgets. Some end up somewhere stranger, like an Android engine for AI agents or a Linux distribution for a board nobody supported. Away from the keyboard, I’m probably playing something retro or covered in mud at an obstacle course race.',
     ],
     personalLinkLabel: 'Race photos and other interests',
   },
   heroSummary:
-    'I build reusable iOS components and platform libraries for Zoho’s app ecosystem, which teams integrate in a day instead of months.',
+    'I build iOS and Android apps, full-stack web apps and the reusable components other developers build on.',
   deliverySummary:
-    'Early in the iOS role at Zoho, contributed to feature additions, bug fixes and minor releases for Zoho Sprints and Zoho Projects. For the Zoho Sprints revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
+    'Early in the iOS role at Zoho, contributed to feature additions, bug fixes and minor releases for Zoho’s iOS apps. For a major app revamp, integrated updated web APIs and translated their responses for the mobile app, contributed to revamp planning, and led UI redesign and navigation improvements.',
   headline:
     'iOS Product Engineer at Zoho | Reusable Components & Platform Libraries | Swift, UIKit & SwiftUI',
   location: 'Chennai, India',
   profileImage: '/profile.jpg',
   summary:
-    'iOS engineer at Zoho since May 2022, now building reusable Kanban, spreadsheet and navigation components, platform libraries and component integration tooling for Zoho’s iOS app ecosystem. Earlier, on Zoho Sprints and Zoho Projects, integrated updated web APIs and translated their responses for the mobile app in the Zoho Sprints revamp, contributed to planning, and led UI redesign and navigation improvements.',
+    'iOS engineer at Zoho since May 2022, now building reusable UI and data-visualization components, platform libraries and component integration tooling for Zoho’s iOS app ecosystem. Earlier, integrated updated web APIs and translated their responses for the mobile app in a major app revamp, made minor backend API changes, contributed to planning, and led UI redesign and navigation improvements.',
   resumeSummary:
-    'iOS engineer building reusable components, platform libraries and MCP tooling for Zoho’s iOS app ecosystem, which teams integrate in a day instead of months. Previously led the UI and navigation redesign for the Zoho Sprints revamp.',
+    'Works across iOS, Android and full-stack web. At Zoho, builds reusable UI components, platform libraries and MCP tooling that product teams integrate in a day instead of months, and previously led the UI and navigation redesign for a major iOS app revamp.',
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/raj-kumar-s',
     email: 'hello@iamnyx.dev',
@@ -517,7 +517,7 @@ export const projects = [
     description:
       'Ara is deprecated and is being rebuilt as Agent OS. The successor is in development, bringing specialist agents, persistent personal data and coordinated workflows into a local-first workspace built on a pinned Hermes runtime.',
     resumeSummary:
-      'Agent OS, the successor to the deprecated Ara prototype, is in development with a React/TypeScript dashboard, Python/FastAPI backend, PostgreSQL data library and Hermes-backed specialist-agent execution.',
+      'In development: a local-first workspace for specialist AI agents, with a React/TypeScript dashboard, Python/FastAPI backend, PostgreSQL data library and Hermes-backed agent execution.',
     architecture: {
       title: 'Agent OS architecture',
       note: 'Successor in development; the earlier Ara prototype is deprecated.',
@@ -603,7 +603,7 @@ export const skillsData = [
     name: 'Swift',
     category: 'Mobile',
     evidence:
-      'Developed reusable Kanban, spreadsheet and navigation components for Zoho iOS apps, from requirements analysis to product-team integration support.',
+      'Developed reusable UI and data-visualization components, including Kanban boards, spreadsheets and navigation, for Zoho iOS apps, from requirements analysis to product-team integration support.',
   },
   {
     id: 'uikit',

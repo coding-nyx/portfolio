@@ -79,7 +79,7 @@ const HeroSection = ({ resumeUrl }) => {
           <p className="line muted">{profileData.heroSummary}</p>
           <div className="acts">
             <SpringAction as="a" className="btn primary" href="#experience" data-sec="experience">
-              View iOS work
+              View my work
             </SpringAction>
             <SpringAction as="a" className="btn ghost" href={resumeUrl} download>
               Resume ↓

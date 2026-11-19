@@ -69,7 +69,7 @@ def build():
     section("Profile")
     story.append(para(text(profile.get("resumeSummary", profile["summary"]))))
     section("Technical skills")
-    story.append(para("<b>iOS:</b> Swift, UIKit, SwiftUI, UICollectionView, UITableView, Swift Package Manager.<br/><b>Performance and tooling:</b> Xcode Instruments, layout-attribute caching, Git, MCP, component APIs.<br/><b>Supporting:</b> Kotlin, Jetpack Compose, TypeScript, React, Firebase, Zoho Catalyst, Linux."))
+    story.append(para("<b>iOS:</b> Swift, UIKit, SwiftUI, UICollectionView, UITableView, Swift Package Manager.<br/><b>Performance and tooling:</b> Xcode Instruments, layout-attribute caching, Git, MCP, component APIs.<br/><b>Full-stack web:</b> TypeScript, React, Next.js, Python/FastAPI, PostgreSQL, Firebase, REST and MCP APIs.<br/><b>Also:</b> Kotlin, Jetpack Compose, Zoho Catalyst, Linux."))
     section("Experience")
     story.append(para(text(role["company"]) + " | " + text(role["role"]) + " | " + text(role["dates"]), "job"))
     work_by_id = {item["id"]: item for item in role["projects"] if "resumeSummary" in item}

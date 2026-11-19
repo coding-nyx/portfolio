@@ -209,7 +209,7 @@ test('employment availability questions use shared availability without catching
   for (const question of [
     'What is Raj’s current role?',
     'Is Raj interested in volunteering work?',
-    'Tell me about the Zoho Sprints revamp',
+    'Tell me about the app revamp',
   ]) {
     assert.ok(!generateFallbackResponse(question).includes(headline), question);
   }
@@ -391,7 +391,7 @@ test('live Rook receives the same platform-library facts as saved replies', () =
   const facts = JSON.parse(systemPrompt.split('AUTHORITATIVE FACTS:\n')[1]);
   const liveWork = facts.experience[0].work.find((item) => item.name === work.name);
   assert.equal(liveWork.description, work.desc);
-  assert.match(liveWork.description, /Developing/);
+  assert.match(liveWork.description, /^Building/, 'work stays described as ongoing');
   for (const capability of ['Contacts', 'Speech', 'Vision', 'Continuity'])
     assert.ok(liveWork.description.includes(capability));
   assert.match(liveWork.description, /Zoho R&D libraries/);
@@ -412,7 +412,7 @@ test('AI SDLC questions explain the workflow without naming internal examples', 
 test('production delivery questions include release and maintenance contributions', () => {
   const reply = generateFallbackResponse('What production releases and bug fixes did Raj work on?');
   assert.match(reply, /feature additions, bug fixes and minor releases/);
-  assert.match(reply, /Zoho Sprints revamp/);
+  assert.match(reply, /major app revamp/);
   assert.doesNotMatch(reply, /\[ACTION:/);
   const revamp = generateFallbackResponse('What API migration and middleware revamp did Raj plan?');
   assert.match(

@@ -318,11 +318,11 @@
 .pc-image img[data-image-layout='portrait'],
 .project-screenshot img[data-image-layout='portrait'] {
   object-fit: cover;
-  object-position: center 33%;
+  object-position: center top;
 }
 .project-screenshot img[data-image-layout='portrait'] {
   aspect-ratio: 16 / 9;
-  object-position: center 37%;
+  object-position: center top;
 }
 .project-image-caption {
   font-size: 12px;
